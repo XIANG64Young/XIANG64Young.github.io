@@ -23,15 +23,12 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="Hive安装 首先安装MySQL 1、查看mysql的依赖 1rpm -qa | grep mysql 2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96; 3、离线安装mysql 12rpm -ivh MySQL-server-5.1.73-1.glib">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="f:/notes/大数据/src/clip_image002.gif">
-<meta property="og:image" content="f:/notes/大数据/src/clip_image004.gif">
 <meta property="article:published_time" content="2022-06-09T13:31:42.940Z">
-<meta property="article:modified_time" content="2022-06-09T05:48:42.031Z">
+<meta property="article:modified_time" content="2022-06-10T08:16:28.541Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="BigData">
 <meta property="article:tag" content="Hive">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="f:/notes/大数据/src/clip_image002.gif">
   
   
   
@@ -304,7 +301,9 @@
 <p>修改hive-env.sh</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">HADOOP_HOME</span>=/bigdata/hadoop-<span class="hljs-number">2</span>.<span class="hljs-number">6</span>.<span class="hljs-number">0</span><br><span class="hljs-attribute">JAVA_HOME</span>=/bigdata/jdk1.<span class="hljs-number">8</span>.<span class="hljs-number">0</span>_171<br><span class="hljs-attribute">HIVE_HOME</span>=/bigdata/hive-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <figure>
-<img src="F:\notes\大数据\src\clip_image002.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<img
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image002.gif" srcset="/img/loading.gif" lazyload
+alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>修改hive-site.xml</p>
@@ -325,7 +324,8 @@
 <p>5、启动在主节点/bigdata/hive-1.2.1/bin目录下执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./schematool -dbType mysql -initSchema<br></code></pre></td></tr></table></figure>
 <p>//初始化元数据</p>
-<p>6、启动Hive ./hive <img src="F:\notes\大数据\src\clip_image004.gif" srcset="/img/loading.gif" lazyload
+<p>6、启动Hive ./hive <img
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image004.gif" srcset="/img/loading.gif" lazyload
 alt="img" /></p>
 <p><strong>遇见的问题：</strong></p>
 <p>在安装mysql的时候，可能会有centos自带的mysql会有端口冲突。</p>
