@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="搭建zookeeper： 1、下载zookeeper并解压  1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs  cd conf&#x2F; cp zoo_sample.cfg zoo.c">
+    <meta name="description" content="搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs   img  cd conf&#x2F; cp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5.搭建zookeeper：">
 <meta property="og:url" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/5.Zookeeper%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="搭建zookeeper： 1、下载zookeeper并解压  1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs  cd conf&#x2F; cp zoo_sample.cfg zoo.c">
+<meta property="og:description" content="搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs   img  cd conf&#x2F; cp">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image002-1640091876388.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image004-1640091876388.gif">
@@ -31,11 +31,8 @@
 <meta property="og:image" content="f:/notes/大数据/src/clip_image012.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image014.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image016.gif">
-<meta property="og:image" content="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image018.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image020.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image022.gif">
-<meta property="og:image" content="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image024.gif">
-<meta property="og:image" content="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image028.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image030.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image032.gif">
@@ -288,49 +285,86 @@
             
             <div class="markdown-body">
               
-              <h1 id="搭建zookeeper："><a href="#搭建zookeeper：" class="headerlink" title="搭建zookeeper："></a>搭建zookeeper：</h1><p> 1、下载zookeeper并解压 </p>
+              <h1 id="搭建zookeeper">搭建zookeeper：</h1>
+<p>1、下载zookeeper并解压</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -zxvf zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>.tar.gz -C /bigdata**<br></code></pre></td></tr></table></figure>
-
-<p><img src="F:\notes\大数据\src\clip_image002-1640091876388.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image002-1640091876388.gif" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs</p>
 <p><strong>cd zookeeper-3.4.6</strong></p>
 <p><strong>mkdir data</strong></p>
 <p><strong>mkdir logs</strong></p>
-<p><img src="F:\notes\大数据\src\clip_image004-1640091876388.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><strong>cd conf&#x2F;</strong></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image004-1640091876388.gif" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>cd conf/</strong></p>
 <p><strong>cp zoo_sample.cfg zoo.cfg</strong></p>
-<p><img src="F:\notes\大数据\src\clip_image006.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image006.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p><strong>vi zoo.cfg</strong></p>
 <p>添加以下内容</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">dataDir</span>=/bigdata/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>/data<br><span class="hljs-attribute">dataLogDir</span>=/bigdata/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>/logs<br><span class="hljs-attribute">server</span>.<span class="hljs-number">1</span>=master:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br><span class="hljs-attribute">server</span>.<span class="hljs-number">2</span>=node1:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br><span class="hljs-attribute">server</span>.<span class="hljs-number">3</span>=node2:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br></code></pre></td></tr></table></figure>
-
-<p><img src="F:\notes\大数据\src\clip_image008.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image008.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p><strong>cd data</strong></p>
 <p>新建一个<strong>myid</strong>文件</p>
 <p><strong>vi myid</strong></p>
 <p><strong>1</strong></p>
-<p><img src="F:\notes\大数据\src\clip_image010.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image010.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>3、复制master的zookeeper-3.4.6到<strong>node1</strong>和<strong>node2</strong>上</p>
-<p><img src="F:\notes\大数据\src\clip_image012.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><img src="F:\notes\大数据\src\clip_image014.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image012.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="F:\notes\大数据\src\clip_image014.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>4、分别修改<strong>node1</strong>和<strong>node2</strong>上myid的值为2和3</p>
-<p><strong>cd &#x2F;bigdata&#x2F;zookeeper-3.4.6&#x2F;data</strong></p>
+<p><strong>cd /bigdata/zookeeper-3.4.6/data</strong></p>
 <p><strong>vi myid</strong></p>
 <p><strong>2</strong></p>
 <p><strong>vi myid</strong></p>
 <p><strong>3</strong></p>
-<p><img src="F:\notes\大数据\src\clip_image016.gif" srcset="/img/loading.gif" lazyload alt="img"><img src="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image018.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p> 5、分别启动master,<strong>node1</strong>,<strong>node2</strong>上的zookeeper（zookeeper三台都要启动）</p>
-<p><strong>zkServer.sh start</strong> </p>
-<p><img src="F:\notes\大数据\src\clip_image020.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="F:\notes\大数据\src\clip_image016.gif" srcset="/img/loading.gif" lazyload alt="img" /><img
+src="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image018.gif" srcset="/img/loading.gif" lazyload
+alt="img" /></p>
+<p>5、分别启动master,<strong>node1</strong>,<strong>node2</strong>上的zookeeper（zookeeper三台都要启动）</p>
+<p><strong>zkServer.sh start</strong></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image020.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>(可以在环境变量里设置，以便于下次不用再进入bin中操作)</p>
 <p>6、查看zookeeper的状态</p>
 <p><strong>zkServer.sh status</strong></p>
-<p><img src="F:\notes\大数据\src\clip_image022.gif" srcset="/img/loading.gif" lazyload alt="img"><img src="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image024.gif" srcset="/img/loading.gif" lazyload alt="img"><img src="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="F:\notes\大数据\src\clip_image022.gif" srcset="/img/loading.gif" lazyload alt="img" /><img
+src="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image024.gif" srcset="/img/loading.gif" lazyload
+alt="img" /><img
+src="file:///C:/Users/12137/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif" srcset="/img/loading.gif" lazyload
+alt="img" /></p>
 <p>7、验证zookeeper集群，启动客户端</p>
-<p><strong>bin&#x2F;zkCli.sh</strong></p>
-<p><img src="F:\notes\大数据\src\clip_image028.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
-<p><img src="F:\notes\大数据\src\clip_image030.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>bin/zkCli.sh</strong></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image028.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="F:\notes\大数据\src\clip_image030.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>至此：zookeeper集群安装完毕！</p>
 <p>PS:</p>
 <p>由于zk运行一段时间后，会产生大量的日志文件，把磁盘空间占满，导致整个机器进程都不能活动了，所以需要定期清理这些日志文件，方法如下：</p>
@@ -338,14 +372,16 @@
 <li>写一个脚本文件cleanup.sh内容如下：</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">java</span> -cp zookeeper.jar:lib/slf4j-api-<span class="hljs-number">1</span>.<span class="hljs-number">6</span>.<span class="hljs-number">1</span>.jar:lib/slf4j-log4j12-<span class="hljs-number">1</span>.<span class="hljs-number">6</span>.<span class="hljs-number">1</span>.jar:lib/log4j-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">15</span>.jar:conf org.apache.zookeeper.server.PurgeTxnLog &lt;dataDir&gt; &lt;snapDir&gt; -n &lt;count&gt;<br></code></pre></td></tr></table></figure>
-
-<p> 其中：dataDir：即上面配置的dataDir的目录； snapDir：即上面配置的dataLogDir的目录；count：保留前几个日志文件，默认为3</p>
-<p><img src="F:\notes\大数据\src\clip_image032.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>其中：dataDir：即上面配置的dataDir的目录；
+snapDir：即上面配置的dataLogDir的目录；count：保留前几个日志文件，默认为3</p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image032.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <ul>
 <li>通过crontab写定时任务，来完成定时清理日志的需求</li>
 </ul>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">crontab</span> -e <span class="hljs-number">0</span> <span class="hljs-number">0</span> * * /opt/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">10</span>/bin/cleanup.sh<br></code></pre></td></tr></table></figure>
-
 
               
             </div>

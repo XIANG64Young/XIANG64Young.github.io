@@ -229,7 +229,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/16.GaussianNetwork/" target="_self">
         <div>
-          高斯网络高斯图模型（高斯网络）是一种随机变量为连续的有向或者无向图。有向图版本的高斯图是高斯贝叶斯网络，无向版本的叫高斯马尔可夫网络。 高斯网络的每一个节点都是高斯分布：$\mathcal{N}(\mu_i,\Sigma_i)$，于是所有节点的联合分布就是一个高斯分布，均值为 $\mu$，方差为 $\Sigma$。 对于边缘概率，我们有下面三个结论：  对于方差矩阵，可以得到独立性条件：$x_i\
+          高斯网络 高斯图模型（高斯网络）是一种随机变量为连续的有向或者无向图。有向图版本的高斯图是高斯贝叶斯网络，无向版本的叫高斯马尔可夫网络。 高斯网络的每一个节点都是高斯分布：\(\mathcal{N}(\mu_i,\Sigma_i)\)，于是所有节点的联合分布就是一个高斯分布，均值为 \(\mu\)，方差为 \(\Sigma\)。 对于边缘概率，我们有下面三个结论：  对于方差矩阵，可以
         </div>
       </a>
 
@@ -290,7 +290,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/15.CRF/" target="_self">
         <div>
-          条件随机场我们知道，分类问题可以分为硬分类和软分类两种，其中硬分类有 SVM，PLA，LDA 等。软分类问题大体上可以分为概率生成和概率判别模型，其中较为有名的概率判别模型有 Logistic 回归，生成模型有朴素贝叶斯模型。Logistic 回归模型的损失函数为交叉熵，这类模型也叫对数线性模型，一般地，又叫做最大熵模型，这类模型和指数族分布的概率假设是一致的。对朴素贝叶斯假设，如果将其中的单元素
+          条件随机场 我们知道，分类问题可以分为硬分类和软分类两种，其中硬分类有 SVM，PLA，LDA 等。软分类问题大体上可以分为概率生成和概率判别模型，其中较为有名的概率判别模型有 Logistic 回归，生成模型有朴素贝叶斯模型。Logistic 回归模型的损失函数为交叉熵，这类模型也叫对数线性模型，一般地，又叫做最大熵模型，这类模型和指数族分布的概率假设是一致的。对朴素贝叶斯假设，如果将
         </div>
       </a>
 
@@ -351,7 +351,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/14.particleFilter/" target="_self">
         <div>
-          粒子滤波Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。 我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 $f(z)$ 的期望，可以利用某种抽样方法，在这个概率分布中抽取 $N$ 个样本，则 $\mathbb{
+          粒子滤波 Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。 我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 \(f(z)\) 的期望，可以利用某种抽样方法，在这个概率分布中抽取 \(N\) 个样本，
         </div>
       </a>
 
@@ -412,7 +412,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/13.LDS/" target="_self">
         <div>
-          线性动态系统HMM 模型适用于隐变量是离散的值的时候，对于连续隐变量的 HMM，常用线性动态系统描述线性高斯模型的态变量，使用粒子滤波来表述非高斯非线性的态变量。 LDS 又叫卡尔曼滤波，其中，线性体现在上一时刻和这一时刻的隐变量以及隐变量和观测之间：$$\begin{align}z_t&amp;&#x3D;A\cdot z_{t-1}+B+\varepsilon\x_t&amp;&#x3D;C\
+          线性动态系统 HMM 模型适用于隐变量是离散的值的时候，对于连续隐变量的 HMM，常用线性动态系统描述线性高斯模型的态变量，使用粒子滤波来表述非高斯非线性的态变量。 LDS 又叫卡尔曼滤波，其中，线性体现在上一时刻和这一时刻的隐变量以及隐变量和观测之间： \[ \begin{align} z_t&amp;&#x3D;A\cdot z_{t-1}+B+\varepsilon\\ x_t&amp;amp
         </div>
       </a>
 
@@ -473,7 +473,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/12.HMM/" target="_self">
         <div>
-          隐马尔可夫模型隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了时序信息
+          隐马尔可夫模型 隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了
         </div>
       </a>
 
@@ -534,7 +534,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/11.MCMC/" target="_self">
         <div>
-          马尔可夫链蒙特卡洛MCMC 是一种随机的近似推断，其核心就是基于采样的随机近似方法蒙特卡洛方法。对于采样任务来说，有下面一些常用的场景：  采样作为任务，用于生成新的样本 求和&#x2F;求积分  采样结束后，我们需要评价采样出来的样本点是不是好的样本集：  样本趋向于高概率的区域 样本之间必须独立  具体采样中，采样是一个困难的过程：  无法采样得到归一化因子，即无法直接对概率 $ p(x)&amp;#
+          马尔可夫链蒙特卡洛 MCMC 是一种随机的近似推断，其核心就是基于采样的随机近似方法蒙特卡洛方法。对于采样任务来说，有下面一些常用的场景：  采样作为任务，用于生成新的样本 求和&#x2F;求积分  采样结束后，我们需要评价采样出来的样本点是不是好的样本集：  样本趋向于高概率的区域 样本之间必须独立  具体采样中，采样是一个困难的过程：  无法采样得到归一化因子，即无法直接对概
         </div>
       </a>
 
@@ -595,7 +595,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/10.VI/" target="_self">
         <div>
-          变分推断我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 $\hat{x}$ 这样的新样本，需要得到：$$p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta$$如果新样本和数据集独立
+          变分推断 我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 \(\hat{x}\) 这样的新样本，需要得到： \[ p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta \] 如果新样本和数
         </div>
       </a>
 
@@ -656,7 +656,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E6%B3%A8%E6%84%8Fnotices/" target="_self">
         <div>
-          大数据 注意小细节关于IP的配置问题网络配置文件 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts内 需要先查看网络配置的接口是多少再行修改 1ifconfig  网络接口内的配置 1234567ONBOOT&#x3D;yesNM_CONTROLLED&#x3D;yesBOOTPROTO&#x3D;staticIPADDR&#x3D;192.168.174.100   &lt;看自己的NET的网
+          大数据 注意小细节 关于IP的配置问题 网络配置文件 &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts内 需要先查看网络配置的接口是多少再行修改 1ifconfig 网络接口内的配置 1234567ONBOOT&#x3D;yesNM_CONTROLLED&#x3D;yesBOOTPROTO&#x3D;staticIPADDR&#x3D;192.168.174.100   &lt;看自己的NET的网段&gt;NET
         </div>
       </a>
 
@@ -717,7 +717,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E5%88%87%E6%8D%A2java%E7%89%88%E6%9C%AC/" target="_self">
         <div>
-          首先需要安装一个新的jdk 然后修改环境变量里面的JAVA_HOME 然后复制新的jdk&#x2F;bin里面的java.exe&#x2F;javaw.exe&#x2F;javaws.exe到C:\Windows\System32 注意修改regedit中的注册表的信息HKEY_LOCAL_MACHINE\Software\JavaSoft\Java Runtime Environment修改默认
+          首先需要安装一个新的jdk 然后修改环境变量里面的JAVA_HOME 然后复制新的jdk&#x2F;bin里面的java.exe&#x2F;javaw.exe&#x2F;javaws.exe到C: 注意修改regedit中的注册表的信息HKEY_LOCAL_MACHINERuntime Environment 修改默认jdk的版本 注意要及时删除环境变量path中C:; 这是java1.8安装的时候默认自带的。
         </div>
       </a>
 
@@ -780,7 +780,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/PySpark%E6%A1%88%E4%BE%8B/" target="_self">
         <div>
-          一．选题1.1 背景从 1934 年到 1963 年，旧金山因将一些世界上最臭名昭著的罪犯关押在无法逃脱的岛而臭名昭著恶魔 。 今天，这座城市以其科技场景而闻名，而不是它的犯罪历史。但是，随着财富不平等的加剧、住房短缺以及乘坐 BART 上班的昂贵数字玩具的激增，海湾边的城市并不缺乏犯罪。 从 Sunset 到 SOMA，从 Marina 到 Excelsior，本次比赛的数据集提供了旧金山所有社
+          一．选题 1.1 背景 从 1934 年到 1963 年，旧金山因将一些世界上最臭名昭著的罪犯关押在无法逃脱的岛而臭名昭著恶魔 。 今天，这座城市以其科技场景而闻名，而不是它的犯罪历史。但是，随着财富不平等的加剧、住房短缺以及乘坐 BART 上班的昂贵数字玩具的激增，海湾边的城市并不缺乏犯罪。 从 Sunset 到 SOMA，从 Marina 到 Excelsior，本次比赛的数据
         </div>
       </a>
 

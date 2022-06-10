@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="指数族分布指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式：$$p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))$$其中，$\eta$">
+    <meta name="description" content="指数族分布 指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式： \[ p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x)) \] 其中，\(\eta\">
 <meta property="og:type" content="article">
 <meta property="og:title" content="指数族分布">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/6.Exponentialfamily/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="指数族分布指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式：$$p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))$$其中，$\eta$">
+<meta property="og:description" content="指数族分布 指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式： \[ p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x)) \] 其中，\(\eta\">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.134Z">
 <meta property="article:modified_time" content="2022-06-09T08:01:31.986Z">
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          2.9k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          26 分钟
+          25 分钟
         
       </span>
     
@@ -270,23 +270,107 @@
             
             <div class="markdown-body">
               
-              <h1 id="指数族分布"><a href="#指数族分布" class="headerlink" title="指数族分布"></a>指数族分布</h1><p>指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式：<br>$$<br>p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))<br>$$<br>其中，$\eta$ 是参数向量，$A(\eta)$ 是对数配分函数（归一化因子）。</p>
-<p>在这个式子中，$ \phi(x)$ 叫做充分统计量，包含样本集合所有的信息，例如高斯分布中的均值和方差。充分统计量在在线学习中有应用，对于一个数据集，只需要记录样本的充分统计量即可。</p>
-<p>对于一个模型分布假设（似然），那么我们在求解中，常常需要寻找一个共轭先验，使得先验与后验的形式相同，例如选取似然是二项分布，可取先验是 Beta 分布，那么后验也是 Beta 分布。指数族分布常常具有共轭的性质，于是我们在模型选择以及推断具有很大的便利。</p>
+              <h1 id="指数族分布">指数族分布</h1>
+<p>指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta
+分布、Dirichlet 分布、Gamma
+分布等一系列分布。指数族分布可以写为统一的形式： <span
+class="math display">\[
+p(x|\eta)=h(x)\exp(\eta^T\phi(x)-A(\eta))=\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))
+\]</span> 其中，<span class="math inline">\(\eta\)</span>
+是参数向量，<span class="math inline">\(A(\eta)\)</span>
+是对数配分函数（归一化因子）。</p>
+<p>在这个式子中，$ (x)$
+叫做充分统计量，包含样本集合所有的信息，例如高斯分布中的均值和方差。充分统计量在在线学习中有应用，对于一个数据集，只需要记录样本的充分统计量即可。</p>
+<p>对于一个模型分布假设（似然），那么我们在求解中，常常需要寻找一个共轭先验，使得先验与后验的形式相同，例如选取似然是二项分布，可取先验是
+Beta 分布，那么后验也是 Beta
+分布。指数族分布常常具有共轭的性质，于是我们在模型选择以及推断具有很大的便利。</p>
 <p>共轭先验的性质便于计算，同时，指数族分布满足最大熵的思想（无信息先验），也就是说对于经验分布利用最大熵原理导出的分布就是指数族分布。</p>
-<p>观察到指数族分布的表达式类似线性模型，事实上，指数族分布很自然地导出广义线性模型：<br>$$<br>y&#x3D;f(w^Tx)\<br>y|x\sim Exp Family<br>$$<br>在更复杂的概率图模型中，例如在无向图模型中如受限玻尔兹曼机中，指数族分布也扮演着重要作用。</p>
+<p>观察到指数族分布的表达式类似线性模型，事实上，指数族分布很自然地导出广义线性模型：
+<span class="math display">\[
+y=f(w^Tx)\\
+y|x\sim Exp Family
+\]</span>
+在更复杂的概率图模型中，例如在无向图模型中如受限玻尔兹曼机中，指数族分布也扮演着重要作用。</p>
 <p>在推断的算法中，例如变分推断中，指数族分布也会大大简化计算。</p>
-<h2 id="一维高斯分布"><a href="#一维高斯分布" class="headerlink" title="一维高斯分布"></a>一维高斯分布</h2><p>一维高斯分布可以写成：<br>$$<br>p(x|\theta)&#x3D;\frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(x-\mu)^2}{2\sigma^2})<br>$$<br>将这个式子改写：<br>$$<br>\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{1}{2\sigma^2}(x^2-2\mu x+\mu^2))\<br>&#x3D;\exp(\log(2\pi\sigma^2)^{-1&#x2F;2})\exp(-\frac{1}{2\sigma^2}\begin{pmatrix}-2\mu&amp;1\end{pmatrix}\begin{pmatrix}x\x^2\end{pmatrix}-\frac{\mu^2}{2\sigma^2})<br>$$<br>所以：<br>$$<br>\eta&#x3D;\begin{pmatrix}\frac{\mu}{\sigma^2}\-\frac{1}{2\sigma^2}\end{pmatrix}&#x3D;\begin{pmatrix}\eta_1\\eta_2\end{pmatrix}<br>$$<br>于是 $A(\eta)$：<br>$$<br>A(\eta)&#x3D;-\frac{\eta_1^2}{4\eta_2}+\frac{1}{2}\log(-\frac{\pi}{\eta_2})<br>$$</p>
-<h2 id="充分统计量和对数配分函数的关系"><a href="#充分统计量和对数配分函数的关系" class="headerlink" title="充分统计量和对数配分函数的关系"></a>充分统计量和对数配分函数的关系</h2><p>对概率密度函数求积分：<br>$$<br>\begin{align}<br>\exp(A(\eta))&amp;&#x3D;\int h(x)\exp(\eta^T\phi(x))dx\nonumber<br>\end{align}<br>$$<br>两边对参数求导：<br>$$<br>\exp(A(\eta))A’(\eta)&#x3D;\int h(x)\exp(\eta^T\phi(x))\phi(x)dx\<br>\Longrightarrow A’(\eta)&#x3D;\mathbb{E}<em>{p(x|\eta)}[\phi(x)]<br>$$<br>类似的：<br>$$<br>A’’(\eta)&#x3D;Var</em>{p(x|\eta)}[\phi(x)]<br>$$<br>由于方差为正，于是 $A(\eta)$ 一定是凸函数。</p>
-<h2 id="充分统计量和极大似然估计"><a href="#充分统计量和极大似然估计" class="headerlink" title="充分统计量和极大似然估计"></a>充分统计量和极大似然估计</h2><p>对于独立全同采样得到的数据集 $\mathcal{D}&#x3D;{x_1,x_2,\cdots,x_N}$。<br>$$<br>\begin{align}\eta_{MLE}&amp;&#x3D;\mathop{argmax}<em>\eta\sum\limits</em>{i&#x3D;1}^N\log p(x_i|\eta)\nonumber\<br>&amp;&#x3D;\mathop{argmax}<em>\eta\sum\limits</em>{i&#x3D;1}^N(\eta^T\phi(x_i)-A(\eta))\nonumber\<br>&amp;\Longrightarrow A’(\eta_{MLE})&#x3D;\frac{1}{N}\sum\limits_{i&#x3D;1}^N\phi(x_i)</p>
-<p>\end{align}<br>$$<br>由此可以看到，为了估算参数，只需要知道充分统计量就可以了。</p>
-<h2 id="最大熵"><a href="#最大熵" class="headerlink" title="最大熵"></a>最大熵</h2><p>信息熵记为：<br>$$<br>Entropy&#x3D;\int-p(x)\log(p(x))dx<br>$$</p>
+<h2 id="一维高斯分布">一维高斯分布</h2>
+<p>一维高斯分布可以写成： <span class="math display">\[
+p(x|\theta)=\frac{1}{\sqrt{2\pi}\sigma}\exp(-\frac{(x-\mu)^2}{2\sigma^2})
+\]</span> 将这个式子改写： <span class="math display">\[
+\frac{1}{\sqrt{2\pi\sigma^2}}\exp(-\frac{1}{2\sigma^2}(x^2-2\mu
+x+\mu^2))\\
+=\exp(\log(2\pi\sigma^2)^{-1/2})\exp(-\frac{1}{2\sigma^2}\begin{pmatrix}-2\mu&amp;1\end{pmatrix}\begin{pmatrix}x\\x^2\end{pmatrix}-\frac{\mu^2}{2\sigma^2})
+\]</span> 所以： <span class="math display">\[
+\eta=\begin{pmatrix}\frac{\mu}{\sigma^2}\\-\frac{1}{2\sigma^2}\end{pmatrix}=\begin{pmatrix}\eta_1\\\eta_2\end{pmatrix}
+\]</span> 于是 <span class="math inline">\(A(\eta)\)</span>： <span
+class="math display">\[
+A(\eta)=-\frac{\eta_1^2}{4\eta_2}+\frac{1}{2}\log(-\frac{\pi}{\eta_2})
+\]</span></p>
+<h2
+id="充分统计量和对数配分函数的关系">充分统计量和对数配分函数的关系</h2>
+<p>对概率密度函数求积分： <span class="math display">\[
+\begin{align}
+\exp(A(\eta))&amp;=\int h(x)\exp(\eta^T\phi(x))dx\nonumber
+\end{align}
+\]</span> 两边对参数求导： <span class="math display">\[
+\exp(A(\eta))A&#39;(\eta)=\int h(x)\exp(\eta^T\phi(x))\phi(x)dx\\
+\Longrightarrow A&#39;(\eta)=\mathbb{E}_{p(x|\eta)}[\phi(x)]
+\]</span> 类似的： <span class="math display">\[
+A&#39;&#39;(\eta)=Var_{p(x|\eta)}[\phi(x)]
+\]</span> 由于方差为正，于是 <span
+class="math inline">\(A(\eta)\)</span> 一定是凸函数。</p>
+<h2 id="充分统计量和极大似然估计">充分统计量和极大似然估计</h2>
+<p>对于独立全同采样得到的数据集 <span
+class="math inline">\(\mathcal{D}=\{x_1,x_2,\cdots,x_N\}\)</span>。 $$
+<span
+class="math display">\[\begin{align}\eta_{MLE}&amp;=\mathop{argmax}_\eta\sum\limits_{i=1}^N\log
+p(x_i|\eta)\nonumber\\
+&amp;=\mathop{argmax}_\eta\sum\limits_{i=1}^N(\eta^T\phi(x_i)-A(\eta))\nonumber\\
+&amp;\Longrightarrow
+A&#39;(\eta_{MLE})=\frac{1}{N}\sum\limits_{i=1}^N\phi(x_i)
+
+\end{align}\]</span> $$
+由此可以看到，为了估算参数，只需要知道充分统计量就可以了。</p>
+<h2 id="最大熵">最大熵</h2>
+<p>信息熵记为： <span class="math display">\[
+Entropy=\int-p(x)\log(p(x))dx
+\]</span></p>
 <blockquote>
-<p>   一般地，对于完全随机的变量（等可能），信息熵最大。</p>
-<p>  我们的假设为最大熵原则，假设数据是离散分布的，$k$ 个特征的概率分别为 $p_k$，最大熵原理可以表述为：<br>  $$<br>  \max{H(p)}&#x3D;\min{\sum\limits_{k&#x3D;1}^Kp_k\log p_k}\ s.t.\ \sum\limits_{k&#x3D;1}^Kp_k&#x3D;1<br>  $$<br>  利用 Lagrange 乘子法：<br>  $$<br>  L(p,\lambda)&#x3D;\sum\limits_{k&#x3D;1}^Kp_k\log p_k+\lambda(1-\sum\limits_{k&#x3D;1}^Kp_k)<br>  $$<br>  于是可得：<br>  $$<br>  p_1&#x3D;p_2&#x3D;\cdots&#x3D;p_K&#x3D;\frac{1}{K}<br>  $$<br>  因此等可能的情况熵最大。</p>
+<p>一般地，对于完全随机的变量（等可能），信息熵最大。</p>
+<p>我们的假设为最大熵原则，假设数据是离散分布的，<span
+class="math inline">\(k\)</span> 个特征的概率分别为 <span
+class="math inline">\(p_k\)</span>，最大熵原理可以表述为： <span
+class="math display">\[
+  \max\{H(p)\}=\min\{\sum\limits_{k=1}^Kp_k\log p_k\}\ s.t.\
+\sum\limits_{k=1}^Kp_k=1
+  \]</span> 利用 Lagrange 乘子法： <span class="math display">\[
+  L(p,\lambda)=\sum\limits_{k=1}^Kp_k\log
+p_k+\lambda(1-\sum\limits_{k=1}^Kp_k)
+  \]</span> 于是可得： <span class="math display">\[
+  p_1=p_2=\cdots=p_K=\frac{1}{K}
+  \]</span> 因此等可能的情况熵最大。</p>
 </blockquote>
-<p>一个数据集 $\mathcal{D}$，在这个数据集上的经验分布为 $\hat{p}(x)&#x3D;\frac{Count(x)}{N}$，实际不可能满足所有的经验概率相同，于是在上面的最大熵原理中还需要加入这个经验分布的约束。</p>
-<p>对任意一个函数，经验分布的经验期望可以求得为：<br>$$<br>\mathbb{E}<em>\hat{p}[f(x)]&#x3D;\Delta<br>$$<br>于是：<br>$$<br>\max{H(p)}&#x3D;\min{\sum\limits</em>{k&#x3D;1}^Np_k\log p_k}\ s.t.\ \sum\limits_{k&#x3D;1}^Np_k&#x3D;1,\mathbb{E}<em>p[f(x)]&#x3D;\Delta<br>$$<br>Lagrange 函数为：<br>$$<br>L(p,\lambda_0,\lambda)&#x3D;\sum\limits</em>{k&#x3D;1}^Np_k\log p_k+\lambda_0(1-\sum\limits_{k&#x3D;1}^Np_k)+\lambda^T(\Delta-\mathbb{E}<em>p[f(x)])<br>$$<br>求导得到：<br>$$<br>\frac{\partial}{\partial p(x)}L&#x3D;\sum\limits</em>{k&#x3D;1}^N(\log p(x)+1)-\sum\limits_{k&#x3D;1}^N\lambda_0-\sum\limits_{k&#x3D;1}^N\lambda^Tf(x)\<br>\Longrightarrow\sum\limits_{k&#x3D;1}^N\log p(x)+1-\lambda_0-\lambda^Tf(x)&#x3D;0<br>$$<br>由于数据集是任意的，对数据集求和也意味着求和项里面的每一项都是0：<br>$$<br>p(x)&#x3D;\exp(\lambda^Tf(x)+\lambda_0-1)<br>$$<br>这就是指数族分布。</p>
+<p>一个数据集 <span
+class="math inline">\(\mathcal{D}\)</span>，在这个数据集上的经验分布为
+<span
+class="math inline">\(\hat{p}(x)=\frac{Count(x)}{N}\)</span>，实际不可能满足所有的经验概率相同，于是在上面的最大熵原理中还需要加入这个经验分布的约束。</p>
+<p>对任意一个函数，经验分布的经验期望可以求得为： <span
+class="math display">\[
+\mathbb{E}_\hat{p}[f(x)]=\Delta
+\]</span> 于是： <span class="math display">\[
+\max\{H(p)\}=\min\{\sum\limits_{k=1}^Np_k\log p_k\}\ s.t.\
+\sum\limits_{k=1}^Np_k=1,\mathbb{E}_p[f(x)]=\Delta
+\]</span> Lagrange 函数为： <span class="math display">\[
+L(p,\lambda_0,\lambda)=\sum\limits_{k=1}^Np_k\log
+p_k+\lambda_0(1-\sum\limits_{k=1}^Np_k)+\lambda^T(\Delta-\mathbb{E}_p[f(x)])
+\]</span> 求导得到： <span class="math display">\[
+\frac{\partial}{\partial p(x)}L=\sum\limits_{k=1}^N(\log
+p(x)+1)-\sum\limits_{k=1}^N\lambda_0-\sum\limits_{k=1}^N\lambda^Tf(x)\\
+\Longrightarrow\sum\limits_{k=1}^N\log p(x)+1-\lambda_0-\lambda^Tf(x)=0
+\]</span>
+由于数据集是任意的，对数据集求和也意味着求和项里面的每一项都是0： <span
+class="math display">\[
+p(x)=\exp(\lambda^Tf(x)+\lambda_0-1)
+\]</span> 这就是指数族分布。</p>
 
               
             </div>

@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="变分推断我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 $\hat{x}$ 这样的新样本，需要得到：$$p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta$$如果新样本和数据集独立">
+    <meta name="description" content="变分推断 我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 \(\hat{x}\) 这样的新样本，需要得到： \[ p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta \] 如果新样本和数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="变分推断">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/10.VI/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="变分推断我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 $\hat{x}$ 这样的新样本，需要得到：$$p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta$$如果新样本和数据集独立">
+<meta property="og:description" content="变分推断 我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 \(\hat{x}\) 这样的新样本，需要得到： \[ p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta \] 如果新样本和数">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.110Z">
 <meta property="article:modified_time" content="2022-06-09T08:01:51.354Z">
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k 字
+          4.2k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          36 分钟
+          35 分钟
         
       </span>
     
@@ -270,26 +270,151 @@
             
             <div class="markdown-body">
               
-              <h1 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h1><p>我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于 $\hat{x}$ 这样的新样本，需要得到：<br>$$<br>p(\hat{x}|X)&#x3D;\int_\theta p(\hat{x},\theta|X)d\theta&#x3D;\int_\theta p(\theta|X)p(\hat{x}|\theta,X)d\theta<br>$$<br>如果新样本和数据集独立，那么推断就是概率分布依参数后验分布的期望。</p>
+              <h1 id="变分推断">变分推断</h1>
+<p>我们已经知道概率模型可以分为，频率派的优化问题和贝叶斯派的积分问题。从贝叶斯角度来看推断，对于
+<span class="math inline">\(\hat{x}\)</span> 这样的新样本，需要得到：
+<span class="math display">\[
+p(\hat{x}|X)=\int_\theta p(\hat{x},\theta|X)d\theta=\int_\theta
+p(\theta|X)p(\hat{x}|\theta,X)d\theta
+\]</span>
+如果新样本和数据集独立，那么推断就是概率分布依参数后验分布的期望。</p>
 <p>我们看到，推断问题的中心是参数后验分布的求解，推断分为：</p>
-<ol>
+<ol type="1">
 <li>精确推断</li>
-<li>近似推断-参数空间无法精确求解<ol>
+<li>近似推断-参数空间无法精确求解
+<ol type="1">
 <li>确定性近似-如变分推断</li>
 <li>随机近似-如 MCMC，MH，Gibbs</li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h2 id="基于平均场假设的变分推断"><a href="#基于平均场假设的变分推断" class="headerlink" title="基于平均场假设的变分推断"></a>基于平均场假设的变分推断</h2><p>我们记 $Z$ 为隐变量和参数的集合，$Z_i$ 为第 $i$ 维的参数，于是，回顾一下 EM 中的推导：<br>$$<br>\log p(X)&#x3D;\log p(X,Z)-\log p(Z|X)&#x3D;\log\frac{p(X,Z)}{q(Z)}-\log\frac{p(Z|X)}{q(Z)}<br>$$<br>左右两边分别积分：<br>$$<br>Left:\int_Zq(Z)\log p(X)dZ&#x3D;\log p(X)\<br>Right:\int_Z[\log \frac{p(X,Z)}{q(Z)}-\log \frac{p(Z|X)}{q(Z)}]q(Z)dZ&#x3D;ELBO+KL(q,p)<br>$$<br>第二个式子可以写为变分和 KL 散度的和：<br>$$<br>L(q)+KL(q,p)<br>$$<br>由于这个式子是常数，于是寻找 $q\simeq p$ 就相当于对 $L(q)$ 最大值。<br>$$<br>\hat{q}(Z)&#x3D;\mathop{argmax}<em>{q(Z)}L(q)<br>$$<br>假设 $q(Z)$ 可以划分为 $M$ 个组（平均场近似）：<br>$$<br>q(Z)&#x3D;\prod\limits</em>{i&#x3D;1}^Mq_i(Z_i)<br>$$<br>因此，在 $L(q)&#x3D;\int_Zq(Z)\log p(X,Z)dZ-\int_Zq(Z)\log{q(Z)}$ 中，看 $p(Z_j)$ ，第一项：<br>$$<br>\begin{align}\int_Zq(Z)\log p(X,Z)dZ&amp;&#x3D;\int_Z\prod\limits_{i&#x3D;1}^Mq_i(Z_i)\log p(X,Z)dZ\nonumber\<br>&amp;&#x3D;\int_{Z_j}q_j(Z_j)\int_{Z-Z_{j}}\prod\limits_{i\ne j}q_i(Z_i)\log p(X,Z)dZ\nonumber\<br>&amp;&#x3D;\int_{Z_j}q_j(Z_j)\mathbb{E}<em>{\prod\limits</em>{i\ne j}q_i(Z_i)}[\log p(X,Z)]dZ_j<br>\end{align}<br>$$</p>
-<p>第二项：<br>$$<br>\int_Zq(Z)\log q(Z)dZ&#x3D;\int_Z\prod\limits_{i&#x3D;1}^Mq_i(Z_i)\sum\limits_{i&#x3D;1}^M\log q_i(Z_i)dZ<br>$$<br>展开求和项第一项为：<br>$$<br>\int_Z\prod\limits_{i&#x3D;1}^Mq_i(Z_i)\log q_1(Z_1)dZ&#x3D;\int_{Z_1}q_1(Z_1)\log q_1(Z_1)dZ_1<br>$$<br>所以：<br>$$<br>\int_Zq(Z)\log q(Z)dZ&#x3D;\sum\limits_{i&#x3D;1}^M\int_{Z_i}q_i(Z_i)\log q_i(Z_i)dZ_i&#x3D;\int_{Z_j}q_j(Z_j)\log q_j(Z_j)dZ_j+Const<br>$$<br>两项相减，令 $\mathbb{E}<em>{\prod\limits</em>{i\ne j}q_i(Z_i)}[\log p(X,Z)]&#x3D;\log \hat{p}(X,Z_j)$ 可以得到：<br>$$<br>-\int_{Z_j}q_j(Z_j)\log\frac{q_j(Z_j)}{\hat{p}(X,Z_j)}dZ_j\le 0<br>$$<br>于是最大的 $q_j(Z_j)&#x3D;\hat{p}(X,Z_j)$ 才能得到最大值。我们看到，对每一个 $q_j$，都是固定其余的 $q_i$，求这个值，于是可以使用坐标上升的方法进行迭代求解，上面的推导针对单个样本，但是对数据集也是适用的。</p>
+<h2 id="基于平均场假设的变分推断">基于平均场假设的变分推断</h2>
+<p>我们记 <span class="math inline">\(Z\)</span>
+为隐变量和参数的集合，<span class="math inline">\(Z_i\)</span> 为第
+<span class="math inline">\(i\)</span> 维的参数，于是，回顾一下 EM
+中的推导： <span class="math display">\[
+\log p(X)=\log p(X,Z)-\log
+p(Z|X)=\log\frac{p(X,Z)}{q(Z)}-\log\frac{p(Z|X)}{q(Z)}
+\]</span> 左右两边分别积分： <span class="math display">\[
+Left:\int_Zq(Z)\log p(X)dZ=\log p(X)\\
+Right:\int_Z[\log \frac{p(X,Z)}{q(Z)}-\log
+\frac{p(Z|X)}{q(Z)}]q(Z)dZ=ELBO+KL(q,p)
+\]</span> 第二个式子可以写为变分和 KL 散度的和： <span
+class="math display">\[
+L(q)+KL(q,p)
+\]</span> 由于这个式子是常数，于是寻找 <span
+class="math inline">\(q\simeq p\)</span> 就相当于对 <span
+class="math inline">\(L(q)\)</span> 最大值。 <span
+class="math display">\[
+\hat{q}(Z)=\mathop{argmax}_{q(Z)}L(q)
+\]</span> 假设 <span class="math inline">\(q(Z)\)</span> 可以划分为
+<span class="math inline">\(M\)</span> 个组（平均场近似）： <span
+class="math display">\[
+q(Z)=\prod\limits_{i=1}^Mq_i(Z_i)
+\]</span> 因此，在 <span class="math inline">\(L(q)=\int_Zq(Z)\log
+p(X,Z)dZ-\int_Zq(Z)\log{q(Z)}\)</span> 中，看 <span
+class="math inline">\(p(Z_j)\)</span> ，第一项： <span
+class="math display">\[
+\begin{align}\int_Zq(Z)\log
+p(X,Z)dZ&amp;=\int_Z\prod\limits_{i=1}^Mq_i(Z_i)\log p(X,Z)dZ\nonumber\\
+&amp;=\int_{Z_j}q_j(Z_j)\int_{Z-Z_{j}}\prod\limits_{i\ne j}q_i(Z_i)\log
+p(X,Z)dZ\nonumber\\
+&amp;=\int_{Z_j}q_j(Z_j)\mathbb{E}_{\prod\limits_{i\ne j}q_i(Z_i)}[\log
+p(X,Z)]dZ_j
+\end{align}
+\]</span></p>
+<p>第二项： <span class="math display">\[
+\int_Zq(Z)\log
+q(Z)dZ=\int_Z\prod\limits_{i=1}^Mq_i(Z_i)\sum\limits_{i=1}^M\log
+q_i(Z_i)dZ
+\]</span> 展开求和项第一项为： <span class="math display">\[
+\int_Z\prod\limits_{i=1}^Mq_i(Z_i)\log q_1(Z_1)dZ=\int_{Z_1}q_1(Z_1)\log
+q_1(Z_1)dZ_1
+\]</span> 所以： <span class="math display">\[
+\int_Zq(Z)\log q(Z)dZ=\sum\limits_{i=1}^M\int_{Z_i}q_i(Z_i)\log
+q_i(Z_i)dZ_i=\int_{Z_j}q_j(Z_j)\log q_j(Z_j)dZ_j+Const
+\]</span> 两项相减，令 <span
+class="math inline">\(\mathbb{E}_{\prod\limits_{i\ne j}q_i(Z_i)}[\log
+p(X,Z)]=\log \hat{p}(X,Z_j)\)</span> 可以得到： <span
+class="math display">\[
+-\int_{Z_j}q_j(Z_j)\log\frac{q_j(Z_j)}{\hat{p}(X,Z_j)}dZ_j\le 0
+\]</span> 于是最大的 <span
+class="math inline">\(q_j(Z_j)=\hat{p}(X,Z_j)\)</span>
+才能得到最大值。我们看到，对每一个 <span
+class="math inline">\(q_j\)</span>，都是固定其余的 <span
+class="math inline">\(q_i\)</span>，求这个值，于是可以使用坐标上升的方法进行迭代求解，上面的推导针对单个样本，但是对数据集也是适用的。</p>
 <p>基于平均场假设的变分推断存在一些问题：</p>
-<ol>
-<li>假设太强，$Z$ 非常复杂的情况下，假设不适用</li>
+<ol type="1">
+<li>假设太强，<span class="math inline">\(Z\)</span>
+非常复杂的情况下，假设不适用</li>
 <li>期望中的积分，可能无法计算</li>
 </ol>
-<h2 id="SGVI"><a href="#SGVI" class="headerlink" title="SGVI"></a>SGVI</h2><p>从 $Z$ 到 $X$ 的过程叫做生成过程或译码，反过来的额过程叫推断过程或编码过程，基于平均场的变分推断可以导出坐标上升的算法，但是这个假设在一些情况下假设太强，同时积分也不一定能算。我们知道，优化方法除了坐标上升，还有梯度上升的方式，我们希望通过梯度上升来得到变分推断的另一种算法。</p>
-<p>我们的目标函数：<br>$$<br>\hat{q}(Z)&#x3D;\mathop{argmax}<em>{q(Z)}L(q)<br>$$<br>假定 $q(Z)&#x3D;q_\phi(Z)$，是和 $\phi$ 这个参数相连的概率分布。于是 $\mathop{argmax}</em>{q(Z)}L(q)&#x3D;\mathop{argmax}<em>{\phi}L(\phi)$，其中 $L(\phi)&#x3D;\mathbb{E}</em>{q_\phi}[\log p_\theta(x^i,z)-\log q_\phi(z)]$，这里 $x^i$ 表示第 $i$ 个样本。<br>$$<br>\begin{align}\nabla_\phi L(\phi)&amp;&#x3D;\nabla_\phi\mathbb{E}<em>{q_\phi}[\log p_\theta(x^i,z)-\log q_\phi(z)]\nonumber\<br>&amp;&#x3D;\nabla_\phi\int q_\phi(z)[\log p_\theta(x^i,z)-\log q_\phi(z)]dz\nonumber\<br>&amp;&#x3D;\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log q_\phi(z)]dz+\int q_\phi(z)\nabla_\phi [\log p_\theta(x^i,z)-\log q_\phi(z)]dz\nonumber\<br>&amp;&#x3D;\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log q_\phi(z)]dz-\int q_\phi(z)\nabla_\phi \log q_\phi(z)dz\nonumber\<br>&amp;&#x3D;\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log q_\phi(z)]dz-\int \nabla_\phi q_\phi(z)dz\nonumber\<br>&amp;&#x3D;\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log q_\phi(z)]dz\nonumber\<br>&amp;&#x3D;\int q_\phi(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log q_\phi(z))dz\nonumber\<br>&amp;&#x3D;\mathbb{E}</em>{q_\phi}[(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log q_\phi(z))]<br>\end{align}<br>$$<br>这个期望可以通过蒙特卡洛采样来近似，从而得到梯度，然后利用梯度上升的方法来得到参数：<br>$$<br>z^l\sim q_\phi(z)\<br>\mathbb{E}<em>{q_\phi}[(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log q_\phi(z))]\sim \frac{1}{L}\sum\limits</em>{l&#x3D;1}^L(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log q_\phi(z))<br>$$<br>但是由于求和符号中存在一个对数项，于是直接采样的方差很大，需要采样的样本非常多。为了解决方差太大的问题，我们采用 Reparameterization 的技巧。</p>
-<p>考虑：<br>$$<br>\nabla_\phi L(\phi)&#x3D;\nabla_\phi\mathbb{E}<em>{q_\phi}[\log p_\theta(x^i,z)-\log q_\phi(z)]<br>$$<br>我们取：$z&#x3D;g_\phi(\varepsilon,x^i),\varepsilon\sim p(\varepsilon)$，于是对后验：$z\sim q_\phi(z|x^i)$，有 $|q_\phi(z|x^i)dz|&#x3D;|p(\varepsilon)d\varepsilon|$。代入上面的梯度中：<br>$$<br>\begin{align}<br>\nabla_\phi L(\phi)&amp;&#x3D;\nabla_\phi\mathbb{E}</em>{q_\phi}[\log p_\theta(x^i,z)-\log q_\phi(z)]\nonumber\<br>&amp;&#x3D;\nabla_\phi L(\phi)&#x3D;\nabla_\phi\int[\log p_\theta(x^i,z)-\log q_\phi(z)]q_\phi dz\nonumber\<br>&amp;&#x3D;\nabla_\phi\int[\log p_\theta(x^i,z)-\log q_\phi(z)]p_\varepsilon d\varepsilon\nonumber\<br>&amp;&#x3D;\mathbb{E}<em>{p(\varepsilon)}[\nabla_\phi[\log p_\theta(x^i,z)-\log q_\phi(z)]]\nonumber\<br>&amp;&#x3D;\mathbb{E}</em>{p(\varepsilon)}[\nabla_z[\log p_\theta(x^i,z)-\log q_\phi(z)]\nabla_\phi z]\nonumber\<br>&amp;&#x3D;\mathbb{E}_{p(\varepsilon)}[\nabla_z[\log p_\theta(x^i,z)-\log q_\phi(z)]\nabla_\phi g_\phi(\varepsilon,x^i)]<br>\end{align}<br>$$<br>对这个式子进行蒙特卡洛采样，然后计算期望，得到梯度。</p>
+<h2 id="sgvi">SGVI</h2>
+<p>从 <span class="math inline">\(Z\)</span> 到 <span
+class="math inline">\(X\)</span>
+的过程叫做生成过程或译码，反过来的额过程叫推断过程或编码过程，基于平均场的变分推断可以导出坐标上升的算法，但是这个假设在一些情况下假设太强，同时积分也不一定能算。我们知道，优化方法除了坐标上升，还有梯度上升的方式，我们希望通过梯度上升来得到变分推断的另一种算法。</p>
+<p>我们的目标函数： <span class="math display">\[
+\hat{q}(Z)=\mathop{argmax}_{q(Z)}L(q)
+\]</span> 假定 <span class="math inline">\(q(Z)=q_\phi(Z)\)</span>，是和
+<span class="math inline">\(\phi\)</span> 这个参数相连的概率分布。于是
+<span
+class="math inline">\(\mathop{argmax}_{q(Z)}L(q)=\mathop{argmax}_{\phi}L(\phi)\)</span>，其中
+<span class="math inline">\(L(\phi)=\mathbb{E}_{q_\phi}[\log
+p_\theta(x^i,z)-\log q_\phi(z)]\)</span>，这里 <span
+class="math inline">\(x^i\)</span> 表示第 <span
+class="math inline">\(i\)</span> 个样本。 <span class="math display">\[
+\begin{align}\nabla_\phi
+L(\phi)&amp;=\nabla_\phi\mathbb{E}_{q_\phi}[\log p_\theta(x^i,z)-\log
+q_\phi(z)]\nonumber\\
+&amp;=\nabla_\phi\int q_\phi(z)[\log p_\theta(x^i,z)-\log
+q_\phi(z)]dz\nonumber\\
+&amp;=\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log
+q_\phi(z)]dz+\int q_\phi(z)\nabla_\phi [\log p_\theta(x^i,z)-\log
+q_\phi(z)]dz\nonumber\\
+&amp;=\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log
+q_\phi(z)]dz-\int q_\phi(z)\nabla_\phi \log q_\phi(z)dz\nonumber\\
+&amp;=\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log
+q_\phi(z)]dz-\int \nabla_\phi q_\phi(z)dz\nonumber\\
+&amp;=\int\nabla_\phi q_\phi(z)[\log p_\theta(x^i,z)-\log
+q_\phi(z)]dz\nonumber\\
+&amp;=\int q_\phi(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log
+q_\phi(z))dz\nonumber\\
+&amp;=\mathbb{E}_{q_\phi}[(\nabla_\phi\log q_\phi)(\log
+p_\theta(x^i,z)-\log q_\phi(z))]
+\end{align}
+\]</span>
+这个期望可以通过蒙特卡洛采样来近似，从而得到梯度，然后利用梯度上升的方法来得到参数：
+<span class="math display">\[
+z^l\sim q_\phi(z)\\
+\mathbb{E}_{q_\phi}[(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log
+q_\phi(z))]\sim \frac{1}{L}\sum\limits_{l=1}^L(\nabla_\phi\log
+q_\phi)(\log p_\theta(x^i,z)-\log q_\phi(z))
+\]</span>
+但是由于求和符号中存在一个对数项，于是直接采样的方差很大，需要采样的样本非常多。为了解决方差太大的问题，我们采用
+Reparameterization 的技巧。</p>
+<p>考虑： <span class="math display">\[
+\nabla_\phi L(\phi)=\nabla_\phi\mathbb{E}_{q_\phi}[\log
+p_\theta(x^i,z)-\log q_\phi(z)]
+\]</span> 我们取：<span
+class="math inline">\(z=g_\phi(\varepsilon,x^i),\varepsilon\sim
+p(\varepsilon)\)</span>，于是对后验：<span class="math inline">\(z\sim
+q_\phi(z|x^i)\)</span>，有 <span
+class="math inline">\(|q_\phi(z|x^i)dz|=|p(\varepsilon)d\varepsilon|\)</span>。代入上面的梯度中：
+<span class="math display">\[
+\begin{align}
+\nabla_\phi L(\phi)&amp;=\nabla_\phi\mathbb{E}_{q_\phi}[\log
+p_\theta(x^i,z)-\log q_\phi(z)]\nonumber\\
+&amp;=\nabla_\phi L(\phi)=\nabla_\phi\int[\log p_\theta(x^i,z)-\log
+q_\phi(z)]q_\phi dz\nonumber\\
+&amp;=\nabla_\phi\int[\log p_\theta(x^i,z)-\log q_\phi(z)]p_\varepsilon
+d\varepsilon\nonumber\\
+&amp;=\mathbb{E}_{p(\varepsilon)}[\nabla_\phi[\log p_\theta(x^i,z)-\log
+q_\phi(z)]]\nonumber\\
+&amp;=\mathbb{E}_{p(\varepsilon)}[\nabla_z[\log p_\theta(x^i,z)-\log
+q_\phi(z)]\nabla_\phi z]\nonumber\\
+&amp;=\mathbb{E}_{p(\varepsilon)}[\nabla_z[\log p_\theta(x^i,z)-\log
+q_\phi(z)]\nabla_\phi g_\phi(\varepsilon,x^i)]
+\end{align}
+\]</span> 对这个式子进行蒙特卡洛采样，然后计算期望，得到梯度。</p>
 
               
             </div>

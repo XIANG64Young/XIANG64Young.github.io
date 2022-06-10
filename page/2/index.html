@@ -229,7 +229,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/7.PGMIntro/" target="_self">
         <div>
-          概率图模型概率图模型使用图的方式表示概率分布。为了在图中添加各种概率，首先总结一下随机变量分布的一些规则：$$\begin{align}&amp;Sum\ Rule:p(x_1)&#x3D;\int p(x_1,x_2)dx_2\&amp;Product\ Rule:p(x_1,x_2)&#x3D;p(x_1|x_2)p(x_2)\&amp;Chain\ Rule:p(x_1,x_2,\cdots
+          概率图模型 概率图模型使用图的方式表示概率分布。为了在图中添加各种概率，首先总结一下随机变量分布的一些规则： \[ \begin{align} &amp;Sum\ Rule:p(x_1)&#x3D;\int p(x_1,x_2)dx_2\\ &amp;Product\ Rule:p(x_1,x_2)&#x3D;p(x_1|x_2)p(x_2)\\ &amp;Chain\ Rule:p(x_1,x_2,\
         </div>
       </a>
 
@@ -290,7 +290,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/6.Exponentialfamily/" target="_self">
         <div>
-          指数族分布指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式：$$p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))$$其中，$\eta$
+          指数族分布 指数族是一类分布，包括高斯分布、伯努利分布、二项分布、泊松分布、Beta 分布、Dirichlet 分布、Gamma 分布等一系列分布。指数族分布可以写为统一的形式： \[ p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x)) \] 其中，\(\eta\
         </div>
       </a>
 
@@ -351,7 +351,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/4.DimentionReduction/" target="_self">
         <div>
-          降维我们知道，解决过拟合的问题除了正则化和添加数据之外，降维就是最好的方法。降维的思路来源于维度灾难的问题，我们知道 $n$ 维球的体积为：$$CR^n$$那么在球体积与边长为 $2R$ 的超立方体比值为：$$\lim\limits_{n\rightarrow0}\frac{CR^n}{2^nR^n}&#x3D;0$$ 这就是所谓的维度灾难，在高维数据中，主要样本都分布在立方体的边缘，所以数据集更
+          降维 我们知道，解决过拟合的问题除了正则化和添加数据之外，降维就是最好的方法。降维的思路来源于维度灾难的问题，我们知道 \(n\) 维球的体积为： \[ CR^n \] 那么在球体积与边长为 \(2R\) 的超立方体比值为： \[ \lim\limits_{n\rightarrow0}\frac{CR^n}{2^nR^n}&#x3D;0 \] 这就是所谓的维度灾难，在高维数据中，主要样本都分
         </div>
       </a>
 
@@ -412,7 +412,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/23.ApproInference/" target="_self">
         <div>
-          近似推断这一讲中的近似推断具体描述在深度生成模型中的近似推断。推断的目的有下面几个部分：  推断本身，根据结果（观测）得到原因（隐变量）。 为参数的学习提供帮助。  但是推断本身是一个困难的额任务，计算复杂度往往很高，对于无向图，由于节点之间的联系过多，那么因子分解很难进行，并且相互之间都有耦合，于是很难求解，仅仅在某些情况如 RBM 中可解，在有向图中，常常由于条件独立性问题，如两个节点之间条件
+          近似推断 这一讲中的近似推断具体描述在深度生成模型中的近似推断。推断的目的有下面几个部分：  推断本身，根据结果（观测）得到原因（隐变量）。 为参数的学习提供帮助。  但是推断本身是一个困难的额任务，计算复杂度往往很高，对于无向图，由于节点之间的联系过多，那么因子分解很难进行，并且相互之间都有耦合，于是很难求解，仅仅在某些情况如 RBM 中可解，在有向图中，常常由于条件独立性问题，
         </div>
       </a>
 
@@ -473,7 +473,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/22.PartitionFunction/" target="_self">
         <div>
-          配分函数在学习和推断中，对于一个概率的归一化因子很难处理，这个归一化因子和配分函数相关。假设一个概率分布：$$p(x|\theta)&#x3D;\frac{1}{Z(\theta)}\hat{p}(x|\theta),Z(\theta)&#x3D;\int\hat{p}(x|\theta)dx$$ 包含配分函数的 MLE在学习任务中，采用最大似然：$$\begin{align}\hat{\thet
+          配分函数 在学习和推断中，对于一个概率的归一化因子很难处理，这个归一化因子和配分函数相关。假设一个概率分布： \[ p(x|\theta)&#x3D;\frac{1}{Z(\theta)}\hat{p}(x|\theta),Z(\theta)&#x3D;\int\hat{p}(x|\theta)dx \] 包含配分函数的 MLE 在学习任务中，采用最大似然： \[ \begin{align} \hat
         </div>
       </a>
 
@@ -534,7 +534,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/21.NN/" target="_self">
         <div>
-          前馈神经网络机器学习我们已经知道可以分为两大流派：  频率派，这个流派的方法叫做统计学习，根据具体问题有下面的算法：  正则化，L1，L2 等  核化，如核支撑向量机  集成化，AdaBoost，RandomForest  层次化，神经网络，神经网络有各种不同的模型，有代表性的有：  多层感知机 Autoencoder CNN RNN  这几种模型又叫做深度神经网络。    贝叶斯派，这个流派的方
+          前馈神经网络 机器学习我们已经知道可以分为两大流派：  频率派，这个流派的方法叫做统计学习，根据具体问题有下面的算法：  正则化，L1，L2 等 核化，如核支撑向量机 集成化，AdaBoost，RandomForest 层次化，神经网络，神经网络有各种不同的模型，有代表性的有：  多层感知机 Autoencoder CNN RNN  这几种模型又叫做深度神经网络。
         </div>
       </a>
 
@@ -595,7 +595,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/20.Spectral/" target="_self">
         <div>
-          谱聚类聚类问题可以分为两种思路：  Compactness，这类有 K-means，GMM 等，但是这类算法只能处理凸集，为了处理非凸的样本集，必须引入核技巧。 Connectivity，这类以谱聚类为代表。  谱聚类是一种基于无向带权图的聚类方法。这个图用 $G&#x3D;(V,E)$ 表示，其中 $V&#x3D;{1,2,\cdots,N}$，$E&#x3D;{w_{ij}}$，这里 $w_{
+          谱聚类 聚类问题可以分为两种思路：  Compactness，这类有 K-means，GMM 等，但是这类算法只能处理凸集，为了处理非凸的样本集，必须引入核技巧。 Connectivity，这类以谱聚类为代表。  谱聚类是一种基于无向带权图的聚类方法。这个图用 \(G&#x3D;(V,E)\) 表示，其中 \(V&#x3D;\{1,2,\cdots,N\}\)，\(E&#x3D;\{w_{ij}\}\)，这里 \
         </div>
       </a>
 
@@ -656,7 +656,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/19.RBM/" target="_self">
         <div>
-          受限玻尔兹曼机玻尔兹曼机是一种存在隐节点的无向图模型。在图模型中最简单的是朴素贝叶斯模型（朴素贝叶斯假设），引入单个隐变量后，发展出了 GMM，如果单个隐变量变成序列的隐变量，就得到了状态空间模型（引入齐次马尔可夫假设和观测独立假设就有HMM，Kalman Filter，Particle Filter），为了引入观测变量之间的关联，引入了一种最大熵模型-MEMM，为了克服 MEMM 中的局域问题，
+          受限玻尔兹曼机 玻尔兹曼机是一种存在隐节点的无向图模型。在图模型中最简单的是朴素贝叶斯模型（朴素贝叶斯假设），引入单个隐变量后，发展出了 GMM，如果单个隐变量变成序列的隐变量，就得到了状态空间模型（引入齐次马尔可夫假设和观测独立假设就有HMM，Kalman Filter，Particle Filter），为了引入观测变量之间的关联，引入了一种最大熵模型-MEMM，为了克服 MEMM 中
         </div>
       </a>
 
@@ -717,7 +717,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/18.GaussianProcess/" target="_self">
         <div>
-          高斯过程回归将一维高斯分布推广到多变量中就得到了高斯网络，将多变量推广到无限维，就得到了高斯过程，高斯过程是定义在连续域（时间空间）上的无限多个高维随机变量所组成的随机过程。 在时间轴上的任意一个点都满足高斯分布吗，将这些点的集合叫做高斯过程的一个样本。    对于时间轴上的序列 $\xi_t$，如果 $\forall n\in N^+，t_i\in T$，有 $\xi_{t_1-t_n}\sim
+          高斯过程回归 将一维高斯分布推广到多变量中就得到了高斯网络，将多变量推广到无限维，就得到了高斯过程，高斯过程是定义在连续域（时间空间）上的无限多个高维随机变量所组成的随机过程。 在时间轴上的任意一个点都满足高斯分布吗，将这些点的集合叫做高斯过程的一个样本。  对于时间轴上的序列 \(\xi_t\)，如果 \(\forall n\in N^+，t_i\in T\)，有 \(\xi_{t_
         </div>
       </a>
 
@@ -778,7 +778,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/17.BayesianLR/" target="_self">
         <div>
-          贝叶斯线性回归 我们知道，线性回归当噪声为高斯分布的时候，最小二乘损失导出的结果相当于对概率模型应用 MLE，引入参数的先验时，先验分布是高斯分布，那么 MAP的结果相当于岭回归的正则化，如果先验是拉普拉斯分布，那么相当于 Lasso 的正则化。这两种方案都是点估计方法。我们希望利用贝叶斯方法来求解参数的后验分布。 线性回归的模型假设为：$$\begin{align}f(x)&#x3D;w^Tx\
+          贝叶斯线性回归 我们知道，线性回归当噪声为高斯分布的时候，最小二乘损失导出的结果相当于对概率模型应用 MLE，引入参数的先验时，先验分布是高斯分布，那么 MAP的结果相当于岭回归的正则化，如果先验是拉普拉斯分布，那么相当于 Lasso 的正则化。这两种方案都是点估计方法。我们希望利用贝叶斯方法来求解参数的后验分布。 线性回归的模型假设为： \[ \begin{align}f(x)&#x3D;w^
         </div>
       </a>
 

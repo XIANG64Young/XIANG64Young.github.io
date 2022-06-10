@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Perceptron Linear Algorithm 感知机Definition假设输入空间（特征空间）是$\mathcal{X} \subset \mathbb{R}^n$，输出空间是$\mathcal{Y}&#x3D;{-1,+1}$。输入$x\in \mathcal{X}$表示实例的特征向量，对应于输入空间（特征空间）的点；输出$y\in \mathcal{Y}$表示类别。由输入空间到输出">
+    <meta name="description" content="Perceptron Linear Algorithm 感知机 Definition 假设输入空间（特征空间）是\(\mathcal{X} \subset \mathbb{R}^n\)，输出空间是\(\mathcal{Y}&#x3D;\{-1,+1\}\)。输入\(x\in \mathcal{X}\)表示实例的特征向量，对应于输入空间（特征空间）的点；输出\(y\in \mathcal{Y}\)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="感知机">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Perceptron/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="Perceptron Linear Algorithm 感知机Definition假设输入空间（特征空间）是$\mathcal{X} \subset \mathbb{R}^n$，输出空间是$\mathcal{Y}&#x3D;{-1,+1}$。输入$x\in \mathcal{X}$表示实例的特征向量，对应于输入空间（特征空间）的点；输出$y\in \mathcal{Y}$表示类别。由输入空间到输出">
+<meta property="og:description" content="Perceptron Linear Algorithm 感知机 Definition 假设输入空间（特征空间）是\(\mathcal{X} \subset \mathbb{R}^n\)，输出空间是\(\mathcal{Y}&#x3D;\{-1,+1\}\)。输入\(x\in \mathcal{X}\)表示实例的特征向量，对应于输入空间（特征空间）的点；输出\(y\in \mathcal{Y}\)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.149Z">
 <meta property="article:modified_time" content="2022-06-09T08:01:11.140Z">
@@ -270,25 +270,80 @@
             
             <div class="markdown-body">
               
-              <h1 id="Perceptron-Linear-Algorithm-感知机"><a href="#Perceptron-Linear-Algorithm-感知机" class="headerlink" title="Perceptron Linear Algorithm 感知机"></a>Perceptron Linear Algorithm 感知机</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>假设输入空间（特征空间）是$\mathcal{X} \subset \mathbb{R}^n$，输出空间是$\mathcal{Y}&#x3D;{-1,+1}$。输入$x\in \mathcal{X}$表示实例的特征向量，对应于输入空间（特征空间）的点；输出$y\in \mathcal{Y}$表示类别。由输入空间到输出空间的如下函数：<br>$$<br>f(x)&#x3D;sign(w \cdot x+b)<br>$$<br>成为感知机。其中，$w,b$成为感知机模型的参数,$w \in \mathbb{R}^n$叫做权值（weight）或权值向量（weight vector），$b \in \mathbb{R}$叫做偏置（bias），$w \cdot x$表示两者的内积。$sign$是符号函数，即<br>$$<br>sign(a)&#x3D;\left{\begin{matrix}+1,a\ge0\-1,a\lt0\end{matrix}\right.<br>$$</p>
-<p>感知机是一种线性分类器，属于判别模型。感知机模型的假设空间是定义在特征空间中的所有线性分类模型（linear classification model）或线性分类器（linear classifier），即函数模型${f,|,f(x)&#x3D;w \cdot x +b }$</p>
-<h2 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h2><ol>
-<li><p>统计误分类点：<br>$$<br>l(w)&#x3D;\sum_{i&#x3D;1}^N \ \mathbb{I}(y_i \cdot (w^Tx +b ) &lt; 0)<br>$$<br>但是指示函数不连续，在计算过程中不太友好</p>
-</li>
-<li><p>统计误分类点到分来超平面的距离：<br>$$<br>\begin{align}l(w) &amp;&#x3D;|w^Tx +b |\ &amp;&#x3D;\sum_{i&#x3D;1}^N - ,y_i \cdot (w^Tx +b )\end{align}<br>$$</p>
-</li>
+              <h1 id="perceptron-linear-algorithm-感知机">Perceptron Linear Algorithm
+感知机</h1>
+<h2 id="definition">Definition</h2>
+<p>假设输入空间（特征空间）是<span class="math inline">\(\mathcal{X}
+\subset \mathbb{R}^n\)</span>，输出空间是<span
+class="math inline">\(\mathcal{Y}=\{-1,+1\}\)</span>。输入<span
+class="math inline">\(x\in
+\mathcal{X}\)</span>表示实例的特征向量，对应于输入空间（特征空间）的点；输出<span
+class="math inline">\(y\in
+\mathcal{Y}\)</span>表示类别。由输入空间到输出空间的如下函数： <span
+class="math display">\[
+f(x)=sign(w \cdot x+b)
+\]</span> 成为感知机。其中，<span
+class="math inline">\(w,b\)</span>成为感知机模型的参数,<span
+class="math inline">\(w \in
+\mathbb{R}^n\)</span>叫做权值（weight）或权值向量（weight
+vector），<span class="math inline">\(b \in
+\mathbb{R}\)</span>叫做偏置（bias），<span class="math inline">\(w \cdot
+x\)</span>表示两者的内积。<span
+class="math inline">\(sign\)</span>是符号函数，即 <span
+class="math display">\[
+sign(a)=\left\{\begin{matrix}+1,a\ge0\\-1,a\lt0\end{matrix}\right.
+\]</span></p>
+<p>感知机是一种线性分类器，属于判别模型。感知机模型的假设空间是定义在特征空间中的所有线性分类模型（linear
+classification model）或线性分类器（linear classifier），即函数模型<span
+class="math inline">\(\{f\,|\,f(x)=w \cdot x +b \}\)</span></p>
+<h2 id="loss-function">Loss Function</h2>
+<ol type="1">
+<li><p>统计误分类点： <span class="math display">\[
+l(w)=\sum_{i=1}^N \ \mathbb{I}(y_i \cdot (w^Tx +b ) &lt; 0)
+\]</span> 但是指示函数不连续，在计算过程中不太友好</p></li>
+<li><p>统计误分类点到分来超平面的距离： <span class="math display">\[
+\begin{align}l(w) &amp;=|w^Tx +b |\\ &amp;=\sum_{i=1}^N - \,y_i \cdot
+(w^Tx +b )\end{align}
+\]</span></p></li>
 </ol>
-<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>为了找到更好的$w,b$。使用随机梯度下降SGD, 但是容易受特征缩放、学习率因素影响陷入局部最小值。<br>$$<br>w_{n+1} \leftarrow w_n +\eta \frac{\partial l}{\partial w}\<br>b_{n+1} \leftarrow b_n +\eta \frac{\partial l}{\partial b}<br>$$<br>对该算法的超参数：学习率$\eta$，误差上限$\varepsilon$，学习次数$epoch$</p>
-<h2 id="收敛性："><a href="#收敛性：" class="headerlink" title="收敛性："></a>收敛性：</h2><p>设训练数据集$T&#x3D;{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)}$是线性可分的，其中$x_i\in \mathcal{X}&#x3D;\mathbb{R}^n,\ y_i\in\mathcal{Y}&#x3D;{+1,-1},\ i&#x3D;1,2,\cdots,N$则:</p>
+<h2 id="algorithm">Algorithm</h2>
+<p>为了找到更好的<span
+class="math inline">\(w,b\)</span>。使用随机梯度下降SGD,
+但是容易受特征缩放、学习率因素影响陷入局部最小值。 <span
+class="math display">\[
+w_{n+1} \leftarrow w_n +\eta \frac{\partial l}{\partial w}\\
+b_{n+1} \leftarrow b_n +\eta \frac{\partial l}{\partial b}
+\]</span> 对该算法的超参数：学习率<span
+class="math inline">\(\eta\)</span>，误差上限<span
+class="math inline">\(\varepsilon\)</span>，学习次数<span
+class="math inline">\(epoch\)</span></p>
+<h2 id="收敛性">收敛性：</h2>
+<p>设训练数据集<span
+class="math inline">\(T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}\)</span>是线性可分的，其中<span
+class="math inline">\(x_i\in \mathcal{X}=\mathbb{R}^n,\
+y_i\in\mathcal{Y}=\{+1,-1\},\ i=1,2,\cdots,N\)</span>则:</p>
 <ul>
-<li>存在满足条件$||\hat{w}<em>{opt}||&#x3D;1$的超平面$\hat{w}</em>{opt} \cdot \hat{x}&#x3D;w_{opt}\cdot x +b_{opt}&#x3D;0$将训练数据集完全正确分开；且存在$\gamma&gt;0$,对所有$i&#x3D;1,2,\cdots,N$:</li>
+<li>存在满足条件<span
+class="math inline">\(||\hat{w}_{opt}||=1\)</span>的超平面<span
+class="math inline">\(\hat{w}_{opt} \cdot \hat{x}=w_{opt}\cdot x
++b_{opt}=0\)</span>将训练数据集完全正确分开；且存在<span
+class="math inline">\(\gamma&gt;0\)</span>,对所有<span
+class="math inline">\(i=1,2,\cdots,N\)</span>:</li>
 </ul>
-<p>$$<br>y_i (\hat{w}<em>{opt} \cdot \hat{x})&#x3D;y_i(w</em>{opt}\cdot x +b_{opt})\geq \gamma<br>$$</p>
+<p><span class="math display">\[
+y_i (\hat{w}_{opt} \cdot \hat{x})=y_i(w_{opt}\cdot x +b_{opt})\geq
+\gamma
+\]</span></p>
 <ul>
-<li>令$R&#x3D;max_{i \leq i \leq N} ||\hat{x}_i||$,则感知机算法在训练数据集上的误分类次数$k$满足不等式:</li>
+<li>令<span class="math inline">\(R=max_{i \leq i \leq N}
+||\hat{x}_i||\)</span>,则感知机算法在训练数据集上的误分类次数<span
+class="math inline">\(k\)</span>满足不等式:</li>
 </ul>
-<p>$$<br>k \leq (\frac{R}{\gamma})^2<br>$$</p>
-<h2 id="Disadvantage"><a href="#Disadvantage" class="headerlink" title="Disadvantage"></a><strong>Disadvantage</strong></h2><ol>
+<p><span class="math display">\[
+k \leq (\frac{R}{\gamma})^2
+\]</span></p>
+<h2 id="disadvantage"><strong>Disadvantage</strong></h2>
+<ol type="1">
 <li>存在多解</li>
 <li>依赖初值，也依赖选择顺序</li>
 <li>当数据集线性不可分就会产生迭代震荡。</li>

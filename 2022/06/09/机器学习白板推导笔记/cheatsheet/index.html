@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="总结Math MLE$$\theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{iid}\mathop{argmax}\limits _{\theta}\sum\limits {i&#x3D;1}^{N}\log p(x{i}|\theta)$$  MAP$$\theta_">
+    <meta name="description" content="总结 Math  MLE \[ \theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{iid}\mathop{argmax}\limits _{\theta}\sum\limits _{i&#x3D;1}^{N}\log p(x_{i}|\theta) \] MAP \[ \thet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="总结">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/cheatsheet/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="总结Math MLE$$\theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{iid}\mathop{argmax}\limits _{\theta}\sum\limits {i&#x3D;1}^{N}\log p(x{i}|\theta)$$  MAP$$\theta_">
+<meta property="og:description" content="总结 Math  MLE \[ \theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{iid}\mathop{argmax}\limits _{\theta}\sum\limits _{i&#x3D;1}^{N}\log p(x_{i}|\theta) \] MAP \[ \thet">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.141Z">
 <meta property="article:modified_time" content="2022-06-09T07:58:58.015Z">
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          11k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          99 分钟
+          92 分钟
         
       </span>
     
@@ -270,285 +270,510 @@
             
             <div class="markdown-body">
               
-              <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h2><ol>
-<li><p>MLE<br>$$<br>\theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{iid}\mathop{argmax}\limits _{\theta}\sum\limits <em>{i&#x3D;1}^{N}\log p(x</em>{i}|\theta)<br>$$</p>
-</li>
-<li><p>MAP<br>$$<br>\theta_{MAP}&#x3D;\mathop{argmax}\limits _{\theta} \  p(\theta|X)&#x3D;\mathop{argmax}\limits _{\theta}\  p(X|\theta)\cdot p(\theta)<br>$$</p>
-</li>
-<li><p>Gaussian Distribution<br>$$<br>\begin{align}&amp;p(x|\mu,\Sigma)&#x3D;\frac{1}{(2\pi)^{p&#x2F;2}|\Sigma|^{1&#x2F;2}}e^{-\frac{1}{2}(x-\mu)^{T}\Sigma^{-1}(x-\mu)}\<br>&amp;\Delta&#x3D;(x-\mu)^{T}\Sigma^{-1}(x-\mu)&#x3D;\sum\limits <em>{i&#x3D;1}^{p}(x-\mu)^{T}u</em>{i}\frac{1}{\lambda_{i}}u_{i}^{T}(x-\mu)&#x3D;\sum\limits <em>{i&#x3D;1}^{p}\frac{y</em>{i}^{2}}{\lambda_{i}}<br>\end{align}<br>$$</p>
-</li>
-<li><p>已知 $x\sim\mathcal{N}(\mu,\Sigma), y\sim Ax+b$，有：<br>$$<br>\begin{align}y\sim\mathcal{N}(A\mu+b, A\Sigma A^T)<br>\end{align}<br>$$</p>
-</li>
-<li><p>记 $x&#x3D;(x_1, x_2,\cdots,x_p)^T&#x3D;(x_{a,m\times 1}, x_{b,n\times1})^T,\mu&#x3D;(\mu_{a,m\times1}, \mu_{b,n\times1}),\Sigma&#x3D;\begin{pmatrix}\Sigma_{aa}&amp;\Sigma_{ab}\\Sigma_{ba}&amp;\Sigma_{bb}\end{pmatrix}$，已知 $x\sim\mathcal{N}(\mu,\Sigma)$，则：<br>$$<br>\begin{align}&amp;x_a\sim\mathcal{N}(\mu_a,\Sigma_{aa})\<br>&amp;x_b|x_a\sim\mathcal{N}(\mu_{b|a},\Sigma_{b|a})\<br>&amp;\mu_{b|a}&#x3D;\Sigma_{ba}\Sigma_{aa}^{-1}(x_a-\mu_a)+\mu_b\<br>&amp;\Sigma_{b|a}&#x3D;\Sigma_{bb}-\Sigma_{ba}\Sigma_{aa}^{-1}\Sigma_{ab}<br>\end{align}<br>$$</p>
-</li>
+              <h1 id="总结">总结</h1>
+<h2 id="math">Math</h2>
+<ol type="1">
+<li><p>MLE <span class="math display">\[
+\theta_{MLE}=\mathop{argmax}\limits _{\theta}\log
+p(X|\theta)\mathop{=}\limits _{iid}\mathop{argmax}\limits
+_{\theta}\sum\limits _{i=1}^{N}\log p(x_{i}|\theta)
+\]</span></p></li>
+<li><p>MAP <span class="math display">\[
+\theta_{MAP}=\mathop{argmax}\limits _{\theta}
+\  p(\theta|X)=\mathop{argmax}\limits _{\theta}\  p(X|\theta)\cdot
+p(\theta)
+\]</span></p></li>
+<li><p>Gaussian Distribution <span class="math display">\[
+\begin{align}&amp;p(x|\mu,\Sigma)=\frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}}e^{-\frac{1}{2}(x-\mu)^{T}\Sigma^{-1}(x-\mu)}\\
+&amp;\Delta=(x-\mu)^{T}\Sigma^{-1}(x-\mu)=\sum\limits
+_{i=1}^{p}(x-\mu)^{T}u_{i}\frac{1}{\lambda_{i}}u_{i}^{T}(x-\mu)=\sum\limits
+_{i=1}^{p}\frac{y_{i}^{2}}{\lambda_{i}}
+\end{align}
+\]</span></p></li>
+<li><p>已知 <span class="math inline">\(x\sim\mathcal{N}(\mu,\Sigma),
+y\sim Ax+b\)</span>，有： <span class="math display">\[
+\begin{align}y\sim\mathcal{N}(A\mu+b, A\Sigma A^T)
+\end{align}
+\]</span></p></li>
+<li><p>记 <span class="math inline">\(x=(x_1,
+x_2,\cdots,x_p)^T=(x_{a,m\times 1},
+x_{b,n\times1})^T,\mu=(\mu_{a,m\times1},
+\mu_{b,n\times1}),\Sigma=\begin{pmatrix}\Sigma_{aa}&amp;\Sigma_{ab}\\\Sigma_{ba}&amp;\Sigma_{bb}\end{pmatrix}\)</span>，已知
+<span class="math inline">\(x\sim\mathcal{N}(\mu,\Sigma)\)</span>，则：
+<span class="math display">\[
+\begin{align}&amp;x_a\sim\mathcal{N}(\mu_a,\Sigma_{aa})\\
+&amp;x_b|x_a\sim\mathcal{N}(\mu_{b|a},\Sigma_{b|a})\\
+&amp;\mu_{b|a}=\Sigma_{ba}\Sigma_{aa}^{-1}(x_a-\mu_a)+\mu_b\\
+&amp;\Sigma_{b|a}=\Sigma_{bb}-\Sigma_{ba}\Sigma_{aa}^{-1}\Sigma_{ab}
+\end{align}
+\]</span></p></li>
 </ol>
-<h2 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a>Linear Regression</h2><h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><ol>
-<li><p>Dataset:<br>$$<br>\mathcal{D}&#x3D;{(x_1, y_1),(x_2, y_2),\cdots,(x_N, y_N)}<br>$$</p>
-</li>
-<li><p>Notation:<br>$$<br>X&#x3D;(x_1,x_2,\cdots,x_N)^T,Y&#x3D;(y_1,y_2,\cdots,y_N)^T<br>$$</p>
-</li>
-<li><p>Model:<br>$$<br>f(w)&#x3D;w^Tx<br>$$</p>
-</li>
+<h2 id="linear-regression">Linear Regression</h2>
+<h3 id="model">Model</h3>
+<ol type="1">
+<li><p>Dataset: <span class="math display">\[
+\mathcal{D}=\{(x_1, y_1),(x_2, y_2),\cdots,(x_N, y_N)\}
+\]</span></p></li>
+<li><p>Notation: <span class="math display">\[
+X=(x_1,x_2,\cdots,x_N)^T,Y=(y_1,y_2,\cdots,y_N)^T
+\]</span></p></li>
+<li><p>Model: <span class="math display">\[
+f(w)=w^Tx
+\]</span></p></li>
 </ol>
-<h3 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h3><ol>
-<li>最小二乘误差&#x2F;高斯噪声的MLE<br>$$<br>L(w)&#x3D;\sum\limits_{i&#x3D;1}^N||w^Tx_i-y_i||^2_2<br>$$</li>
+<h3 id="loss-function">Loss Function</h3>
+<ol type="1">
+<li>最小二乘误差/高斯噪声的MLE <span class="math display">\[
+L(w)=\sum\limits_{i=1}^N||w^Tx_i-y_i||^2_2
+\]</span></li>
 </ol>
-<h3 id="闭式解"><a href="#闭式解" class="headerlink" title="闭式解"></a>闭式解</h3><p>$$<br>\begin{align}\hat{w}&#x3D;(X^TX)^{-1}X^TY&#x3D;X^+Y\<br>X&#x3D;U\Sigma V^T\<br>X^+&#x3D;V\Sigma^{-1}U^T<br>\end{align}<br>$$</p>
-<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>$$<br>\begin{align}<br>L1-Gaussian \ priori&amp;:\mathop{argmin}\limits_wL(w)+\lambda||w||_1,\lambda\gt0\<br>L2-Laplasian\ priori-Sparsity&amp;:\mathop{argmin}\limits_wL(w)+\lambda||w||^2_2,\lambda \gt 0<br>\end{align}<br>$$</p>
-<h2 id="Linear-Classification"><a href="#Linear-Classification" class="headerlink" title="Linear Classification"></a>Linear Classification</h2><h3 id="Hard"><a href="#Hard" class="headerlink" title="Hard"></a>Hard</h3><h4 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h4><ol>
-<li><p>Idea: 在线性模型上加入激活函数</p>
-</li>
-<li><p>Loss Function:</p>
-</li>
+<h3 id="闭式解">闭式解</h3>
+<p><span class="math display">\[
+\begin{align}\hat{w}=(X^TX)^{-1}X^TY=X^+Y\\
+X=U\Sigma V^T\\
+X^+=V\Sigma^{-1}U^T
+\end{align}
+\]</span></p>
+<h3 id="正则化">正则化</h3>
+<p><span class="math display">\[
+\begin{align}
+L1-Gaussian \
+priori&amp;:\mathop{argmin}\limits_wL(w)+\lambda||w||_1,\lambda\gt0\\
+L2-Laplasian\
+priori-Sparsity&amp;:\mathop{argmin}\limits_wL(w)+\lambda||w||^2_2,\lambda
+\gt 0
+\end{align}
+\]</span></p>
+<h2 id="linear-classification">Linear Classification</h2>
+<h3 id="hard">Hard</h3>
+<h4 id="pca">PCA</h4>
+<ol type="1">
+<li><p>Idea: 在线性模型上加入激活函数</p></li>
+<li><p>Loss Function:</p></li>
 </ol>
-<p>$$<br>L(w)&#x3D;\sum\limits_{x_i\in\mathcal{D}_{wrong}}-y_iw^Tx_i<br>$$</p>
-<ol start="3">
+<p><span class="math display">\[
+L(w)=\sum\limits_{x_i\in\mathcal{D}_{wrong}}-y_iw^Tx_i
+\]</span></p>
+<ol start="3" type="1">
 <li>Parameters:</li>
 </ol>
-<p>$$<br>w^{t+1}\leftarrow w^{t}+\lambda y_ix_i<br>$$</p>
-<h4 id="Fisher"><a href="#Fisher" class="headerlink" title="Fisher"></a>Fisher</h4><ol>
-<li><p>Idea: 投影，类内小，类间大。</p>
-</li>
-<li><p>Loss Function:<br>$$<br>\begin{align}&amp;J(w)&#x3D;\frac{w^TS_bw}{w^TS_ww}\<br>&amp;S_b&#x3D;(\overline{x_{c1}}-\overline{x_{c2}})(\overline{x_{c1}}-\overline{x_{c2}})^T\<br>&amp;S_w&#x3D;S_1+S_2<br>\end{align}<br>$$</p>
-</li>
-<li><p>闭式解，投影方向:<br>$$<br>S_w^{-1}(\overline{x_{c1}}-\overline{x_{c2}})<br>$$</p>
-</li>
+<p><span class="math display">\[
+w^{t+1}\leftarrow w^{t}+\lambda y_ix_i
+\]</span></p>
+<h4 id="fisher">Fisher</h4>
+<ol type="1">
+<li><p>Idea: 投影，类内小，类间大。</p></li>
+<li><p>Loss Function: <span class="math display">\[
+\begin{align}&amp;J(w)=\frac{w^TS_bw}{w^TS_ww}\\
+&amp;S_b=(\overline{x_{c1}}-\overline{x_{c2}})(\overline{x_{c1}}-\overline{x_{c2}})^T\\
+&amp;S_w=S_1+S_2
+\end{align}
+\]</span></p></li>
+<li><p>闭式解，投影方向: <span class="math display">\[
+S_w^{-1}(\overline{x_{c1}}-\overline{x_{c2}})
+\]</span></p></li>
 </ol>
-<h3 id="Soft"><a href="#Soft" class="headerlink" title="Soft"></a>Soft</h3><h4 id="判别模型"><a href="#判别模型" class="headerlink" title="判别模型"></a>判别模型</h4><h5 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h5><ol>
-<li><p>Idea，激活函数:<br>$$<br>\begin{align}p(C_1|x)&amp;&#x3D;\frac{1}{1+\exp(-a)}\<br>a&amp;&#x3D;w^Tx<br>\end{align}<br>$$</p>
-</li>
-<li><p>Loss Function(交叉熵):<br>$$<br>\hat{w}&#x3D;\mathop{argmax}_wJ(w)&#x3D;\mathop{argmax}<em>w\sum\limits</em>{i&#x3D;1}^N(y_i\log p_1+(1-y_i)\log p_0)<br>$$</p>
-</li>
-<li><p>解法，SGD<br>$$<br>J’(w)&#x3D;\sum\limits_{i&#x3D;1}^N(y_i-p_1)x_i<br>$$</p>
-</li>
+<h3 id="soft">Soft</h3>
+<h4 id="判别模型">判别模型</h4>
+<h5 id="logistic-regression">Logistic Regression</h5>
+<ol type="1">
+<li><p>Idea，激活函数: <span class="math display">\[
+\begin{align}p(C_1|x)&amp;=\frac{1}{1+\exp(-a)}\\
+a&amp;=w^Tx
+\end{align}
+\]</span></p></li>
+<li><p>Loss Function(交叉熵): <span class="math display">\[
+\hat{w}=\mathop{argmax}_wJ(w)=\mathop{argmax}_w\sum\limits_{i=1}^N(y_i\log
+p_1+(1-y_i)\log p_0)
+\]</span></p></li>
+<li><p>解法，SGD <span class="math display">\[
+J&#39;(w)=\sum\limits_{i=1}^N(y_i-p_1)x_i
+\]</span></p></li>
 </ol>
-<h4 id="生成模型"><a href="#生成模型" class="headerlink" title="生成模型"></a>生成模型</h4><h5 id="GDA"><a href="#GDA" class="headerlink" title="GDA"></a>GDA</h5><ol>
+<h4 id="生成模型">生成模型</h4>
+<h5 id="gda">GDA</h5>
+<ol type="1">
 <li><p>Model</p>
-<ol>
-<li>$y\sim Bernoulli(\phi)$</li>
-<li>$x|y&#x3D;1\sim\mathcal{N}(\mu_1,\Sigma)$</li>
-<li>$x|y&#x3D;0\sim\mathcal{N}(\mu_0,\Sigma)$</li>
+<ol type="1">
+<li><span class="math inline">\(y\sim Bernoulli(\phi)\)</span></li>
+<li><span
+class="math inline">\(x|y=1\sim\mathcal{N}(\mu_1,\Sigma)\)</span></li>
+<li><span
+class="math inline">\(x|y=0\sim\mathcal{N}(\mu_0,\Sigma)\)</span></li>
+</ol></li>
+<li><p>MAP <span class="math display">\[
+\begin{align}
+&amp;\mathop{argmax}_{\phi,\mu_0,\mu_1,\Sigma}\log p(X|Y)p(Y)\nonumber\\
+&amp;=\mathop{argmax}_{\phi,\mu_0,\mu_1,\Sigma}\sum\limits_{i=1}^N((1-y_i)\log\mathcal{N}(\mu_0,\Sigma)+y_i\log
+\mathcal{N}(\mu_1,\Sigma)+y_i\log\phi+(1-y_i)\log(1-\phi))
+\end{align}
+\]</span></p></li>
+<li><p>解 <span class="math display">\[
+\begin{align}\phi&amp;=\frac{N_1}{N}\\
+\mu_1&amp;=\frac{\sum\limits_{i=1}^Ny_ix_i}{N_1}\\
+\mu_0&amp;=\frac{\sum\limits_{i=1}^N(1-y_i)x_i}{N_0}\\
+\Sigma&amp;=\frac{N_1S_1+N_2S_2}{N}
+\end{align}
+\]</span></p></li>
 </ol>
-</li>
-<li><p>MAP<br>$$<br>\begin{align}<br>&amp;\mathop{argmax}<em>{\phi,\mu_0,\mu_1,\Sigma}\log p(X|Y)p(Y)\nonumber\<br>&amp;&#x3D;\mathop{argmax}</em>{\phi,\mu_0,\mu_1,\Sigma}\sum\limits_{i&#x3D;1}^N((1-y_i)\log\mathcal{N}(\mu_0,\Sigma)+y_i\log \mathcal{N}(\mu_1,\Sigma)+y_i\log\phi+(1-y_i)\log(1-\phi))<br>\end{align}<br>$$</p>
-</li>
-<li><p>解<br>$$<br>\begin{align}\phi&amp;&#x3D;\frac{N_1}{N}\<br>\mu_1&amp;&#x3D;\frac{\sum\limits_{i&#x3D;1}^Ny_ix_i}{N_1}\<br>\mu_0&amp;&#x3D;\frac{\sum\limits_{i&#x3D;1}^N(1-y_i)x_i}{N_0}\<br>\Sigma&amp;&#x3D;\frac{N_1S_1+N_2S_2}{N}<br>\end{align}<br>$$</p>
-</li>
+<h5 id="naive-bayesian">Naive Bayesian</h5>
+<ol type="1">
+<li><p>Model, 对单个数据点的各个维度作出限制 <span
+class="math display">\[
+x_i\perp x_j|y,\forall\  i\ne j
+\]</span></p>
+<ol type="1">
+<li><span class="math inline">\(x_i\)</span> 为连续变量：<span
+class="math inline">\(p(x_i|y)=\mathcal{N}(\mu_i,\sigma_i^2)\)</span></li>
+<li><span class="math inline">\(x_i\)</span>
+为离散变量：类别分布（Categorical）：<span
+class="math inline">\(p(x_i=i|y)=\theta_i,\sum\limits_{i=1}^K\theta_i=1\)</span></li>
+<li><span class="math inline">\(p(y)=\phi^y(1-\phi)^{1-y}\)</span></li>
+</ol></li>
+<li><p>解：和GDA相同</p></li>
 </ol>
-<h5 id="Naive-Bayesian"><a href="#Naive-Bayesian" class="headerlink" title="Naive Bayesian"></a>Naive Bayesian</h5><ol>
-<li><p>Model, 对单个数据点的各个维度作出限制<br>$$<br>x_i\perp x_j|y,\forall\  i\ne j<br>$$</p>
-<ol>
-<li>$x_i$ 为连续变量：$p(x_i|y)&#x3D;\mathcal{N}(\mu_i,\sigma_i^2)$</li>
-<li>$x_i$ 为离散变量：类别分布（Categorical）：$p(x_i&#x3D;i|y)&#x3D;\theta_i,\sum\limits_{i&#x3D;1}^K\theta_i&#x3D;1$</li>
-<li>$p(y)&#x3D;\phi^y(1-\phi)^{1-y}$</li>
-</ol>
-</li>
-<li><p>解：和GDA相同</p>
-</li>
-</ol>
-<h2 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h2><p>中心化：<br>$$<br>\begin{align}S<br>&amp;&#x3D;\frac{1}{N}X^T(E_N-\frac{1}{N}\mathbb{I}<em>{N1}\mathbb{I}</em>{1N})(E_N-\frac{1}{N}\mathbb{I}<em>{N1}\mathbb{I}</em>{1N})^TX\nonumber\<br>&amp;&#x3D;\frac{1}{N}X^TH^2X&#x3D;\frac{1}{N}X^THX<br>\end{align}<br>$$</p>
-<h3 id="PCA-1"><a href="#PCA-1" class="headerlink" title="PCA"></a>PCA</h3><ol>
-<li><p>Idea: 坐标变换，寻找线性无关的新基矢，取信息损失最小的前几个维度</p>
-</li>
-<li><p>Loss Function:<br>$$<br>\begin{align}J<br>&amp;&#x3D;\sum\limits_{j&#x3D;1}^qu_j^TSu_j\ ,\ s.t.\ u_j^Tu_j&#x3D;1<br>\end{align}<br>$$</p>
-</li>
+<h2 id="dimension-reduction">Dimension Reduction</h2>
+<p>中心化： <span class="math display">\[
+\begin{align}S
+&amp;=\frac{1}{N}X^T(E_N-\frac{1}{N}\mathbb{I}_{N1}\mathbb{I}_{1N})(E_N-\frac{1}{N}\mathbb{I}_{N1}\mathbb{I}_{1N})^TX\nonumber\\
+&amp;=\frac{1}{N}X^TH^2X=\frac{1}{N}X^THX
+\end{align}
+\]</span></p>
+<h3 id="pca-1">PCA</h3>
+<ol type="1">
+<li><p>Idea:
+坐标变换，寻找线性无关的新基矢，取信息损失最小的前几个维度</p></li>
+<li><p>Loss Function: <span class="math display">\[
+\begin{align}J
+&amp;=\sum\limits_{j=1}^qu_j^TSu_j\ ,\ s.t.\ u_j^Tu_j=1
+\end{align}
+\]</span></p></li>
 <li><p>解：</p>
-<ol>
-<li><p>特征分解法<br>$$<br>S&#x3D;U\Lambda U^T<br>$$</p>
-</li>
-<li><p>SVD for X&#x2F;S<br>$$<br>\begin{align}HX&#x3D;U\Sigma V^T\<br>S&#x3D;\frac{1}{N}V\Sigma^T\Sigma V^T<br>\new\ co&#x3D;HX\cdot V\end{align}<br>$$</p>
-</li>
-<li><p>SVD for T<br>$$<br>\begin{align}T&#x3D;HXX^TH&#x3D;U\Sigma\Sigma^TU^T\<br>new\ co&#x3D;U\Sigma<br>\end{align}<br>$$</p>
-</li>
+<ol type="1">
+<li><p>特征分解法 <span class="math display">\[
+S=U\Lambda U^T
+\]</span></p></li>
+<li><p>SVD for X/S <span class="math display">\[
+\begin{align}HX=U\Sigma V^T\\
+S=\frac{1}{N}V\Sigma^T\Sigma V^T
+\\new\ co=HX\cdot V\end{align}
+\]</span></p></li>
+<li><p>SVD for T <span class="math display">\[
+\begin{align}T=HXX^TH=U\Sigma\Sigma^TU^T\\
+new\ co=U\Sigma
+\end{align}
+\]</span></p></li>
+</ol></li>
 </ol>
-</li>
+<h3 id="p-pca">p-PCA</h3>
+<ol type="1">
+<li><p>Model: <span class="math display">\[
+\begin{align}
+z&amp;\sim\mathcal{N}(\mathbb{O}_{q1},\mathbb{I}_{qq})\\
+x&amp;=Wz+\mu+\varepsilon\\
+\varepsilon&amp;\sim\mathcal{N}(0,\sigma^2\mathbb{I}_{pp})
+\end{align}
+\]</span></p></li>
+<li><p>Learning: E-M</p></li>
+<li><p>Inference: <span class="math display">\[
+p(z|x)=\mathcal{N}(W^T(WW^T+\sigma^2\mathbb{I})^{-1}(x-\mu),\mathbb{I}-W^T(WW^T+\sigma^2\mathbb{I})^{-1}W)
+\]</span></p></li>
 </ol>
-<h3 id="p-PCA"><a href="#p-PCA" class="headerlink" title="p-PCA"></a>p-PCA</h3><ol>
-<li><p>Model:<br>$$<br>\begin{align}<br>z&amp;\sim\mathcal{N}(\mathbb{O}<em>{q1},\mathbb{I}</em>{qq})\<br>x&amp;&#x3D;Wz+\mu+\varepsilon\<br>\varepsilon&amp;\sim\mathcal{N}(0,\sigma^2\mathbb{I}_{pp})<br>\end{align}<br>$$</p>
-</li>
-<li><p>Learning: E-M</p>
-</li>
-<li><p>Inference:<br>$$<br>p(z|x)&#x3D;\mathcal{N}(W^T(WW^T+\sigma^2\mathbb{I})^{-1}(x-\mu),\mathbb{I}-W^T(WW^T+\sigma^2\mathbb{I})^{-1}W)<br>$$</p>
-</li>
-</ol>
-<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><ol>
+<h2 id="svm">SVM</h2>
+<ol type="1">
 <li>强对偶关系：凸优化+（松弛）Slater 条件-&gt;强对偶。</li>
-<li>参数求解：KKT条件<ol>
+<li>参数求解：KKT条件
+<ol type="1">
 <li>可行域</li>
 <li>互补松弛+梯度为0</li>
+</ol></li>
 </ol>
-</li>
+<h3 id="hard-margin">Hard-margin</h3>
+<ol type="1">
+<li><p>Idea: 最大化间隔</p></li>
+<li><p>Model: <span class="math display">\[
+\mathop{argmin}_{w,b}\frac{1}{2}w^Tw\ s.t.\
+y_i(w^Tx_i+b)\ge1,i=1,2,\cdots,N
+\]</span></p></li>
+<li><p>对偶问题 <span class="math display">\[
+\max_{\lambda}-\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1}^N\lambda_i\lambda_jy_iy_jx_i^Tx_j+\sum\limits_{i=1}^N\lambda_i,\
+s.t.\ \lambda_i\ge0
+\]</span></p></li>
+<li><p>模型参数 <span class="math display">\[
+\hat{w}=\sum\limits_{i=1}^N\lambda_iy_ix_i\\
+\hat{b}=y_k-w^Tx_k=y_k-\sum\limits_{i=1}^N\lambda_iy_ix_i^Tx_k,\exist
+k,1-y_k(w^Tx_k+b)=0
+\]</span></p></li>
 </ol>
-<h3 id="Hard-margin"><a href="#Hard-margin" class="headerlink" title="Hard-margin"></a>Hard-margin</h3><ol>
-<li><p>Idea: 最大化间隔</p>
-</li>
-<li><p>Model:<br>$$<br>\mathop{argmin}_{w,b}\frac{1}{2}w^Tw\ s.t.\ y_i(w^Tx_i+b)\ge1,i&#x3D;1,2,\cdots,N<br>$$</p>
-</li>
-<li><p>对偶问题<br>$$<br>\max_{\lambda}-\frac{1}{2}\sum\limits_{i&#x3D;1}^N\sum\limits_{j&#x3D;1}^N\lambda_i\lambda_jy_iy_jx_i^Tx_j+\sum\limits_{i&#x3D;1}^N\lambda_i,\ s.t.\ \lambda_i\ge0<br>$$</p>
-</li>
-<li><p>模型参数<br>$$<br>\hat{w}&#x3D;\sum\limits_{i&#x3D;1}^N\lambda_iy_ix_i\<br>\hat{b}&#x3D;y_k-w^Tx_k&#x3D;y_k-\sum\limits_{i&#x3D;1}^N\lambda_iy_ix_i^Tx_k,\exist k,1-y_k(w^Tx_k+b)&#x3D;0<br>$$</p>
-</li>
+<h3 id="soft-margin">Soft-margin</h3>
+<ol type="1">
+<li><p>Idea:允许少量错误</p></li>
+<li><p>Model: <span class="math display">\[
+error=\sum\limits_{i=1}^N\max\{0,1-y_i(w^Tx_i+b)\}\\
+\mathop{argmin}_{w,b}\frac{1}{2}w^Tw+C\sum\limits_{i=1}^N\xi_i\ s.t.\
+y_i(w^Tx_i+b)\ge1-\xi_i,\xi_i\ge0,i=1,2,\cdots,N
+\]</span></p></li>
 </ol>
-<h3 id="Soft-margin"><a href="#Soft-margin" class="headerlink" title="Soft-margin"></a>Soft-margin</h3><ol>
-<li><p>Idea:允许少量错误</p>
-</li>
-<li><p>Model:<br>$$<br>error&#x3D;\sum\limits_{i&#x3D;1}^N\max{0,1-y_i(w^Tx_i+b)}\<br>\mathop{argmin}<em>{w,b}\frac{1}{2}w^Tw+C\sum\limits</em>{i&#x3D;1}^N\xi_i\ s.t.\ y_i(w^Tx_i+b)\ge1-\xi_i,\xi_i\ge0,i&#x3D;1,2,\cdots,N<br>$$</p>
-</li>
+<h3 id="kernel">Kernel</h3>
+<p>对称的正定函数都可以作为正定核。</p>
+<h2 id="exp-family">Exp Family</h2>
+<ol type="1">
+<li><p>表达式 <span class="math display">\[
+p(x|\eta)=h(x)\exp(\eta^T\phi(x)-A(\eta))=\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))
+\]</span></p></li>
+<li><p>对数配分函数 <span class="math display">\[
+\begin{align}
+A&#39;(\eta)=\mathbb{E}_{p(x|\eta)}[\phi(x)]\\
+A&#39;&#39;(\eta)=Var_{p(x|\eta)}[\phi(x)]
+\end{align}
+\]</span></p></li>
+<li><p>指数族分布满足最大熵定理</p></li>
 </ol>
-<h3 id="Kernel"><a href="#Kernel" class="headerlink" title="Kernel"></a>Kernel</h3><p>对称的正定函数都可以作为正定核。</p>
-<h2 id="Exp-Family"><a href="#Exp-Family" class="headerlink" title="Exp Family"></a>Exp Family</h2><ol>
-<li><p>表达式<br>$$<br>p(x|\eta)&#x3D;h(x)\exp(\eta^T\phi(x)-A(\eta))&#x3D;\frac{1}{\exp(A(\eta))}h(x)\exp(\eta^T\phi(x))<br>$$</p>
-</li>
-<li><p>对数配分函数<br>$$<br>\begin{align}<br>A’(\eta)&#x3D;\mathbb{E}<em>{p(x|\eta)}[\phi(x)]\<br>A’’(\eta)&#x3D;Var</em>{p(x|\eta)}[\phi(x)]<br>\end{align}<br>$$</p>
-</li>
-<li><p>指数族分布满足最大熵定理</p>
-</li>
-</ol>
-<h2 id="PGM"><a href="#PGM" class="headerlink" title="PGM"></a>PGM</h2><h3 id="Representation"><a href="#Representation" class="headerlink" title="Representation"></a>Representation</h3><ol>
-<li><p>有向图<br>$$<br>p(x_1,x_2,\cdots,x_p)&#x3D;\prod\limits_{i&#x3D;1}^pp(x_i|x_{parent(i)})<br>$$<br>D-separation<br>$$<br>p(x_i|x_{-i})&#x3D;\frac{p(x)}{\int p(x)dx_{i}}&#x3D;\frac{\prod\limits_{j&#x3D;1}^pp(x_j|x_{parents(j)})}{\int\prod\limits_{j&#x3D;1}^pp(x_j|x_{parents(j)})dx_i}&#x3D;\frac{p(x_i|x_{parents(i)})p(x_{child(i)}|x_i)}{\int p(x_i|x_{parents(i)})p(x_{child(i)}|x_i)dx_i}<br>$$</p>
-</li>
-<li><p>无向图<br>$$<br>\begin{align}p(x)&#x3D;\frac{1}{Z}\prod\limits_{i&#x3D;1}^{K}\phi(x_{ci})\<br>Z&#x3D;\sum\limits_{x\in\mathcal{X}}\prod\limits_{i&#x3D;1}^{K}\phi(x_{ci})\<br>\phi(x_{ci})&#x3D;\exp(-E(x_{ci}))<br>\end{align}<br>$$</p>
-</li>
+<h2 id="pgm">PGM</h2>
+<h3 id="representation">Representation</h3>
+<ol type="1">
+<li><p>有向图 <span class="math display">\[
+p(x_1,x_2,\cdots,x_p)=\prod\limits_{i=1}^pp(x_i|x_{parent(i)})
+\]</span> D-separation <span class="math display">\[
+p(x_i|x_{-i})=\frac{p(x)}{\int
+p(x)dx_{i}}=\frac{\prod\limits_{j=1}^pp(x_j|x_{parents(j)})}{\int\prod\limits_{j=1}^pp(x_j|x_{parents(j)})dx_i}=\frac{p(x_i|x_{parents(i)})p(x_{child(i)}|x_i)}{\int
+p(x_i|x_{parents(i)})p(x_{child(i)}|x_i)dx_i}
+\]</span></p></li>
+<li><p>无向图 <span class="math display">\[
+\begin{align}p(x)=\frac{1}{Z}\prod\limits_{i=1}^{K}\phi(x_{ci})\\
+Z=\sum\limits_{x\in\mathcal{X}}\prod\limits_{i=1}^{K}\phi(x_{ci})\\
+\phi(x_{ci})=\exp(-E(x_{ci}))
+\end{align}
+\]</span></p></li>
 <li><p>有向转无向</p>
-<ol>
+<ol type="1">
 <li>将每个节点的父节点两两相连</li>
 <li>将有向边替换为无向边</li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h3 id="Learning"><a href="#Learning" class="headerlink" title="Learning"></a>Learning</h3><p>参数学习-EM</p>
-<ol>
-<li><p>目的：解决具有隐变量的混合模型的参数估计（极大似然估计）</p>
-</li>
-<li><p>参数：<br>$$<br>\theta_{MLE}&#x3D;\mathop{argmax}\limits_\theta\log p(x|\theta)<br>$$</p>
-</li>
-<li><p>迭代求解：<br>$$<br>\theta^{t+1}&#x3D;\mathop{argmax}\limits_{\theta}\int_z\log [p(x,z|\theta)]p(z|x,\theta^t)dz&#x3D;\mathbb{E}_{z|x,\theta^t}[\log p(x,z|\theta)]<br>$$</p>
-</li>
-<li><p>原理<br>$$<br>\log p(x|\theta^t)\le\log p(x|\theta^{t+1})<br>$$</p>
-</li>
+<h3 id="learning">Learning</h3>
+<p>参数学习-EM</p>
+<ol type="1">
+<li><p>目的：解决具有隐变量的混合模型的参数估计（极大似然估计）</p></li>
+<li><p>参数： <span class="math display">\[
+\theta_{MLE}=\mathop{argmax}\limits_\theta\log p(x|\theta)
+\]</span></p></li>
+<li><p>迭代求解： <span class="math display">\[
+\theta^{t+1}=\mathop{argmax}\limits_{\theta}\int_z\log
+[p(x,z|\theta)]p(z|x,\theta^t)dz=\mathbb{E}_{z|x,\theta^t}[\log
+p(x,z|\theta)]
+\]</span></p></li>
+<li><p>原理 <span class="math display">\[
+\log p(x|\theta^t)\le\log p(x|\theta^{t+1})
+\]</span></p></li>
 <li><p>广义EM</p>
-<ol>
-<li><p>E step：<br>$$<br>\hat{q}^{t+1}(z)&#x3D;\mathop{argmax}_q\int_zq^t(z)\log\frac{p(x,z|\theta)}{q^t(z)}dz,fixed\ \theta<br>$$</p>
-</li>
-<li><p>M step：<br>$$<br>\hat{\theta}&#x3D;\mathop{argmax}_\theta \int_zq^{t+1}(z)\log\frac{p(x,z|\theta)}{q^{t+1}(z)}dz,fixed\ \hat{q}<br>$$</p>
-</li>
+<ol type="1">
+<li><p>E step： <span class="math display">\[
+\hat{q}^{t+1}(z)=\mathop{argmax}_q\int_zq^t(z)\log\frac{p(x,z|\theta)}{q^t(z)}dz,fixed\
+\theta
+\]</span></p></li>
+<li><p>M step： <span class="math display">\[
+\hat{\theta}=\mathop{argmax}_\theta
+\int_zq^{t+1}(z)\log\frac{p(x,z|\theta)}{q^{t+1}(z)}dz,fixed\ \hat{q}
+\]</span></p></li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h3 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h3><ol>
+<h3 id="inference">Inference</h3>
+<ol type="1">
 <li><p>精确推断</p>
-<ol>
-<li><p>VE</p>
-</li>
-<li><p>BP<br>$$<br>m_{j\to i}(i)&#x3D;\sum\limits_j\phi_j(j)\phi_{ij}(ij)\prod\limits_{k\in Neighbour(j)-i}m_{k\to j}(j)<br>$$</p>
-</li>
-<li><p>MP<br>$$<br>m_{j\to i}&#x3D;\max\limits_{j}\phi_j\phi_{ij}\prod\limits_{k\in Neighbour(j)-i}m_{k\to j}<br>$$</p>
-</li>
-</ol>
-</li>
+<ol type="1">
+<li><p>VE</p></li>
+<li><p>BP <span class="math display">\[
+m_{j\to i}(i)=\sum\limits_j\phi_j(j)\phi_{ij}(ij)\prod\limits_{k\in
+Neighbour(j)-i}m_{k\to j}(j)
+\]</span></p></li>
+<li><p>MP <span class="math display">\[
+m_{j\to i}=\max\limits_{j}\phi_j\phi_{ij}\prod\limits_{k\in
+Neighbour(j)-i}m_{k\to j}
+\]</span></p></li>
+</ol></li>
 <li><p>近似推断</p>
-<ol>
+<ol type="1">
 <li><p>确定性近似，VI</p>
-<ol>
-<li><p>变分表达式<br>$$<br>\hat{q}(Z)&#x3D;\mathop{argmax}_{q(Z)}L(q)<br>$$</p>
-</li>
-<li><p>平均场近似下的 VI-坐标上升<br>$$<br>\mathbb{E}<em>{\prod\limits</em>{i\ne j}q_i(Z_i)}[\log p(X,Z)]&#x3D;\log \hat{p}(X,Z_j)\<br>q_j(Z_j)&#x3D;\hat{p}(X,Z_j)<br>$$</p>
-</li>
-<li><p>SGVI-变成优化问题，重参数法<br>$$<br>\mathop{argmax}<em>{q(Z)}L(q)&#x3D;\mathop{argmax}</em>{\phi}L(\phi)\<br>\nabla_\phi L(\phi)&#x3D;\mathbb{E}<em>{q_\phi}[(\nabla_\phi\log q_\phi)(\log p_\theta(x^i,z)-\log q_\phi(z))]\<br>&#x3D;\mathbb{E}</em>{p(\varepsilon)}[\nabla_z[\log p_\theta(x^i,z)-\log q_\phi(z)]\nabla_\phi g_\phi(\varepsilon,x^i)]\<br>z&#x3D;g_\phi(\varepsilon,x^i),\varepsilon\sim p(\varepsilon)<br>$$</p>
-</li>
-</ol>
-</li>
+<ol type="1">
+<li><p>变分表达式 <span class="math display">\[
+\hat{q}(Z)=\mathop{argmax}_{q(Z)}L(q)
+\]</span></p></li>
+<li><p>平均场近似下的 VI-坐标上升 <span class="math display">\[
+\mathbb{E}_{\prod\limits_{i\ne j}q_i(Z_i)}[\log p(X,Z)]=\log
+\hat{p}(X,Z_j)\\
+q_j(Z_j)=\hat{p}(X,Z_j)
+\]</span></p></li>
+<li><p>SGVI-变成优化问题，重参数法 <span class="math display">\[
+\mathop{argmax}_{q(Z)}L(q)=\mathop{argmax}_{\phi}L(\phi)\\
+\nabla_\phi L(\phi)=\mathbb{E}_{q_\phi}[(\nabla_\phi\log q_\phi)(\log
+p_\theta(x^i,z)-\log q_\phi(z))]\\
+=\mathbb{E}_{p(\varepsilon)}[\nabla_z[\log p_\theta(x^i,z)-\log
+q_\phi(z)]\nabla_\phi g_\phi(\varepsilon,x^i)]\\
+z=g_\phi(\varepsilon,x^i),\varepsilon\sim p(\varepsilon)
+\]</span></p></li>
+</ol></li>
 <li><p>随机性近似</p>
-<ol>
+<ol type="1">
 <li><p>蒙特卡洛方法采样</p>
-<ol>
-<li><p>CDF 采样</p>
-</li>
-<li><p>拒绝采样， $q(z)$，使得 $\forall z_i,Mq(z_i)\ge p(z_i)$，拒绝因子：$\alpha&#x3D;\frac{p(z^i)}{Mq(z^i)}\le1$</p>
-</li>
-<li><p>重要性采样<br>$$<br>\mathbb{E}<em>{p(z)}[f(z)]&#x3D;\int p(z)f(z)dz&#x3D;\int \frac{p(z)}{q(z)}f(z)q(z)dz\simeq\frac{1}{N}\sum\limits</em>{i&#x3D;1}^Nf(z_i)\frac{p(z_i)}{q(z_i)}<br>$$</p>
-</li>
-<li><p>重要性重采样：重要性采样+重采样</p>
-</li>
-</ol>
-</li>
-<li><p>MCMC：构建马尔可夫链概率序列，使其收敛到平稳分布 $p(z)$。</p>
-<ol>
-<li><p>转移矩阵（提议分布）<br>$$<br>p(z)\cdot Q_{z\to z^*}\alpha(z,z^*)&#x3D;p(z^*)\cdot Q_{z^<em>\to z}\alpha(z^</em>,z)\<br>\alpha(z,z^*)&#x3D;\min{1,\frac{p(z^*)Q_{z^<em>\to z}}{p(z)Q_{z\to z^</em>}}}<br>$$</p>
-</li>
+<ol type="1">
+<li><p>CDF 采样</p></li>
+<li><p>拒绝采样， <span class="math inline">\(q(z)\)</span>，使得 <span
+class="math inline">\(\forall z_i,Mq(z_i)\ge
+p(z_i)\)</span>，拒绝因子：<span
+class="math inline">\(\alpha=\frac{p(z^i)}{Mq(z^i)}\le1\)</span></p></li>
+<li><p>重要性采样 <span class="math display">\[
+\mathbb{E}_{p(z)}[f(z)]=\int p(z)f(z)dz=\int
+\frac{p(z)}{q(z)}f(z)q(z)dz\simeq\frac{1}{N}\sum\limits_{i=1}^Nf(z_i)\frac{p(z_i)}{q(z_i)}
+\]</span></p></li>
+<li><p>重要性重采样：重要性采样+重采样</p></li>
+</ol></li>
+<li><p>MCMC：构建马尔可夫链概率序列，使其收敛到平稳分布 <span
+class="math inline">\(p(z)\)</span>。</p>
+<ol type="1">
+<li><p>转移矩阵（提议分布） <span class="math display">\[
+p(z)\cdot Q_{z\to z^*}\alpha(z,z^*)=p(z^*)\cdot Q_{z^*\to
+z}\alpha(z^*,z)\\
+\alpha(z,z^*)=\min\{1,\frac{p(z^*)Q_{z^*\to z}}{p(z)Q_{z\to z^*}}\}
+\]</span></p></li>
 <li><p>算法（MH）：</p>
-<ol>
-<li>通过在0，1之间均匀分布取点 $u$</li>
-<li>生成 $z^<em>\sim Q(z^</em>|z^{i-1})$</li>
-<li>计算 $\alpha$ 值</li>
-<li>如果 $\alpha\ge u$，则 $z^i&#x3D;z^*$，否则 $z^{i}&#x3D;z^{i-1}$</li>
+<ol type="1">
+<li>通过在0，1之间均匀分布取点 <span
+class="math inline">\(u\)</span></li>
+<li>生成 <span class="math inline">\(z^*\sim
+Q(z^*|z^{i-1})\)</span></li>
+<li>计算 <span class="math inline">\(\alpha\)</span> 值</li>
+<li>如果 <span class="math inline">\(\alpha\ge u\)</span>，则 <span
+class="math inline">\(z^i=z^*\)</span>，否则 <span
+class="math inline">\(z^{i}=z^{i-1}\)</span></li>
+</ol></li>
+</ol></li>
+<li><p>Gibbs 采样：给定初始值 <span
+class="math inline">\(z_1^0,z_2^0,\cdots\)</span>在 <span
+class="math inline">\(t+1\)</span> 时刻，采样 <span
+class="math inline">\(z_i^{t+1}\sim
+p(z_i|z_{-i})\)</span>，从第一个维度一个个采样。</p></li>
+</ol></li>
+</ol></li>
 </ol>
-</li>
+<h2 id="gmm">GMM</h2>
+<ol type="1">
+<li><p>Model <span class="math display">\[
+p(x)=\sum\limits_{k=1}^Kp_k\mathcal{N}(x|\mu_k,\Sigma_k)
+\]</span></p></li>
+<li><p>求解-EM <span class="math display">\[
+\begin{align}Q(\theta,\theta^t)&amp;=\sum\limits_z[\log\prod\limits_{i=1}^Np(x_i,z_i|\theta)]\prod
+\limits_{i=1}^Np(z_i|x_i,\theta^t)\nonumber\\
+&amp;=\sum\limits_z[\sum\limits_{i=1}^N\log p(x_i,z_i|\theta)]\prod
+\limits_{i=1}^Np(z_i|x_i,\theta^t)\nonumber\\
+&amp;=\sum\limits_{i=1}^N\sum\limits_{z_i}\log
+p(x_i,z_i|\theta)p(z_i|x_i,\theta^t)\nonumber\\
+&amp;=\sum\limits_{i=1}^N\sum\limits_{z_i}\log
+p_{z_i}\mathcal{N(x_i|\mu_{z_i},\Sigma_{z_i})}\frac{p_{z_i}^t\mathcal{N}(x_i|\mu_{z_i}^t,\Sigma_{z_i}^t)}{\sum\limits_kp_k^t\mathcal{N}(x_i|\mu_k^t,\Sigma_k^t)}
+\end{align}
+\]</span></p>
+<p><span class="math display">\[
+p_k^{t+1}=\frac{1}{N}\sum\limits_{i=1}^Np(z_i=k|x_i,\theta^t)
+\]</span></p></li>
 </ol>
-</li>
-<li><p>Gibbs 采样：给定初始值 $z_1^0,z_2^0,\cdots$在 $t+1$ 时刻，采样 $z_i^{t+1}\sim p(z_i|z_{-i})$，从第一个维度一个个采样。</p>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h2 id="GMM"><a href="#GMM" class="headerlink" title="GMM"></a>GMM</h2><ol>
-<li><p>Model<br>$$<br>p(x)&#x3D;\sum\limits_{k&#x3D;1}^Kp_k\mathcal{N}(x|\mu_k,\Sigma_k)<br>$$</p>
-</li>
-<li><p>求解-EM<br>$$<br>\begin{align}Q(\theta,\theta^t)&amp;&#x3D;\sum\limits_z[\log\prod\limits_{i&#x3D;1}^Np(x_i,z_i|\theta)]\prod \limits_{i&#x3D;1}^Np(z_i|x_i,\theta^t)\nonumber\<br>&amp;&#x3D;\sum\limits_z[\sum\limits_{i&#x3D;1}^N\log p(x_i,z_i|\theta)]\prod \limits_{i&#x3D;1}^Np(z_i|x_i,\theta^t)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^N\sum\limits_{z_i}\log p(x_i,z_i|\theta)p(z_i|x_i,\theta^t)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^N\sum\limits_{z_i}\log p_{z_i}\mathcal{N(x_i|\mu_{z_i},\Sigma_{z_i})}\frac{p_{z_i}^t\mathcal{N}(x_i|\mu_{z_i}^t,\Sigma_{z_i}^t)}{\sum\limits_kp_k^t\mathcal{N}(x_i|\mu_k^t,\Sigma_k^t)}<br>\end{align}<br>$$</p>
-<p>$$<br>p_k^{t+1}&#x3D;\frac{1}{N}\sum\limits_{i&#x3D;1}^Np(z_i&#x3D;k|x_i,\theta^t)<br>$$</p>
-</li>
-</ol>
-<h2 id="序列模型-HMM，LDS，Particle"><a href="#序列模型-HMM，LDS，Particle" class="headerlink" title="序列模型-HMM，LDS，Particle"></a>序列模型-HMM，LDS，Particle</h2><ol>
+<h2 id="序列模型-hmmldsparticle">序列模型-HMM，LDS，Particle</h2>
+<ol type="1">
 <li><p>假设：</p>
-<ol>
-<li><p>齐次 Markov 假设（未来只依赖于当前）：<br>$$<br>p(i_{t+1}|i_t,i_{t-1},\cdots,i_1,o_t,o_{t-1},\cdots,o_1)&#x3D;p(i_{t+1}|i_t)<br>$$</p>
-</li>
-<li><p>观测独立假设：<br>$$<br>p(o_t|i_t,i_{t-1},\cdots,i_1,o_{t-1},\cdots,o_1)&#x3D;p(o_t|i_t)<br>$$</p>
-</li>
+<ol type="1">
+<li><p>齐次 Markov 假设（未来只依赖于当前）： <span
+class="math display">\[
+p(i_{t+1}|i_t,i_{t-1},\cdots,i_1,o_t,o_{t-1},\cdots,o_1)=p(i_{t+1}|i_t)
+\]</span></p></li>
+<li><p>观测独立假设： <span class="math display">\[
+p(o_t|i_t,i_{t-1},\cdots,i_1,o_{t-1},\cdots,o_1)=p(o_t|i_t)
+\]</span></p></li>
+</ol></li>
+<li><p>参数 <span class="math display">\[
+\lambda=(\pi,A,B)
+\]</span></p></li>
 </ol>
-</li>
-<li><p>参数<br>$$<br>\lambda&#x3D;(\pi,A,B)<br>$$</p>
-</li>
+<h3 id="离散线性隐变量-hmm">离散线性隐变量-HMM</h3>
+<ol type="1">
+<li><p>Evaluation：<span
+class="math inline">\(p(O|\lambda)\)</span>，Forward-Backward 算法 <span
+class="math display">\[
+p(O|\lambda)=\sum\limits_{i=1}^Np(O,i_T=q_i|\lambda)=\sum\limits_{i=1}^N\alpha_T(i)=\sum\limits_{i=1}^Nb_i(o_1)\pi_i\beta_1(i)\\
+\alpha_{t+1}(j)=\sum\limits_{i=1}^Nb_{j}(o_t)a_{ij}\alpha_t(i)\\
+\beta_t(i)=\sum\limits_{j=1}^Nb_j(o_{t+1})a_{ij}\beta_{t+1}(j)
+\]</span></p></li>
+<li><p>Learning：<span
+class="math inline">\(\lambda=\mathop{argmax}\limits_{\lambda}p(O|\lambda)\)</span>，EM
+算法（Baum-Welch） <span class="math display">\[
+\lambda^{t+1}=\mathop{argmax}_\lambda\sum\limits_I\log
+p(O,I|\lambda)p(O,I|\lambda^t)\\=\sum\limits_I[\log
+\pi_{i_1}+\sum\limits_{t=2}^T\log
+a_{i_{t-1},i_t}+\sum\limits_{t=1}^T\log b_{i_t}(o_t)]p(O,I|\lambda^t)
+\]</span></p></li>
+<li><p>Decoding：<span
+class="math inline">\(I=\mathop{argmax}\limits_{I}p(I|O,\lambda)\)</span>，Viterbi
+算法-动态规划 <span class="math display">\[
+\delta_{t}(j)=\max\limits_{i_1,\cdots,i_{t-1}}p(o_1,\cdots,o_t,i_1,\cdots,i_{t-1},i_t=q_i)\\\delta_{t+1}(j)=\max\limits_{1\le
+i\le
+N}\delta_t(i)a_{ij}b_j(o_{t+1})\\\psi_{t+1}(j)=\mathop{argmax}\limits_{1\le
+i\le N}\delta_t(i)a_{ij}
+\]</span></p></li>
 </ol>
-<h3 id="离散线性隐变量-HMM"><a href="#离散线性隐变量-HMM" class="headerlink" title="离散线性隐变量-HMM"></a>离散线性隐变量-HMM</h3><ol>
-<li><p>Evaluation：$p(O|\lambda)$，Forward-Backward 算法<br>$$<br>p(O|\lambda)&#x3D;\sum\limits_{i&#x3D;1}^Np(O,i_T&#x3D;q_i|\lambda)&#x3D;\sum\limits_{i&#x3D;1}^N\alpha_T(i)&#x3D;\sum\limits_{i&#x3D;1}^Nb_i(o_1)\pi_i\beta_1(i)\<br>\alpha_{t+1}(j)&#x3D;\sum\limits_{i&#x3D;1}^Nb_{j}(o_t)a_{ij}\alpha_t(i)\<br>\beta_t(i)&#x3D;\sum\limits_{j&#x3D;1}^Nb_j(o_{t+1})a_{ij}\beta_{t+1}(j)<br>$$</p>
-</li>
-<li><p>Learning：$\lambda&#x3D;\mathop{argmax}\limits_{\lambda}p(O|\lambda)$，EM 算法（Baum-Welch）<br>$$<br>\lambda^{t+1}&#x3D;\mathop{argmax}<em>\lambda\sum\limits_I\log p(O,I|\lambda)p(O,I|\lambda^t)\&#x3D;\sum\limits_I[\log \pi</em>{i_1}+\sum\limits_{t&#x3D;2}^T\log a_{i_{t-1},i_t}+\sum\limits_{t&#x3D;1}^T\log b_{i_t}(o_t)]p(O,I|\lambda^t)<br>$$</p>
-</li>
-<li><p>Decoding：$I&#x3D;\mathop{argmax}\limits_{I}p(I|O,\lambda)$，Viterbi 算法-动态规划<br>$$<br>\delta_{t}(j)&#x3D;\max\limits_{i_1,\cdots,i_{t-1}}p(o_1,\cdots,o_t,i_1,\cdots,i_{t-1},i_t&#x3D;q_i)\\delta_{t+1}(j)&#x3D;\max\limits_{1\le i\le N}\delta_t(i)a_{ij}b_j(o_{t+1})\\psi_{t+1}(j)&#x3D;\mathop{argmax}\limits_{1\le i\le N}\delta_t(i)a_{ij}<br>$$</p>
-</li>
-</ol>
-<h3 id="连续线性隐变量-LDS"><a href="#连续线性隐变量-LDS" class="headerlink" title="连续线性隐变量-LDS"></a>连续线性隐变量-LDS</h3><ol>
-<li><p>Model<br>$$<br>\begin{align}<br>p(z_t|z_{t-1})&amp;\sim\mathcal{N}(A\cdot z_{t-1}+B,Q)\<br>p(x_t|z_t)&amp;\sim\mathcal{N}(C\cdot z_t+D,R)\<br>z_1&amp;\sim\mathcal{N}(\mu_1,\Sigma_1)<br>\end{align}<br>$$</p>
-</li>
-<li><p>滤波<br>$$<br>p(z_t|x_{1:t})&#x3D;p(x_{1:t},z_t)&#x2F;p(x_{1:t})\propto p(x_{1:t},z_t)\&#x3D;p(x_t|z_t)p(z_t|x_{1:t-1})p(x_{1:t-1})\propto p(x_t|z_t)p(z_t|x_{1:t-1})<br>$$</p>
-</li>
+<h3 id="连续线性隐变量-lds">连续线性隐变量-LDS</h3>
+<ol type="1">
+<li><p>Model <span class="math display">\[
+\begin{align}
+p(z_t|z_{t-1})&amp;\sim\mathcal{N}(A\cdot z_{t-1}+B,Q)\\
+p(x_t|z_t)&amp;\sim\mathcal{N}(C\cdot z_t+D,R)\\
+z_1&amp;\sim\mathcal{N}(\mu_1,\Sigma_1)
+\end{align}
+\]</span></p></li>
+<li><p>滤波 <span class="math display">\[
+p(z_t|x_{1:t})=p(x_{1:t},z_t)/p(x_{1:t})\propto
+p(x_{1:t},z_t)\\=p(x_t|z_t)p(z_t|x_{1:t-1})p(x_{1:t-1})\propto
+p(x_t|z_t)p(z_t|x_{1:t-1})
+\]</span></p></li>
 <li><p>递推求解-线性高斯模型</p>
-<ol>
-<li><p>Prediction<br>$$<br>p(z_t|x_{1:t-1})&#x3D;\int_{z_{t-1}}p(z_t|z_{t-1})p(z_{t-1}|x_{1:t-1})dz_{t-1}&#x3D;\int_{z_{t-1}}\mathcal{N}(Az_{t-1}+B,Q)\mathcal{N}(\mu_{t-1},\Sigma_{t-1})dz_{t-1}<br>$$</p>
-</li>
-<li><p>Update:<br>$$<br>p(z_t|x_{1:t})\propto p(x_t|z_t)p(z_t|x_{1:t-1}<br>$$</p>
-</li>
+<ol type="1">
+<li><p>Prediction <span class="math display">\[
+p(z_t|x_{1:t-1})=\int_{z_{t-1}}p(z_t|z_{t-1})p(z_{t-1}|x_{1:t-1})dz_{t-1}=\int_{z_{t-1}}\mathcal{N}(Az_{t-1}+B,Q)\mathcal{N}(\mu_{t-1},\Sigma_{t-1})dz_{t-1}
+\]</span></p></li>
+<li><p>Update: <span class="math display">\[
+p(z_t|x_{1:t})\propto p(x_t|z_t)p(z_t|x_{1:t-1}
+\]</span></p></li>
+</ol></li>
 </ol>
-</li>
+<h3 id="连续非线性隐变量-粒子滤波">连续非线性隐变量-粒子滤波</h3>
+<p>通过采样(SIR)解决： <span class="math display">\[
+\mathbb{E}[f(z)]=\int_zf(z)p(z)dz=\int_zf(z)\frac{p(z)}{q(z)}q(z)dz=\sum\limits_{i=1}^Nf(z_i)\frac{p(z_i)}{q(z_i)}
+\]</span></p>
+<ol type="1">
+<li><p>采样 <span class="math display">\[
+w_t^i\propto\frac{p(x_t|z_t)p(z_t|z_{t-1})}{q(z_t|z_{1:t-1},x_{1:t})}w_{t-1}^i\\
+q(z_t|z_{1:t-1},x_{1:t})=p(z_t|z_{t-1})
+\]</span></p></li>
+<li><p>重采样</p></li>
 </ol>
-<h3 id="连续非线性隐变量-粒子滤波"><a href="#连续非线性隐变量-粒子滤波" class="headerlink" title="连续非线性隐变量-粒子滤波"></a>连续非线性隐变量-粒子滤波</h3><p>通过采样(SIR)解决：<br>$$<br>\mathbb{E}[f(z)]&#x3D;\int_zf(z)p(z)dz&#x3D;\int_zf(z)\frac{p(z)}{q(z)}q(z)dz&#x3D;\sum\limits_{i&#x3D;1}^Nf(z_i)\frac{p(z_i)}{q(z_i)}<br>$$</p>
-<ol>
-<li><p>采样<br>$$<br>w_t^i\propto\frac{p(x_t|z_t)p(z_t|z_{t-1})}{q(z_t|z_{1:t-1},x_{1:t})}w_{t-1}^i\<br>q(z_t|z_{1:t-1},x_{1:t})&#x3D;p(z_t|z_{t-1})<br>$$</p>
-</li>
-<li><p>重采样</p>
-</li>
-</ol>
-<h2 id="CRF"><a href="#CRF" class="headerlink" title="CRF"></a>CRF</h2><ol>
-<li><p>PDF<br>$$<br>p(Y&#x3D;y|X&#x3D;x)&#x3D;\frac{1}{Z(x,\theta)}\exp[\theta^TH(y_t,y_{t-1},x)]<br>$$</p>
-</li>
-<li><p>边缘概率<br>$$<br>p(y_t&#x3D;i|x)&#x3D;\sum\limits_{y_{1:t-1}}\sum\limits_{y_{t+1:T}}\frac{1}{Z}\prod\limits_{t’&#x3D;1}^T\phi_{t’}(y_{t’-1},y_{t’},x)\<br>p(y_t&#x3D;i|x)&#x3D;\frac{1}{Z}\Delta_l\Delta_r\<br>\Delta_l&#x3D;\sum\limits_{y_{1:t-1}}\phi_{1}(y_0,y_1,x)\phi_2(y_1,y_2,x)\cdots\phi_{t-1}(y_{t-2},y_{t-1},x)\phi_t(y_{t-1},y_t&#x3D;i,x)\<br>\Delta_r&#x3D;\sum\limits_{y_{t+1:T}}\phi_{t+1}(y_t&#x3D;i,y_{t+1},x)\phi_{t+2}(y_{t+1},y_{t+2},x)\cdots\phi_T(y_{T-1},y_T,x)<br>$$</p>
-<p>$$<br>\alpha_t(i)&#x3D;\Delta_l&#x3D;\sum\limits_{j\in S}\phi_t(y_{t-1}&#x3D;j,y_t&#x3D;i,x)\alpha_{t-1}(j)\<br>\Delta_r&#x3D;\beta_t(i)&#x3D;\sum\limits_{j\in S}\phi_{t+1}(y_t&#x3D;i,y_{t+1}&#x3D;j,x)\beta_{t+1}(j)<br>$$</p>
-</li>
-<li><p>学习<br>$$<br>\nabla_\lambda L&#x3D;\sum\limits_{i&#x3D;1}^N\sum\limits_{t&#x3D;1}^T[f(y_{t-1},y_t,x^i)-\sum\limits_{y_{t-1}}\sum\limits_{y_t}p(y_{t-1},y_t|x^i)f(y_{t-1},y_t,x^i)]<br>$$</p>
-</li>
+<h2 id="crf">CRF</h2>
+<ol type="1">
+<li><p>PDF <span class="math display">\[
+p(Y=y|X=x)=\frac{1}{Z(x,\theta)}\exp[\theta^TH(y_t,y_{t-1},x)]
+\]</span></p></li>
+<li><p>边缘概率 <span class="math display">\[
+p(y_t=i|x)=\sum\limits_{y_{1:t-1}}\sum\limits_{y_{t+1:T}}\frac{1}{Z}\prod\limits_{t&#39;=1}^T\phi_{t&#39;}(y_{t&#39;-1},y_{t&#39;},x)\\
+p(y_t=i|x)=\frac{1}{Z}\Delta_l\Delta_r\\
+\Delta_l=\sum\limits_{y_{1:t-1}}\phi_{1}(y_0,y_1,x)\phi_2(y_1,y_2,x)\cdots\phi_{t-1}(y_{t-2},y_{t-1},x)\phi_t(y_{t-1},y_t=i,x)\\
+\Delta_r=\sum\limits_{y_{t+1:T}}\phi_{t+1}(y_t=i,y_{t+1},x)\phi_{t+2}(y_{t+1},y_{t+2},x)\cdots\phi_T(y_{T-1},y_T,x)
+\]</span></p>
+<p><span class="math display">\[
+\alpha_t(i)=\Delta_l=\sum\limits_{j\in
+S}\phi_t(y_{t-1}=j,y_t=i,x)\alpha_{t-1}(j)\\
+\Delta_r=\beta_t(i)=\sum\limits_{j\in
+S}\phi_{t+1}(y_t=i,y_{t+1}=j,x)\beta_{t+1}(j)
+\]</span></p></li>
+<li><p>学习 <span class="math display">\[
+\nabla_\lambda
+L=\sum\limits_{i=1}^N\sum\limits_{t=1}^T[f(y_{t-1},y_t,x^i)-\sum\limits_{y_{t-1}}\sum\limits_{y_t}p(y_{t-1},y_t|x^i)f(y_{t-1},y_t,x^i)]
+\]</span></p></li>
 </ol>
 
               

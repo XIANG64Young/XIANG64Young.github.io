@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Hive安装首先安装MySQL1、查看mysql的依赖  1rpm -qa | grep mysql  2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96;  3、离线安装mysql  12rpm -ivh MySQL-server-5.1.73-1.glibc23.x">
+    <meta name="description" content="Hive安装 首先安装MySQL 1、查看mysql的依赖 1rpm -qa | grep mysql 2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96; 3、离线安装mysql 12rpm -ivh MySQL-server-5.1.73-1.glib">
 <meta property="og:type" content="article">
 <meta property="og:title" content="8.Hive安装">
 <meta property="og:url" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/8.Hive%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="Hive安装首先安装MySQL1、查看mysql的依赖  1rpm -qa | grep mysql  2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96;  3、离线安装mysql  12rpm -ivh MySQL-server-5.1.73-1.glibc23.x">
+<meta property="og:description" content="Hive安装 首先安装MySQL 1、查看mysql的依赖 1rpm -qa | grep mysql 2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96; 3、离线安装mysql 12rpm -ivh MySQL-server-5.1.73-1.glib">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image002.gif">
 <meta property="og:image" content="f:/notes/大数据/src/clip_image004.gif">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2.6k 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          23 分钟
+          22 分钟
         
       </span>
     
@@ -274,70 +274,67 @@
             
             <div class="markdown-body">
               
-              <h1 id="Hive安装"><a href="#Hive安装" class="headerlink" title="Hive安装"></a>Hive安装</h1><h2 id="首先安装MySQL"><a href="#首先安装MySQL" class="headerlink" title="首先安装MySQL"></a>首先安装MySQL</h2><p>1、查看mysql的依赖 </p>
+              <h1 id="hive安装">Hive安装</h1>
+<h2 id="首先安装mysql">首先安装MySQL</h2>
+<p>1、查看mysql的依赖</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic">rpm -qa | grep mysql<br></code></pre></td></tr></table></figure>
-
 <p>2、删除mysql的依赖</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic">rpm -e --nodeps `rpm -qa | grep mysql`<br>rpm -e --nodeps `rpm -qa | grep MySQL`<br></code></pre></td></tr></table></figure>
-
-<p>3、离线安装mysql </p>
+<p>3、离线安装mysql</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic">rpm -ivh MySQL-server-<span class="hljs-number">5.1</span>.<span class="hljs-number">73</span>-<span class="hljs-number">1</span>.glibc23.x86_64.rpm   <br>rpm -ivh MySQL-client-<span class="hljs-number">5.1</span>.<span class="hljs-number">73</span>-<span class="hljs-number">1</span>.glibc23.x86_64.rpm<br></code></pre></td></tr></table></figure>
-
 <p>4、启动mysql服务 （centos6系统）</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic">service mysql start<br></code></pre></td></tr></table></figure>
-
-<p>5、加入到开机启动项  </p>
+<p>5、加入到开机启动项</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic">chkconfig mysql <span class="hljs-keyword">on</span><br></code></pre></td></tr></table></figure>
-
 <p>6、访问mysql服务并修改权限</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic">mysql -uroot -p123456<br></code></pre></td></tr></table></figure>
-
 <p>切换数据库：use mysql;</p>
 <p>查看用户权限表： select user,host from user</p>
-<p>update user set host &#x3D; ‘%’ where user &#x3D; ‘root’ （提示报错不用管，忽略）</p>
+<p>update user set host = '%' where user = 'root'
+（提示报错不用管，忽略）</p>
 <p>刷新权限：flush privileges;</p>
-<h2 id="再安装HIVE"><a href="#再安装HIVE" class="headerlink" title="再安装HIVE"></a>再安装HIVE</h2><p>1、解压hive的安装包</p>
+<h2 id="再安装hive">再安装HIVE</h2>
+<p>1、解压hive的安装包</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -zxvf apache-hive-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span>-bin.tar.gz <br></code></pre></td></tr></table></figure>
-
 <p>修改下目录名称</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">mv</span> apache-hive-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span>-bin hive-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-
 <p>2、备份配置文件</p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">cp hive-env.sh.<span class="hljs-keyword">template</span> hive-env.sh<br>cp hive-<span class="hljs-keyword">default</span>.xml.<span class="hljs-keyword">template</span> hive-site.xml<br></code></pre></td></tr></table></figure>
-
 <p>3、修改配置文件</p>
 <p>修改hive-env.sh</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">HADOOP_HOME</span>=/bigdata/hadoop-<span class="hljs-number">2</span>.<span class="hljs-number">6</span>.<span class="hljs-number">0</span><br><span class="hljs-attribute">JAVA_HOME</span>=/bigdata/jdk1.<span class="hljs-number">8</span>.<span class="hljs-number">0</span>_171<br><span class="hljs-attribute">HIVE_HOME</span>=/bigdata/hive-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-
-<p><img src="F:\notes\大数据\src\clip_image002.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<figure>
+<img src="F:\notes\大数据\src\clip_image002.gif" srcset="/img/loading.gif" lazyload alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
 <p>修改hive-site.xml</p>
 <p>&lt;建议使用模式匹配进行查找替换，文件很长</p>
 <p>也可以把xml文件放到windows环境下，利用sublimetext3等工具搜索替换&gt;</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>jdbc:mysql://master:3306/hive?useSSL=false<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>root<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>123456<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>hive.querylog.location<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>/bigdata/hive-1.2.1/tmp<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>hive.exec.local.scratchdir<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>/bigdata/hive-1.2.1/tmp<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>hive.downloaded.resources.dir<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>	 <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>/bigdata/hive-1.2.1/tmp<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>4、替换相关的jar包</p>
-<p>拷贝mysql驱动到&#x2F;usr&#x2F;local&#x2F;soft&#x2F;hive-1.2.1&#x2F;lib目录下</p>
+<p>拷贝mysql驱动到/usr/local/soft/hive-1.2.1/lib目录下</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">cp <span class="hljs-regexp">/bigdata/</span>packet<span class="hljs-regexp">/mysql-connector-java-5.1.17.jar ../</span>lib/<br></code></pre></td></tr></table></figure>
-
 <p>将hadoop的jline-0.9.94.jar的jar替换成hive的版本。</p>
-<p>hive的 jline-2.12.jar 位置在 &#x2F;bigdata&#x2F;hive-1.2.1&#x2F;lib&#x2F;jline-2.12.jar</p>
+<p>hive的 jline-2.12.jar 位置在
+/bigdata/hive-1.2.1/lib/jline-2.12.jar</p>
 <p>将Hadoop的删除</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rm</span> -rf  /bigdata/hadoop-<span class="hljs-number">2</span>.<span class="hljs-number">6</span>.<span class="hljs-number">0</span>/share/hadoop/yarn/lib/jline-<span class="hljs-number">0</span>.<span class="hljs-number">9</span>.<span class="hljs-number">94</span>.jar<br></code></pre></td></tr></table></figure>
-
 <p>然后将hive的jar拷过去hadoop下：</p>
 <p>命令：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">cp  <span class="hljs-regexp">/bigdata/</span>hive-<span class="hljs-number">1.2</span>.<span class="hljs-number">1</span><span class="hljs-regexp">/lib/</span>jline-<span class="hljs-number">2.12</span>.jar <span class="hljs-regexp">/bigdata/</span>hadoop-<span class="hljs-number">2.6</span>.<span class="hljs-number">0</span><span class="hljs-regexp">/share/</span>hadoop<span class="hljs-regexp">/yarn/</span>lib/<br></code></pre></td></tr></table></figure>
-
-<p>5、启动在主节点&#x2F;bigdata&#x2F;hive-1.2.1&#x2F;bin目录下执行：</p>
+<p>5、启动在主节点/bigdata/hive-1.2.1/bin目录下执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./schematool -dbType mysql -initSchema<br></code></pre></td></tr></table></figure>
-
-<p> &#x2F;&#x2F;初始化元数据</p>
-<p>6、启动Hive   .&#x2F;hive <img src="F:\notes\大数据\src\clip_image004.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>//初始化元数据</p>
+<p>6、启动Hive ./hive <img src="F:\notes\大数据\src\clip_image004.gif" srcset="/img/loading.gif" lazyload
+alt="img" /></p>
 <p><strong>遇见的问题：</strong></p>
 <p>在安装mysql的时候，可能会有centos自带的mysql会有端口冲突。</p>
-<p>如果遇见error: Failed dependencies: MySQL conflicts with mysql-5.1.71-1.el6.x86_64  使用rpm -e mysql-5.1.73-5.el6_7.1.x86_64 –nodeps删除他</p>
-<p>如果发现MySQL的服务不在状态 就可以ps找一下进程号 kill杀死 重新启动一下就OK了 ps aux | grep mysql  kill -9 进程号</p>
-<p>mysql 的相关命令是&#x2F;etc&#x2F;init.d&#x2F;mysql status&#x2F;stop&#x2F;start&#x2F;…</p>
+<p>如果遇见error: Failed dependencies: MySQL conflicts with
+mysql-5.1.71-1.el6.x86_64 使用rpm -e mysql-5.1.73-5.el6_7.1.x86_64
+--nodeps删除他</p>
+<p>如果发现MySQL的服务不在状态 就可以ps找一下进程号 kill杀死
+重新启动一下就OK了 ps aux | grep mysql kill -9 进程号</p>
+<p>mysql 的相关命令是/etc/init.d/mysql status/stop/start/...</p>
 
               
             </div>

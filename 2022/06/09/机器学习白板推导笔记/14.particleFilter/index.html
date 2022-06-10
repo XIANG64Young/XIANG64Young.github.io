@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="粒子滤波Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。 我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 $f(z)$ 的期望，可以利用某种抽样方法，在这个概率分布中抽取 $N$ 个样本，则 $\mathbb{">
+    <meta name="description" content="粒子滤波 Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。 我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 \(f(z)\) 的期望，可以利用某种抽样方法，在这个概率分布中抽取 \(N\) 个样本，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="粒子滤波">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/14.particleFilter/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="粒子滤波Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。 我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 $f(z)$ 的期望，可以利用某种抽样方法，在这个概率分布中抽取 $N$ 个样本，则 $\mathbb{">
+<meta property="og:description" content="粒子滤波 Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。 我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 \(f(z)\) 的期望，可以利用某种抽样方法，在这个概率分布中抽取 \(N\) 个样本，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.116Z">
 <meta property="article:modified_time" content="2022-06-09T08:02:05.490Z">
@@ -228,7 +228,7 @@
         
         
         
-          17 分钟
+          16 分钟
         
       </span>
     
@@ -270,21 +270,68 @@
             
             <div class="markdown-body">
               
-              <h1 id="粒子滤波"><a href="#粒子滤波" class="headerlink" title="粒子滤波"></a>粒子滤波</h1><p>Kalman 滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。</p>
-<p>我们希望应用 Monte Carlo 方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数 $f(z)$ 的期望，可以利用某种抽样方法，在这个概率分布中抽取 $N$ 个样本，则 $\mathbb{E}[f(z)]\simeq\frac{1}{N}\sum\limits_{i&#x3D;1}^Nf(z_i)$。但是如果这个概率十分复杂，那么采样比较困难。对于复杂的概率分布，我们可以通过一个简单的概率分布 $q(z)$ 作为桥梁（重要值采样）:<br>$$<br>\mathbb{E}[f(z)]&#x3D;\int_zf(z)p(z)dz&#x3D;\int_zf(z)\frac{p(z)}{q(z)}q(z)dz&#x3D;\sum\limits_{i&#x3D;1}^Nf(z_i)\frac{p(z_i)}{q(z_i)}<br>$$<br>于是直接通过对 $q(z)$ 采样，然后对每一个采样的样本应用权重就得到了期望的近似，当然为了概率分布的特性，我们需要对权重进行归一化。</p>
-<p>在滤波问题中，需要求解 $p(z_t|x_{1:t})$，其权重为：<br>$$<br>w_t^i&#x3D;\frac{p(z_t^i|x_{1:t})}{q(z_t^i|x_{1:t})},i&#x3D;1,2,\cdots,N<br>$$<br>于是在每一个时刻 $t$，都需要采样 $N$ 个点，但是即使采样了这么多点，分子上面的那一项也十分难求，于是希望找到一个关于权重的递推公式。为了解决这个问题，引入序列重要性采样（SIS）。</p>
-<h2 id="SIS"><a href="#SIS" class="headerlink" title="SIS"></a>SIS</h2><p>在 SIS 中，解决的问题是 $p(z_{1:t}|x_{1:t})$。<br>$$<br>w_t^i\propto\frac{p(z_{1:t}|x_{1:t})}{q(z_{1:t}|x_{1:t})}<br>$$<br>根据 LDS 中的推导：<br>$$<br>\begin{align}p(z_{1:t}|x_{1:t})\propto p(x_{1:t},z_{1:t})&amp;&#x3D;p(x_t|z_{1:t},x_{1:t-1})p(z_{1:t},x_{1:t-1})\nonumber\<br>&amp;&#x3D;p(x_t|z_t)p(z_t|x_{1:t-1},z_{1:t-1})p(x_{1:t-1},z_{1:t-1})\nonumber\<br>&amp;&#x3D;p(x_t|z_t)p(z_t|z_{t-1})p(x_{1:t-1},z_{1:t-1})\nonumber\<br>&amp;\propto p(x_t|z_t)p(z_t|z_{t-1})p(z_{1:t-1}|x_{1:t-1})<br>\end{align}<br>$$<br>于是分子的递推式就得到了。对于提议分布的分母，可以取：<br>$$<br>q(z_{1:t}|x_{1:t})&#x3D;q(z_t|z_{1:t-1},x_{1:t})q(z_{1:t-1}|x_{1:t-1})<br>$$<br>所以有：<br>$$<br>w_t^i\propto\frac{p(z_{1:t}|x_{1:t})}{q(z_{1:t}|x_{1:t})}\propto \frac{p(x_t|z_t)p(z_t|z_{t-1})p(z_{1:t-1}|x_{1:t-1})}{q(z_t|z_{1:t-1},x_{1:t})q(z_{1:t-1}|x_{1:t-1})}&#x3D;\frac{p(x_t|z_t)p(z_t|z_{t-1})}{q(z_t|z_{1:t-1},x_{1:t})}w_{t-1}^i<br>$$<br>我们得到的对权重的算法为：</p>
-<ol>
-<li>$t-1$ 时刻，采样完成并计算得到权重</li>
-<li>t 时刻，根据 $q(z_t|z_{1:t-1},x_{1:t})$ 进行采样得到 $z_t^i$。然后计算得到 $N$ 个权重。</li>
+              <h1 id="粒子滤波">粒子滤波</h1>
+<p>Kalman
+滤波根据线性高斯模型可以求得解析解，但是在非线性，非高斯的情况，是无法得到解析解的，对这类一般的情况，我们叫做粒子滤波，我们需要求得概率分布，需要采用采样的方式。</p>
+<p>我们希望应用 Monte Carlo
+方法来进行采样，对于一个概率分布，如果我们希望计算依这个分布的某个函数
+<span class="math inline">\(f(z)\)</span>
+的期望，可以利用某种抽样方法，在这个概率分布中抽取 <span
+class="math inline">\(N\)</span> 个样本，则 <span
+class="math inline">\(\mathbb{E}[f(z)]\simeq\frac{1}{N}\sum\limits_{i=1}^Nf(z_i)\)</span>。但是如果这个概率十分复杂，那么采样比较困难。对于复杂的概率分布，我们可以通过一个简单的概率分布
+<span class="math inline">\(q(z)\)</span> 作为桥梁（重要值采样）: <span
+class="math display">\[
+\mathbb{E}[f(z)]=\int_zf(z)p(z)dz=\int_zf(z)\frac{p(z)}{q(z)}q(z)dz=\sum\limits_{i=1}^Nf(z_i)\frac{p(z_i)}{q(z_i)}
+\]</span> 于是直接通过对 <span class="math inline">\(q(z)\)</span>
+采样，然后对每一个采样的样本应用权重就得到了期望的近似，当然为了概率分布的特性，我们需要对权重进行归一化。</p>
+<p>在滤波问题中，需要求解 <span
+class="math inline">\(p(z_t|x_{1:t})\)</span>，其权重为： <span
+class="math display">\[
+w_t^i=\frac{p(z_t^i|x_{1:t})}{q(z_t^i|x_{1:t})},i=1,2,\cdots,N
+\]</span> 于是在每一个时刻 <span
+class="math inline">\(t\)</span>，都需要采样 <span
+class="math inline">\(N\)</span>
+个点，但是即使采样了这么多点，分子上面的那一项也十分难求，于是希望找到一个关于权重的递推公式。为了解决这个问题，引入序列重要性采样（SIS）。</p>
+<h2 id="sis">SIS</h2>
+<p>在 SIS 中，解决的问题是 <span
+class="math inline">\(p(z_{1:t}|x_{1:t})\)</span>。 <span
+class="math display">\[
+w_t^i\propto\frac{p(z_{1:t}|x_{1:t})}{q(z_{1:t}|x_{1:t})}
+\]</span> 根据 LDS 中的推导： <span class="math display">\[
+\begin{align}p(z_{1:t}|x_{1:t})\propto
+p(x_{1:t},z_{1:t})&amp;=p(x_t|z_{1:t},x_{1:t-1})p(z_{1:t},x_{1:t-1})\nonumber\\
+&amp;=p(x_t|z_t)p(z_t|x_{1:t-1},z_{1:t-1})p(x_{1:t-1},z_{1:t-1})\nonumber\\
+&amp;=p(x_t|z_t)p(z_t|z_{t-1})p(x_{1:t-1},z_{1:t-1})\nonumber\\
+&amp;\propto p(x_t|z_t)p(z_t|z_{t-1})p(z_{1:t-1}|x_{1:t-1})
+\end{align}
+\]</span> 于是分子的递推式就得到了。对于提议分布的分母，可以取： <span
+class="math display">\[
+q(z_{1:t}|x_{1:t})=q(z_t|z_{1:t-1},x_{1:t})q(z_{1:t-1}|x_{1:t-1})
+\]</span> 所以有： <span class="math display">\[
+w_t^i\propto\frac{p(z_{1:t}|x_{1:t})}{q(z_{1:t}|x_{1:t})}\propto
+\frac{p(x_t|z_t)p(z_t|z_{t-1})p(z_{1:t-1}|x_{1:t-1})}{q(z_t|z_{1:t-1},x_{1:t})q(z_{1:t-1}|x_{1:t-1})}=\frac{p(x_t|z_t)p(z_t|z_{t-1})}{q(z_t|z_{1:t-1},x_{1:t})}w_{t-1}^i
+\]</span> 我们得到的对权重的算法为：</p>
+<ol type="1">
+<li><span class="math inline">\(t-1\)</span>
+时刻，采样完成并计算得到权重</li>
+<li>t 时刻，根据 <span
+class="math inline">\(q(z_t|z_{1:t-1},x_{1:t})\)</span> 进行采样得到
+<span class="math inline">\(z_t^i\)</span>。然后计算得到 <span
+class="math inline">\(N\)</span> 个权重。</li>
 <li>最后对权重归一化。</li>
 </ol>
-<p>SIS 算法会出现权值退化的情况，在一定时间后，可能会出现大部分权重都逼近0的情况，这是由于空间维度越来越高，需要的样本也越来越多。解决这个问题的方法有：</p>
-<ol>
+<p>SIS
+算法会出现权值退化的情况，在一定时间后，可能会出现大部分权重都逼近0的情况，这是由于空间维度越来越高，需要的样本也越来越多。解决这个问题的方法有：</p>
+<ol type="1">
 <li>重采样，以权重作为概率分布，重新在已经采样的样本中采样，然后所有样本的权重相同，这个方法的思路是将权重作为概率分布，然后得到累积密度函数，在累积密度上取点（阶梯函数）。</li>
-<li>选择一个合适的提议分布，$q(z_t|z_{1:t-1},x_{1:t})&#x3D;p(z_t|z_{t-1})$，于是就消掉了一项，并且采样的概率就是 $p(z_t|z_{t-1})$，这就叫做生成与测试方法。</li>
+<li>选择一个合适的提议分布，<span
+class="math inline">\(q(z_t|z_{1:t-1},x_{1:t})=p(z_t|z_{t-1})\)</span>，于是就消掉了一项，并且采样的概率就是
+<span
+class="math inline">\(p(z_t|z_{t-1})\)</span>，这就叫做生成与测试方法。</li>
 </ol>
-<p>采用重采样的 SIS 算法就是基本的粒子滤波算法。如果像上面那样选择提议分布，这个算法叫做 SIR 算法。</p>
+<p>采用重采样的 SIS
+算法就是基本的粒子滤波算法。如果像上面那样选择提议分布，这个算法叫做 SIR
+算法。</p>
 
               
             </div>

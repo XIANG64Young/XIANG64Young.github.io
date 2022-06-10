@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="隐马尔可夫模型隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了时序信息">
+    <meta name="description" content="隐马尔可夫模型 隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="隐马尔可夫模型">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/12.HMM/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="隐马尔可夫模型隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了时序信息">
+<meta property="og:description" content="隐马尔可夫模型 隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.113Z">
 <meta property="article:modified_time" content="2022-06-09T08:01:59.196Z">
@@ -217,7 +217,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7k 字
+          6.4k 字
         
       </span>
     
@@ -228,7 +228,7 @@
         
         
         
-          59 分钟
+          54 分钟
         
       </span>
     
@@ -270,19 +270,22 @@
             
             <div class="markdown-body">
               
-              <h2 id="隐马尔可夫模型"><a href="#隐马尔可夫模型" class="headerlink" title="隐马尔可夫模型"></a>隐马尔可夫模型</h2><p>隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC 等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如 GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了时序信息，从而样本之间不独立全同分布的，这种模型就叫做动态模型，隐变量随着时间发生变化，于是观测变量也发生变化：</p>
+              <h2 id="隐马尔可夫模型">隐马尔可夫模型</h2>
+<p>隐马尔可夫模型是一种概率图模型。我们知道，机器学习模型可以从频率派和贝叶斯派两个方向考虑，在频率派的方法中的核心是优化问题，而在贝叶斯派的方法中，核心是积分问题，也发展出来了一系列的积分方法如变分推断，MCMC
+等。概率图模型最基本的模型可以分为有向图（贝叶斯网络）和无向图（马尔可夫随机场）两个方面，例如
+GMM，在这些基本的模型上，如果样本之间存在关联，可以认为样本中附带了时序信息，从而样本之间不独立全同分布的，这种模型就叫做动态模型，隐变量随着时间发生变化，于是观测变量也发生变化：</p>
 <pre><code class=" mermaid">graph LR;
 	z1--&gt;z2--&gt;z3;
 	
 </code></pre>
-
 <p>根据状态变量的特点，可以分为：</p>
-<ol>
+<ol type="1">
 <li>HMM，状态变量（隐变量）是离散的</li>
 <li>Kalman 滤波，状态变量是连续的，线性的</li>
 <li>粒子滤波，状态变量是连续，非线性的</li>
 </ol>
-<h2 id="HMM"><a href="#HMM" class="headerlink" title="HMM"></a>HMM</h2><p>HMM 用概率图表示为：</p>
+<h2 id="hmm">HMM</h2>
+<p>HMM 用概率图表示为：</p>
 <pre><code class=" mermaid">graph TD;
 t1--&gt;t2;
 subgraph four
@@ -301,47 +304,188 @@ end
 t2--&gt;t3;
 t3--&gt;t4;
 </code></pre>
-
-<p>上图表示了四个时刻的隐变量变化。用参数 $\lambda&#x3D;(\pi,A,B)$ 来表示，其中 $\pi$ 是开始的概率分布，$A$ 为状态转移矩阵，$B$ 为发射矩阵。</p>
-<p>下面使用 $ o_t$ 来表示观测变量，$O$ 为观测序列，$V&#x3D;{v_1,v_2,\cdots,v_M}$ 表示观测的值域，$i_t$ 表示状态变量，$I$ 为状态序列，$Q&#x3D;{q_1,q_2,\cdots,q_N}$ 表示状态变量的值域。定义 $A&#x3D;(a_{ij}&#x3D;p(i_{t+1}&#x3D;q_j|i_t&#x3D;q_i))$ 表示状态转移矩阵，$B&#x3D;(b_j(k)&#x3D;p(o_t&#x3D;v_k|i_t&#x3D;q_j))$ 表示发射矩阵。</p>
+<p>上图表示了四个时刻的隐变量变化。用参数 <span
+class="math inline">\(\lambda=(\pi,A,B)\)</span> 来表示，其中 <span
+class="math inline">\(\pi\)</span> 是开始的概率分布，<span
+class="math inline">\(A\)</span> 为状态转移矩阵，<span
+class="math inline">\(B\)</span> 为发射矩阵。</p>
+<p>下面使用 $ o_t$ 来表示观测变量，<span
+class="math inline">\(O\)</span> 为观测序列，<span
+class="math inline">\(V=\{v_1,v_2,\cdots,v_M\}\)</span>
+表示观测的值域，<span class="math inline">\(i_t\)</span>
+表示状态变量，<span class="math inline">\(I\)</span> 为状态序列，<span
+class="math inline">\(Q=\{q_1,q_2,\cdots,q_N\}\)</span>
+表示状态变量的值域。定义 <span
+class="math inline">\(A=(a_{ij}=p(i_{t+1}=q_j|i_t=q_i))\)</span>
+表示状态转移矩阵，<span
+class="math inline">\(B=(b_j(k)=p(o_t=v_k|i_t=q_j))\)</span>
+表示发射矩阵。</p>
 <p>在 HMM 中，有两个基本假设：</p>
-<ol>
-<li><p>齐次 Markov 假设（未来只依赖于当前）：<br>$$<br>p(i_{t+1}|i_t,i_{t-1},\cdots,i_1,o_t,o_{t-1},\cdots,o_1)&#x3D;p(i_{t+1}|i_t)<br>$$</p>
-</li>
-<li><p>观测独立假设：<br>$$<br>p(o_t|i_t,i_{t-1},\cdots,i_1,o_{t-1},\cdots,o_1)&#x3D;p(o_t|i_t)<br>$$</p>
-</li>
+<ol type="1">
+<li><p>齐次 Markov 假设（未来只依赖于当前）： <span
+class="math display">\[
+p(i_{t+1}|i_t,i_{t-1},\cdots,i_1,o_t,o_{t-1},\cdots,o_1)=p(i_{t+1}|i_t)
+\]</span></p></li>
+<li><p>观测独立假设： <span class="math display">\[
+p(o_t|i_t,i_{t-1},\cdots,i_1,o_{t-1},\cdots,o_1)=p(o_t|i_t)
+\]</span></p></li>
 </ol>
 <p>HMM 要解决三个问题：</p>
-<ol>
-<li>Evaluation：$p(O|\lambda)$，Forward-Backward 算法</li>
-<li>Learning：$\lambda&#x3D;\mathop{argmax}\limits_{\lambda}p(O|\lambda)$，EM 算法（Baum-Welch）</li>
-<li>Decoding：$I&#x3D;\mathop{argmax}\limits_{I}p(I|O,\lambda)$，Vierbi 算法<ol>
-<li>预测问题：$p(i_{t+1}|o_1,o_2,\cdots,o_t)$</li>
-<li>滤波问题：$p(i_t|o_1,o_2,\cdots,o_t)$</li>
+<ol type="1">
+<li>Evaluation：<span
+class="math inline">\(p(O|\lambda)\)</span>，Forward-Backward 算法</li>
+<li>Learning：<span
+class="math inline">\(\lambda=\mathop{argmax}\limits_{\lambda}p(O|\lambda)\)</span>，EM
+算法（Baum-Welch）</li>
+<li>Decoding：<span
+class="math inline">\(I=\mathop{argmax}\limits_{I}p(I|O,\lambda)\)</span>，Vierbi
+算法
+<ol type="1">
+<li>预测问题：<span
+class="math inline">\(p(i_{t+1}|o_1,o_2,\cdots,o_t)\)</span></li>
+<li>滤波问题：<span
+class="math inline">\(p(i_t|o_1,o_2,\cdots,o_t)\)</span></li>
+</ol></li>
 </ol>
-</li>
-</ol>
-<h3 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h3><p>$$<br>p(O|\lambda)&#x3D;\sum\limits_{I}p(I,O|\lambda)&#x3D;\sum\limits_{I}p(O|I,\lambda)p(I|\lambda)<br>$$</p>
-<p>$$<br>p(I|\lambda)&#x3D;p(i_1,i_2,\cdots,i_t|\lambda)&#x3D;p(i_t|i_1,i_2,\cdots,i_{t-1},\lambda)p(i_1,i_2,\cdots,i_{t-1}|\lambda)<br>$$</p>
-<p>根据齐次 Markov 假设：<br>$$<br>p(i_t|i_1,i_2,\cdots,i_{t-1},\lambda)&#x3D;p(i_t|i_{t-1})&#x3D;a_{i_{t-1}i_t}<br>$$<br>所以：<br>$$<br>p(I|\lambda)&#x3D;\pi_1\prod\limits_{t&#x3D;2}^Ta_{i_{t-1},i_t}<br>$$<br>又由于：<br>$$<br>p(O|I,\lambda)&#x3D;\prod\limits_{t&#x3D;1}^Tb_{i_t}(o_t)<br>$$<br>于是：<br>$$<br>p(O|\lambda)&#x3D;\sum\limits_{I}\pi_{i_1}\prod\limits_{t&#x3D;2}^Ta_{i_{t-1},i_t}\prod\limits_{t&#x3D;1}^Tb_{i_t}(o_t)<br>$$<br>我们看到，上面的式子中的求和符号是对所有的观测变量求和，于是复杂度为 $O(N^T)$。</p>
-<p>下面，记 $\alpha_t(i)&#x3D;p(o_1,o_2,\cdots,o_t,i_t&#x3D;q_i|\lambda)$，所以，$\alpha_T(i)&#x3D;p(O,i_T&#x3D;q_i|\lambda)$。我们看到：<br>$$<br>p(O|\lambda)&#x3D;\sum\limits_{i&#x3D;1}^Np(O,i_T&#x3D;q_i|\lambda)&#x3D;\sum\limits_{i&#x3D;1}^N\alpha_T(i)<br>$$<br>对 $\alpha_{t+1}(j)$：<br>$$<br>\begin{align}\alpha_{t+1}(j)&amp;&#x3D;p(o_1,o_2,\cdots,o_{t+1},i_{t+1}&#x3D;q_j|\lambda)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_1,o_2,\cdots,o_{t+1},i_{t+1}&#x3D;q_j,i_t&#x3D;q_i|\lambda)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_{t+1}|o_1,o_2,\cdots,i_{t+1}&#x3D;q_j,i_t&#x3D;q_i|\lambda)p(o_1,\cdots,o_t,i_t&#x3D;q_i,i_{t+1}&#x3D;q_j|\lambda)<br>\end{align}<br>$$<br>利用观测独立假设：<br>$$<br>\begin{align}\alpha_{t+1}(j)&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_{t+1}|i_{t+1}&#x3D;q_j)p(o_1,\cdots,o_t,i_t&#x3D;q_i,i_{t+1}&#x3D;q_j|\lambda)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_{t+1}|i_{t+1}&#x3D;q_j)p(i_{t+1}&#x3D;q_j|o_1,\cdots,o_t,i_t&#x3D;q_i,\lambda)p(o_1,\cdots,o_t,i_t&#x3D;q_i|\lambda)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Nb_{j}(o_t)a_{ij}\alpha_t(i)<br>\end{align}<br>$$<br>上面利用了齐次 Markov 假设得到了一个递推公式，这个算法叫做前向算法。</p>
-<p>还有一种算法叫做后向算法，定义 $\beta_t(i)&#x3D;p(o_{t+1},o_{t+1},\cdots，o_T|i_t&#x3D;i,\lambda)$：<br>$$<br>\begin{align}p(O|\lambda)&amp;&#x3D;p(o_1,\cdots,o_T|\lambda)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_1,o_2,\cdots,o_T,i_1&#x3D;q_i|\lambda)\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_1,o_2,\cdots,o_T|i_1&#x3D;q_i,\lambda)\pi_i\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Np(o_1|o_2,\cdots,o_T,i_1&#x3D;q_i,\lambda)p(o_2,\cdots,o_T|i_1&#x3D;q_i,\lambda)\pi_i\nonumber\<br>&amp;&#x3D;\sum\limits_{i&#x3D;1}^Nb_i(o_1)\pi_i\beta_1(i)<br>\end{align}<br>$$<br>对于这个 $\beta_1(i)$：<br>$$<br>\begin{align}\beta_t(i)&amp;&#x3D;p(o_{t+1},\cdots,o_T|i_t&#x3D;q_i)\nonumber\<br>&amp;&#x3D;\sum\limits_{j&#x3D;1}^Np(o_{t+1},o_{t+2},\cdots,o_T,i_{t+1}&#x3D;q_j|i_t&#x3D;q_i)\nonumber\<br>&amp;&#x3D;\sum\limits_{j&#x3D;1}^Np(o_{t+1},\cdots,o_T|i_{t+1}&#x3D;q_j,i_t&#x3D;q_i)p(i_{t+1}&#x3D;q_j|i_t&#x3D;q_i)\nonumber\<br>&amp;&#x3D;\sum\limits_{j&#x3D;1}^Np(o_{t+1},\cdots,o_T|i_{t+1}&#x3D;q_j)a_{ij}\nonumber\<br>&amp;&#x3D;\sum\limits_{j&#x3D;1}^Np(o_{t+1}|o_{t+2},\cdots,o_T,i_{t+1}&#x3D;q_j)p(o_{t+2},\cdots,o_T|i_{t+1}&#x3D;q_j)a_{ij}\nonumber\<br>&amp;&#x3D;\sum\limits_{j&#x3D;1}^Nb_j(o_{t+1})a_{ij}\beta_{t+1}(j)<br>\end{align}<br>$$<br>于是后向地得到了第一项。</p>
-<h3 id="Learning"><a href="#Learning" class="headerlink" title="Learning"></a>Learning</h3><p>为了学习得到参数的最优值，在 MLE 中：<br>$$<br>\lambda_{MLE}&#x3D;\mathop{argmax}<em>\lambda p(O|\lambda)<br>$$<br>我们采用 EM 算法（在这里也叫 Baum Welch 算法），用上标表示迭代：<br>$$<br>\theta^{t+1}&#x3D;\mathop{argmax}</em>{\theta}\int_z\log p(X,Z|\theta)p(Z|X,\theta^t)dz<br>$$<br>其中，$X$ 是观测变量，$Z$ 是隐变量序列。于是：<br>$$<br>\lambda^{t+1}&#x3D;\mathop{argmax}<em>\lambda\sum\limits_I\log p(O,I|\lambda)p(I|O,\lambda^t)\<br>&#x3D;\mathop{argmax}<em>\lambda\sum\limits_I\log p(O,I|\lambda)p(O,I|\lambda^t)<br>$$<br> 这里利用了 $p(O|\lambda^t)$ 和$\lambda$ 无关。将 Evaluation 中的式子代入：<br>$$<br>\sum\limits_I\log p(O,I|\lambda)p(O,I|\lambda^t)&#x3D;\sum\limits_I[\log \pi</em>{i_1}+\sum\limits</em>{t&#x3D;2}^T\log a_{i_{t-1},i_t}+\sum\limits_{t&#x3D;1}^T\log b_{i_t}(o_t)]p(O,I|\lambda^t)<br>$$<br>对 $\pi^{t+1}$：<br>$$<br>\begin{align}\pi^{t+1}&amp;&#x3D;\mathop{argmax}<em>\pi\sum\limits_I[\log \pi</em>{i_1}p(O,I|\lambda^t)]\nonumber\<br>&amp;&#x3D;\mathop{argmax}<em>\pi\sum\limits_I[\log \pi</em>{i_1}\cdot p(O,i_1,i_2,\cdots,i_T|\lambda^t)]<br>\end{align}<br>$$<br>上面的式子中，对 $i_2,i_2,\cdots,i_T$ 求和可以将这些参数消掉：<br>$$<br>\pi^{t+1}&#x3D;\mathop{argmax}<em>\pi\sum\limits</em>{i_1}[\log \pi_{i_1}\cdot p(O,i_1|\lambda^t)]<br>$$<br>上面的式子还有对 $\pi$ 的约束 $\sum\limits_i\pi_i&#x3D;1$。定义 Lagrange 函数：<br>$$<br>L(\pi,\eta)&#x3D;\sum\limits_{i&#x3D;1}^N\log \pi_i\cdot p(O,i_1&#x3D;q_i|\lambda^t)+\eta(\sum\limits_{i&#x3D;1}^N\pi_i-1)<br>$$<br>于是：<br>$$<br>\frac{\partial L}{\partial\pi_i}&#x3D;\frac{1}{\pi_i}p(O,i_1&#x3D;q_i|\lambda^t)+\eta&#x3D;0<br>$$<br>对上式求和：<br>$$<br>\sum\limits_{i&#x3D;1}^Np(O,i_1&#x3D;q_i|\lambda^t)+\pi_i\eta&#x3D;0\Rightarrow\eta&#x3D;-p(O|\lambda^t)<br>$$<br>所以：<br>$$<br>\pi_i^{t+1}&#x3D;\frac{p(O,i_1&#x3D;q_i|\lambda^t)}{p(O|\lambda^t)}<br>$$</p>
-<h3 id="Decoding"><a href="#Decoding" class="headerlink" title="Decoding"></a>Decoding</h3><p>Decoding 问题表述为：<br>$$<br>I&#x3D;\mathop{argmax}\limits_{I}p(I|O,\lambda)<br>$$<br>我们需要找到一个序列，其概率最大，这个序列就是在参数空间中的一个路径，可以采用动态规划的思想。</p>
-<p>定义：<br>$$<br>\delta_{t}(j)&#x3D;\max\limits_{i_1,\cdots,i_{t-1}}p(o_1,\cdots,o_t,i_1,\cdots,i_{t-1},i_t&#x3D;q_i)<br>$$<br>于是：<br>$$<br>\delta_{t+1}(j)&#x3D;\max\limits_{1\le i\le N}\delta_t(i)a_{ij}b_j(o_{t+1})<br>$$<br>这个式子就是从上一步到下一步的概率再求最大值。记这个路径为：<br>$$<br>\psi_{t+1}(j)&#x3D;\mathop{argmax}\limits_{1\le i\le N}\delta_t(i)a_{ij}<br>$$</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>HMM 是一种动态模型，是由混合树形模型和时序结合起来的一种模型（类似 GMM + Time）。对于类似 HMM 的这种状态空间模型，普遍的除了学习任务（采用 EM ）外，还有推断任务，推断任务包括：</p>
-<ol>
-<li><p>译码 Decoding：$p(z_1,z_2,\cdots,z_t|x_1,x_2,\cdots,x_t)$</p>
-</li>
-<li><p>似然概率：$p(X|\theta)$</p>
-</li>
-<li><p>滤波：$ p(z_t|x_1,\cdots,x_t)$，Online<br>$$<br>p(z_t|x_{1:t})&#x3D;\frac{p(x_{1:t},z_t)}{p(x_{1:t})}&#x3D;C\alpha_t(z_t)<br>$$</p>
-</li>
-<li><p>平滑：$p(z_t|x_1,\cdots,x_T)$，Offline<br>$$<br>p(z_t|x_{1:T})&#x3D;\frac{p(x_{1:T},z_t)}{p(x_{1:T})}&#x3D;\frac{\alpha_t(z_t)p(x_{t+1:T}|x_{1:t},z_t)}{p(x_{1:T})}<br>$$<br>根据概率图的条件独立性，有：<br>$$<br>p(z_t|x_{1:T})&#x3D;\frac{\alpha_t(z_t)p(x_{t+1:T}|z_t)}{p(x_{1:T})}&#x3D;C\alpha_t(z_t)\beta_t(z_t)<br>$$<br>这个算法叫做前向后向算法。</p>
-</li>
-<li><p>预测：$p(z_{t+1},z_{t+2}|x_1,\cdots,x_t),p(x_{t+1},x_{t+2}|x_1,\cdots,x_t)$<br>$$<br>p(z_{t+1}|x_{1:t})&#x3D;\sum_{z_t}p(z_{t+1},z_t|x_{1:t})&#x3D;\sum\limits_{z_t}p(z_{t+1}|z_t)p(z_t|x_{1:t})<br>$$</p>
-<p>$$<br>p(x_{t+1}|x_{1:t})&#x3D;\sum\limits_{z_{t+1}}p(x_{t+1},z_{t+1}|x_{1:t})&#x3D;\sum\limits_{z_{t+1}}p(x_{t+1}|z_{t+1})p(z_{t+1}|x_{1:t})<br>$$</p>
-</li>
+<h3 id="evaluation">Evaluation</h3>
+<p><span class="math display">\[
+p(O|\lambda)=\sum\limits_{I}p(I,O|\lambda)=\sum\limits_{I}p(O|I,\lambda)p(I|\lambda)
+\]</span></p>
+<p><span class="math display">\[
+p(I|\lambda)=p(i_1,i_2,\cdots,i_t|\lambda)=p(i_t|i_1,i_2,\cdots,i_{t-1},\lambda)p(i_1,i_2,\cdots,i_{t-1}|\lambda)
+\]</span></p>
+<p>根据齐次 Markov 假设： <span class="math display">\[
+p(i_t|i_1,i_2,\cdots,i_{t-1},\lambda)=p(i_t|i_{t-1})=a_{i_{t-1}i_t}
+\]</span> 所以： <span class="math display">\[
+p(I|\lambda)=\pi_1\prod\limits_{t=2}^Ta_{i_{t-1},i_t}
+\]</span> 又由于： <span class="math display">\[
+p(O|I,\lambda)=\prod\limits_{t=1}^Tb_{i_t}(o_t)
+\]</span> 于是： <span class="math display">\[
+p(O|\lambda)=\sum\limits_{I}\pi_{i_1}\prod\limits_{t=2}^Ta_{i_{t-1},i_t}\prod\limits_{t=1}^Tb_{i_t}(o_t)
+\]</span>
+我们看到，上面的式子中的求和符号是对所有的观测变量求和，于是复杂度为
+<span class="math inline">\(O(N^T)\)</span>。</p>
+<p>下面，记 <span
+class="math inline">\(\alpha_t(i)=p(o_1,o_2,\cdots,o_t,i_t=q_i|\lambda)\)</span>，所以，<span
+class="math inline">\(\alpha_T(i)=p(O,i_T=q_i|\lambda)\)</span>。我们看到：
+<span class="math display">\[
+p(O|\lambda)=\sum\limits_{i=1}^Np(O,i_T=q_i|\lambda)=\sum\limits_{i=1}^N\alpha_T(i)
+\]</span> 对 <span class="math inline">\(\alpha_{t+1}(j)\)</span>：
+<span class="math display">\[
+\begin{align}\alpha_{t+1}(j)&amp;=p(o_1,o_2,\cdots,o_{t+1},i_{t+1}=q_j|\lambda)\nonumber\\
+&amp;=\sum\limits_{i=1}^Np(o_1,o_2,\cdots,o_{t+1},i_{t+1}=q_j,i_t=q_i|\lambda)\nonumber\\
+&amp;=\sum\limits_{i=1}^Np(o_{t+1}|o_1,o_2,\cdots,i_{t+1}=q_j,i_t=q_i|\lambda)p(o_1,\cdots,o_t,i_t=q_i,i_{t+1}=q_j|\lambda)
+\end{align}
+\]</span> 利用观测独立假设： <span class="math display">\[
+\begin{align}\alpha_{t+1}(j)&amp;=\sum\limits_{i=1}^Np(o_{t+1}|i_{t+1}=q_j)p(o_1,\cdots,o_t,i_t=q_i,i_{t+1}=q_j|\lambda)\nonumber\\
+&amp;=\sum\limits_{i=1}^Np(o_{t+1}|i_{t+1}=q_j)p(i_{t+1}=q_j|o_1,\cdots,o_t,i_t=q_i,\lambda)p(o_1,\cdots,o_t,i_t=q_i|\lambda)\nonumber\\
+&amp;=\sum\limits_{i=1}^Nb_{j}(o_t)a_{ij}\alpha_t(i)
+\end{align}
+\]</span> 上面利用了齐次 Markov
+假设得到了一个递推公式，这个算法叫做前向算法。</p>
+<p>还有一种算法叫做后向算法，定义 <span
+class="math inline">\(\beta_t(i)=p(o_{t+1},o_{t+1},\cdots，o_T|i_t=i,\lambda)\)</span>：
+<span class="math display">\[
+\begin{align}p(O|\lambda)&amp;=p(o_1,\cdots,o_T|\lambda)\nonumber\\
+&amp;=\sum\limits_{i=1}^Np(o_1,o_2,\cdots,o_T,i_1=q_i|\lambda)\nonumber\\
+&amp;=\sum\limits_{i=1}^Np(o_1,o_2,\cdots,o_T|i_1=q_i,\lambda)\pi_i\nonumber\\
+&amp;=\sum\limits_{i=1}^Np(o_1|o_2,\cdots,o_T,i_1=q_i,\lambda)p(o_2,\cdots,o_T|i_1=q_i,\lambda)\pi_i\nonumber\\
+&amp;=\sum\limits_{i=1}^Nb_i(o_1)\pi_i\beta_1(i)
+\end{align}
+\]</span> 对于这个 <span class="math inline">\(\beta_1(i)\)</span>：
+<span class="math display">\[
+\begin{align}\beta_t(i)&amp;=p(o_{t+1},\cdots,o_T|i_t=q_i)\nonumber\\
+&amp;=\sum\limits_{j=1}^Np(o_{t+1},o_{t+2},\cdots,o_T,i_{t+1}=q_j|i_t=q_i)\nonumber\\
+&amp;=\sum\limits_{j=1}^Np(o_{t+1},\cdots,o_T|i_{t+1}=q_j,i_t=q_i)p(i_{t+1}=q_j|i_t=q_i)\nonumber\\
+&amp;=\sum\limits_{j=1}^Np(o_{t+1},\cdots,o_T|i_{t+1}=q_j)a_{ij}\nonumber\\
+&amp;=\sum\limits_{j=1}^Np(o_{t+1}|o_{t+2},\cdots,o_T,i_{t+1}=q_j)p(o_{t+2},\cdots,o_T|i_{t+1}=q_j)a_{ij}\nonumber\\
+&amp;=\sum\limits_{j=1}^Nb_j(o_{t+1})a_{ij}\beta_{t+1}(j)
+\end{align}
+\]</span> 于是后向地得到了第一项。</p>
+<h3 id="learning">Learning</h3>
+<p>为了学习得到参数的最优值，在 MLE 中： <span class="math display">\[
+\lambda_{MLE}=\mathop{argmax}_\lambda p(O|\lambda)
+\]</span> 我们采用 EM 算法（在这里也叫 Baum Welch
+算法），用上标表示迭代： <span class="math display">\[
+\theta^{t+1}=\mathop{argmax}_{\theta}\int_z\log
+p(X,Z|\theta)p(Z|X,\theta^t)dz
+\]</span> 其中，<span class="math inline">\(X\)</span> 是观测变量，<span
+class="math inline">\(Z\)</span> 是隐变量序列。于是： <span
+class="math display">\[
+\lambda^{t+1}=\mathop{argmax}_\lambda\sum\limits_I\log
+p(O,I|\lambda)p(I|O,\lambda^t)\\
+=\mathop{argmax}_\lambda\sum\limits_I\log p(O,I|\lambda)p(O,I|\lambda^t)
+\]</span> 这里利用了 <span class="math inline">\(p(O|\lambda^t)\)</span>
+和<span class="math inline">\(\lambda\)</span> 无关。将 Evaluation
+中的式子代入： <span class="math display">\[
+\sum\limits_I\log p(O,I|\lambda)p(O,I|\lambda^t)=\sum\limits_I[\log
+\pi_{i_1}+\sum\limits_{t=2}^T\log
+a_{i_{t-1},i_t}+\sum\limits_{t=1}^T\log b_{i_t}(o_t)]p(O,I|\lambda^t)
+\]</span> 对 <span class="math inline">\(\pi^{t+1}\)</span>： <span
+class="math display">\[
+\begin{align}\pi^{t+1}&amp;=\mathop{argmax}_\pi\sum\limits_I[\log
+\pi_{i_1}p(O,I|\lambda^t)]\nonumber\\
+&amp;=\mathop{argmax}_\pi\sum\limits_I[\log \pi_{i_1}\cdot
+p(O,i_1,i_2,\cdots,i_T|\lambda^t)]
+\end{align}
+\]</span> 上面的式子中，对 <span
+class="math inline">\(i_2,i_2,\cdots,i_T\)</span>
+求和可以将这些参数消掉： <span class="math display">\[
+\pi^{t+1}=\mathop{argmax}_\pi\sum\limits_{i_1}[\log \pi_{i_1}\cdot
+p(O,i_1|\lambda^t)]
+\]</span> 上面的式子还有对 <span class="math inline">\(\pi\)</span>
+的约束 <span class="math inline">\(\sum\limits_i\pi_i=1\)</span>。定义
+Lagrange 函数： <span class="math display">\[
+L(\pi,\eta)=\sum\limits_{i=1}^N\log \pi_i\cdot
+p(O,i_1=q_i|\lambda^t)+\eta(\sum\limits_{i=1}^N\pi_i-1)
+\]</span> 于是： <span class="math display">\[
+\frac{\partial
+L}{\partial\pi_i}=\frac{1}{\pi_i}p(O,i_1=q_i|\lambda^t)+\eta=0
+\]</span> 对上式求和： <span class="math display">\[
+\sum\limits_{i=1}^Np(O,i_1=q_i|\lambda^t)+\pi_i\eta=0\Rightarrow\eta=-p(O|\lambda^t)
+\]</span> 所以： <span class="math display">\[
+\pi_i^{t+1}=\frac{p(O,i_1=q_i|\lambda^t)}{p(O|\lambda^t)}
+\]</span></p>
+<h3 id="decoding">Decoding</h3>
+<p>Decoding 问题表述为： <span class="math display">\[
+I=\mathop{argmax}\limits_{I}p(I|O,\lambda)
+\]</span>
+我们需要找到一个序列，其概率最大，这个序列就是在参数空间中的一个路径，可以采用动态规划的思想。</p>
+<p>定义： <span class="math display">\[
+\delta_{t}(j)=\max\limits_{i_1,\cdots,i_{t-1}}p(o_1,\cdots,o_t,i_1,\cdots,i_{t-1},i_t=q_i)
+\]</span> 于是： <span class="math display">\[
+\delta_{t+1}(j)=\max\limits_{1\le i\le N}\delta_t(i)a_{ij}b_j(o_{t+1})
+\]</span> 这个式子就是从上一步到下一步的概率再求最大值。记这个路径为：
+<span class="math display">\[
+\psi_{t+1}(j)=\mathop{argmax}\limits_{1\le i\le N}\delta_t(i)a_{ij}
+\]</span></p>
+<h2 id="小结">小结</h2>
+<p>HMM 是一种动态模型，是由混合树形模型和时序结合起来的一种模型（类似
+GMM + Time）。对于类似 HMM 的这种状态空间模型，普遍的除了学习任务（采用
+EM ）外，还有推断任务，推断任务包括：</p>
+<ol type="1">
+<li><p>译码 Decoding：<span
+class="math inline">\(p(z_1,z_2,\cdots,z_t|x_1,x_2,\cdots,x_t)\)</span></p></li>
+<li><p>似然概率：<span
+class="math inline">\(p(X|\theta)\)</span></p></li>
+<li><p>滤波：$ p(z_t|x_1,,x_t)$，Online <span class="math display">\[
+p(z_t|x_{1:t})=\frac{p(x_{1:t},z_t)}{p(x_{1:t})}=C\alpha_t(z_t)
+\]</span></p></li>
+<li><p>平滑：<span
+class="math inline">\(p(z_t|x_1,\cdots,x_T)\)</span>，Offline <span
+class="math display">\[
+p(z_t|x_{1:T})=\frac{p(x_{1:T},z_t)}{p(x_{1:T})}=\frac{\alpha_t(z_t)p(x_{t+1:T}|x_{1:t},z_t)}{p(x_{1:T})}
+\]</span> 根据概率图的条件独立性，有： <span class="math display">\[
+p(z_t|x_{1:T})=\frac{\alpha_t(z_t)p(x_{t+1:T}|z_t)}{p(x_{1:T})}=C\alpha_t(z_t)\beta_t(z_t)
+\]</span> 这个算法叫做前向后向算法。</p></li>
+<li><p>预测：<span
+class="math inline">\(p(z_{t+1},z_{t+2}|x_1,\cdots,x_t),p(x_{t+1},x_{t+2}|x_1,\cdots,x_t)\)</span>
+<span class="math display">\[
+p(z_{t+1}|x_{1:t})=\sum_{z_t}p(z_{t+1},z_t|x_{1:t})=\sum\limits_{z_t}p(z_{t+1}|z_t)p(z_t|x_{1:t})
+\]</span></p>
+<p><span class="math display">\[
+p(x_{t+1}|x_{1:t})=\sum\limits_{z_{t+1}}p(x_{t+1},z_{t+1}|x_{1:t})=\sum\limits_{z_{t+1}}p(x_{t+1}|z_{t+1})p(z_{t+1}|x_{1:t})
+\]</span></p></li>
 </ol>
 
               

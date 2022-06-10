@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="HADOOP 相关知识Hadoop的优势⒈高可靠性。Hadoop按位存储和处理数据的能力值得人们信赖。⒉高扩展性。Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。⒊高效性。Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。⒋高容错性。Hadoop能够自动保存数据的多个副本，并且能够自动将失败的任务重新分配。">
+    <meta name="description" content="HADOOP 相关知识 Hadoop的优势 ⒈高可靠性。Hadoop按位存储和处理数据的能力值得人们信赖。 ⒉高扩展性。Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。 ⒊高效性。Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。 ⒋高容错性。Hadoop能够自动保存数据的多个副本，并且能够自动将">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1.HADOOP相关知识">
 <meta property="og:url" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/1.Hadoop%E7%9B%B8%E5%85%B3/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="HADOOP 相关知识Hadoop的优势⒈高可靠性。Hadoop按位存储和处理数据的能力值得人们信赖。⒉高扩展性。Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。⒊高效性。Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。⒋高容错性。Hadoop能够自动保存数据的多个副本，并且能够自动将失败的任务重新分配。">
+<meta property="og:description" content="HADOOP 相关知识 Hadoop的优势 ⒈高可靠性。Hadoop按位存储和处理数据的能力值得人们信赖。 ⒉高扩展性。Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。 ⒊高效性。Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。 ⒋高容错性。Hadoop能够自动保存数据的多个副本，并且能够自动将">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:42.922Z">
 <meta property="article:modified_time" content="2022-06-09T05:31:42.826Z">
@@ -271,12 +271,23 @@
             
             <div class="markdown-body">
               
-              <h1 id="HADOOP-相关知识"><a href="#HADOOP-相关知识" class="headerlink" title="HADOOP 相关知识"></a>HADOOP 相关知识</h1><h2 id="Hadoop的优势"><a href="#Hadoop的优势" class="headerlink" title="Hadoop的优势"></a>Hadoop的优势</h2><p>⒈高可靠性。Hadoop按位存储和处理数据的能力值得人们信赖。<br>⒉高扩展性。Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。<br>⒊高效性。Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。<br>⒋高容错性。Hadoop能够自动保存数据的多个副本，并且能够自动将失败的任务重新分配。</p>
-<h2 id="Hadoop启动后能看到哪些进程"><a href="#Hadoop启动后能看到哪些进程" class="headerlink" title="Hadoop启动后能看到哪些进程"></a>Hadoop启动后能看到哪些进程</h2><p>可以看到主节点上有三个进程 : Namenode、Secondarnamenode、Resourcemanager<br>从节点上有两个进程 : Datanode和Nodenodemanager</p>
+              <h1 id="hadoop-相关知识">HADOOP 相关知识</h1>
+<h2 id="hadoop的优势">Hadoop的优势</h2>
+<p>⒈高可靠性。Hadoop按位存储和处理数据的能力值得人们信赖。
+⒉高扩展性。Hadoop是在可用的计算机集簇间分配数据并完成计算任务的，这些集簇可以方便地扩展到数以千计的节点中。
+⒊高效性。Hadoop能够在节点之间动态地移动数据，并保证各个节点的动态平衡，因此处理速度非常快。
+⒋高容错性。Hadoop能够自动保存数据的多个副本，并且能够自动将失败的任务重新分配。</p>
+<h2 id="hadoop启动后能看到哪些进程">Hadoop启动后能看到哪些进程</h2>
+<p>可以看到主节点上有三个进程 :
+Namenode、Secondarnamenode、Resourcemanager 从节点上有两个进程 :
+Datanode和Nodenodemanager</p>
 <ul>
-<li>Namenode：它是Hadoop 中的主服务器，管理文件系统名称空间和对集群中存储的文件的访问。</li>
-<li>Secondarnamenode：它不是 namenode 的冗余守护进程，而是提供周期检查点和清理任务。用来监控HDFS状态的辅助后台程序</li>
-<li>Resourcemanager: YARN中，ResourceManager负责集群中所有资源的统一管理和分配，它接收来自各个节点的资源汇报信息，并把这些信息按照一定的策略分配给各个应用程序与每个节点的管理者和每个应用开发者一起工作。</li>
+<li>Namenode：它是Hadoop
+中的主服务器，管理文件系统名称空间和对集群中存储的文件的访问。</li>
+<li>Secondarnamenode：它不是 namenode
+的冗余守护进程，而是提供周期检查点和清理任务。用来监控HDFS状态的辅助后台程序</li>
+<li>Resourcemanager:
+YARN中，ResourceManager负责集群中所有资源的统一管理和分配，它接收来自各个节点的资源汇报信息，并把这些信息按照一定的策略分配给各个应用程序与每个节点的管理者和每个应用开发者一起工作。</li>
 <li>Datanode：负责管理它所在结点上存储的数据的读写，及存储数据；每个Datanode结点会周期性地向Namenode发送心跳信号和文件块状态报告；执行数据的流水线复制。</li>
 <li>Nodenodemanager：运行在单个节点上的代理，它管理Hadoop集群中单个计算节点，功能包括与ResourceManager保持通信，管理Container的生命周期、监控每个Container的资源使用(内存、CPU等）情况、追踪节点健康状况、管理日志和不同应用程序用到的附属服务</li>
 </ul>

@@ -16,12 +16,12 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Preface定义Machine learning is a filed that bridge compation and statistics with ties to information ,signal process,algorithm control theroy and optimization theory. Machine Learning &#x3D; Matrix + Op">
+    <meta name="description" content="Preface 定义 Machine learning is a filed that bridge compation and statistics with ties to information ,signal process,algorithm control theroy and optimization theory. Machine Learning &#x3D; Matrix +">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习引入">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Preface/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="Preface定义Machine learning is a filed that bridge compation and statistics with ties to information ,signal process,algorithm control theroy and optimization theory. Machine Learning &#x3D; Matrix + Op">
+<meta property="og:description" content="Preface 定义 Machine learning is a filed that bridge compation and statistics with ties to information ,signal process,algorithm control theroy and optimization theory. Machine Learning &#x3D; Matrix +">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.151Z">
 <meta property="article:modified_time" content="2022-06-09T08:01:21.123Z">
@@ -270,56 +270,91 @@
             
             <div class="markdown-body">
               
-              <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a><strong>Preface</strong></h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a><strong>定义</strong></h2><p>Machine learning is a filed that bridge compation and statistics with ties to information ,signal process,algorithm control theroy and optimization theory.</p>
-<p>Machine Learning &#x3D; Matrix + Optimization + Algorithm + Statistics</p>
-<p>Tom Mitchell提出了一个更形式化的定义：假设用P来评估计算机程序在某任务类T上的性能，若一个程序通过经验E在T中任务上得到了提升，则我们就说关于T和P，程序对E“学习”了。</p>
+              <h1 id="preface"><strong>Preface</strong></h1>
+<h2 id="定义"><strong>定义</strong></h2>
+<p>Machine learning is a filed that bridge compation and statistics with
+ties to information ,signal process,algorithm control theroy and
+optimization theory.</p>
+<p>Machine Learning = Matrix + Optimization + Algorithm + Statistics</p>
+<p>Tom
+Mitchell提出了一个更形式化的定义：假设用P来评估计算机程序在某任务类T上的性能，若一个程序通过经验E在T中任务上得到了提升，则我们就说关于T和P，程序对E“学习”了。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>发展</th>
 <th></th>
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
-<td>1950s-1970s  逻辑推理时期</td>
+<tbody>
+<tr class="odd">
+<td>1950s-1970s 逻辑推理时期</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
-<td>1970s-1990s  专家系统时期</td>
+<tr class="even">
+<td>1970s-1990s 专家系统时期</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
-<td>1990s-至今     机器学习时期</td>
+<tr class="odd">
+<td>1990s-至今 机器学习时期</td>
 <td></td>
 <td></td>
 </tr>
-</tbody></table>
-<h2 id="基本分类："><a href="#基本分类：" class="headerlink" title="基本分类："></a>基本分类：</h2><ul>
+</tbody>
+</table>
+<h2 id="基本分类">基本分类：</h2>
+<ul>
 <li>监督学习 supervised learning：有标记、有反馈、预测结果</li>
 <li>无监督学习 Unsupervised learning : 无标记、无反馈、内在结构</li>
-<li>强化学习 Reinforcement learning： 决策过程、奖励机制、学习一系列动作</li>
-<li>半监督学习 Self-supervised learning： 利用未标注的数据中信息，辅助标记数据，进行监督学习，以较低成本达到较好的学习效果</li>
-<li>主动学习 Active learning：机器不断主公给出实例让人标注，然后利用标注数据学习预测模型的机器学习问题。</li>
+<li>强化学习 Reinforcement learning：
+决策过程、奖励机制、学习一系列动作</li>
+<li>半监督学习 Self-supervised learning：
+利用未标注的数据中信息，辅助标记数据，进行监督学习，以较低成本达到较好的学习效果</li>
+<li>主动学习 Active
+learning：机器不断主公给出实例让人标注，然后利用标注数据学习预测模型的机器学习问题。</li>
 </ul>
-<h2 id="任务："><a href="#任务：" class="headerlink" title="任务："></a>任务：</h2><p><strong>Regression、Classification、Clustering</strong></p>
-<h2 id="模型偏好："><a href="#模型偏好：" class="headerlink" title="模型偏好："></a>模型偏好：</h2><p>Occam‘s Razor：若多个假设与观察一致，则选择最简单的那个</p>
-<p>No Free Lunch Theorem：两个算法$\xi_a,\xi_b$没有绝对的好坏</p>
-<h2 id="统计学习三要素：模型-策略-算法"><a href="#统计学习三要素：模型-策略-算法" class="headerlink" title="统计学习三要素：模型+策略+算法"></a>统计学习三要素：模型+策略+算法</h2><p><strong>模型</strong>：模型的假设空间（hypothesis space）包含所有可能的条件概率分布或决策函数)。</p>
-<p>假设空间用$\mathcal{F}$表示。假设空间可以定义为决策函数的集合：$\mathcal{F} &#x3D; { f\   | Y&#x3D;f,(X)}$</p>
-<p>其中，$\mathit{X}，\mathit{Y}$均是定义在输入空间$\mathcal{X}$和输出空间$\mathcal{Y}$上的变量。这时$\mathcal{F}$通常由一个参数向量决定的函数族：$\mathcal{F}&#x3D;{\mathit{f}|\mathit{Y}&#x3D;\mathit{f_\theta(\mathit{X}),\theta\in\mathbb{R^n}}}$</p>
+<h2 id="任务">任务：</h2>
+<p><strong>Regression、Classification、Clustering</strong></p>
+<h2 id="模型偏好">模型偏好：</h2>
+<p>Occam‘s Razor：若多个假设与观察一致，则选择最简单的那个</p>
+<p>No Free Lunch Theorem：两个算法<span
+class="math inline">\(\xi_a,\xi_b\)</span>没有绝对的好坏</p>
+<h2 id="统计学习三要素模型策略算法">统计学习三要素：模型+策略+算法</h2>
+<p><strong>模型</strong>：模型的假设空间（hypothesis
+space）包含所有可能的条件概率分布或决策函数)。</p>
+<p>假设空间用<span
+class="math inline">\(\mathcal{F}\)</span>表示。假设空间可以定义为决策函数的集合：<span
+class="math inline">\(\mathcal{F} = \{ f\  | Y=f\,(X)\}\)</span></p>
+<p>其中，<span
+class="math inline">\(\mathit{X}，\mathit{Y}\)</span>均是定义在输入空间<span
+class="math inline">\(\mathcal{X}\)</span>和输出空间<span
+class="math inline">\(\mathcal{Y}\)</span>上的变量。这时<span
+class="math inline">\(\mathcal{F}\)</span>通常由一个参数向量决定的函数族：<span
+class="math inline">\(\mathcal{F}=\{\mathit{f}|\mathit{Y}=\mathit{f_\theta(\mathit{X}),\theta\in\mathbb{R^n}\}}\)</span></p>
 <p><strong>策略</strong>: 损失函数和风险函数</p>
-<p>经验风险最小化：empirical risk minimization，ERM:<br>$$<br>\min_{f \in \mathcal{F}} \frac{1}{N},\sum_{i&#x3D;1}^{N}L(y_i,f(x_i))<br>$$<br>结构风险最小化：structural risk minimization，SRM：<br>$$<br>\min_{f \in \mathcal{F}} \frac{1}{N},\sum_{i&#x3D;1}^{N}L(y_i,f(x_i))+\lambda\mathit{J}(f)<br>$$<br><strong>算法：</strong>其实就是指学习模型的具体算法。</p>
+<p>经验风险最小化：empirical risk minimization，ERM: <span
+class="math display">\[
+\min_{f \in \mathcal{F}} \frac{1}{N}\,\sum_{i=1}^{N}L(y_i,f(x_i))
+\]</span> 结构风险最小化：structural risk minimization，SRM： <span
+class="math display">\[
+\min_{f \in \mathcal{F}}
+\frac{1}{N}\,\sum_{i=1}^{N}L(y_i,f(x_i))+\lambda\mathit{J}(f)
+\]</span> <strong>算法：</strong>其实就是指学习模型的具体算法。</p>
 <ul>
-<li>泛化误差：机器学习模型在样本集合$\mathit{D}\ $上的整体误差。（也称为期望风险）</li>
+<li>泛化误差：机器学习模型在样本集合<span
+class="math inline">\(\mathit{D}\
+\)</span>上的整体误差。（也称为期望风险）</li>
 </ul>
-<p>$$<br>\mathit{R}<em>{exp}(f)&#x3D; \mathit{E}</em>{p(\mathit{D})}[\boldsymbol{L}(y,f(x))]<br>$$</p>
-<ul>
-<li>经验误差：机器学习模型在训练样本$\mathit{G},$上的整体误差。（也称为经验风险）</li>
-</ul>
-<p>$$<br>\mathit{R}<em>{emp}(f)&#x3D; \frac{1}{N}\sum^n</em>{k&#x3D;1}[\boldsymbol{L}(y_k,f(x_k))]&#x3D;\frac{1}{n}\sum^n_{i&#x3D;1}\boldsymbol{L}(y_i,\hat{y_i})<br>$$</p>
+<p><span class="math display">\[
+\mathit{R}_{exp}(f)= \mathit{E}_{p(\mathit{D})}[\boldsymbol{L}(y,f(x))]
+\]</span> - 经验误差：机器学习模型在训练样本<span
+class="math inline">\(\mathit{G}\,\)</span>上的整体误差。（也称为经验风险）</p>
+<p><span class="math display">\[
+\mathit{R}_{emp}(f)=
+\frac{1}{N}\sum^n_{k=1}[\boldsymbol{L}(y_k,f(x_k))]=\frac{1}{n}\sum^n_{i=1}\boldsymbol{L}(y_i,\hat{y_i})
+\]</span></p>
 
               
             </div>

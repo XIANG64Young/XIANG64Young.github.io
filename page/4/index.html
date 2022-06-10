@@ -229,7 +229,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/9.HIVE%20%E7%AC%94%E8%AE%B0/" target="_self">
         <div>
-          Hive笔记hive的存储格式：1 textfile 没有压缩，但是比较占用存储空间。读取效率最高2 rcfile 有压缩，空间占用小。 比较节省空间。3 SequenceFile 适合小文件存储。hive和hdfs的关系：hive的存储是基于hdfs的，在hive中创建一个库，实际上就是在hdfs上的当前用户路径下创建了一个目录；比如 create database sz；hdfs:&#x2F;
+          Hive笔记 hive的存储格式： 1 textfile 没有压缩，但是比较占用存储空间。读取效率最高 2 rcfile 有压缩，空间占用小。 比较节省空间。 3 SequenceFile 适合小文件存储。 hive和hdfs的关系： hive的存储是基于hdfs的，在hive中创建一个库，实际上就是在hdfs上的当前用户 路径下创建了一个目录； 比如 create database
         </div>
       </a>
 
@@ -292,7 +292,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/8.Hive%E5%AE%89%E8%A3%85/" target="_self">
         <div>
-          Hive安装首先安装MySQL1、查看mysql的依赖  1rpm -qa | grep mysql  2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96;  3、离线安装mysql  12rpm -ivh MySQL-server-5.1.73-1.glibc23.x
+          Hive安装 首先安装MySQL 1、查看mysql的依赖 1rpm -qa | grep mysql 2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96; 3、离线安装mysql 12rpm -ivh MySQL-server-5.1.73-1.glib
         </div>
       </a>
 
@@ -355,7 +355,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/7.Hbase%20Shell/" target="_self">
         <div>
-          Hbase Shell的用法 whoami    我是谁    whoami version    返回hbase版本信息    version status    返回hbase集群的状态信息    status table_help    查看如何操作表    table_help create    创建表    create ‘表名’, ‘列族名1’, ‘列族名2’, ‘列族名N’ alt
+          Hbase Shell的用法  whoami 我是谁 whoami version 返回hbase版本信息 version status 返回hbase集群的状态信息 status table_help 查看如何操作表 table_help create 创建表 create ‘表名’, ‘列族名1’, ‘列族名2’, ‘列族名N’ alter 修改列族 添加一个列族：alter ‘
         </div>
       </a>
 
@@ -418,7 +418,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/6.Hbase%E6%90%AD%E5%BB%BA/" target="_self">
         <div>
-          安装hbase1．解压缩hbase的软件包，使用命令： 1tar -zxvf hbase-1.3.0-bin.tar.gz   2．进入hbase的配置目录，在hbase-env.sh文件里面加入java环境变量.即： 123export JAVA_HOME&#x3D;&#x2F;bigdata&#x2F;jdk1.8.0_121#关闭HBase自带的Zookeeper,使用Zookeeper集群：export HBASE_M
+          安装hbase 1．解压缩hbase的软件包，使用命令： 1tar -zxvf hbase-1.3.0-bin.tar.gz  2．进入hbase的配置目录，在hbase-env.sh文件里面加入java环境变量.即： 123export JAVA_HOME&#x3D;&#x2F;bigdata&#x2F;jdk1.8.0_121#关闭HBase自带的Zookeeper,使用Zookeeper集群：export HBA
         </div>
       </a>
 
@@ -481,7 +481,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/5.Zookeeper%E5%AE%89%E8%A3%85/" target="_self">
         <div>
-          搭建zookeeper： 1、下载zookeeper并解压  1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs  cd conf&#x2F; cp zoo_sample.cfg zoo.c
+          搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs   img  cd conf&#x2F; cp
         </div>
       </a>
 
@@ -544,7 +544,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/4.MapReduce/" target="_self">
         <div>
-          MapReduce 上图是MapReduce的任务处理过程 概述MapReduce是一种分布式计算模型，由Google提出，主要用于搜索领域，解决海量数据的计算问题.MapReduce是分布式运行的，由两个阶段组成：Map和Reduce，Map阶段是一个独立的程序，有很多个节点同时运行，每个节点处理一部分数据。Reduce阶段是一个独立的程序，有很多个节点同时运行，每个节点处理一部分数据【在这先把
+          MapReduce   image-20211023183642227  上图是MapReduce的任务处理过程 概述 MapReduce是一种分布式计算模型，由Google提出，主要用于搜索领域，解决海量数据的计算问题. MapReduce是分布式运行的，由两个阶段组成：Map和Reduce，Map阶段是一个独立的程序，有很多个节点同时运行，每个节点处理一部分数据。Reduce阶
         </div>
       </a>
 
@@ -607,7 +607,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/3.HDFS%20shell/" target="_self">
         <div>
-          HDFS shell操作配置hadoop环境变量 vi &#x2F;etc&#x2F;profile：export HADOOP_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;soft&#x2F;hadoop-2.6.0export PATH&#x3D;.:$JAVA_HOME&#x2F;bin:$HADOOP_HOME&#x2F;bin:$PATH然后执行 source
+          HDFS shell操作 配置hadoop环境变量 vi &#x2F;etc&#x2F;profile： export HADOOP_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;soft&#x2F;hadoop-2.6.0 export PATH&#x3D;.:$JAVA_HOME&#x2F;bin:$HADOOP_HOME&#x2F;bin:$PATH 然后执行 source &#x2F;etc&#x2F;profile hdfs ；hdfs中输入的路径需要是绝对路径 通过h
         </div>
       </a>
 
@@ -670,7 +670,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/2.Hadoop%E6%90%AD%E5%BB%BA/" target="_self">
         <div>
-          HADOOP搭建准备：需要三台虚拟机（修改好IP地址并安装JAVA） 修改当前网络时间： 1date -s ”2021-10-23 08:47:00“  关闭防火墙并且关闭防火墙自启动 12service iptables stop&#x2F;status&#x2F;start&#x2F;resrtart &#x2F;&#x2F;防火墙的相关命令chkconfig iptables off &#x2F;&#x2F;关闭防火墙自启动  设置三台主机ssh免密登陆 现修
+          HADOOP搭建 准备： 需要三台虚拟机（修改好IP地址并安装JAVA） 修改当前网络时间： 1date -s ”2021-10-23 08:47:00“ 关闭防火墙并且关闭防火墙自启动 12service iptables stop&#x2F;status&#x2F;start&#x2F;resrtart &#x2F;&#x2F;防火墙的相关命令chkconfig iptables off &#x2F;&#x2F;关闭防火墙自启动 设置三台主机ssh
         </div>
       </a>
 
@@ -733,7 +733,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/13.Question/" target="_self">
         <div>
-          Q&amp;A NoticeMysql安装遇见问题：1error: Failed dependencies:  MySQL conflicts with mysql-5.1.71-1.el6.x86_64     解决办法 12ps aux | grep mysql    kill -9 进程号  mysql的相关命令是 1&#x2F;etc&#x2F;init.d&#x2F;mysql status&#x2F;start&#x2F;stop&#x2F;.
+          Q&amp;A Notice Mysql安装遇见问题： 1error: Failed dependencies:  MySQL conflicts with mysql-5.1.71-1.el6.x86_64    解决办法 12ps aux | grep mysql    kill -9 进程号 mysql的相关命令是 1&#x2F;etc&#x2F;init.d&#x2F;mysql status&#x2F;start&#x2F;
         </div>
       </a>
 
@@ -794,7 +794,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/11.Spark/" target="_self">
         <div>
-          Spark的搭建安装Scala由于Scala只是一个应用软件，只需要安装在master节点即可。 上传scala安装包1&#x2F;bigdata&#x2F;packet&#x2F;scala-2.11.8  解压scala安装包1tar -zxvf scala-2.11.8.tgz -C &#x2F;bigdata  环境变量配置（三台机器都做一遍）：vim &#x2F;etc&#x2F;profile 123#scalaexport
+          Spark的搭建 安装Scala 由于Scala只是一个应用软件，只需要安装在master节点即可。 上传scala安装包 1&#x2F;bigdata&#x2F;packet&#x2F;scala-2.11.8 解压scala安装包 1tar -zxvf scala-2.11.8.tgz -C &#x2F;bigdata 环境变量配置（三台机器都做一遍）： vim &#x2F;etc&#x2F;profile 123#scalaexpo
         </div>
       </a>
 
