@@ -25,6 +25,8 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
   
   <title>相阳的小屋</title>
 
@@ -58,7 +60,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -221,15 +223,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/SupportVectorMachine%20/" target="_self">
-          支持向量机
+        <a href="/2022/07/04/post-name/" target="_self">
+          post_name
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/SupportVectorMachine%20/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/post-name/" target="_self">
         <div>
-          Support Vector Machine 支持向量机 支持向量机（SVM）的核心关键词： 间隔、对偶、核函数 SVM在分类问题中有着重要地位，其主要思想是最大化两类之间的间隔。按照数据集的特点：  线性可分问题，如之前的感知机算法处理的问题 线性可分，只有一点点错误点，如感知机算法发展出来的 Pocket 算法处理的问题 非线性问题，完全不可分，如在感知机问题发展出来的多层感知
+          
         </div>
       </a>
 
@@ -237,8 +239,41 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:44" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:41" pubdate>
+              2022-07-04
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/%E8%9E%8D%E5%90%88%E8%A7%A3%E5%86%B3%E5%A4%9A%E6%A0%87%E7%AD%BE%E9%97%AE%E9%A2%98/" target="_self">
+          融合解读多标签方法小记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/%E8%9E%8D%E5%90%88%E8%A7%A3%E5%86%B3%E5%A4%9A%E6%A0%87%E7%AD%BE%E9%97%AE%E9%A2%98/" target="_self">
+        <div>
+          这里给了两个的方案: SST 与大多数机器学习模型一样,这里的目标是构造一个将输入映射到输出的函数,在这种情况下，输出将是一组向量.单一目标(ST)考虑m个单一模型来预测多标签。此外，还引入了stack的方式(SST)提高效果。SST有两个预测阶段。在第一阶段，用m个模型预测m个目标。在后一阶段，通过变换训练集D，为每个目标学习一组m&#39;元模型。在变换后的训练集中，它使用输出空间的估计值。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -253,7 +288,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -268,7 +303,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -282,15 +319,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Preface/" target="_self">
-          机器学习引入
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E6%8A%80%E6%9C%AF/" target="_self">
+          时间序列预测技术
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Preface/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E6%8A%80%E6%9C%AF/" target="_self">
         <div>
-          Preface 定义 Machine learning is a filed that bridge compation and statistics with ties to information ,signal process,algorithm control theroy and optimization theory. Machine Learning &#x3D; Matrix +
+          Holt 趋向于被作为趋势序列的通用模型。 霍尔特指数平滑法是一种高级的线性指数平滑方法，该方法的优点是可以用不同的平滑参数对原序列的两种因素进行平滑，具有很大的灵活性，因此在实践中被广泛地应用。 Holt指数平滑模型由Holt于1957年提出。它与一般的指数平滑模型不同的是它对趋势数据直接进行平滑并对原时间序列进行预测，需要考虑的是两个平滑参数以及初值的选取问题，也被成为Holt双参数线性
         </div>
       </a>
 
@@ -298,8 +335,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -314,7 +351,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -329,7 +366,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
             
           </div>
         
@@ -343,15 +380,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Perceptron/" target="_self">
-          感知机
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94ROCKA/" target="_self">
+          ROCKA——时间序列聚类算法
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Perceptron/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94ROCKA/" target="_self">
         <div>
-          Perceptron Linear Algorithm 感知机 Definition 假设输入空间（特征空间）是\(\mathcal{X} \subset \mathbb{R}^n\)，输出空间是\(\mathcal{Y}&#x3D;\{-1,+1\}\)。输入\(x\in \mathcal{X}\)表示实例的特征向量，对应于输入空间（特征空间）的点；输出\(y\in \mathcal{Y}\)
+          ROCKA——时间序列聚类算法 KPI时间序列聚类面临的挑战  噪声和异常：噪声是指数据采集时候带来的较小的波动。异常是指相对于序列的平均水平波动很大的数值。噪声和异常都会影响到时间序列的聚类，无论是使用特征工程还是相关性的方式做聚类。 振幅：kpi数据因为是在不同机器上采集的数值有可能存在一定的差异。 偏移：各个时间序列因为在调用链上的位置不同，所以有可能存在延迟  提取basel
         </div>
       </a>
 
@@ -359,8 +396,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -375,7 +412,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -390,7 +427,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -404,15 +443,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearRegression/" target="_self">
-          线性回归
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/Winsorization%20Method/" target="_self">
+          Winsorization小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearRegression/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/Winsorization%20Method/" target="_self">
         <div>
-          Linear Regression 定义  回归定义： 通过带标签样本训练构造适当模型并通过该模型算出新样本的预测值 线性回归： 基于线性模型的回归学习任务通常称之为线性回归，相应的线性模型称为线性回归模型 对于任意给定的样本\(X&#x3D; (x_1, x_2, … , x_𝑚)^𝑇,Y&#x3D; (y_1, y_2, … , y_𝑚)^𝑇\)， 线性回归的初始模型表示为： \[ �
+          Winsorization Method 如果某个值超过第 99 个百分位的值，并且低于给定值的第 1 个百分位，则将被视为异常值。 1234567def Winsorization_outliers(df):    q1 &#x3D; np.percentile(df , 1)    q3 &#x3D; np.percentile(df , 99)    for i in df:        if i &amp;g
         </div>
       </a>
 
@@ -420,8 +459,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -436,7 +475,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -451,7 +490,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -465,15 +506,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearGaussianModel/" target="_self">
-          线性高斯模型
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/TD-IDF/" target="_self">
+          TF-IDF小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearGaussianModel/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/TD-IDF/" target="_self">
         <div>
-          LinearGaussianModel 高斯作为机器学习中的常客也是无法避免的,而线性模型作为比较简单的模型，两者结合出的线性高斯模型，在今后的机器学习中大量涉及到这方面的知识。例如在各种滤波中,高斯滤波，卡曼滤波，粒子滤波。 一维情况 MLE: Maximum Likelihood Estimation 高斯分布在机器学习中占有举足轻重的作用。在 MLE 方法中： \[ \theta
+          TF-IDF（term frequency–inverse document frequency，词频-逆向文件频率）是一种用于信息检索（information retrieval）与文本挖掘（text mining）的常用加权技术。 TF-IDF是一种统计方法，用以评估一字词对于一个文件集或一个语料库中的其中一份文件的重要程度。字词的重要性随着它在文件中出现的次数成正比增加，但同时会随着它
         </div>
       </a>
 
@@ -481,8 +522,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -497,7 +538,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -512,7 +553,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -526,15 +569,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearClassification/" target="_self">
-          线性分类
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/SVDD/" target="_self">
+          SVDD小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearClassification/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/SVDD/" target="_self">
         <div>
-          线性分类 线性回归： graph TD;     LinearRegression--&gt;non-linear;     LinearRegression--&gt;non-crude --&gt; PCA;     LinearRegression--&gt;non-globa --&gt; DecisionTree;     non-linear --&gt; Attribute --
+          Support Vector Data Description，SVDD 支持向量数据描述，是一种单值分类算法，能够实现目标样本和非目标样本的区分，通常用于异常检测与入侵检测等领域。   123456.gif  SVDD是One-Class Classification的一种常用方法。在One-Class Classification中，训练集中只有target class的数据
         </div>
       </a>
 
@@ -542,8 +585,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -558,7 +601,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -573,7 +616,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -587,15 +632,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Intro_Math/" target="_self">
-          数学引入
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/Numeric%20Oulier--IQR/" target="_self">
+          IQP小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Intro_Math/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/Numeric%20Oulier--IQR/" target="_self">
         <div>
-          Introduction 对概率的诠释有两大学派，一种是频率派另一种是贝叶斯派。后面我们对观测集采用下面记号： \[ \mathcal{X}_{N\times p}&#x3D;(x_{1},x_{2},\cdots,x_{N})^{T},x_{i}&#x3D;(x_{i1},x_{i2},\cdots,x_{ip})^{T} \] 这个记号表示有 \(N\) 个样本，每个样本都是 \(p\) 维向量。其
+          数字异常值方法是一维特征空间中最简单的非参数异常值检测方法，异常值是通过IQR（InterQuartile Range）计算得的。 计算第一和第三 四分位数（\(Q_1\)、\(Q_3\)），异常值是位于四分位数范围之外的数据点\(x_i\)： \(x_i \gt Q_3 + k(IQR) \quad or \quad x_i \lt Q_1-k(IQR),\\where \ IQR &#x3D; Q
         </div>
       </a>
 
@@ -603,8 +648,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -619,7 +664,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -634,7 +679,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -648,15 +695,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/cheatsheet/" target="_self">
-          总结
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/MultiModel/" target="_self">
+          多模态小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/cheatsheet/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/MultiModel/" target="_self">
         <div>
-          总结 Math  MLE \[ \theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{iid}\mathop{argmax}\limits _{\theta}\sum\limits _{i&#x3D;1}^{N}\log p(x_{i}|\theta) \] MAP \[ \thet
+          多模态一般有三种常见的结构 classDiagram       MultiModel &lt;|-- Early Fusion       MultiModel &lt;|-- Late Fusion       MultiModel &lt;|-- Intermediate Fusion       class Early Fusion&amp;#123;           +Date Level
         </div>
       </a>
 
@@ -664,8 +711,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -680,7 +727,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -695,7 +742,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -709,15 +758,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/9.GMM/" target="_self">
-          高斯混合模型
+        <a href="/2022/07/04/%E9%9A%8F%E7%AC%94/LocalOutlierFactor/" target="_self">
+          LOF小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/9.GMM/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E9%9A%8F%E7%AC%94/LocalOutlierFactor/" target="_self">
         <div>
-          高斯混合模型 为了解决高斯模型的单峰性的问题，我们引入多个高斯模型的加权平均来拟合多峰数据： \[ p(x)&#x3D;\sum\limits_{k&#x3D;1}^K\alpha_k\mathcal{N}(\mu_k,\Sigma_k) \] 引入隐变量 \(z\)，这个变量表示对应的样本 \(x\) 属于哪一个高斯分布，这个变量是一个离散的随机变量： \[ p(z&#x3D;i)&#x3D;p_i,\sum\limits
+          定义 首先，基于密度的离群点检测方法有一个基本假设：非离群点对象周围的密度与其邻域周围的密度类似，而离群点对象周围的密度显著不同于其邻域周围的密度。 什么意思呢？看下面图片感受下。   图片  集群 C1 包含了 400 多个点，集群 C2 包含 100 个点。C1 和 C2 都是一类集群点，区别是 C1 位置比较集中，或者说密度比较大。而像 o1、o2点均为异常点，因为基于我
         </div>
       </a>
 
@@ -725,8 +774,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
+            <time datetime="2022-07-04 16:05" pubdate>
+              2022-07-04
             </time>
           </div>
         
@@ -741,7 +790,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  <a href="/categories/%E9%9A%8F%E7%AC%94/" class="category-chain-item">随笔</a>
   
   
 
@@ -756,68 +805,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/">#随笔</a>
             
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/8.EM/" target="_self">
-          期望最大
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/8.EM/" target="_self">
-        <div>
-          期望最大 期望最大算法的目的是解决具有隐变量的混合模型的参数估计（极大似然估计）。MLE 对 \(p(x|\theta)\) 参数的估计记为：\(\theta_{MLE}&#x3D;\mathop{argmax}\limits_\theta\log p(x|\theta)\)。EM 算法对这个问题的解决方法是采用迭代的方法： \[ \theta^{t+1}&#x3D;\mathop{argmax}\lim
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-09 21:31" pubdate>
-              2022-06-09
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
             
           </div>
         
@@ -829,7 +819,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
@@ -882,6 +872,30 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -944,14 +958,12 @@
 
 
 
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
 
 
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

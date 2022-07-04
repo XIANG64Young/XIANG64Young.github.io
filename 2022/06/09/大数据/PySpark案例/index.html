@@ -31,6 +31,8 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
   
   <title>15.PySpark案例 - 相阳的小屋</title>
 
@@ -70,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -378,7 +380,7 @@ Classification比赛中下载了相关数据集。从数据集介绍、导入，
 <p>Step2：利用Xftp把本地数据集放到集群的master节点上，目录为/bigdata/pyspark/data</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image008-1640092387227.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image008-1640092387227.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -397,7 +399,7 @@ alt="img" />
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image010-16400923872271.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image010-16400923872271.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -417,7 +419,7 @@ alt="img" />
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image012-16400923872271.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image012-16400923872271.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -440,19 +442,19 @@ alt="img" />
 <p>Sqoop 版本 1.4.7 安装路径 /bigdata/sqoop-1.4.7</p>
 <p>我们需要查看数据信息，并对数据经行清洗。为我们接下来的可视化分析和数据建模提供良好的数据源，方便处理。</p>
 <p>Step1：加载数据并查看数据属性 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image014-16400923872271.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image014-16400923872271.png"
 alt="img" /></p>
 <p>Step2: 查看部分数据</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image016-16400923872271.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image016-16400923872271.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>Step3：查看是否存在空置或异常值</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image018-16400923872281.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image018-16400923872281.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -488,13 +490,13 @@ terminate by ‘,’</strong> <strong>stored as textfile location
 <p>(数据一开始放在/spark文件夹下，后来有创建了新的/pyspark 数据一致)</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -519,13 +521,13 @@ string, Address String, X string, Y string)</strong> <strong>comment
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image024.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image024.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image026.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image026.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -556,20 +558,20 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8;</strong></td>
 </tr>
 <tr class="even">
 <td><strong>mysql &gt; select * from log limit 10;<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.png"
 alt="img" /></strong></td>
 </tr>
 </tbody>
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -594,13 +596,13 @@ jdbc:mysql://192.168.174.101:3306/crime --username root --password
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image034.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image034.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image036.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image036.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -624,13 +626,13 @@ select * from log limit 10;</strong></td>
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image038.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image038.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image040.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image040.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -649,7 +651,7 @@ alt="img" />
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image042.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image042.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -670,13 +672,13 @@ alt="img" />
 <p>(scan 查询数目太多，没有办法截下来)</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image044.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image044.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image046.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image046.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -700,7 +702,7 @@ alt="img" />
 </table>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image048.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image048.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -718,7 +720,7 @@ by category order by category_count desc limit 10;</th>
 <tbody>
 <tr class="odd">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image050.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image050.png"
 alt="img" /></strong></td>
 </tr>
 </tbody>
@@ -735,7 +737,7 @@ group by pddistrict order by pddistrict_count desc limit 20;</th>
 <tbody>
 <tr class="odd">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image052.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image052.png"
 alt="img" /></strong></td>
 </tr>
 </tbody>
@@ -752,7 +754,7 @@ alt="img" /></strong></td>
 <tbody>
 <tr class="odd">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image054.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image054.png"
 alt="img" /></strong></td>
 </tr>
 </tbody>
@@ -764,7 +766,7 @@ alt="img" /></strong></td>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.rcParams[<span class="hljs-string">&#x27;figure.figsize&#x27;</span>]=(<span class="hljs-number">20</span>,<span class="hljs-number">9</span>) plt.style.use(<span class="hljs-string">&#x27;dark_background&#x27;</span>) sns.countplot(dataset[<span class="hljs-string">&#x27;Category&#x27;</span>],palette=<span class="hljs-string">&#x27;gnuplot&#x27;</span>) plt.title(<span class="hljs-string">&#x27;Major Crimes in  Sanfrancisco&#x27;</span>,fontweight=<span class="hljs-number">30</span>,fontsize=<span class="hljs-number">20</span>) plt.xticks(rotation=<span class="hljs-number">90</span>)  plt.show() <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image056.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image056.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -774,7 +776,7 @@ OFFENSES这两类犯罪是最多的</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">df =  pd.crosstab(dataset[<span class="hljs-string">&#x27;Category&#x27;</span>],dataset[<span class="hljs-string">&#x27;PdDistrict&#x27;</span>])<br>color =  plt.cm.Greys(np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>))<br>df.div(df.<span class="hljs-built_in">sum</span>(<span class="hljs-number">1</span>).astype(<span class="hljs-built_in">float</span>),  axis = <span class="hljs-number">0</span>).plot.bar(stacked = <span class="hljs-literal">True</span>, color = color, figsize = (<span class="hljs-number">18</span>, <span class="hljs-number">12</span>))<br>plt.title(<span class="hljs-string">&#x27;District vs Category of  Crime&#x27;</span>, fontweight = <span class="hljs-number">30</span>, fontsize = <span class="hljs-number">20</span>)<br>plt.xticks(rotation = <span class="hljs-number">90</span>)<br>plt.show()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image058.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image058.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -784,20 +786,20 @@ alt="img" />
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset[<span class="hljs-string">&#x27;year&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.year  <br>dataset[<span class="hljs-string">&#x27;month&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.month  <br>dataset[<span class="hljs-string">&#x27;day&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.day  dataset[<span class="hljs-string">&#x27;hour&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.hour  <br>plt.figure(figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">19</span>))  <br>plt.style.use(<span class="hljs-string">&#x27;fivethirtyeight&#x27;</span>)     <br>year_group = dataset.groupby(<span class="hljs-string">&#x27;year&#x27;</span>).size() <br>plt.subplot(<span class="hljs-number">311</span>) <br>plt.plot(year_group.index[:-<span class="hljs-number">1</span>],year_group[:-<span class="hljs-number">1</span>],<span class="hljs-string">&#x27;ks-&#x27;</span>) plt.xlabel(<span class="hljs-string">&#x27;year&#x27;</span>)  <br>month_group = dataset.groupby(<span class="hljs-string">&#x27;month&#x27;</span>).size()<br>plt.subplot(<span class="hljs-number">312</span>)  <br>plt.plot(month_group,<span class="hljs-string">&#x27;ks-&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;month&#x27;</span>)  <br>day_group = dataset.groupby(<span class="hljs-string">&#x27;day&#x27;</span>).size()  <br>plt.subplot(<span class="hljs-number">313</span>)  <br>plt.plot(day_group,<span class="hljs-string">&#x27;ks-&#x27;</span>)  <br>plt.xlabel(<span class="hljs-string">&#x27;day&#x27;</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image060.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image060.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image064.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image064.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>从上图可知，在2011年前SF的犯罪数基本上呈递减趋势，2011后数量激增，案件高发期是在一年中的5月和10月，在每个月的月初会有涨幅。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">week_group =  dataset.groupby([<span class="hljs-string">&#x27;DayOfWeek&#x27;</span>,<span class="hljs-string">&#x27;hour&#x27;</span>]).size()<br><span class="hljs-comment">#多重分组  </span><br>week_group = week_group.unstack()<br><span class="hljs-comment">#对分组后的多重索引转为xy索引    </span><br>week_group.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">8</span>))<span class="hljs-comment">#行列互换后画</span><br>plt.xlabel(<span class="hljs-string">&#x27;hour of day&#x27;</span>,size=<span class="hljs-number">15</span>)  <br>plt.ylabel(<span class="hljs-string">&#x27;Number of crimes&#x27;</span>,size=<span class="hljs-number">15</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
 <p>·<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image066.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image066.png"
 alt="img" /></p>
 <p>可以看出，案件高发时间是在12点和18点左右，凌晨后数量会显著减少，在周五周六的晚上8点后案件发生率会比平时要高。</p>
 <h3 id="高发案件的时间结合地点的分析">7.1.4
@@ -805,7 +807,7 @@ alt="img" /></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">cate_group = dataset.groupby(by=<span class="hljs-string">&#x27;Category&#x27;</span>).size()  <br>top6 = <span class="hljs-built_in">list</span>(cate_group.index[:<span class="hljs-number">6</span>])  <br>tmp = dataset[dataset[<span class="hljs-string">&#x27;Category&#x27;</span>].isin(top6)]  <br>tmp_group = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;hour&#x27;</span>]).size()<br>tmp_group = tmp_group.unstack()  <br>tmp_group.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),style=<span class="hljs-string">&#x27;o-&#x27;</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image068.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image068.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -813,7 +815,7 @@ alt="img" />
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">tmp2 = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;PdDistrict&#x27;</span>]).size() tmp2.unstack().T.plot(kind=<span class="hljs-string">&#x27;bar&#x27;</span>,figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),rot=<span class="hljs-number">45</span>) plt.show()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image070.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image070.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -821,7 +823,7 @@ alt="img" />
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">tmp3 = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;DayOfWeek&#x27;</span>]).size()  <br>tmp3 = tmp3.unstack()  <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):      <br>    tmp3.iloc[i] = tmp3.iloc[i]/tmp3.<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>)[i] <span class="hljs-built_in">print</span>(tmp3)  <br>tmp3.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),style=<span class="hljs-string">&#x27;o-&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&quot;weekday&quot;</span>,size=<span class="hljs-number">20</span>)  <br><span class="hljs-comment">#plt.axes.set_xticks([])  </span><br>plt.xticks([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-string">&#x27;Mon&#x27;</span>,<span class="hljs-string">&#x27;Tue&#x27;</span>,<span class="hljs-string">&#x27;Wed&#x27;</span>,<span class="hljs-string">&#x27;Thur&#x27;</span>,<span class="hljs-string">&#x27;Fri&#x27;</span>,<span class="hljs-string">&#x27;Sat&#x27;</span>,<span class="hljs-string">&#x27;Sun&#x27;</span>])  <br>plt.show()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image072.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image072.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -830,7 +832,7 @@ offenses外，都在周五周六有所增多。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">mon_g = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;month&#x27;</span>]).size()  <br>mon_g = mon_g.unstack()  <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):      <br>    mon_g.iloc[i] = mon_g.iloc[i]/mon_g.<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>)[i] mon_g.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),style=<span class="hljs-string">&#x27;o-&#x27;</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image074.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image074.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -839,26 +841,26 @@ alt="img" />
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">ddf =  tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,pd.Grouper(<span class="hljs-string">&#x27;Dates&#x27;</span>)]).size() ddf = ddf.unstack().fillna(<span class="hljs-number">0</span>)  <br>ddf = ddf.T  <br>df2 = ddf.resample(<span class="hljs-string">&#x27;m&#x27;</span>,how=<span class="hljs-string">&#x27;sum&#x27;</span>)<span class="hljs-comment">#按月求和</span><br>plt.style.use(<span class="hljs-string">&#x27;dark_background&#x27;</span>)  <br>moav = df2.rolling(<span class="hljs-number">12</span>).mean()<span class="hljs-comment">#每12个月统计平均，相当于加了个窗  </span><br>i = <span class="hljs-number">1</span>  <br><span class="hljs-keyword">for</span> cat <span class="hljs-keyword">in</span> df2.columns:      <br>    plt.figure(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">15</span>))    <br>    ax =  plt.subplot(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,i)<br>    plt.plot(df2.index,df2[cat])<br>    plt.plot(df2.index,moav[cat])<br>    plt.title(cat)<br>    i+=<span class="hljs-number">1</span><br>df2.plot()  <br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image076.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image076.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image078.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image078.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image080.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image080.png"
 alt="img" /> <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image082-1640092446805.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image082-1640092446805.png"
 alt="img" /> <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image084-1640092449858.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image084-1640092449858.png"
 alt="img" /> <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image086-1640092452099.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image086-1640092452099.png"
 alt="img" /> <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image088-1640092454204.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image088-1640092454204.png"
 alt="img" /></p>
 <p>可见，不同种类的案件随时间是有不同变化的，如assault在15年后急剧下降，可能有专项整治等活动。</p>
 <h2 id="spark数据分析">7.2 Spark数据分析</h2>
@@ -928,7 +930,7 @@ evaluator.evaluate(predictions)</td>
 </tr>
 <tr class="odd">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image090.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image090.png"
 alt="img" /></strong></td>
 </tr>
 <tr class="even">
@@ -955,7 +957,7 @@ evaluator.evaluate(predictions)</td>
 </tr>
 <tr class="even">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image092.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image092.png"
 alt="img" /></strong></td>
 </tr>
 <tr class="odd">
@@ -985,7 +987,7 @@ cvModel = cv.fit(trainingData) predictions = cvModel.transform(testData)
 </tr>
 <tr class="odd">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image093.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image093.png"
 alt="img" /></strong></td>
 </tr>
 <tr class="even">
@@ -1005,7 +1007,7 @@ evaluator.evaluate(predictions)</td>
 </tr>
 <tr class="even">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image095.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image095.png"
 alt="img" /></strong></td>
 </tr>
 <tr class="odd">
@@ -1034,7 +1036,7 @@ evaluator.evaluate(predictions)</td>
 </tr>
 <tr class="odd">
 <td><strong><img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image097.png" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image097.png"
 alt="img" /></strong></td>
 </tr>
 </tbody>
@@ -1306,6 +1308,30 @@ attempts，zookeeper对于Hmaster的选举产生了阻碍效果。Solution：</p
     </div>
   
   
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
   
   
 </div>
@@ -1366,10 +1392,6 @@ attempts，zookeeper对于Hmaster的选举产生了阻碍效果。Solution：</p
 
 
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
 
 
 
@@ -1512,7 +1534,7 @@ attempts，zookeeper对于Hmaster的选举产生了阻碍效果。Solution：</p
             inlineMath: { '[+]': [['$', '$']] }
           },
           loader : {
-            load: ['ui/lazy']
+            
           },
           options: {
             renderActions: {
@@ -1544,6 +1566,8 @@ attempts，zookeeper对于Hmaster的选举产生了阻碍效果。Solution：</p
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

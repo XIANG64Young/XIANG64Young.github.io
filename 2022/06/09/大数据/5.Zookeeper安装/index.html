@@ -33,6 +33,8 @@
 <meta name="twitter:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image016.gif">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
   
   <title>5.搭建zookeeper： - 相阳的小屋</title>
 
@@ -72,7 +74,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -278,7 +280,7 @@
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -zxvf zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>.tar.gz -C /bigdata**<br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image002-1640091876388.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image002-1640091876388.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -288,7 +290,7 @@ alt="img" />
 <p><strong>mkdir logs</strong></p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image004-1640091876388.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image004-1640091876388.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -296,7 +298,7 @@ alt="img" />
 <p><strong>cp zoo_sample.cfg zoo.cfg</strong></p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image006.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image006.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -305,7 +307,7 @@ alt="img" />
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">dataDir</span>=/bigdata/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>/data<br><span class="hljs-attribute">dataLogDir</span>=/bigdata/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>/logs<br><span class="hljs-attribute">server</span>.<span class="hljs-number">1</span>=master:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br><span class="hljs-attribute">server</span>.<span class="hljs-number">2</span>=node1:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br><span class="hljs-attribute">server</span>.<span class="hljs-number">3</span>=node2:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br></code></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image008.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image008.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -315,20 +317,20 @@ alt="img" />
 <p><strong>1</strong></p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image010.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image010.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>3、复制master的zookeeper-3.4.6到<strong>node1</strong>和<strong>node2</strong>上</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image012.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image012.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image014.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image014.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -338,12 +340,12 @@ alt="img" />
 <p><strong>2</strong></p>
 <p><strong>vi myid</strong></p>
 <p><strong>3</strong></p>
-<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image016.gif" srcset="/img/loading.gif" lazyload alt="img" style="zoom:33%;" /></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image016.gif" alt="img" style="zoom:33%;" /></p>
 <p>5、分别启动master,<strong>node1</strong>,<strong>node2</strong>上的zookeeper（zookeeper三台都要启动）</p>
 <p><strong>zkServer.sh start</strong></p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -352,7 +354,7 @@ alt="img" />
 <p><strong>zkServer.sh status</strong></p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -360,13 +362,13 @@ alt="img" />
 <p><strong>bin/zkCli.sh</strong></p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -381,7 +383,7 @@ alt="img" />
 snapDir：即上面配置的dataLogDir的目录；count：保留前几个日志文件，默认为3</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.gif" srcset="/img/loading.gif" lazyload
+src="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.gif"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -605,6 +607,30 @@ alt="img" />
     </div>
   
   
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
   
   
 </div>
@@ -665,10 +691,6 @@ alt="img" />
 
 
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
 
 
 
@@ -811,7 +833,7 @@ alt="img" />
             inlineMath: { '[+]': [['$', '$']] }
           },
           loader : {
-            load: ['ui/lazy']
+            
           },
           options: {
             renderActions: {
@@ -843,6 +865,8 @@ alt="img" />
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
