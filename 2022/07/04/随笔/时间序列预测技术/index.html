@@ -23,14 +23,15 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="Holt 趋向于被作为趋势序列的通用模型。 霍尔特指数平滑法是一种高级的线性指数平滑方法，该方法的优点是可以用不同的平滑参数对原序列的两种因素进行平滑，具有很大的灵活性，因此在实践中被广泛地应用。 Holt指数平滑模型由Holt于1957年提出。它与一般的指数平滑模型不同的是它对趋势数据直接进行平滑并对原时间序列进行预测，需要考虑的是两个平滑参数以及初值的选取问题，也被成为Holt双参数线性">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/765608-20160305160907487-76859704.png">
+<meta property="og:image" content="http://example.com/src/765608-20160305172536268-1238138049.png">
 <meta property="article:published_time" content="2022-07-04T08:05:05.690Z">
-<meta property="article:modified_time" content="2022-07-04T07:45:24.563Z">
+<meta property="article:modified_time" content="2022-07-04T13:29:54.274Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/765608-20160305160907487-76859704.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>时间序列预测技术 - 相阳的小屋</title>
@@ -71,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -299,12 +300,10 @@ class="math inline">\([0,N]\)</span>，那么<span
 class="math inline">\(Y_v=T_v+S_v+R_v\)</span> ，其中<span
 class="math inline">\(v=1,\dots,N\)</span>
 （加法模型中，各项具有相同量纲、STL只能处理加法模型，可以先将数据取对数，进行STL分解后的各分量结果取指数即可）</p>
-<p><img
-src="https://gitee.com/xiang976young/note/raw/master/img/765608-20160305160907487-76859704.png"
-alt="img" /> <span class="math display">\[
+<p><img src="/src/765608-20160305160907487-76859704.png" alt="img" />
+<span class="math display">\[
 log(Y_t)=log(Trend_t*Seasonal_t*Irregular_t)
-\]</span> <img
-src="https://gitee.com/xiang976young/note/raw/master/img/765608-20160305172536268-1238138049.png"
+\]</span> <img src="/src/765608-20160305172536268-1238138049.png"
 alt="img" /></p>
 <h1 id="holt-winters"><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/u010665216/article/details/78051192?locationNum=11&amp;fps=1">Holt-Winters</a></h1>
@@ -458,6 +457,35 @@ class="math inline">\(p=1\)</span></p>
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="b02aac14b88120d45da2149de9227ad8"
+      data-page-url="2022/07/04/随笔/时间序列预测技术/"
+      data-page-title="时间序列预测技术"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -562,30 +590,6 @@ class="math inline">\(p=1\)</span></p>
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -821,8 +825,6 @@ class="math inline">\(p=1\)</span></p>
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

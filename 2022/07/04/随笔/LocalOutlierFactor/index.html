@@ -23,15 +23,19 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="定义 首先，基于密度的离群点检测方法有一个基本假设：非离群点对象周围的密度与其邻域周围的密度类似，而离群点对象周围的密度显著不同于其邻域周围的密度。 什么意思呢？看下面图片感受下。   图片  集群 C1 包含了 400 多个点，集群 C2 包含 100 个点。C1 和 C2 都是一类集群点，区别是 C1 位置比较集中，或者说密度比较大。而像 o1、o2点均为异常点，因为基于我">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/640-1640416354808.webp">
+<meta property="og:image" content="http://example.com/src/image-20220316145612429.png">
+<meta property="og:image" content="http://example.com/src/image-20211225151420414.png">
+<meta property="og:image" content="http://example.com/src/640-1640416819808.webp">
+<meta property="og:image" content="http://example.com/src/640-1640416819835.webp">
 <meta property="article:published_time" content="2022-07-04T08:05:05.680Z">
-<meta property="article:modified_time" content="2022-07-04T07:54:24.270Z">
+<meta property="article:modified_time" content="2022-07-04T13:29:52.725Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="随笔">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/640-1640416354808.webp">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>LOF小记 - 相阳的小屋</title>
@@ -72,7 +76,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -277,9 +281,7 @@
 <p>首先，基于密度的离群点检测方法有一个基本假设：<strong>非离群点对象周围的密度与其邻域周围的密度类似，而离群点对象周围的密度显著不同于其邻域周围的密度。</strong></p>
 <p>什么意思呢？看下面图片感受下。</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/640-1640416354808.webp"
-alt="图片" />
+<img src="/src/640-1640416354808.webp" alt="图片" />
 <figcaption aria-hidden="true">图片</figcaption>
 </figure>
 <p>集群 <code>C1</code> 包含了 400 多个点，集群 <code>C2</code> 包含 100
@@ -299,13 +301,11 @@ d_k(p)=d(P,O)
 \]</span></p></li>
 <li><p>K近邻领域。以点P的圆心，以K近邻距离<span
 class="math inline">\(d_k(P)\)</span>为半径画圆，这个圈以内的范围就是K距离领域
-<span class="math display">\[
-N_k(P)=\{ d(P,O&#39;) \le d_k({P}) \}
-\]</span></p></li>
+$$</p>
+<p>N_k(P)={ d(P,O') d_k({P}) } $$</p></li>
 <li><p>可达距离。点P到点O的第K可达距离 <span class="math display">\[
 reach\_dist_k(O,P)=max\{d_k(O),d(O,P) \}
-\]</span> <img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/image-20220316145612429.png"
+\]</span> <img src="/src/image-20220316145612429.png"
 alt="image-20220316145612429" /> <span
 class="math inline">\(p_2\)</span>距离<span
 class="math inline">\(o\)</span>点远，那么可达距离就是他们的实际距离。但是<span
@@ -326,8 +326,7 @@ N_k(P)}reach\_dist_k(P,O)}{|N_k(P)|}}
 <li>如果LOF值越大，说明越异常，反之如果越小，说明越趋于正常。</li>
 </ol>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/image-20211225151420414.png"
+<img src="/src/image-20211225151420414.png"
 alt="image-20211225151420414" />
 <figcaption aria-hidden="true">image-20211225151420414</figcaption>
 </figure>
@@ -368,9 +367,7 @@ LOF 值。</p>
 分数的分布。在下图中看到正常数据（蓝色）的分数聚集在 1.0
 左右。离群数据点（橙色）的得分均大于 1.0，一般高于正常数据。</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/640-1640416819808.webp"
-alt="图片" />
+<img src="/src/640-1640416819808.webp" alt="图片" />
 <figcaption aria-hidden="true">图片</figcaption>
 </figure>
 <p><strong>Sklearn</strong></p>
@@ -385,9 +382,7 @@ alt="图片" />
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">clf = LocalOutlierFactor(novelty=<span class="hljs-literal">True</span>)<br>clf = clf.fit(X_train)<br>test_scores = clf.decision_function(X_test)<br><br>test_scores = -<span class="hljs-number">1</span>*test_scores<br><br>roc = <span class="hljs-built_in">round</span>(roc_auc_score(y_test, test_scores), ndigits=<span class="hljs-number">4</span>)<br>prn = <span class="hljs-built_in">round</span>(precision_n_scores(y_test, test_scores), ndigits=<span class="hljs-number">4</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;clf_name&#125;</span> ROC:<span class="hljs-subst">&#123;roc&#125;</span>, precision @ rank n:<span class="hljs-subst">&#123;prn&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
 <p>该模式下模型的异常值分数被反转，异常值的分数低于正常值。</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/640-1640416819835.webp"
-alt="图片" />
+<img src="/src/640-1640416819835.webp" alt="图片" />
 <figcaption aria-hidden="true">图片</figcaption>
 </figure>
 
@@ -501,6 +496,35 @@ alt="图片" />
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="2b92d7e4e93b57afd239d470cd35dc75"
+      data-page-url="2022/07/04/随笔/LocalOutlierFactor/"
+      data-page-title="LOF小记"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -605,30 +629,6 @@ alt="图片" />
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -864,8 +864,6 @@ alt="图片" />
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

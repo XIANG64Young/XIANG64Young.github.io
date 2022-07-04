@@ -16,24 +16,34 @@
   <meta name="author" content="Chris·Yougn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs   img  cd conf&#x2F; cp">
+    <meta name="description" content="搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data **mkdir logs   img  cd conf&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5.搭建zookeeper：">
 <meta property="og:url" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/5.Zookeeper%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="相阳的小屋">
-<meta property="og:description" content="搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs   img  cd conf&#x2F; cp">
+<meta property="og:description" content="搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data **mkdir logs   img  cd conf&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image016.gif">
+<meta property="og:image" content="http://example.com/src/clip_image002-1640091876388.gif">
+<meta property="og:image" content="http://example.com/src/clip_image004-1640091876388.gif">
+<meta property="og:image" content="http://example.com/src/clip_image006.gif">
+<meta property="og:image" content="http://example.com/src/clip_image008.gif">
+<meta property="og:image" content="http://example.com/src/clip_image010.gif">
+<meta property="og:image" content="http://example.com/src/clip_image012.gif">
+<meta property="og:image" content="http://example.com/src/clip_image014.gif">
+<meta property="og:image" content="http://example.com/src/clip_image016.gif">
+<meta property="og:image" content="http://example.com/src/clip_image020.gif">
+<meta property="og:image" content="http://example.com/src/clip_image022.gif">
+<meta property="og:image" content="http://example.com/src/clip_image028.gif">
+<meta property="og:image" content="http://example.com/src/clip_image030.gif">
+<meta property="og:image" content="http://example.com/src/clip_image032.gif">
 <meta property="article:published_time" content="2022-06-09T13:31:42.935Z">
-<meta property="article:modified_time" content="2022-06-10T08:16:02.478Z">
+<meta property="article:modified_time" content="2022-07-04T13:51:17.289Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="BigData">
 <meta property="article:tag" content="Zookeeper">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image016.gif">
+<meta name="twitter:image" content="http://example.com/src/clip_image002-1640091876388.gif">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>5.搭建zookeeper： - 相阳的小屋</title>
@@ -74,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -279,36 +289,28 @@
 <p>1、下载zookeeper并解压</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -zxvf zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>.tar.gz -C /bigdata**<br></code></pre></td></tr></table></figure>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image002-1640091876388.gif"
-alt="img" />
+<img src="/src/clip_image002-1640091876388.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs</p>
 <p><strong>cd zookeeper-3.4.6</strong></p>
 <p><strong>mkdir data</strong></p>
-<p><strong>mkdir logs</strong></p>
+<p>**mkdir logs</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image004-1640091876388.gif"
-alt="img" />
+<img src="/src/clip_image004-1640091876388.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p><strong>cd conf/</strong></p>
 <p><strong>cp zoo_sample.cfg zoo.cfg</strong></p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image006.gif"
-alt="img" />
+<img src="/src/clip_image006.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p><strong>vi zoo.cfg</strong></p>
 <p>添加以下内容</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">dataDir</span>=/bigdata/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>/data<br><span class="hljs-attribute">dataLogDir</span>=/bigdata/zookeeper-<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">6</span>/logs<br><span class="hljs-attribute">server</span>.<span class="hljs-number">1</span>=master:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br><span class="hljs-attribute">server</span>.<span class="hljs-number">2</span>=node1:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br><span class="hljs-attribute">server</span>.<span class="hljs-number">3</span>=node2:<span class="hljs-number">2888</span>:<span class="hljs-number">3888</span><br></code></pre></td></tr></table></figure>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image008.gif"
-alt="img" />
+<img src="/src/clip_image008.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p><strong>cd data</strong></p>
@@ -316,22 +318,16 @@ alt="img" />
 <p><strong>vi myid</strong></p>
 <p><strong>1</strong></p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image010.gif"
-alt="img" />
+<img src="/src/clip_image010.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>3、复制master的zookeeper-3.4.6到<strong>node1</strong>和<strong>node2</strong>上</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image012.gif"
-alt="img" />
+<img src="/src/clip_image012.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image014.gif"
-alt="img" />
+<img src="/src/clip_image014.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>4、分别修改<strong>node1</strong>和<strong>node2</strong>上myid的值为2和3</p>
@@ -340,36 +336,28 @@ alt="img" />
 <p><strong>2</strong></p>
 <p><strong>vi myid</strong></p>
 <p><strong>3</strong></p>
-<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image016.gif" alt="img" style="zoom:33%;" /></p>
+<p><img src="/src/clip_image016.gif" alt="img" style="zoom:33%;" /></p>
 <p>5、分别启动master,<strong>node1</strong>,<strong>node2</strong>上的zookeeper（zookeeper三台都要启动）</p>
 <p><strong>zkServer.sh start</strong></p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.gif"
-alt="img" />
+<img src="/src/clip_image020.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>(可以在环境变量里设置，以便于下次不用再进入bin中操作)</p>
 <p>6、查看zookeeper的状态</p>
 <p><strong>zkServer.sh status</strong></p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.gif"
-alt="img" />
+<img src="/src/clip_image022.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>7、验证zookeeper集群，启动客户端</p>
 <p><strong>bin/zkCli.sh</strong></p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.gif"
-alt="img" />
+<img src="/src/clip_image028.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.gif"
-alt="img" />
+<img src="/src/clip_image030.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>至此：zookeeper集群安装完毕！</p>
@@ -382,9 +370,7 @@ alt="img" />
 <p>其中：dataDir：即上面配置的dataDir的目录；
 snapDir：即上面配置的dataLogDir的目录；count：保留前几个日志文件，默认为3</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.gif"
-alt="img" />
+<img src="/src/clip_image032.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <ul>
@@ -502,6 +488,35 @@ alt="img" />
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="cd00c16cbfd03284981110c2e23fb283"
+      data-page-url="2022/06/09/大数据/5.Zookeeper安装/"
+      data-page-title="5.搭建zookeeper："
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -606,30 +621,6 @@ alt="img" />
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -865,8 +856,6 @@ alt="img" />
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

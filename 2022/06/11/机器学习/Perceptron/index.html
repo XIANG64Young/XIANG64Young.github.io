@@ -23,23 +23,21 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="Introduce 感知机模型(Perceptron)是一个最简单的有监督的二分类线性模型。他可以从两个方面进行介绍 方面一 问题分析 问题（一维）：儿童免票乘车问题（孩子身高低于1.2m可以免票上车） 这转换成数学表达式就是 \(x:\)身高，\(y:\{-1:\)免票 ,\(1:\)购票\(\}\) \[ y&#x3D;\left\{\begin{matrix}+1,x\ge1.2m \\">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/2274220-20211218214342516-2127817773.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211218214401828-471520394.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211219113413328-528436610.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211218221216356-994026222.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211218221328431-310696772.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211218221424196-524684068.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211219124043889-525716909.png">
-<meta property="og:image" content="http://example.com/img/2274220-20211219130328971-1222419824.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211218214342516-2127817773.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211218214401828-471520394.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211219113413328-528436610.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211218221216356-994026222.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211218221328431-310696772.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211218221424196-524684068.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211219124043889-525716909.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211219130328971-1222419824.png">
 <meta property="article:published_time" content="2022-06-11T01:32:31.392Z">
-<meta property="article:modified_time" content="2022-07-04T09:06:44.947Z">
+<meta property="article:modified_time" content="2022-07-04T13:35:11.141Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/2274220-20211218214342516-2127817773.png">
+<meta name="twitter:image" content="http://example.com/src/2274220-20211218214342516-2127817773.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>Perceptron - 相阳的小屋</title>
@@ -80,7 +78,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -294,8 +292,8 @@ class="math inline">\(\}\)</span></p>
 <p><span class="math display">\[ y=\left\{\begin{matrix}+1,x\ge1.2m \\
 -1,x\lt1.2m\end{matrix}\right. \]</span></p>
 <figure>
-<img src="/img/2274220-20211218214342516-2127817773.png" alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
+<img src="/src/2274220-20211218214342516-2127817773.png" alt="src" />
+<figcaption aria-hidden="true">src</figcaption>
 </figure>
 <p>如果把<span class="math inline">\(y\)</span>用函数<span
 class="math inline">\(f(x;b)\)</span>表达出来就如下所示</p>
@@ -303,8 +301,8 @@ class="math inline">\(f(x;b)\)</span>表达出来就如下所示</p>
 y=f(x;b)=\left\{\begin{matrix}+1,z=x+b\ge0 \\ -1,z=x+b \lt0
 \end{matrix}\right. \]</span></p>
 <figure>
-<img src="/img/2274220-20211218214401828-471520394.png" alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
+<img src="/src/2274220-20211218214401828-471520394.png" alt="src" />
+<figcaption aria-hidden="true">src</figcaption>
 </figure>
 <p>用机器学习的话来说变量<span
 class="math inline">\(x\)</span>就是一个<strong>特征</strong>,<span
@@ -322,18 +320,18 @@ class="math inline">\(y:\{-1:\)</span>坏瓜 ,<span
 class="math inline">\(1:\)</span>好瓜<span
 class="math inline">\(\}\)</span> 数据如图所示：</p>
 <figure>
-<img src="/img/2274220-20211219113413328-528436610.png" alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
+<img src="/src/2274220-20211219113413328-528436610.png" alt="src" />
+<figcaption aria-hidden="true">src</figcaption>
 </figure>
 <p>用一般的数学方法，我们希望将两个变量<span
 class="math inline">\(x_1,x_2\)</span>映射到一个维度上去
 就会出现如下三种经典的情况</p>
-<p>映射到水平方向<img src="/img/2274220-20211218221216356-994026222.png"
-alt="img" /></p>
-<p>映射到竖直方向<img src="/img/2274220-20211218221328431-310696772.png"
-alt="img" /></p>
-<p>映射到任意方向<img src="/img/2274220-20211218221424196-524684068.png"
-alt="img" /></p>
+<p>映射到水平方向<img src="/src/2274220-20211218221216356-994026222.png"
+alt="src" /></p>
+<p>映射到竖直方向<img src="/src/2274220-20211218221328431-310696772.png"
+alt="src" /></p>
+<p>映射到任意方向<img src="/src/2274220-20211218221424196-524684068.png"
+alt="src" /></p>
 <p>二维向量映射到一维空间需要有映射的方向。此时就需要一定的方向向量<span
 class="math inline">\(\mathbb{w}=(w_1 \ w_2)^T\)</span>
 此时，如果把<span class="math inline">\(y\)</span>用函数<span
@@ -346,16 +344,16 @@ class="math inline">\(\mathbb{x},\mathbb{w}升维就可以了\)</span></p>
 <h2 id="方面二-模型发展">方面二 模型发展</h2>
 <p>1943年，McCulloch和Pits结合神经元模型Neuron提出来经典的抽象的M-P神经元模型</p>
 <p>神经元的生物学结构<img
-src="/img/2274220-20211219123951945-1354915555.png" alt="img" /></p>
-<p>M-P神经元模型 <img src="/img/2274220-20211219124043889-525716909.png"
-alt="img" /></p>
+src="/src/2274220-20211219123951945-1354915555.png" alt="src" /></p>
+<p>M-P神经元模型 <img src="/src/2274220-20211219124043889-525716909.png"
+alt="src" /></p>
 <p>而感知机模型是从神经元模型发展过来的。感知机是由两层神经元组成的一个简单模型。只有输出层是M-P
 神经元，即只有输出层神经元进行激活函数处理，也称为功能神经元（
 functional
 neuron）；输入层只是接受外界信号（样本属性）并传递给输出层（输入层的神经元个数等于样本的属性数目），而没有激活函数。示意图如下：</p>
 <figure>
-<img src="/img/2274220-20211219130328971-1222419824.png" alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
+<img src="/src/2274220-20211219130328971-1222419824.png" alt="src" />
+<figcaption aria-hidden="true">src</figcaption>
 </figure>
 <h1 id="definition">Definition</h1>
 <p>假设输入空间（特征空间）是<span class="math inline">\(\mathcal{X}
@@ -542,6 +540,35 @@ target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aE411o7qd
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="913b017970d9eff1b2743d973802f103"
+      data-page-url="2022/06/11/机器学习/Perceptron/"
+      data-page-title="Perceptron"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -646,30 +673,6 @@ target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aE411o7qd
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -905,8 +908,6 @@ target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aE411o7qd
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

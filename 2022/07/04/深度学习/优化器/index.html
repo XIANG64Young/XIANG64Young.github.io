@@ -23,20 +23,18 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="优化的目标 尽管优化提供了一种最大限度地减少深度学习损失函数的方法，但实质上，优化和深度学习的目标是根本不同的。 前者主要关注的是最小化目标，后者则关注在给定有限数据量的情况下寻找合适的模型。 深度学习优化的挑战 其中一些最令人烦恼的是局部最小值、鞍点和梯度消失。让我们来看看它们。 局部最小值 对于任何目标函数\(f(x)\)，如果在\(x\)处对应的\(𝑓(𝑥)\)值小于在\(x">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/image-20220309141205687.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/image-20220309141416324.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/image-20220309141507927.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/image-20220309141749050.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/image-20220309160114281.png">
+<meta property="og:image" content="http://example.com/src/image-20220309141205687.png">
+<meta property="og:image" content="http://example.com/src/image-20220309141416324.png">
+<meta property="og:image" content="http://example.com/src/image-20220309141507927.png">
+<meta property="og:image" content="http://example.com/src/image-20220309141749050.png">
+<meta property="og:image" content="http://example.com/src/image-20220309160114281.png">
 <meta property="article:published_time" content="2022-07-04T08:05:05.641Z">
-<meta property="article:modified_time" content="2022-07-04T07:51:55.666Z">
+<meta property="article:modified_time" content="2022-07-04T13:29:29.979Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Deep Learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/image-20220309141205687.png">
+<meta name="twitter:image" content="http://example.com/src/image-20220309141205687.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>深度学习 优化器 - 相阳的小屋</title>
@@ -77,7 +75,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -295,7 +293,7 @@ class="math inline">\(f(x)\)</span>在<span
 class="math inline">\(x\)</span>处的值是整个域上目标函数的最小值，那么<span
 class="math inline">\(f(x)\)</span>是全局最小值。</p>
 <figure>
-<img src="..\src\image-20220309141205687.png"
+<img src="\src\image-20220309141205687.png"
 alt="image-20220309141205687" />
 <figcaption aria-hidden="true">image-20220309141205687</figcaption>
 </figure>
@@ -306,7 +304,7 @@ point）是指函数的所有梯度都消失但既不是全局最小值也不是
 class="math inline">\(𝑓(𝑥)=𝑥^3\)</span>。它的一阶和二阶导数在<span
 class="math inline">\(𝑥=0\)</span>时消失。这时优化可能会停止，尽管它不是最小值。</p>
 <figure>
-<img src="..\src\image-20220309141416324.png"
+<img src="\src\image-20220309141416324.png"
 alt="image-20220309141416324" />
 <figcaption aria-hidden="true">image-20220309141416324</figcaption>
 </figure>
@@ -315,7 +313,7 @@ class="math inline">\(𝑓(𝑥,𝑦)=𝑥^2−𝑦^2\)</span>。它的鞍点为
 class="math inline">\(y\)</span>的最大值，也是关于<span
 class="math inline">\(x\)</span>的最小值。此外，它<em>看起来</em>像马鞍，这就是这个数学属性的名字由来。</p>
 <figure>
-<img src="..\src\image-20220309141507927.png"
+<img src="\src\image-20220309141507927.png"
 alt="image-20220309141507927" />
 <figcaption aria-hidden="true">image-20220309141507927</figcaption>
 </figure>
@@ -334,7 +332,7 @@ class="math inline">\(𝑓\)</span>的梯度接近零。更具体地说，<span
 class="math inline">\(𝑓′(𝑥)=1−tanh2(𝑥)\)</span>，因此是<span
 class="math inline">\(𝑓′(4)=0.0013\)</span>。因此，在我们取得进展之前，优化将会停滞很长一段时间。事实证明，这是在引入ReLU激活函数之前训练深度学习模型相当棘手的原因之一。</p>
 <figure>
-<img src="../src\image-20220309141749050.png"
+<img src="/src\image-20220309141749050.png"
 alt="image-20220309141749050" />
 <figcaption aria-hidden="true">image-20220309141749050</figcaption>
 </figure>
@@ -467,9 +465,9 @@ class="math inline">\(\eta\)</span>，在机器学习中又称为学习率。</p
 小批量随机梯度下降。</p>
 <p>小批量随机梯度下降往往能够提升运算速度， 平均梯度的方式减少了方差，
 但是在产生下降过程中易出现左右振荡的现象。而动量梯度下降法通过减小振荡对算法进行优化。动量梯度下降法的核心便是对一系列梯度进行指数加权平均。</p>
-<p><img src="..\src\image-20220309160114281.png"
+<p><img src="\src\image-20220309160114281.png"
 alt="image-20220309160114281" /><img
-src="..\src\image-20220309160122493.png"
+src="\src\image-20220309160122493.png"
 alt="image-20220309160122493" /></p>
 <p>动量法计算计算公式。他使用指数加权法 让梯度拥有所有信息 <span
 class="math display">\[
@@ -688,6 +686,35 @@ target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/optim.html"
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="8a5e76d1718b196bfc4dc4a80c1741fd"
+      data-page-url="2022/07/04/深度学习/优化器/"
+      data-page-title="深度学习 优化器"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -792,30 +819,6 @@ target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/optim.html"
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -1051,8 +1054,6 @@ target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/optim.html"
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

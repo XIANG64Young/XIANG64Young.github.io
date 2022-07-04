@@ -23,23 +23,32 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="如何理解K-L散度（相对熵） Kullback-Leibler Divergence，即K-L散度，是一种量化两种概率分布P和Q之间差异的方式，又叫相对熵。在概率学和统计学上，我们经常会使用一种更简单的、近似的分布来替代观察数据或太复杂的分布。K-L散度能帮助我们度量使用一个分布来近似另一个分布时所损失的信息量。 K-L散度定义见文末附录1。另外在附录5中解释了为什么在深度学习中，训练模型时使">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/webp.webp">
-<meta property="og:image" content="http://example.com/img/webp-165590384367879.webp">
-<meta property="og:image" content="http://example.com/img/webp-165590384766882.webp">
-<meta property="og:image" content="http://example.com/img/webp-165590386927085.webp">
-<meta property="og:image" content="http://example.com/img/75110-b049f7fc560bd8d8.png">
+<meta property="og:image" content="http://example.com/src/webp.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590384367879.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590384766882.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590386927085.webp">
+<meta property="og:image" content="http://example.com/src/75110-b049f7fc560bd8d8.png">
+<meta property="og:image" content="http://example.com/src/webp.webp">
+<meta property="og:image" content="http://example.com/src/webp-165694178715996.webp">
+<meta property="og:image" content="http://example.com/src/webp-165694178859698.webp">
+<meta property="og:image" content="http://example.com/src/webp-1656941790199100.webp">
+<meta property="og:image" content="http://example.com/src/75110-f682f83675fa42ee.png">
+<meta property="og:image" content="http://example.com/src/webp-1656941798226108.webp">
+<meta property="og:image" content="http://example.com/src/webp-1656941800646111.webp">
 <meta property="og:image" content="http://example.com/img/webp-165590387792790.webp">
-<meta property="og:image" content="http://example.com/img/webp-165590388157393.webp">
-<meta property="og:image" content="http://example.com/img/75110-857b751b045a3aa2.png">
+<meta property="og:image" content="http://example.com/src/webp-1656941803774114.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590388157393.webp">
+<meta property="og:image" content="http://example.com/src/75110-857b751b045a3aa2.png">
+<meta property="og:image" content="http://example.com/src/75110-5d773218b2511d9a.png">
+<meta property="og:image" content="http://example.com/src/75110-f55d663d60503fa4.png">
+<meta property="og:image" content="http://example.com/src/webp-1656941818267121.webp">
 <meta property="article:published_time" content="2022-06-11T01:32:31.296Z">
-<meta property="article:modified_time" content="2022-07-04T09:06:42.341Z">
+<meta property="article:modified_time" content="2022-07-04T13:37:41.214Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/webp.webp">
+<meta name="twitter:image" content="http://example.com/src/webp.webp">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>KL散度 - 相阳的小屋</title>
@@ -80,7 +89,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -290,31 +299,31 @@
 <p>假设我们是一群太空科学家，经过遥远的旅行，来到了一颗新发现的星球。在这个星球上，生存着一种长有牙齿的蠕虫，引起了我们的研究兴趣。我们发现这种蠕虫生有10颗牙齿，但是因为不注意口腔卫生，又喜欢嚼东西，许多蠕虫会掉牙。收集大量样本之后，我们得到关于蠕虫牙齿数量的经验分布，如下图所示</p>
 </blockquote>
 <figure>
-<img src="/img/webp.webp" alt="img" />
+<img src="/src/webp.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>牙齿数量分布</p>
 <figure>
-<img src="/img/webp-165590384367879.webp" alt="img" />
+<img src="/src/webp-165590384367879.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>会掉牙的外星蠕虫</p>
 <p>这些数据很有价值，但是也有点问题。我们距离地球🌍太远了，把这些概率分布数据发送回地球过于昂贵。还好我们是一群聪明的科学家，用一个只有一两个参数的简单模型来近似原始数据会减小数据传送量。最简单的近似模型是<code>均分布</code>，因为蠕虫牙齿不会超过10颗，所以有11个可能值，那蠕虫的牙齿数量概率都为
 <code>1/11</code>。分布图如下：</p>
 <figure>
-<img src="/img/webp-165590384766882.webp" alt="img" />
+<img src="/src/webp-165590384766882.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>uniform distribution</p>
 <p>显然我们的原始数据并非均分布的，但也不是我们已知的分布，至少不是常见的分布。作为备选，我们想到的另一种简单模型是<code>二项式分布binomial distribution</code>。蠕虫嘴里面共有<code>n=10</code>个牙槽，每个牙槽出现牙齿与否为独立事件，且概率均为<code>p</code>。则蠕虫牙齿数量即为期望值<code>E[x]=n*p</code>，真实期望值即为观察数据的平均值，比如说<code>5.7</code>，则<code>p=0.57</code>，得到如下图所示的二项式分布：</p>
 <figure>
-<img src="/img/webp-165590386927085.webp" alt="img" />
+<img src="/src/webp-165590386927085.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>binomial</p>
 <p>对比一下原始数据，可以看出均分布和二项分布都不能完全描述原始分布。</p>
 <figure>
-<img src="/img/75110-b049f7fc560bd8d8.png" alt="img" />
+<img src="/src/75110-b049f7fc560bd8d8.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>all distributions</p>
@@ -323,9 +332,7 @@
 <h2 id="数据的熵">数据的熵</h2>
 <p>K-L散度源于信息论。信息论主要研究如何量化数据中的信息。最重要的信息度量单位是<code>熵</code>Entropy，一般用<code>H</code>表示。分布的熵的公式如下：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-7977551fba322af7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/472/format/webp"
-alt="img" />
+<img src="/src/webp.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>Entropy</p>
@@ -334,25 +341,19 @@ alt="img" />
 <h2 id="k-l散度度量信息损失">K-L散度度量信息损失</h2>
 <p>只需要稍加修改<code>熵H</code>的计算公式就能得到<code>K-L散度</code>的计算公式。设<code>p</code>为观察得到的概率分布，<code>q</code>为另一分布来近似<code>p</code>，则<code>p</code>、<code>q</code>的<code>K-L散度</code>为：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-e94b5412d85e5698.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/752/format/webp"
-alt="img" />
+<img src="/src/webp-165694178715996.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>entropy-p-q</p>
 <p>显然，根据上面的公式，K-L散度其实是数据的原始分布p和近似分布q之间的对数差值的期望。如果继续用<code>2</code>为底的对数计算，则<strong>K-L散度值表示信息损失的二进制位数</strong>。下面公式以期望表达K-L散度：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-5e6109b0e9ec780a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/576/format/webp"
-alt="img" />
+<img src="/src/webp-165694178859698.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>DKL1</p>
 <p>一般，K-L散度以下面的书写方式更常见：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-d602c1e8d0fe3689.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/534/format/webp"
-alt="img" />
+<img src="/src/webp-1656941790199100.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>DKL2</p>
@@ -361,17 +362,13 @@ alt="img" />
 <h2 id="对比两种分布">对比两种分布</h2>
 <p>首先是用均分布来近似原始分布的K-L散度：</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/75110-f682f83675fa42ee.png"
-alt="img" />
+<img src="/src/75110-f682f83675fa42ee.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>DKL-uniform</p>
 <p>接下来计算用二项式分布近似原始分布的K-L散度：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-b7a85dc7ac779750.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/581/format/webp"
-alt="img" />
+<img src="/src/webp-1656941798226108.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>DKL-binomial</p>
@@ -379,9 +376,7 @@ alt="img" />
 <h2 id="散度并非距离">散度并非距离</h2>
 <p>很自然地，一些同学把K-L散度看作是不同分布之间距离的度量。这是不对的，因为从K-L散度的计算公式就可以看出它不符合对称性（距离度量应该满足对称性）。如果用我们上面观察的数据分布来近似二项式分布，得到如下结果：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-c72abbdf1938256e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/558/format/webp"
-alt="img" />
+<img src="/src/webp-1656941800646111.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>DKL-notdistance</p>
@@ -401,9 +396,7 @@ alt="img" />
 <p>前面只考虑了均分布模型和二项式分布模型，接下来我们考虑另外一种模型来近似原始数据。首先把原始数据分成两部分，1）0-5颗牙齿的概率和
 2）6-10颗牙齿的概率。概率值如下：</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-76a03ef0cd285801.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/414/format/webp"
-alt="img" />
+<img src="/src/webp-1656941803774114.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>ad hoc model</p>
@@ -412,13 +405,13 @@ alt="img" />
 <code>j=6,7,8,9,10</code>。
 Aha，我们自己建立了一个新的（奇怪的）模型来近似原始的分布，模型只有一个参数<code>p</code>，像前面那样优化二项式分布的时候所做的一样，让我们画出K-L散度值随<code>p</code>变化的情况：</p>
 <figure>
-<img src="/img/webp-165590388157393.webp" alt="img" />
+<img src="/src/webp-165590388157393.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>finding an optimal parameter value for our ad hoc model</p>
 <p>当<code>p=0.47</code>时，K-L值取最小值<code>0.338</code>。似曾相识吗？对，这个值和使用均分布的K-L散度值是一样的（这并不能说明什么）！下面我们继续画出这个奇怪模型的概率分布图，看起来确实和均分布的概率分布图相似：</p>
 <figure>
-<img src="/img/75110-857b751b045a3aa2.png" alt="img" />
+<img src="/src/75110-857b751b045a3aa2.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>ad hoc model distribution</p>
@@ -445,25 +438,19 @@ library for python</a>。</p>
 <ol type="1">
 <li><p>K-L 散度的定义</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/75110-5d773218b2511d9a.png"
-alt="img" />
+<img src="/src/75110-5d773218b2511d9a.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>define K-L divergence</p></li>
 <li><p>计算K-L的注意事项</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/75110-f55d663d60503fa4.png"
-alt="img" />
+<img src="/src/75110-f55d663d60503fa4.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>notice</p></li>
 <li><p>遇到<code>log 0</code>时怎么办</p>
 <figure>
-<img
-src="https://upload-images.jianshu.io/upload_images/75110-a7dc83686d7206c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp"
-alt="img" />
+<img src="/src/webp-1656941818267121.webp" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>example for K-L smoothing</p></li>
@@ -598,6 +585,35 @@ classification?</a></li>
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="966a823b2b9853d162e068fe95d24610"
+      data-page-url="2022/06/11/机器学习/KL散度/"
+      data-page-title="KL散度"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -702,30 +718,6 @@ classification?</a></li>
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -961,8 +953,6 @@ classification?</a></li>
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

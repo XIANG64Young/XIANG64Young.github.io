@@ -23,23 +23,21 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="Tensor的概念 说起张量（tensor）就不得不说他和scalar、vertor、matrix之间的关系了，直接上图：   img   标量（scalar）：只有大小概念，没有方向的概念。通过一个具体的数值就能表达完整。比如：重量、温度、长度、提及、时间、热量等都数据标量。 向量（vector）：物理学上也叫矢量，指由大小和方向共同决定的量（跟「标量」相区别）。向量主要有2个维">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212114510782-517507267.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212121653659-1556888048.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212124655518-1573408127.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212211034421-51741505.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212220038950-808356639.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212220334767-1100716490.png">
-<meta property="og:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211213161318232-1359331427.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211212114510782-517507267.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211212121653659-1556888048.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211212124655518-1573408127.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211212211034421-51741505.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211212220038950-808356639.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211212220334767-1100716490.png">
+<meta property="og:image" content="http://example.com/src/2274220-20211213161318232-1359331427.png">
 <meta property="article:published_time" content="2022-07-04T08:05:05.636Z">
-<meta property="article:modified_time" content="2022-07-04T07:52:11.453Z">
+<meta property="article:modified_time" content="2022-07-04T13:29:40.301Z">
 <meta property="article:author" content="Chris·Yougn">
-<meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Python">
+<meta property="article:tag" content="Deep Learning">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/src/2274220-20211212114510782-517507267.png">
+<meta name="twitter:image" content="http://example.com/src/2274220-20211212114510782-517507267.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>tensor基本概念  torch版 - 相阳的小屋</title>
@@ -80,7 +78,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -284,7 +282,7 @@
               <h1 id="tensor的概念">Tensor的概念</h1>
 <p>说起张量（tensor）就不得不说他和scalar、vertor、matrix之间的关系了，直接上图：</p>
 <figure>
-<img src="..\src\2274220-20211212114510782-517507267.png" alt="img" />
+<img src="\src\2274220-20211212114510782-517507267.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <blockquote>
@@ -296,12 +294,12 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/young978/p/15669123
 </blockquote>
 <p>当下主流的深度网络学习框架是PyTorch和Tensorflow。</p>
 <p>对于这两个框架而言，我只想用一句代码来阐述我心中的杂乱：</p>
-<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">Import</span> torch <span class="hljs-built_in">as</span> tf               <br></code></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">Import</span> torch <span class="hljs-built_in">as</span> tf               <br><br></code></pre></td></tr></table></figure>
 <p>但是，我还是选择了PyTorch（ ^<em>^ / ~</em>~ ）</p>
 <p>tensor,是PyTorch中最基础的数据类型,也是进行数据存储和运算的基本单元。</p>
 <p>数组array这个概念，数组是类似于列表的高阶对象，是有序的元素序列。</p>
 <figure>
-<img src="..\src\2274220-20211212121653659-1556888048.png" alt="img" />
+<img src="\src\2274220-20211212121653659-1556888048.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>Tensor在PyTorch的地位相当于Array在Numpy中地位。</p>
@@ -312,7 +310,7 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/young978/p/15669123
 <h2 id="torch.dtype">torch.dtype</h2>
 <p>Pytorch拥有12个不同的数据类型。</p>
 <figure>
-<img src="..\src\2274220-20211212124655518-1573408127.png" alt="img" />
+<img src="\src\2274220-20211212124655518-1573408127.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>tensor类型 相关代码</p>
@@ -331,19 +329,19 @@ cpu，cuda或者一些设备类型的可选设备序号</p>
 <p>torch.layout 是表示 torch.tensor
 的内存布局的对象。目前，torch.tensor支持torch.strided（密集张量）和sparse_coo（稀疏的COO张量）。</p>
 <figure>
-<img src="..\src\2274220-20211212211034421-51741505.png" alt="img" />
+<img src="\src\2274220-20211212211034421-51741505.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>stride()方法其实指的就是，tensor每个维度变化1在实际物理存储空间变化的大小。<img
-src="..\src\loading.gif" alt="img" /></p>
+src="\src\loading.gif" alt="img" /></p>
 <blockquote>
 <figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">x = torch.tensor([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [<span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>]])</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">x.stride()</span><br>(5, 1)<br><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">x.t().stride()</span><br>(1, 5)<br></code></pre></td></tr></table></figure>
 </blockquote>
 <h1 id="tensor的创建与访问">Tensor的创建与访问</h1>
 <h2 id="tensor的创建方式">Tensor的创建方式</h2>
 <ul>
-<li>可以根据数据、元组、NumPy的ndarray、标量和其他类型，来构建tensor。方法有：torch.tensor()、torch.ones()、torch.zeros()、torch.from_array()...</li>
-<li>也可以从一些分布中采样构建新的张量：torch.arange()、torch.range()、torch.rand()、torch.randn()、torch.normal()...</li>
+<li>可以根据数据、元组、NumPy的ndarray、标量和其他类型，来构建tensor。方法有：torch.tensor()、torch.ones()、torch.zeros()、torch.from_array().</li>
+<li>也可以从一些分布中采样构建新的张量：torch.arange()、torch.range()、torch.rand()、torch.randn()、torch.normal().</li>
 <li>当然也有一些比较特殊的搭建：torch.eye()用于构建一个对角矩阵</li>
 </ul>
 <h2 id="tensor的访问方式">Tensor的访问方式</h2>
@@ -355,7 +353,7 @@ src="..\src\loading.gif" alt="img" /></p>
 <blockquote>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">X</span> = torch.randn((<span class="hljs-number">2</span>,<span class="hljs-number">3</span>))<br><span class="hljs-attr">mask</span> = torch.randn((<span class="hljs-number">2</span>,<span class="hljs-number">3</span>))&gt;<span class="hljs-number">0</span><br><span class="hljs-attr">X1</span> = X[mask]<br><span class="hljs-attr">X2</span> = torch.masked_select(X,mask)<br></code></pre></td></tr></table></figure>
 <figure>
-<img src="..\src\2274220-20211212220038950-808356639.png" alt="img" />
+<img src="\src\2274220-20211212220038950-808356639.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 </blockquote>
@@ -365,7 +363,7 @@ src="..\src\loading.gif" alt="img" /></p>
 <blockquote>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">x</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>)<br><span class="hljs-attr">y</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>)<br><span class="hljs-attr">z</span> = torch.where(x&gt;y,x,y)<br></code></pre></td></tr></table></figure>
 <figure>
-<img src="..\src\2274220-20211212220334767-1100716490.png" alt="img" />
+<img src="\src\2274220-20211212220334767-1100716490.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 </blockquote>
@@ -424,7 +422,7 @@ src="..\src\loading.gif" alt="img" /></p>
 <p>粗略的来说，就是利用squeeze()方法使低维的数据升到高维的数据，再利用cat()方法拼接成同样的大小。（前提是，该维度长度为1，或者没有维度才可以）</p>
 <p>下面这张图就可以很清晰的表达BroadCasting的效果。</p>
 <figure>
-<img src="..\src\2274220-20211213161318232-1359331427.png" alt="img" />
+<img src="\src\2274220-20211213161318232-1359331427.png" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>范数调用torch.norm(input, p='fro', dim=None, keepdim=False, out=None,
@@ -463,9 +461,9 @@ p=1 \to L_1 \\ p=2 \to L_2 \\ P=inf \to L_\infty
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Deep-Learning/">#Deep Learning</a>
-      
         <a href="/tags/Python/">#Python</a>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
       
     </div>
   
@@ -542,6 +540,35 @@ p=1 \to L_1 \\ p=2 \to L_2 \\ P=inf \to L_\infty
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="22dfb9efe987f9f46baf339ceac9aabf"
+      data-page-url="2022/07/04/深度学习/tensor基本方法/"
+      data-page-title="tensor基本概念  torch版"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -646,30 +673,6 @@ p=1 \to L_1 \\ p=2 \to L_2 \\ P=inf \to L_\infty
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -905,8 +908,6 @@ p=1 \to L_1 \\ p=2 \to L_2 \\ P=inf \to L_\infty
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

@@ -23,15 +23,16 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="Hive安装 首先安装MySQL 1、查看mysql的依赖 1rpm -qa | grep mysql 2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96; 3、离线安装mysql 12rpm -ivh MySQL-server-5.1.73-1.glib">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/src/clip_image002.gif">
+<meta property="og:image" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/src/clip_image004.gif">
 <meta property="article:published_time" content="2022-06-09T13:31:42.940Z">
-<meta property="article:modified_time" content="2022-06-10T08:16:28.541Z">
+<meta property="article:modified_time" content="2022-07-04T13:51:18.592Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="BigData">
 <meta property="article:tag" content="Hive">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/06/09/%E5%A4%A7%E6%95%B0%E6%8D%AE/src/clip_image002.gif">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>8.Hive安装 - 相阳的小屋</title>
@@ -72,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -303,9 +304,7 @@
 <p>修改hive-env.sh</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">HADOOP_HOME</span>=/bigdata/hadoop-<span class="hljs-number">2</span>.<span class="hljs-number">6</span>.<span class="hljs-number">0</span><br><span class="hljs-attribute">JAVA_HOME</span>=/bigdata/jdk1.<span class="hljs-number">8</span>.<span class="hljs-number">0</span>_171<br><span class="hljs-attribute">HIVE_HOME</span>=/bigdata/hive-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image002.gif"
-alt="img" />
+<img src="../src/clip_image002.gif" alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>修改hive-site.xml</p>
@@ -326,8 +325,7 @@ alt="img" />
 <p>5、启动在主节点/bigdata/hive-1.2.1/bin目录下执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./schematool -dbType mysql -initSchema<br></code></pre></td></tr></table></figure>
 <p>//初始化元数据</p>
-<p>6、启动Hive ./hive <img
-src="https://gitee.com/xiang976young/note/raw/master/img/clip_image004.gif"
+<p>6、启动Hive ./hive <img src="../src/clip_image004.gif"
 alt="img" /></p>
 <p><strong>遇见的问题：</strong></p>
 <p>在安装mysql的时候，可能会有centos自带的mysql会有端口冲突。</p>
@@ -448,6 +446,35 @@ mysql-5.1.71-1.el6.x86_64 使用rpm -e mysql-5.1.73-5.el6_7.1.x86_64
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="dd0b9ea4d4a59c3513d578d5392dd4fc"
+      data-page-url="2022/06/09/大数据/8.Hive安装/"
+      data-page-title="8.Hive安装"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -552,30 +579,6 @@ mysql-5.1.71-1.el6.x86_64 使用rpm -e mysql-5.1.73-5.el6_7.1.x86_64
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -811,8 +814,6 @@ mysql-5.1.71-1.el6.x86_64 使用rpm -e mysql-5.1.73-5.el6_7.1.x86_64
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

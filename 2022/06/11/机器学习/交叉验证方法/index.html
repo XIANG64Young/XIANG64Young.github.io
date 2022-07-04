@@ -27,14 +27,12 @@
 <meta property="og:image" content="http://example.com/src/2274220-20211212113146806-2032744793.png">
 <meta property="og:image" content="http://example.com/src/2274220-20211212113146957-262206822.png">
 <meta property="article:published_time" content="2022-06-11T01:32:31.402Z">
-<meta property="article:modified_time" content="2022-07-04T09:06:46.122Z">
+<meta property="article:modified_time" content="2022-07-04T13:34:51.050Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/src/2274220-20211212113147123-1500880612.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>交叉验证 - 相阳的小屋</title>
@@ -75,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -315,10 +313,6 @@ alt="图片" /><strong>优点</strong></p>
 <p>在小数据集的情况下，将保留一部分用于测试模型，其中可能具有我们的模型可能会错过的重要特征，因为它没有对该数据进行训练。</p>
 <p><strong>代码片段</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris <br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split <br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression <br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br>iris = load_iris()<br>X = iris.data<br>Y = iris.target <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Size of Dataset &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<span class="hljs-built_in">len</span>(X)))<br>logreg = LogisticRegression()<br>x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=<span class="hljs-number">0.3</span>, random_state=<span class="hljs-number">42</span>)<br>logreg.fit(x_train, y_train)<br>predict = logreg.predict(x_test) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Accuracy score on training set is &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(accuracy_score(logreg.predict(x_train), y_train))) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Accuracy score on test set is &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(accuracy_score(predict, y_test)))<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p> <img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212122517173-1672251919.png" /></p>
-</blockquote>
 <h2 id="k-折交叉验证">2、K 折交叉验证</h2>
 <p>在这种 K 折交叉验证技术中，整个数据集被划分为 K
 个相等大小的部分。每个分区称为一个“折叠”。因此，因为我们有 K
@@ -342,10 +336,6 @@ K-Fold
 </ol>
 <p><strong>代码片段</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris <br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> cross_val_score,KFold <br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br>iris = load_iris()<br>X = iris.data<br>Y = iris.target<br>logreg = LogisticRegression()<br>kf = KFold(n_splits=<span class="hljs-number">5</span>)<br>score = cross_val_score(logreg, X, Y, cv=kf) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cross Validation Scores are &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score)) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average Cross Validation score :&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score.mean()))<br></code></pre></td></tr></table></figure>
-<blockquote>
-<h2 id="section"><img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212122600959-72032711.png" /></h2>
-</blockquote>
 <h2 id="分层-k-折交叉验证">3、分层 K 折交叉验证</h2>
 <p>分层 K-Fold 是 K-Fold
 交叉验证的增强版本，主要用于不平衡的数据集。就像 K-fold
@@ -362,10 +352,6 @@ alt="图片" /><strong>优点</strong></p>
 </ol>
 <p><strong>代码片段</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris <br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> cross_val_score, StratifiedKFold <br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br>iris = load_iris()<br>X = iris.data<br>Y = iris.target<br>logreg = LogisticRegression()<br>stratifiedkf = StratifiedKFold(n_splits=<span class="hljs-number">5</span>)<br>score = cross_val_score(logreg, X, Y, cv=stratifiedkf) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cross Validation Scores are &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score)) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average Cross Validation score :&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score.mean()))<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p><img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212122645942-934331533.png" /></p>
-</blockquote>
 <h2 id="leave-p-out-交叉验证">4、Leave P Out  交叉验证</h2>
 <p>Leave P Out 交叉验证是一种详尽的交叉验证技术，其中 p
 样本用作验证集，剩余的 np 样本用作训练集。</p>
@@ -384,10 +370,6 @@ p=10，那么在每次迭代中，10 个值将用作验证集，其余 90
 </ol>
 <p><strong>代码片段</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> LeavePOut, cross_val_score <br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris <br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br>iris = load_iris()<br>X = iris.data<br>Y = iris.target<br>lpo = LeavePOut(p=<span class="hljs-number">2</span>)<br>lpo.get_n_splits(X)<br>tree = RandomForestClassifier(n_estimators=<span class="hljs-number">10</span>, max_depth=<span class="hljs-number">5</span>, n_jobs=-<span class="hljs-number">1</span>)<br>score = cross_val_score(tree, X, Y, cv=lpo) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cross Validation Scores are &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score)) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average Cross Validation score :&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score.mean()))<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p><img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212140830663-684793118.png" /></p>
-</blockquote>
 <h2 id="留一交叉验证">5、留一交叉验证</h2>
 <p>留一交叉验证是一种详尽的交叉验证技术，其中 1 个样本点用作验证集，其余
 n-1 个样本用作训练集。</p>
@@ -398,10 +380,6 @@ n-1 个样本用作训练集。</p>
 src="/src/2274220-20211212113147240-1106296430.png"
 alt="图片" /><strong>「代码片段」</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris <br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier <br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> LeaveOneOut, cross_val_score<br>iris = load_iris()<br>X = iris.data<br>Y = iris.target<br>loo = LeaveOneOut()<br>tree = RandomForestClassifier(n_estimators=<span class="hljs-number">10</span>, max_depth=<span class="hljs-number">5</span>, n_jobs=-<span class="hljs-number">1</span>)<br>score = cross_val_score(tree, X, Y, cv=loo) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cross Validation Scores are &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score)) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average Cross Validation score :&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(score.mean()))<br></code></pre></td></tr></table></figure>
-<blockquote>
-<h2 id="section-1"><img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123629314-401787736.png" /></h2>
-</blockquote>
 <h2 id="蒙特卡罗交叉验证shuffle-split">6、蒙特卡罗交叉验证（Shuffle
 Split）</h2>
 <p>蒙特卡罗交叉验证，也称为Shuffle
@@ -423,10 +401,6 @@ alt="图片" /><strong>优点</strong></p>
 </ol>
 <p><strong>代码片段</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> ShuffleSplit, cross_val_score <br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris <br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression  <br>iris = load_iris()<br>logreg = LogisticRegression()<br>shuffle_split = ShuffleSplit(test_size=<span class="hljs-number">0.3</span>, train_size=<span class="hljs-number">0.5</span>, n_splits=<span class="hljs-number">10</span>)<br>scores = cross_val_score(logreg, iris.data, iris.target, cv=shuffle_split) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;cross Validation scores:n &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(scores)) <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Average Cross Validation score :&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(scores.mean()))<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p><img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123326527-1083747011.png" /></p>
-</blockquote>
 <h2 id="时间序列交叉验证">7、时间序列交叉验证</h2>
 <p>什么是时间序列数据？</p>
 <p>时间序列数据是在不同时间点收集的数据。由于数据点是在相邻时间段收集的，因此观测值之间可能存在相关性。这是区分时间序列数据与横截面数据的特征之一。</p>
@@ -442,10 +416,6 @@ alt="图片" /><strong>优点</strong></p>
 <p>不适用于其他数据类型的验证：与其他技术一样，我们选择随机样本作为训练或验证集，但在该技术中数据的顺序非常重要。</p>
 <p><strong>代码片段</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> TimeSeriesSplit<br>X = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]])<br>y = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>])<br>time_series = TimeSeriesSplit() <span class="hljs-built_in">print</span>(time_series) <br><span class="hljs-keyword">for</span> train_index, test_index <span class="hljs-keyword">in</span> time_series.split(X): <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;TRAIN:&quot;</span>, train_index, <span class="hljs-string">&quot;TEST:&quot;</span>, test_index)<br>    X_train, X_test = X[train_index], X[test_index]<br>    y_train, y_test = y[train_index], y[test_index]<br></code></pre></td></tr></table></figure>
-<blockquote>
-<p><img
-src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123353224-1582511862.png" /></p>
-</blockquote>
 
               
             </div>
@@ -533,9 +503,9 @@ src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123353224-1
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/04/Python/matplotlib/" title="matplotlib example">
+                      <a href="/2022/07/04/Python/matplotlib/" title="Matplotlib Example">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">matplotlib example</span>
+                        <span class="hidden-mobile">Matplotlib Example</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -555,6 +525,35 @@ src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123353224-1
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="513e9766459e48ae1cb82346a3ea6f68"
+      data-page-url="2022/06/11/机器学习/交叉验证方法/"
+      data-page-title="交叉验证"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -659,30 +658,6 @@ src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123353224-1
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -918,8 +893,6 @@ src="https://src2020.cnblogs.com/blog/2274220/202112/2274220-20211212123353224-1
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

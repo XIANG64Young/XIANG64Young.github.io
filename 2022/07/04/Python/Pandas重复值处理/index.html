@@ -24,13 +24,11 @@
 <meta property="og:description" content="本次来介绍重复值处理的常用方法。  重复值处理主要涉及两个部分，一个是找出重复值，第二个是删除重复值，也就是根据自己设定的条件进行删除操作。 定位重复值 对于重复值，我们首先需要查看这些重复值是什么样的形式，然后确定删除的范围，而查询重复值需要用到duplicated函数。 duplicated的返回值是布尔值，返回True和False，默认情况下会按照一行的所有内容进行查重。 主要参">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-04T08:04:59.604Z">
-<meta property="article:modified_time" content="2022-07-04T08:03:35.421Z">
+<meta property="article:modified_time" content="2022-07-04T13:29:42.482Z">
 <meta property="article:author" content="Chris·Yougn">
-<meta property="article:tag" content="python">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>Pandas duplicated data dealing - 相阳的小屋</title>
@@ -71,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -352,7 +350,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/python/" class="category-chain-item">python</a>
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
   
   
 
@@ -367,7 +365,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/python/">#python</a>
+        <a href="/tags/Python/">#Python</a>
       
     </div>
   
@@ -422,9 +420,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/04/Python/pip/" title="python pip using">
+                      <a href="/2022/07/04/Python/pip/" title="Python pip using">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">python pip using</span>
+                        <span class="hidden-mobile">Python pip using</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -444,6 +442,35 @@
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="d02f9823d2641000efc707fce0500771"
+      data-page-url="2022/07/04/Python/Pandas重复值处理/"
+      data-page-title="Pandas duplicated data dealing"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -548,30 +575,6 @@
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -807,8 +810,6 @@
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

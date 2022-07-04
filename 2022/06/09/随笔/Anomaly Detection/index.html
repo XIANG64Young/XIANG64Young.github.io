@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="What is Anomaly Detection 在数据分析中，异常检测（也称为异常值检测）是识别与大多数数据显着不同而引起怀疑的稀有项目、事件或观察结果。通常，异常项目会转化为某种问题，例如银行欺诈、结构缺陷、医疗问题或文本错误。异常也被称为异常值、新奇事物、噪音、偏差和异常。 特别是在滥用和网络入侵检测的背景下，感兴趣的对象往往不是稀有对象，而是突发的活动。这种模式不符合作为稀有对象的异">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/IMG/heart.jpg">
+<meta property="og:image" content="http://example.com/src/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f.png">
+<meta property="og:image" content="http://example.com/src/image-20211222150026654.png">
+<meta property="og:image" content="http://example.com/src/heart.jpg">
 <meta property="article:published_time" content="2022-06-09T13:31:42.906Z">
-<meta property="article:modified_time" content="2022-07-04T07:56:16.094Z">
+<meta property="article:modified_time" content="2022-07-04T13:29:56.323Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gitee.com/xiang976young/note/raw/master/IMG/heart.jpg">
+<meta name="twitter:image" content="http://example.com/src/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>异常检测小记 - 相阳的小屋</title>
@@ -73,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -346,16 +346,14 @@ Grubbs 算法，T Test
 之类的算法判断新的序列是否异常，从而推断出原始序列是否异常。另外一种方法是在高维度上直接建立模型，然后判断。在<strong>多维数据检测</strong>的话，方法就比较多可以参考其他部分。</p>
 <p><strong>3-sigma原理</strong>：前提：数据只含有随机误差。当质量特性呈现正态分布的时候（实际上，当样本足够大的时候，泊松分布、二项分布等均趋近于正态分布的）。3-sigma水平代表了99.73%的合格率。</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f.png"
+<img src="/src/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p><strong>Grubbs原理</strong>：计算可疑值的G值(<span
 class="math inline">\(G_i=\frac{x_i-x^-}{s}\)</span>)，将其与格拉布斯表匹配，判断临界值的大小。若大于，则是异常值舍去。若小于则不是异常值应该保留。</p>
 <figure>
-<img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/image-20211222150026654.png"
+<img src="/src/image-20211222150026654.png"
 alt="image-20211222150026654" />
 <figcaption aria-hidden="true">image-20211222150026654</figcaption>
 </figure>
@@ -379,8 +377,7 @@ alt="image-20211222150026654" />
 <h2 id="无训练数据单变量集体异常">无训练数据（单变量集体异常）</h2>
 <p>例如时间序列数据是单变量数据集中集体异常值的最佳案例。在这种情况下，异常值的发生是因为值以意外的顺序出现。例如如下图：</p>
 <figure>
-<img src="https://gitee.com/xiang976young/note/raw/master/IMG/heart.jpg"
-alt="心" />
+<img src="/src/heart.jpg" alt="心" />
 <figcaption aria-hidden="true">心</figcaption>
 </figure>
 <p>第三次心跳可能是异常的，不是因为值超出范围，而是因为他们以错误的顺序发生。</p>
@@ -390,8 +387,7 @@ alt="心" />
 <li><p>Markov Chain或者Hidden Markov
 Chain可以衡量一系列事件发生的概率。当一系列事件发生的时候，我们可以使用Markov
 Chain来衡量该序列发生的概率，并用他来检测任何稀有序列。 <img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/fraud.png"
-alt="Fraud" /></p>
+src="/src/fraud.png" alt="Fraud" /></p>
 <p>例如，让我们考虑信用卡交易。未来使用MarkovChain对整个事件进行建模，让我们使用两个值来表示每个交易：交易价值<span
 class="math inline">\((L,H)\)</span>和自上次交易以来的时间<span
 class="math inline">\((L,H)\)</span>。由于MarkovChain的状态必须是有限的，我们将选择两个值<span
@@ -451,7 +447,7 @@ Detection with Partially Observed Anomalies</a></p>
 <p>这个算法的主要流程分成两个阶段。在第一阶段，对已知异常样本进行聚类，并从未标记样本中挖掘潜在异常样本以及可靠正常样本；第二阶段，基于以上的样本，构建带权重的多分类模型。</p>
 <figure>
 <img
-src="https://gitee.com/xiang976young/note/raw/master/IMG/v2-62be70e77861d1b33dcbb83e002d5b26_720w-1640143042828.jpg"
+src="/src/v2-62be70e77861d1b33dcbb83e002d5b26_720w-1640143042828.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -645,6 +641,35 @@ together</p></li>
             </div>
 
             
+  <article id="comments">
+    
+  <div class="cusdis" style="width:100%">
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
+      data-page-id="ed33183e5101d0404bfb8848dd8b01a9"
+      data-page-url="2022/06/09/随笔/Anomaly Detection/"
+      data-page-title="异常检测小记"
+      data-theme="auto"
+    >
+    </div>
+  </div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#cusdis_thread', function() {
+      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
+      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema) {
+        document.querySelector('#cusdis_thread').dataset.theme = schema
+      }
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
           </article>
         </div>
       </div>
@@ -749,30 +774,6 @@ together</p></li>
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
-  
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
   
   
   
@@ -1008,8 +1009,6 @@ together</p></li>
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
