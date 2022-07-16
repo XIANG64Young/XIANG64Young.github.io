@@ -221,15 +221,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5/" target="_self">
-          特征选择示例
+        <a href="/2022/07/16/BigData&amp;Linux/9.HIVE%20%E7%AC%94%E8%AE%B0/" target="_self">
+          BigData——9.Hive笔记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/9.HIVE%20%E7%AC%94%E8%AE%B0/" target="_self">
         <div>
-          太多的特征会增加模型的复杂性和过拟合，而太少的特征会导致模型的拟合不足。将模型优化为足够复杂以使其性能可推广，但又足够简单易于训练、维护和解释是特征选择的主要工作。 “特征选择”意味着可以保留一些特征并放弃其他一些特征。本文的目的是概述一些特征选择策略：  删除未使用的列 删除具有缺失值的列 不相关的特征 低方差特征 多重共线性 特征系数 p 值 方差膨胀因子 (VIF) 基
+          Hive笔记 hive的存储格式： 1 textfile 没有压缩，但是比较占用存储空间。读取效率最高 2 rcfile 有压缩，空间占用小。 比较节省空间。 3 SequenceFile 适合小文件存储。 hive和hdfs的关系： hive的存储是基于hdfs的，在hive中创建一个库，实际上就是在hdfs上的当前用户 路径下创建了一个目录； 比如 create database
         </div>
       </a>
 
@@ -237,8 +237,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -253,7 +253,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -268,7 +268,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Hive/">#Hive</a>
             
           </div>
         
@@ -282,15 +284,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/%E5%A6%99%E7%94%A8/" target="_self">
-          Python Trick
+        <a href="/2022/07/16/BigData&amp;Linux/8.Hive%E5%AE%89%E8%A3%85/" target="_self">
+          BigData——8.Hive安装
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/%E5%A6%99%E7%94%A8/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/8.Hive%E5%AE%89%E8%A3%85/" target="_self">
         <div>
-          1. 重复元素判定 以下方法可以检查给定列表是不是存在重复元素，它会使用 set() 函数来移除所有重复元素。 123456def all_unique(lst):    return len(lst) &#x3D;&#x3D; len(set(lst))x &#x3D; [1,1,2,2,3,2,3,4,5,6]y &#x3D; [1,2,3,4,5]all_unique(x) # Falseall_unique(y) # Tr
+          Hive安装 首先安装MySQL 1、查看mysql的依赖 1rpm -qa | grep mysql 2、删除mysql的依赖 12rpm -e --nodeps &#96;rpm -qa | grep mysql&#96;rpm -e --nodeps &#96;rpm -qa | grep MySQL&#96; 3、离线安装mysql 12rpm -ivh MySQL-server-5.1.73-1.glib
         </div>
       </a>
 
@@ -298,8 +300,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -314,7 +316,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -329,7 +331,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Hive/">#Hive</a>
             
           </div>
         
@@ -343,15 +347,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/PythonNote/" target="_self">
-          Python note
+        <a href="/2022/07/16/BigData&amp;Linux/7.Hbase%20Shell/" target="_self">
+          BigData——7.Hbase Shell的用法
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/PythonNote/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/7.Hbase%20Shell/" target="_self">
         <div>
-          密码（输入信息）不可见 123import getpasspwd&#x3D;getpass.getpass(&quot;请输入密码:&quot;)print(pwd) 进度条 或者利用print的 flush &#x3D; True 参数实现更新 12345import timefor i in range(10):    sys.stdout.write(&amp;#x27;#&amp;#x27;)    sys.stdo
+          Hbase Shell的用法  whoami 我是谁 whoami version 返回hbase版本信息 version status 返回hbase集群的状态信息 status table_help 查看如何操作表 table_help create 创建表 create ‘表名’, ‘列族名1’, ‘列族名2’, ‘列族名N’ alter 修改列族 添加一个列族：alter ‘
         </div>
       </a>
 
@@ -359,8 +363,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -375,7 +379,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -390,7 +394,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Hbase/">#Hbase</a>
             
           </div>
         
@@ -404,15 +410,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/Pyod/" target="_self">
-          Python pyod
+        <a href="/2022/07/16/BigData&amp;Linux/6.Hbase%E6%90%AD%E5%BB%BA/" target="_self">
+          BigData——6.安装hbase
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/Pyod/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/6.Hbase%E6%90%AD%E5%BB%BA/" target="_self">
         <div>
-          PYOD PyOD is the most comprehensive and scalable Python toolkit for detecting outlying objects in multivariate data. link：https:&#x2F;&#x2F;github.com&#x2F;yzhao062&#x2F;pyod 使用SUOD框架可以加速实现 调用pyod  12345678# trai
+          安装hbase 1．解压缩hbase的软件包，使用命令： 1tar -zxvf hbase-1.3.0-bin.tar.gz  2．进入hbase的配置目录，在hbase-env.sh文件里面加入java环境变量.即： 123export JAVA_HOME&#x3D;&#x2F;bigdata&#x2F;jdk1.8.0_121#关闭HBase自带的Zookeeper,使用Zookeeper集群：export HBA
         </div>
       </a>
 
@@ -420,8 +426,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -436,7 +442,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -451,7 +457,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Hbase/">#Hbase</a>
             
           </div>
         
@@ -465,15 +473,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/pip/" target="_self">
-          Python pip using
+        <a href="/2022/07/16/BigData&amp;Linux/5.Zookeeper%E5%AE%89%E8%A3%85/" target="_self">
+          BigData——5.搭建zookeeper：
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/pip/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/5.Zookeeper%E5%AE%89%E8%A3%85/" target="_self">
         <div>
-          pip——package installer for python 这是一个用于对python的第三方库进行安装、更新、卸载等操作的包管理工具。十分方便 「注：因为pip是一个命令行程序，所以pip一般都在命令行中执行各种操作」 1、安装pip 从python3.4开始， pip已经默认安装到python内了，无需再次安装。若没有可以使用一下两种方式安装  输入easy_insta
+          搭建zookeeper： 1、下载zookeeper并解压 1tar -zxvf zookeeper-3.4.6.tar.gz -C &#x2F;bigdata**   img  2、修改zookeeper的配置文件，并建立数据目录data和日志目录logs cd zookeeper-3.4.6 mkdir data mkdir logs   img  cd conf&#x2F; cp
         </div>
       </a>
 
@@ -481,8 +489,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -497,7 +505,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -512,7 +520,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Zookeeper/">#Zookeeper</a>
             
           </div>
         
@@ -526,15 +536,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/Pandas%E9%87%8D%E5%A4%8D%E5%80%BC%E5%A4%84%E7%90%86/" target="_self">
-          Pandas duplicated data dealing
+        <a href="/2022/07/16/BigData&amp;Linux/4.MapReduce/" target="_self">
+          BigData——4.MapReduce介绍
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/Pandas%E9%87%8D%E5%A4%8D%E5%80%BC%E5%A4%84%E7%90%86/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/4.MapReduce/" target="_self">
         <div>
-          本次来介绍重复值处理的常用方法。  重复值处理主要涉及两个部分，一个是找出重复值，第二个是删除重复值，也就是根据自己设定的条件进行删除操作。 定位重复值 对于重复值，我们首先需要查看这些重复值是什么样的形式，然后确定删除的范围，而查询重复值需要用到duplicated函数。 duplicated的返回值是布尔值，返回True和False，默认情况下会按照一行的所有内容进行查重。 主要参
+          MapReduce   image-20211023183642227  上图是MapReduce的任务处理过程 概述 MapReduce是一种分布式计算模型，由Google提出，主要用于搜索领域，解决海量数据的计算问题. MapReduce是分布式运行的，由两个阶段组成：Map和Reduce，Map阶段是一个独立的程序，有很多个节点同时运行，每个节点处理一部分数据。Reduce阶
         </div>
       </a>
 
@@ -542,8 +552,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -558,7 +568,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -573,7 +583,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/MapReduce/">#MapReduce</a>
             
           </div>
         
@@ -587,15 +599,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/pandas%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86/" target="_self">
-          Pandas  losing data deal
+        <a href="/2022/07/16/BigData&amp;Linux/3.HDFS%20shell/" target="_self">
+          BigData——3.HDFS shell操作
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/pandas%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/3.HDFS%20shell/" target="_self">
         <div>
-          一、缺失值类型 在pandas中，缺失数据显示为NaN。缺失值有3种表示方法，np.nan，none，pd.NA。 1、np.nan 缺失值有个特点（坑），它不等于任何值，连自己都不相等。如果用nan和任何其它值比较都会返回nan。 12np.nan &#x3D;&#x3D; np.nan&gt;&gt; False 也正由于这个特点，在数据集读入以后，不论列是什么类型的数据，默认的缺失值全为np.nan。
+          HDFS shell操作 配置hadoop环境变量 vi &#x2F;etc&#x2F;profile： export HADOOP_HOME&#x3D;&#x2F;usr&#x2F;local&#x2F;soft&#x2F;hadoop-2.6.0 export PATH&#x3D;.:$JAVA_HOME&#x2F;bin:$HADOOP_HOME&#x2F;bin:$PATH 然后执行 source &#x2F;etc&#x2F;profile hdfs ；hdfs中输入的路径需要是绝对路径 通过h
         </div>
       </a>
 
@@ -603,8 +615,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -619,7 +631,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -634,7 +646,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/HDFS/">#HDFS</a>
             
           </div>
         
@@ -648,15 +662,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/pandas%E5%B0%8F%E6%8A%80%E5%B7%A7/" target="_self">
-          Pandas trick
+        <a href="/2022/07/16/BigData&amp;Linux/2.Hadoop%E6%90%AD%E5%BB%BA/" target="_self">
+          BigData——2.HADOOP搭建
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/pandas%E5%B0%8F%E6%8A%80%E5%B7%A7/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/2.Hadoop%E6%90%AD%E5%BB%BA/" target="_self">
         <div>
-          Pandas 数据统计包的 6 种高效函数 Pandas 也是一个 Python 包，它提供了快速、灵活以及具有显著表达能力的数据结构，旨在使处理结构化 (表格化、多维、异构) 和时间序列数据变得既简单又直观 。   图片  Pandas 适用于以下各类数据:  具有异构类型列的表格数据，如 SQL 表或 Excel 表； 有序和无序 (不一定是固定频率) 的时间序列数据；
+          HADOOP搭建 准备： 需要三台虚拟机（修改好IP地址并安装JAVA） 修改当前网络时间： 1date -s ”2021-10-23 08:47:00“ 关闭防火墙并且关闭防火墙自启动 12service iptables stop&#x2F;status&#x2F;start&#x2F;resrtart &#x2F;&#x2F;防火墙的相关命令chkconfig iptables off &#x2F;&#x2F;关闭防火墙自启动 设置三台主机ssh
         </div>
       </a>
 
@@ -664,8 +678,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -680,7 +694,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -695,7 +709,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Hadoop/">#Hadoop</a>
             
           </div>
         
@@ -709,15 +725,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/pandas%E5%A4%84%E7%90%862/" target="_self">
-          Pandas using
+        <a href="/2022/07/16/BigData&amp;Linux/13.Question/" target="_self">
+          BigData——13.Q&amp;A Notice2
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/pandas%E5%A4%84%E7%90%862/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/13.Question/" target="_self">
         <div>
-          导入工具包 123456789101112131415# pandas 和numpy是两个基础的工具包import numpy as npimport pandas as pd# matplotlib seaborn是作图工具包import matplotlib.pyplot as pltimport seaborn as sns# 通过os设置默认路径import osos.chdir(&amp;#x
+          Q&amp;A Notice Mysql安装遇见问题： 1error: Failed dependencies:  MySQL conflicts with mysql-5.1.71-1.el6.x86_64    解决办法 12ps aux | grep mysql    kill -9 进程号 mysql的相关命令是 1&#x2F;etc&#x2F;init.d&#x2F;mysql status&#x2F;start&#x2F;
         </div>
       </a>
 
@@ -725,8 +741,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -741,7 +757,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -756,7 +772,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
             
           </div>
         
@@ -770,15 +786,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/Python/PandasNote/" target="_self">
-          Pandas Notes
+        <a href="/2022/07/16/BigData&amp;Linux/11.Spark/" target="_self">
+          BigData——11.Spark的搭建
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/Python/PandasNote/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/BigData&amp;Linux/11.Spark/" target="_self">
         <div>
-          pandas常用速查 引入依赖 123456789101112131415161718192021222324252627282930313233343536373839# 导入模块import pymysqlimport pandas as pdimport numpy as npimport time# 数据库from sqlalchemy import create_engine# 可视
+          Spark的搭建 安装Scala 由于Scala只是一个应用软件，只需要安装在master节点即可。 上传scala安装包 1&#x2F;bigdata&#x2F;packet&#x2F;scala-2.11.8 解压scala安装包 1tar -zxvf scala-2.11.8.tgz -C &#x2F;bigdata 环境变量配置（三台机器都做一遍）： vim &#x2F;etc&#x2F;profile 123#scalaexpo
         </div>
       </a>
 
@@ -786,8 +802,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:04" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -802,7 +818,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
   
   
 
@@ -817,7 +833,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Python/">#Python</a>
+              <a href="/tags/BigData/">#BigData</a>
+            
+              <a href="/tags/Spark/">#Spark</a>
             
           </div>
         
@@ -829,7 +847,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/#board">13</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

@@ -221,15 +221,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/torch/" target="_self">
-          torch使用小记
+        <a href="/2022/07/16/Essay/GCN/" target="_self">
+          Essay——GCN小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/torch/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/GCN/" target="_self">
         <div>
-          使用x&#x3D;x+y会增加内存的开销，如果不是必要的话，可以使用x+&#x3D;y或者x[:]&#x3D;x+y来减少内存的消耗 B &#x3D; A.clone() # 通过分配新内存，将A的一个副本分配给 通过调用max 函数中keepdims&#x3D;True参数，可以让输出的tensor保持input的shape 每个计算图进行一次backward之后，各个节点的值会清除，这样直接进行第二次backward会报错，如果在第一
+          https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_41683065&#x2F;article&#x2F;details&#x2F;104547135 GCN的优点 权值共享，参数共享，从 A X W AXWAXW 可以看出每一个节点的参数矩阵都是 W WW，权值共享； 具有局部性Local Connectivity，也就是局部连接的，因为每次聚合的只是一阶邻居； 上述两个特征也是CNN中进行参数减少的核心思想 感受野
         </div>
       </a>
 
@@ -237,8 +237,437 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/Essay/GAN/" target="_self">
+          Essay——GAN小记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/GAN/" target="_self">
+        <div>
+          Generative Adversarial Networks(生成对抗网络) 生成对抗网络（Generative Adversarial Nets，GAN）是一种基于对抗学习的深度生成模型，最早由Ian Goodfellow于2014年在《Generative Adversarial Nets》中提出，一经提出便成为了学术界研究的热点，也将生成模型的热度推向了另一个新的高峰。 1、
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/Essay/FederatedLearning/" target="_self">
+          Essay——联邦学习小记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/FederatedLearning/" target="_self">
+        <div>
+          什么是Federated Learning（联邦学习） Federated Learning是一种训练数据去中心化的机器学习解决方案，最早于2016年由谷歌公司提出，目的在于通过对保存在大量终端的分布式数据开展训练学习一个高质量中心化的机器学习模型，解决数据孤岛的问题。 （什么是数据孤岛：良好的AI是需要大量优质的数据来支撑运算的。但是机构之间往往不会提供数据交流，从而形成一个个数据孤岛）
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/Essay/Discrimination&amp;Generative/" target="_self">
+          Essay——模型类别
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/Discrimination&amp;Generative/" target="_self">
+        <div>
+          Discrimination&amp;Generative 基本概念 在机器学习中，对于有监督学习可以将其分为两类模型：判别式模型和生成式模型。简单地说，判别式模型是针对条件分布建模，而生成式模型则针对联合分布进行建模。 First，无论是生成式还是判别式模型都是为了求得最大的条件概率\(p(y|x)\)，来作为一个新样本\(x\)的类别。只不过判别式模型和生成式的做法不同 判别式：直接根
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/Essay/DBSCAN/" target="_self">
+          Essay——DBSCAN
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/DBSCAN/" target="_self">
+        <div>
+          Density-Based Spatial Clustering of Applications with Noise 该技术基于DBSCAN聚类方法，DBSCAN是一维或多维特征空间中的非参数，基于密度的离群值检测方法。 在DBSCAN聚类技术中，所有数据点都被定义为核心点（Core Points）、边界点（Border Points）或噪声点（Noise Points）。它将数据集划分
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/Essay/Clustering/" target="_self">
+          Essay——聚类小记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/Clustering/" target="_self">
+        <div>
+          广泛使用的聚类算法可以大致分为几组，包括分区、分层、基于网格、基于模型和基于密度的算法。  基于层次的算法要求时间序列具有相同的长度，当数据长度过长时很难得到满意的结果 K-Means 和 K-Medoids 等分区算法需要一些超参数，例如簇的数量，这些超参数很难确定 基于网格的方法很少用于时间序列聚类，因为它们要么运行速度非常慢，要么在大型数据集上不准确。 基于模型的方法假设它们包括
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/Essay/Attention/" target="_self">
+          Essay——注意力小记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/Essay/Attention/" target="_self">
+        <div>
+          Attention 注意力机制  引用： ​ 1.https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1480510 ​ 2.https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leon_winter&#x2F;article&#x2F;details&#x2F;101231034 ​ 3.https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;350953067  一、机制原理
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Essay/">#Essay</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/DeepLearning/%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0/" target="_self">
+          Deep Learning—访问深度模型网络参数
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0/" target="_self">
+        <div>
+          如何访问网络模型的参数  Way1: net[2]指的是net模型中第2层 1234net[2].stat_dict()net[2].biasnet[2].bias.datanet[2].weight.grad Way2： 利用named_paramters()函数指示出所有网络参数， 进行迭代 1*[(name, param.shape) for name, param in net.
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -282,15 +711,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensor%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/" target="_self">
-          tensor基本概念  torch版
+        <a href="/2022/07/16/DeepLearning/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" target="_self">
+          Deep Learning—目标检测方法小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/tensor%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" target="_self">
         <div>
-          Tensor的概念 说起张量（tensor）就不得不说他和scalar、vertor、matrix之间的关系了，直接上图：   img   标量（scalar）：只有大小概念，没有方向的概念。通过一个具体的数值就能表达完整。比如：重量、温度、长度、提及、时间、热量等都数据标量。 向量（vector）：物理学上也叫矢量，指由大小和方向共同决定的量（跟「标量」相区别）。向量主要有2个维
+          one-stage(YOLO,YOLO9000,YOLOV3,YOLOV4, YOLOV5,SSD等) two-stage(OverFeat，R-CNN，Fast R-CNN，Faster R-CNN 等) g)
         </div>
       </a>
 
@@ -298,8 +727,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -328,11 +757,11 @@
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Deep-Learning/">#Deep Learning</a>
             
               <a href="/tags/Python/">#Python</a>
             
-              <a href="/tags/Deep-Learning/">#Deep Learning</a>
-            
           </div>
         
       </div>
@@ -345,15 +774,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/" target="_self">
-          RNN小记
+        <a href="/2022/07/16/DeepLearning/%E7%82%BC%E4%B8%B9%E5%A4%A7%E6%B3%95/" target="_self">
+          Deep Learning—炼丹经验小记
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/RNN/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/%E7%82%BC%E4%B8%B9%E5%A4%A7%E6%B3%95/" target="_self">
         <div>
-          循环神经网络 我们介绍了\(n\)元语法模型，其中单词\(x_t\)在时间步\(t\)的条件概率仅取决于前面\(n-1\)个单词。对于时间步\(t-(n-1)\)之前的单词，如果我们想将其可能产生的影响合并到\(x_t\)上，需要增加\(n\)，然而模型参数的数量也会随之呈指数增长，因为词表\(\mathcal{V}\)需要存储\(|\mathcal{V}|^n\)个数字，因此与其将\(P(x_
+          ·1 可复现性和一致性』 有的同学在打比赛的时候，从头到尾只维护若干份代码，每次载入前一次的训练参数，改一下代码再炼，俗称老丹。这样会有几个问题：某次引入一个 bug，过了很久才发现，然后不知道影响范围；得到一个好模型，但是不知道它是怎么来的；忘了自己的 baseline，不知道改动是正面还是负面。 要尽可能确保每一个模型有可复现性，实践上建议代码不应该在训练后再改动，训练新的模型时，把
         </div>
       </a>
 
@@ -361,8 +790,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
             </time>
           </div>
         
@@ -393,437 +822,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Deep-Learning/">#Deep Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/module%E5%92%8Cfunctional%E7%9A%84%E8%BE%A8%E6%9E%90/" target="_self">
-          torch中nn与F的区别
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/module%E5%92%8Cfunctional%E7%9A%84%E8%BE%A8%E6%9E%90/" target="_self">
-        <div>
-          nn 与 nn.functional的区别 两者的相同之处：  nn.Xxx和nn.functional.xxx的实际功能是相同的，即nn.Conv2d和nn.functional.conv2d 都是进行卷积，nn.Dropout 和nn.functional.dropout都是进行dropout，。。。。。； 运行效率也是近乎相同。  nn.functional.xxx是函数接口
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Deep-Learning/">#Deep Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/For%20%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" target="_self">
-          李沐课程小记
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/For%20%E5%8A%A8%E6%89%8B%E5%AD%A6%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" target="_self">
-        <div>
-          For 动手学深度学习 物体检测和分割 github.com&#x2F;matterport&#x2F;Mask_RCNN 样式迁移 github.com&#x2F;zhanghang1989&#x2F;MXNET-Gluon-Style-Transfer 文字生成图片 openai.com&#x2F;blog&#x2F;dall-e 网络的输入：[Batch, Channels, Height, Width] 深度学习&#x3D;表示学习+浅层学习
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Deep-Learning/">#Deep Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/CNN/" target="_self">
-          CNN小记
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/CNN/" target="_self">
-        <div>
-          局部连接+权值共享 全连接神经网络需要非常多的计算资源才能支撑它来做反向传播和前向传播，所以说全连接神经网络可以存储非常多的参数，如果你给它的样本如果没有达到它的量级的时候，它可以轻轻松松把你给他的样本全部都记下来，这会出现过拟合的情况。 所以我们应该把神经元和神经元之间的连接的权重个数降下来，但是降下来我们又不能保证它有较强的学习能力，所以这是一个纠结的地方，所以有一个方法就是局部连接+权值
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Deep-Learning/">#Deep Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E4%BB%A3%E5%9F%BA%E7%A1%80/" target="_self">
-          线性代数
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E4%BB%A3%E5%9F%BA%E7%A1%80/" target="_self">
-        <div>
-          线性代数 1 基本符号  \(A \in \mathbb{R}^{m \times n}\)，表示 \(A\) 为由实数组成具有\(m\)行和\(n\)列的矩阵。 \(x \in \mathbb{R}^{ n}\)，表示具有\(n\)个元素的向量。 通常，向量\(x\)将表示列向量: 即，具有\(n\)行和\(1\)列的矩阵。 如果我们想要明确地表示行向量: 具有 \(1\) 行和
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
-            
-              <a href="/tags/Mathematics/">#Mathematics</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9F%A9%E9%98%B5%E5%90%91%E9%87%8F%E6%B1%82%E5%AF%BC/" target="_self">
-          矩阵求导
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%9F%A9%E9%98%B5%E5%90%91%E9%87%8F%E6%B1%82%E5%AF%BC/" target="_self">
-        <div>
-          常用的矩阵求导 \[ \frac{\partial{\beta^T \mathbb{x}}}{\partial{\mathbb{x}}}&#x3D;\beta \\ \frac{\partial{\mathbb{x}^T \mathbb{x}}}{\partial{\mathbb{x}}}&#x3D;2\mathbb{x} \\ \frac{\partial{\mathbb{x}^T A\mathbb{x
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E6%96%B9%E6%B3%95/" target="_self">
-          特征选择方法
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E6%96%B9%E6%B3%95/" target="_self">
-        <div>
-          特征选择方法总结    图片  一、背景介绍 在处理结构型数据时，特征工程中的特征选择是很重要的一个环节，特征选择是选择对模型重要的特征。它的好处[2]在于: ● 减少训练数据大小，加快模型训练速度。 ● 减少模型复杂度，避免过拟合。 ● 特征数少，有利于解释模型。 ● 如果选择对的特征子集，模型准确率可能会提升。 我曾在文章CCF大赛项目提到过一个困境，就是当时我在滑动窗
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9F%BA%E7%A1%80/" target="_self">
-          概率论和数理统计
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/04/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9F%BA%E7%A1%80/" target="_self">
-        <div>
-          概率论和数理统计 1. 概率的基本要素 为了定义集合上的概率，我们需要一些基本元素，  样本空间$$：随机实验的所有结果的集合。在这里，每个结果 $w $ 可以被认为是实验结束时现实世界状态的完整描述。 事件集（事件空间）\(\mathcal{F}\)：元素 \(A \in \mathcal{F}\) 的集合（称为事件）是 $$ 的子集（即每个 \(A \subseteq \Omeg
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-04 16:05" pubdate>
-              2022-07-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Machine-Learning/">#Machine Learning</a>
-            
-              <a href="/tags/Mathematics/">#Mathematics</a>
             
           </div>
         
@@ -835,7 +833,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/#board">13</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

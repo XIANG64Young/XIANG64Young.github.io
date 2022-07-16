@@ -18,7 +18,7 @@
   
     <meta name="description" content="1启用和检查交互模式 12345678import matplotlib as mplimport matplotlib.pyplot as plt # Set the interactive mode to ONplt.ion() # Check the current status of interactive modeprint(mpl.is_interactive()) Output:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Matplotlib Example">
+<meta property="og:title" content="matplotlib example">
 <meta property="og:url" content="http://example.com/2022/07/04/Python/matplotlib/index.html">
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="1启用和检查交互模式 12345678import matplotlib as mplimport matplotlib.pyplot as plt # Set the interactive mode to ONplt.ion() # Check the current status of interactive modeprint(mpl.is_interactive()) Output:">
@@ -85,8 +85,9 @@
 <meta property="og:image" content="http://example.com/src/640-1646287129791118.png">
 <meta property="og:image" content="http://example.com/src/640-1646287105490116.png">
 <meta property="og:image" content="http://example.com/src/640-1646287095116114.png">
+<meta property="og:image" content="http://example.com/2022/07/04/Python/src/640-1646287095116114.png">
 <meta property="article:published_time" content="2022-07-04T08:04:59.570Z">
-<meta property="article:modified_time" content="2022-07-04T13:29:28.852Z">
+<meta property="article:modified_time" content="2022-07-16T14:04:22.235Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
@@ -94,7 +95,7 @@
   
   
   
-  <title>Matplotlib Example - 相阳的小屋</title>
+  <title>matplotlib example - 相阳的小屋</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -257,7 +258,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Matplotlib Example"></span>
+            <span id="subtitle" data-typed-text="matplotlib example"></span>
           
         </div>
 
@@ -291,7 +292,7 @@
         
         
         
-          317 分钟
+          318 分钟
         
       </span>
     
@@ -329,7 +330,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Matplotlib Example</h1>
+            <h1 style="display: none">matplotlib example</h1>
             
             <div class="markdown-body">
               
@@ -806,8 +807,12 @@ Matplotlib 创建具有气泡大小的图例</h2>
 中的水平堆积条形图</h2>
 <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">import numpy <span class="hljs-keyword">as</span> np<br>import matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br>people = (<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;B&#x27;</span>,<span class="hljs-string">&#x27;C&#x27;</span>,<span class="hljs-string">&#x27;D&#x27;</span>,<span class="hljs-string">&#x27;E&#x27;</span>,<span class="hljs-string">&#x27;F&#x27;</span>,<span class="hljs-string">&#x27;G&#x27;</span>,<span class="hljs-string">&#x27;H&#x27;</span>)<br><span class="hljs-keyword">segments</span> = <span class="hljs-number">4</span><br><br><span class="hljs-comment"># generate some multi-dimensional data &amp; arbitrary labels</span><br>data = <span class="hljs-number">3</span> + <span class="hljs-number">10</span>* np.<span class="hljs-built_in">random</span>.rand(<span class="hljs-keyword">segments</span>, <span class="hljs-built_in">len</span>(people))<br>percentages = (np.<span class="hljs-built_in">random</span>.randint(<span class="hljs-number">5</span>,<span class="hljs-number">20</span>, (<span class="hljs-built_in">len</span>(people), <span class="hljs-keyword">segments</span>)))<br>y_pos = np.arange(<span class="hljs-built_in">len</span>(people))<br><br>fig = plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">8</span>))<br>ax = fig.add_subplot(<span class="hljs-number">111</span>)<br><br>colors =<span class="hljs-string">&#x27;rgbwmc&#x27;</span><br>patch_handles = []<br>left = np.zeros(<span class="hljs-built_in">len</span>(people)) <span class="hljs-comment"># left alignment of data starts at zero</span><br><span class="hljs-keyword">for</span> i, d <span class="hljs-keyword">in</span> enumerate(data):<br>    patch_handles.append(ax.barh(y_pos, d, <br>      color=colors[i%<span class="hljs-built_in">len</span>(colors)], align=<span class="hljs-string">&#x27;center&#x27;</span>, <br>      left=left))<br>    <span class="hljs-comment"># accumulate the left-hand offsets</span><br>    left += d<br><br><span class="hljs-comment"># go through all of the bar segments and annotate</span><br><span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-built_in">len</span>(patch_handles)):<br>    <span class="hljs-keyword">for</span> i, patch <span class="hljs-keyword">in</span> enumerate(patch_handles[j].get_children()):<br>        bl = patch.get_xy()<br>        x = <span class="hljs-number">0.5</span>*patch.get_width() + bl[<span class="hljs-number">0</span>]<br>        y = <span class="hljs-number">0.5</span>*patch.get_height() + bl[<span class="hljs-number">1</span>]<br>        ax.<span class="hljs-keyword">text</span>(x,y, <span class="hljs-string">&quot;%d%%&quot;</span> % (percentages[i,j]), ha=<span class="hljs-string">&#x27;center&#x27;</span>)<br><br>ax.set_yticks(y_pos)<br>ax.set_yticklabels(people)<br>ax.set_xlabel(<span class="hljs-string">&#x27;Distance&#x27;</span>)<br><br>plt.show()<br></code></pre></td></tr></table></figure>
 <p>Output:</p>
+<p><img src="\src\640-1646287095116114.png"
+alt="图片" />set_yticklabels(people) ax.set_xlabel('Distance')</p>
+<p>plt.show() ```</p>
+<p>Output:</p>
 <figure>
-<img src="\src\640-1646287095116114.png" alt="图片" />
+<img src="..\src\640-1646287095116114.png" alt="图片" />
 <figcaption aria-hidden="true">图片</figcaption>
 </figure>
 
@@ -854,7 +859,7 @@ Matplotlib 创建具有气泡大小的图例</h2>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Matplotlib Example</div>
+      <div>matplotlib example</div>
       <div>http://example.com/2022/07/04/Python/matplotlib/</div>
     </div>
     <div class="license-meta">
@@ -897,9 +902,9 @@ Matplotlib 创建具有气泡大小的图例</h2>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/04/Python/Numpy.char/" title="Numpy char">
+                      <a href="/2022/07/04/Python/Numpy.char/" title="python numpy char">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Numpy char</span>
+                        <span class="hidden-mobile">python numpy char</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -907,8 +912,8 @@ Matplotlib 创建具有气泡大小的图例</h2>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%96%B9%E6%B3%95/" title="交叉验证">
-                        <span class="hidden-mobile">交叉验证</span>
+                      <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/SupportVectorMachine%20/" title="Machine Learning——支持向量机">
+                        <span class="hidden-mobile">Machine Learning——支持向量机</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -927,7 +932,7 @@ Matplotlib 创建具有气泡大小的图例</h2>
       data-app-id="117a5354-4956-42b6-b340-2f853de97267"
       data-page-id="3f57f6be34bcf4d0691fc3d0a2c4dd0c"
       data-page-url="2022/07/04/Python/matplotlib/"
-      data-page-title="Matplotlib Example"
+      data-page-title="matplotlib example"
       data-theme="auto"
     >
     </div>

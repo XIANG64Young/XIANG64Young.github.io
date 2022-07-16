@@ -18,20 +18,20 @@
   
     <meta name="description" content="贝叶斯线性回归 我们知道，线性回归当噪声为高斯分布的时候，最小二乘损失导出的结果相当于对概率模型应用 MLE，引入参数的先验时，先验分布是高斯分布，那么 MAP的结果相当于岭回归的正则化，如果先验是拉普拉斯分布，那么相当于 Lasso 的正则化。这两种方案都是点估计方法。我们希望利用贝叶斯方法来求解参数的后验分布。 线性回归的模型假设为： \[ \begin{align}f(x)&#x3D;w^">
 <meta property="og:type" content="article">
-<meta property="og:title" content="贝叶斯线性回归">
+<meta property="og:title" content="Machine Learning——贝叶斯线性回归">
 <meta property="og:url" content="http://example.com/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/17.BayesianLR/index.html">
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="贝叶斯线性回归 我们知道，线性回归当噪声为高斯分布的时候，最小二乘损失导出的结果相当于对概率模型应用 MLE，引入参数的先验时，先验分布是高斯分布，那么 MAP的结果相当于岭回归的正则化，如果先验是拉普拉斯分布，那么相当于 Lasso 的正则化。这两种方案都是点估计方法。我们希望利用贝叶斯方法来求解参数的后验分布。 线性回归的模型假设为： \[ \begin{align}f(x)&#x3D;w^">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-09T13:31:43.121Z">
-<meta property="article:modified_time" content="2022-06-09T08:02:15.810Z">
+<meta property="article:modified_time" content="2022-07-16T12:27:52.656Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>贝叶斯线性回归 - 相阳的小屋</title>
+  <title>Machine Learning——贝叶斯线性回归 - 相阳的小屋</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -194,7 +194,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="贝叶斯线性回归"></span>
+            <span id="subtitle" data-typed-text="Machine Learning——贝叶斯线性回归"></span>
           
         </div>
 
@@ -266,7 +266,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">贝叶斯线性回归</h1>
+            <h1 style="display: none">Machine Learning——贝叶斯线性回归</h1>
             
             <div class="markdown-body">
               
@@ -366,7 +366,7 @@ p(y^*|X,Y,x^*)=\int_wp(y^*|w,X,Y,x^*)p(w|X,Y,x^*)dw=\int_wp(y^*|w,x^*)p(w|X,Y)dw
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>贝叶斯线性回归</div>
+      <div>Machine Learning——贝叶斯线性回归</div>
       <div>http://example.com/2022/06/09/机器学习白板推导笔记/17.BayesianLR/</div>
     </div>
     <div class="license-meta">
@@ -409,9 +409,9 @@ p(y^*|X,Y,x^*)=\int_wp(y^*|w,X,Y,x^*)p(w|X,Y,x^*)dw=\int_wp(y^*|w,x^*)p(w|X,Y)dw
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/18.GaussianProcess/" title="高斯过程回归">
+                      <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/18.GaussianProcess/" title="Machine Learning——高斯过程回归">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">高斯过程回归</span>
+                        <span class="hidden-mobile">Machine Learning——高斯过程回归</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -419,8 +419,8 @@ p(y^*|X,Y,x^*)=\int_wp(y^*|w,X,Y,x^*)p(w|X,Y,x^*)dw=\int_wp(y^*|w,x^*)p(w|X,Y)dw
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/16.GaussianNetwork/" title="高斯网络">
-                        <span class="hidden-mobile">高斯网络</span>
+                      <a href="/2022/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/16.GaussianNetwork/" title="Machine Learning——高斯网络">
+                        <span class="hidden-mobile">Machine Learning——高斯网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -439,7 +439,7 @@ p(y^*|X,Y,x^*)=\int_wp(y^*|w,X,Y,x^*)p(w|X,Y,x^*)dw=\int_wp(y^*|w,x^*)p(w|X,Y)dw
       data-app-id="117a5354-4956-42b6-b340-2f853de97267"
       data-page-id="982fc654d3a98926c8d7e54474c1970d"
       data-page-url="2022/06/09/机器学习白板推导笔记/17.BayesianLR/"
-      data-page-title="贝叶斯线性回归"
+      data-page-title="Machine Learning——贝叶斯线性回归"
       data-theme="auto"
     >
     </div>

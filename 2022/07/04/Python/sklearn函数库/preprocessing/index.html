@@ -18,22 +18,21 @@
   
     <meta name="description" content="StandardScaler类是一个用来对数据进行归一化和标准化的类。 1234567891011121314151617181920import numpy as npfrom sklearn.preprocessing import StandardScaler&amp;#x27;&amp;#x27;&amp;#x27;scale_： 缩放比例，同时也是标准差mean_： 每个特征的平均值var_:每个特征的方差n">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sklearn preprocessing">
+<meta property="og:title" content="相阳的小屋">
 <meta property="og:url" content="http://example.com/2022/07/04/Python/sklearn%E5%87%BD%E6%95%B0%E5%BA%93/preprocessing/index.html">
 <meta property="og:site_name" content="相阳的小屋">
 <meta property="og:description" content="StandardScaler类是一个用来对数据进行归一化和标准化的类。 1234567891011121314151617181920import numpy as npfrom sklearn.preprocessing import StandardScaler&amp;#x27;&amp;#x27;&amp;#x27;scale_： 缩放比例，同时也是标准差mean_： 每个特征的平均值var_:每个特征的方差n">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/src/2022-02-22-13-38-06-image.png">
+<meta property="og:image" content="http://example.com/2022/07/04/Python/sklearn%E5%87%BD%E6%95%B0%E5%BA%93/preprocessing/2022-02-22-13-38-06-image.png">
 <meta property="article:published_time" content="2022-07-04T08:04:59.619Z">
-<meta property="article:modified_time" content="2022-07-04T13:26:22.518Z">
+<meta property="article:modified_time" content="2022-07-16T14:04:22.258Z">
 <meta property="article:author" content="Chris·Yougn">
-<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/src/2022-02-22-13-38-06-image.png">
+<meta name="twitter:image" content="http://example.com/2022/07/04/Python/sklearn%E5%87%BD%E6%95%B0%E5%BA%93/preprocessing/2022-02-22-13-38-06-image.png">
   
   
   
-  <title>Sklearn preprocessing - 相阳的小屋</title>
+  <title>相阳的小屋</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Sklearn preprocessing"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -268,7 +267,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Sklearn preprocessing</h1>
+            <h1 style="display: none"></h1>
             
             <div class="markdown-body">
               
@@ -276,7 +275,7 @@
 id="standardscaler类是一个用来对数据进行归一化和标准化的类">StandardScaler类是一个用来对数据进行归一化和标准化的类。</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">scale_： 缩放比例，同时也是标准差</span><br><span class="hljs-string">mean_： 每个特征的平均值</span><br><span class="hljs-string">var_:每个特征的方差</span><br><span class="hljs-string">n_sample_seen_:样本数量，可以通过patial_fit 增加</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>x = np.array(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>ss = StandardScaler()<br>ss.fit(X=x)<br><span class="hljs-built_in">print</span>(x)<br><span class="hljs-built_in">print</span>(ss.n_samples_seen_)<br><span class="hljs-built_in">print</span>(ss.mean_)<br><span class="hljs-built_in">print</span>(ss.var_)<br><span class="hljs-built_in">print</span>(ss.scale_)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;标准化后的数据:&#x27;</span>)<br>y = ss.fit_transform(x)<br>y<br></code></pre></td></tr></table></figure>
 <p>结果：</p>
-<p><img src="/src/2022-02-22-13-38-06-image.png" /></p>
+<p><img src="2022-02-22-13-38-06-image.png" /></p>
 <h2 id="关于standardscaler的api函数">关于StandardScaler()的api函数</h2>
 <table>
 
@@ -365,34 +364,6 @@ copy])</td>
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/python/" class="category-chain-item">python</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/python/">#python</a>
-      
-    </div>
   
 </div>
 
@@ -402,7 +373,7 @@ copy])</td>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Sklearn preprocessing</div>
+      <div></div>
       <div>http://example.com/2022/07/04/Python/sklearn函数库/preprocessing/</div>
     </div>
     <div class="license-meta">
@@ -445,9 +416,9 @@ copy])</td>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/04/%E5%B7%A5%E5%85%B7/git%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/" title="git相关操作">
+                      <a href="/2022/07/04/%E5%B7%A5%E5%85%B7/git%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/" title="Toolkit——git相关操作">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">git相关操作</span>
+                        <span class="hidden-mobile">Toolkit——git相关操作</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -475,7 +446,7 @@ copy])</td>
       data-app-id="117a5354-4956-42b6-b340-2f853de97267"
       data-page-id="ef0d9ab218b146a50504397b108b2be8"
       data-page-url="2022/07/04/Python/sklearn函数库/preprocessing/"
-      data-page-title="Sklearn preprocessing"
+      data-page-title=""
       data-theme="auto"
     >
     </div>

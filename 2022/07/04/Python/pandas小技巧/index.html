@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/src/640.webp">
 <meta property="article:published_time" content="2022-07-04T08:04:59.601Z">
-<meta property="article:modified_time" content="2022-07-04T13:29:44.217Z">
+<meta property="article:modified_time" content="2022-07-16T14:04:22.245Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
@@ -339,7 +339,15 @@ copy () 函数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># We ll use the same dataframe that we used for read_csv</span><br>framex =  df.select_dtypes(include=<span class="hljs-string">&quot;float64&quot;</span>)<span class="hljs-comment"># Returns only time column</span><br></code></pre></td></tr></table></figure>
 <p>最后，pivot_table( ) 也是 Pandas 中一个非常有用的函数。如果对
 pivot_table( ) 在 excel 中的使用有所了解，那么就非常容易上手了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Create a sample dataframe</span><br>school = pd.DataFrame(&#123; A : [ Jay ,  Usher ,  Nicky ,  Romero ,  Will ], <br>       B : [ Masters ,  Graduate ,  Graduate ,  Masters ,  Graduate ], <br>       C : [<span class="hljs-number">26</span>, <span class="hljs-number">22</span>, <span class="hljs-number">20</span>, <span class="hljs-number">23</span>, <span class="hljs-number">24</span>]&#125;)<span class="hljs-comment"># Lets create a pivot table to segregate students based on age and course</span><br>table = pd.pivot_table(school, values = A , index =[ B ,  C ], <br>                         columns =[ B ], aggfunc = np.<span class="hljs-built_in">sum</span>, fill_value=<span class="hljs-string">&quot;Not Available&quot;</span>) <br><br>table<br></code></pre></td></tr></table></figure>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a sample dataframe</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>school <span class="op">=</span> pd.DataFrame(&#123; A : [ Jay ,  Usher ,  Nicky ,  Romero ,  Will ], </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       B : [ Masters ,  Graduate ,  Graduate ,  Masters ,  Graduate ], </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       C : [<span class="dv">26</span>, <span class="dv">22</span>, <span class="dv">20</span>, <span class="dv">23</span>, <span class="dv">24</span>]&#125;)<span class="co"># Lets create a pivot table to segregate students based on age and course</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> pd.pivot_table(school, values <span class="op">=</span> A , index <span class="op">=</span>[ B ,  C ], </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                         columns <span class="op">=</span>[ B ], aggfunc <span class="op">=</span> np.<span class="bu">sum</span>, fill_value<span class="op">=</span><span class="st">&quot;Not Available&quot;</span>) </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>table</span></code></pre></div>
 
               
             </div>
