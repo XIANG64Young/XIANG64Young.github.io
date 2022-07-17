@@ -843,33 +843,6 @@
   
   
   <entry>
-    <title>Essay——DBSCAN</title>
-    <link href="/2022/07/16/Essay/DBSCAN/"/>
-    <url>/2022/07/16/Essay/DBSCAN/</url>
-    
-    <content type="html"><![CDATA[<p>Density-Based Spatial Clustering of Applications with Noise</p><p>该技术基于<ahref="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/DBSCAN">DBSCAN聚类方法</a>，DBSCAN是一维或多维特征空间中的非参数，基于密度的离群值检测方法。</p><p>在DBSCAN聚类技术中，所有数据点都被定义为核心点（CorePoints）、边界点（Border Points）或噪声点（NoisePoints）。它将数据集划分为高密度区域的子组，并将高密度区域聚类标识为异常值。此处，聚类-1 表示聚类包含异常值，其余聚类没有异常值。此 approch 类似于 K均值聚类。DBSCAN 需要两个参数。DBSCAN为多变量异常值检测提供了最佳结果。</p><ol type="1"><li><p>epsilon：一个距离参数，用于定义搜索附近邻居的半径。</p></li><li><p>minPts: 形成集群所需的最低点数。</p></li></ol><p>使用 epsilon 和 minPts，我们可以将每个数据点分类为：</p><ul><li>核心点是在距离ℇ内至少具有最小包含点数（minPTs）的数据点；</li><li>边界点是核心点的距离ℇ内邻近点，但包含的点数小于最小包含点数（minPTs）；</li><li>所有的其他数据点都是噪声点，也被标识为异常值；</li></ul><p>从而，异常检测取决于所要求的最小包含点数、距离ℇ和所选择的距离度量，比如<ahref="https://www.zhihu.com/search?q=欧几里得&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A644680558%7D">欧几里得</a>或曼哈顿距离。该技术是使用KNIME工作流中的<ahref="https://www.zhihu.com/search?q=DBSCAN节点&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A644680558%7D">DBSCAN节点</a>实现的。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> DBSCAN<br>train = pd.read_csv(<span class="hljs-string">&#x27;/input/titanic/train.csv&#x27;</span>)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">DB_outliers</span>(<span class="hljs-params">df</span>):<br>    outlier_detection = DBSCAN(eps = <span class="hljs-number">2</span>, metric=<span class="hljs-string">&#x27;euclidean&#x27;</span>, min_samples = <span class="hljs-number">5</span>)<br>    clusters = outlier_detection.fit_predict(df.values.reshape(-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<br>    data = pd.DataFrame()<br>    data[<span class="hljs-string">&#x27;cluster&#x27;</span>] = clusters<br>    <span class="hljs-built_in">print</span>(data[<span class="hljs-string">&#x27;cluster&#x27;</span>].value_counts().sort_values(ascending=<span class="hljs-literal">False</span>))<br></code></pre></td></tr></table></figure><h1 id="section"></h1>]]></content>
-    
-    
-    <categories>
-      
-      <category>Essay</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>Essay</tag>
-      
-      <tag>算法</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Essay——聚类小记</title>
     <link href="/2022/07/16/Essay/Clustering/"/>
     <url>/2022/07/16/Essay/Clustering/</url>
@@ -1446,9 +1419,9 @@
     
     <tags>
       
-      <tag>tool</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>tool</tag>
       
     </tags>
     
@@ -1498,9 +1471,9 @@
     
     <tags>
       
-      <tag>tool</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>tool</tag>
       
     </tags>
     
@@ -1525,9 +1498,9 @@
     
     <tags>
       
-      <tag>tool</tag>
-      
       <tag>Linux</tag>
+      
+      <tag>tool</tag>
       
     </tags>
     
