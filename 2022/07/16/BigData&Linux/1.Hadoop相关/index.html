@@ -31,6 +31,8 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
   
   <title>BigData——1.HADOOP相关知识 - 相阳的小屋</title>
 
@@ -236,6 +238,14 @@
 
     
     
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
   </div>
 
 
@@ -390,8 +400,8 @@ YARN中，ResourceManager负责集群中所有资源的统一管理和分配，�
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/16/Algorithms/%E8%BD%AE%E7%9B%98%E8%B5%8C/" title="轮盘赌">
-                        <span class="hidden-mobile">轮盘赌</span>
+                      <a href="/2022/07/16/Algorithms/%E8%BD%AE%E7%9B%98%E8%B5%8C/" title="Algorithms——轮盘赌">
+                        <span class="hidden-mobile">Algorithms——轮盘赌</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -404,25 +414,25 @@ YARN中，ResourceManager负责集群中所有资源的统一管理和分配，�
             
   <article id="comments">
     
-  <div class="cusdis" style="width:100%">
-    <div id="cusdis_thread"
-      data-host="https://cusdis.com"
-      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
-      data-page-id="427c79f0c6153d1ae7b4db944c5b4019"
-      data-page-url="2022/07/16/BigData&amp;Linux/1.Hadoop相关/"
-      data-page-title="BigData——1.HADOOP相关知识"
-      data-theme="auto"
-    >
-    </div>
-  </div>
+  <div id="waline"></div>
   <script type="text/javascript">
-    Fluid.utils.loadComments('#cusdis_thread', function() {
-      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
-      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
-      var schema = document.documentElement.getAttribute('data-user-color-scheme');
-      if (schema) {
-        document.querySelector('#cusdis_thread').dataset.theme = schema
-      }
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
     });
   </script>
   <noscript>Please enable JavaScript to view the comments</noscript>
@@ -535,6 +545,30 @@ YARN中，ResourceManager负责集群中所有资源的统一管理和分配，�
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -770,6 +804,8 @@ YARN中，ResourceManager负责集群中所有资源的统一管理和分配，�
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

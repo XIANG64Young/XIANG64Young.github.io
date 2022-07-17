@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Algorithms——DBSCAN</title>
+    <link href="/2022/07/17/Algorithms/DBSCAN/"/>
+    <url>/2022/07/17/Algorithms/DBSCAN/</url>
+    
+    <content type="html"><![CDATA[<p>Density-Based Spatial Clustering of Applications with Noise</p><p>该技术基于<ahref="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/DBSCAN">DBSCAN聚类方法</a>，DBSCAN是一维或多维特征空间中的非参数，基于密度的离群值检测方法。</p><p>在DBSCAN聚类技术中，所有数据点都被定义为核心点（CorePoints）、边界点（Border Points）或噪声点（NoisePoints）。它将数据集划分为高密度区域的子组，并将高密度区域聚类标识为异常值。此处，聚类-1 表示聚类包含异常值，其余聚类没有异常值。此 approch 类似于 K均值聚类。DBSCAN 需要两个参数。DBSCAN为多变量异常值检测提供了最佳结果。</p><ol type="1"><li><p>epsilon：一个距离参数，用于定义搜索附近邻居的半径。</p></li><li><p>minPts: 形成集群所需的最低点数。</p></li></ol><p>使用 epsilon 和 minPts，我们可以将每个数据点分类为：</p><ul><li>核心点是在距离ℇ内至少具有最小包含点数（minPTs）的数据点；</li><li>边界点是核心点的距离ℇ内邻近点，但包含的点数小于最小包含点数（minPTs）；</li><li>所有的其他数据点都是噪声点，也被标识为异常值；</li></ul><p>从而，异常检测取决于所要求的最小包含点数、距离ℇ和所选择的距离度量，比如<ahref="https://www.zhihu.com/search?q=欧几里得&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A644680558%7D">欧几里得</a>或曼哈顿距离。该技术是使用KNIME工作流中的<ahref="https://www.zhihu.com/search?q=DBSCAN节点&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A644680558%7D">DBSCAN节点</a>实现的。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> DBSCAN<br>train = pd.read_csv(<span class="hljs-string">&#x27;/input/titanic/train.csv&#x27;</span>)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">DB_outliers</span>(<span class="hljs-params">df</span>):<br>    outlier_detection = DBSCAN(eps = <span class="hljs-number">2</span>, metric=<span class="hljs-string">&#x27;euclidean&#x27;</span>, min_samples = <span class="hljs-number">5</span>)<br>    clusters = outlier_detection.fit_predict(df.values.reshape(-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<br>    data = pd.DataFrame()<br>    data[<span class="hljs-string">&#x27;cluster&#x27;</span>] = clusters<br>    <span class="hljs-built_in">print</span>(data[<span class="hljs-string">&#x27;cluster&#x27;</span>].value_counts().sort_values(ascending=<span class="hljs-literal">False</span>))<br></code></pre></td></tr></table></figure><h1 id="section"></h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithms</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Essay</tag>
+      
+      <tag>Algorithms</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Machine Learning——线性高斯模型</title>
     <link href="/2022/07/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearGaussianModel/"/>
     <url>/2022/07/16/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearGaussianModel/</url>
@@ -673,16 +700,16 @@
     
     <categories>
       
-      <category>随笔</category>
+      <category>Essay</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Algorithms</tag>
+      <tag>Essay</tag>
       
-      <tag>随笔</tag>
+      <tag>Algorithms</tag>
       
     </tags>
     
@@ -1249,13 +1276,25 @@
   
   
   <entry>
-    <title></title>
+    <title>Deep Learning—Geo小记</title>
     <link href="/2022/07/16/DeepLearning/Geo/"/>
     <url>/2022/07/16/DeepLearning/Geo/</url>
     
     <content type="html"><![CDATA[<p>对于图结构来说，<ahref="https://pytorch-geometric.readthedocs.io/en/latest/modules/data.html#torch_geometric.data.Data">数据格式</a>为</p><figure><img src="/src/image-20220710084309263.png"alt="image-20220710084309263" /><figcaption aria-hidden="true">image-20220710084309263</figcaption></figure><p><code>x=[34,34]</code>指的是样本的数量与维度大小，也就是样本的shape</p><p><code>edge_index</code>指的是一定是[2, n]。是一个source与target的连接，n指的是边的个数，是稀疏的边，并不是密集的</p><p><code>y</code>根据任务不同(可能是图级别任务，也有可能是节点级任务)，然后就会有不同的任意大小。这里是34，因为是node classification，所以是节点的数量。��</p>]]></content>
     
     
+    <categories>
+      
+      <category>Deep Learning</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Deep Learning</tag>
+      
+    </tags>
     
   </entry>
   
@@ -1513,7 +1552,9 @@
     
     <tags>
       
-      <tag>BigData - Linux</tag>
+      <tag>BigData</tag>
+      
+      <tag>Linux</tag>
       
     </tags>
     
@@ -1844,7 +1885,7 @@
   
   
   <entry>
-    <title>轮盘赌</title>
+    <title>Algorithms——轮盘赌</title>
     <link href="/2022/07/16/Algorithms/%E8%BD%AE%E7%9B%98%E8%B5%8C/"/>
     <url>/2022/07/16/Algorithms/%E8%BD%AE%E7%9B%98%E8%B5%8C/</url>
     
@@ -1871,7 +1912,7 @@
   
   
   <entry>
-    <title>ROCKA——时间序列聚类算法</title>
+    <title>Algorithms——ROCKA——时间序列聚类算法</title>
     <link href="/2022/07/16/Algorithms/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94ROCKA/"/>
     <url>/2022/07/16/Algorithms/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94ROCKA/</url>
     
@@ -1880,7 +1921,7 @@
     
     <categories>
       
-      <category>随笔</category>
+      <category>Algorithms</category>
       
     </categories>
     
@@ -1889,7 +1930,7 @@
       
       <tag>Essay</tag>
       
-      <tag>算法</tag>
+      <tag>Algorithms</tag>
       
     </tags>
     
@@ -1898,7 +1939,7 @@
   
   
   <entry>
-    <title>Winsorization小记</title>
+    <title>Algorithms——Winsorization小记</title>
     <link href="/2022/07/16/Algorithms/Winsorization%20Method/"/>
     <url>/2022/07/16/Algorithms/Winsorization%20Method/</url>
     
@@ -1916,8 +1957,6 @@
       
       <tag>Algorithms</tag>
       
-      <tag>随笔</tag>
-      
     </tags>
     
   </entry>
@@ -1925,7 +1964,7 @@
   
   
   <entry>
-    <title>TF-IDF小记</title>
+    <title>Algorithms——TF-IDF小记</title>
     <link href="/2022/07/16/Algorithms/TD-IDF/"/>
     <url>/2022/07/16/Algorithms/TD-IDF/</url>
     
@@ -1943,8 +1982,6 @@
       
       <tag>Algorithms</tag>
       
-      <tag>随笔</tag>
-      
     </tags>
     
   </entry>
@@ -1952,7 +1989,7 @@
   
   
   <entry>
-    <title>SVDD小记</title>
+    <title>Algorithms——SVDD小记</title>
     <link href="/2022/07/16/Algorithms/SVDD/"/>
     <url>/2022/07/16/Algorithms/SVDD/</url>
     
@@ -1970,8 +2007,6 @@
       
       <tag>Algorithms</tag>
       
-      <tag>随笔</tag>
-      
     </tags>
     
   </entry>
@@ -1979,7 +2014,7 @@
   
   
   <entry>
-    <title>IQP小记</title>
+    <title>Algorithms——IQP小记</title>
     <link href="/2022/07/16/Algorithms/Numeric%20Oulier--IQR/"/>
     <url>/2022/07/16/Algorithms/Numeric%20Oulier--IQR/</url>
     
@@ -1995,9 +2030,9 @@
     
     <tags>
       
-      <tag>Algorithms</tag>
+      <tag>Essay</tag>
       
-      <tag>随笔</tag>
+      <tag>Algorithms</tag>
       
     </tags>
     
@@ -2006,7 +2041,7 @@
   
   
   <entry>
-    <title>LOF小记</title>
+    <title>Algorithms——LOF小记</title>
     <link href="/2022/07/16/Algorithms/LocalOutlierFactor/"/>
     <url>/2022/07/16/Algorithms/LocalOutlierFactor/</url>
     
@@ -2031,7 +2066,7 @@
   
   
   <entry>
-    <title>ISO Forest</title>
+    <title>Algorithms——ISO Forest</title>
     <link href="/2022/07/16/Algorithms/IsoForest/"/>
     <url>/2022/07/16/Algorithms/IsoForest/</url>
     
@@ -2058,7 +2093,7 @@
   
   
   <entry>
-    <title>吉布斯检测</title>
+    <title>Algorithms——吉布斯检测</title>
     <link href="/2022/07/16/Algorithms/GrubbsTest/"/>
     <url>/2022/07/16/Algorithms/GrubbsTest/</url>
     
@@ -2085,7 +2120,7 @@
   
   
   <entry>
-    <title>Drain算法</title>
+    <title>Algorithms——Drain算法</title>
     <link href="/2022/07/16/Algorithms/Drain%E7%AE%97%E6%B3%95/"/>
     <url>/2022/07/16/Algorithms/Drain%E7%AE%97%E6%B3%95/</url>
     
@@ -2204,33 +2239,6 @@
     <tags>
       
       <tag>tool</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>前端总结</title>
-    <link href="/2022/07/04/%E5%B7%A5%E5%85%B7/%E5%89%8D%E7%AB%AF/"/>
-    <url>/2022/07/04/%E5%B7%A5%E5%85%B7/%E5%89%8D%E7%AB%AF/</url>
-    
-    <content type="html"><![CDATA[<h1id="看书看视频涨技术没有做项目来的快-但是驱动学习的一定是你的目标你的知识需要">看书、看视频涨技术没有做项目来的快，但是驱动学习的一定是你的目标，你的知识需要</h1><figure><img src="/src/image-20220614093643553.png"alt="image-20220614093643553" /><figcaption aria-hidden="true">image-20220614093643553</figcaption></figure><p>翻到学习文件，应该还可以<ahref="https://github.com/qianguyihao/Web">Github资源</a>，主页地址在<ahref="https://web.qianguyihao.com/">文字资源都在这</a></p><p>面试刷题：高级前端面试（vx公众号）、前端面试星球（vx公众号）、https://muyiy.cn/question/</p><p>基础：</p><ol type="1"><li>环境搭建 webstorm，hbuilder，vscode（最好），sublime。</li><li>html <ahref="https://link.zhihu.com/?target=https%3A//developer.mozilla.org/en-US/docs/Web/HTML">MDNHTML Doc</a></li><li>css <ahref="https://link.zhihu.com/?target=https%3A//developer.mozilla.org/en-US/docs/Web/CSS">MDNCSS Doc</a></li><li>JavaScript <ahref="https://link.zhihu.com/?target=https%3A//developer.mozilla.org/en-US/docs/Web/JavaScript">MDNJavaScript DOC</a></li></ol><p>要先看基础，b站上好多视频，选择一个喜欢的老师教学视频跟着看，html，css，js，先看基础的，看完之后，搜索高阶js，js一定要多看，html，css可以换个老师再看一遍，会有不同的收获（我是这样学的，看完一个老师的视频，有不懂的地方，我重新找一个老师，选择性看）（师姐说的）</p><p>我也认为基础是重要的，框架并没有那么重要，你需要成为一个做框架的人，而不是一个只会用框架的人。会用框架说明不了什么（但是能找到工作），我觉得前端的核心会了，框架应该也是挺顺的。学完基础后，可以仿照电商网站（例如京东、小米）做首页的布局。我记得当时学校培训的时候，我们老师就是这么干的。</p><p>进阶：</p><ol type="1"><li>纯js操作dom、jQuery、Ajax等。jQuery没有过时（师姐说的）。</li><li>深入学习js：知道作用域和闭包，解读原型链，原型替换，this指向和对象原型等，es6，es7的新语法。es6，这部分属于JS新增的语法，面试必问。其中，关于promise、async 等内容要尤其关注，学习地址在下方。</li><li>HTML5和CSS3。要熟悉其中的新特性。 <ahref="https://link.zhihu.com/?target=http%3A//lesscss.cn/">Less中文网</a></li><li>ui框架之旅推荐从bootstrap开始，移动Web开发、Bootstrap等。要注意移动开发中的适配和兼容性问题。</li><li>UI框架：<a href="https://element.eleme.cn/#/">Element UI</a></li><li>前端框架：vue，react，angular2选一种，我建议从vue开始，react的jsx语法不适合你入门去学习，angular2的typescript语法难度也比较高，vue学起来平滑些，结合vue，学一下vue-router，vuex，element,ui，axios，webpack。做个项目玩一下这个全家桶。</li><li>前端工程化</li><li>前端综合</li></ol><p>学习框架，react或者vue或者angular，这三个框架看自己兴趣选择一个先学，再从b站上找一些项目，尚硅谷的之类的跟着学，学习的这些都要记笔记，因为内容很多。如果以后找工作的话，还要刷题，多看看题目就好了。如果还有时间的话，这些都学了，可以多学几个框架，vue和react都掌握了是最好。（TS的内容比ES还要多。。。）</p><p>其他：</p><ol type="1"><li>git与nodejs <ahref="https://link.zhihu.com/?target=https%3A//nodejs.org/en/docs/guides/">Guides| Node.js</a>git是基本操作，仓库这个东西还是要会的。node.js我记得vue里面就用到了一点</li><li>canvas。面试时，有的公司不一定会问canvas，靠运气。如果时间不够，这部分的内容可以先不学。但如果你会，绝对属于加分项。(我记得是用来做网页小游戏的吧，我好想写过)<a href="https://github.com/bxm0927/canvas-special">代码</a></li></ol><h2 id="基础项目">基础项目：</h2><ol type="1"><li>animate <ahref="https://github.com/animate-css/animate.css">代码</a> <ahref="https://animate.style/">效果</a></li><li>CSS-Inspiration<ahref="https://github.com/chokcoco/CSS-Inspiration">代码</a> <ahref="https://chokcoco.github.io/CSS-Inspiration/#/">效果</a></li><li>vanillawebprojects 表单验证、音视频播放器、打字等小应用 <ahref="https://github.com/bradtraversy/vanillawebprojects">代码</a></li><li>Ant Design 基于 Ant Design 设计体系的 React UI 组件库 <ahref="https://github.com/ant-design/ant-design/">React 代码</a> <ahref="https://github.com/vueComponent/ant-design-vue/">Vue代码</a></li><li>Echarts 基于 JavaScript 的开源可视化图表库 <ahref="https://github.com/apache/echarts">代码</a></li><li>ECMAScript是JavaScript的语言标准，描述了JS的能力，API，基本实现步骤。es6<a href="https://es6.ruanyifeng.com/">地址</a></li></ol><h2 id="中级项目">中级项目：</h2><ol type="1"><li>particles.js当我们浏览网页的时候，会看见一些网站的背景有粒子效果，看完是不是也很好奇它是怎么实现的呢？在particles.js这个库里面，我们可以制造许多粒子效果，用在网页的背景可是相当好看的。<ahref="https://codepen.io/VincentGarreau/pen/bGxvQd">演示</a> <ahref="https://github.com/VincentGarreau/particles.js">代码</a></li><li>reveal.js是一款网页ppt，界面优美，又支持许多ppt功能，同时也有许多插件满足前端的需求，例如markdown、code等代码高亮插件。<ahref="https://revealjs.com/">演示</a> <ahref="https://github.com/hakimel/reveal.js">代码</a></li><li>TS现在的前端开发中，对于TypeScript的使用越来越多，尤其是大型迭代项目中，JavaScript不能满足需要，学习TypeScript会是一个必备的技能<a href="https://github.com/jkchao/typescript-book-chinese">书</a></li><li>音乐器还在因为云音乐因为版权下架了一批你自己喜欢的歌曲，但是又不想单独为了几首歌换平台而烦恼吗，那你可以试试这个库，可以使用QQ / 虾米 / 百度 / 酷狗 / 酷我 / 咪咕 / JOOX等音源把云音乐灰色歌曲解锁播放。<ahref="https://github.com/nondanee/UnblockNeteaseMusic">代码</a></li></ol><h2 id="vue.js项目">Vue.js项目：</h2><ol type="1"><li>vue-element-admin 是一个后台前端解决方案，它基于和 element-ui 实现<a href="https://panjiachen.github.io/vue-element-admin">效果</a>、<ahref="https://github.com/PanJiaChen/vue-element-admin">代码</a> 、<ahref="https://panjiachen.github.io/vue-element-admin-site/zh/guide/">介绍</a>、<ahref="https://github.com/PanJiaChen/vue-admin-template">模版</a></li><li>基于Vue.js + Element UI 的后台管理系统解决方案 <ahref="https://lin-xin.gitee.io/example/work/#/login">效果</a>、<ahref="https://github.com/lin-xin/vue-manage-system">代码</a></li><li><a href="https://github.com/biaochenxuying/blog-vue-typescript">Vue+ TypeScript + Element-Ui 支持 markdown 渲染的博客前台展示</a><br />这个博客主挺6的，vue、react的项目 啥都做了他给的其他项目连接都在这个网页的下面<imgsrc="/src/image-20220614104848594.png"alt="image-20220614104848594" /></li></ol><h2 id="react.js项目">React.js项目：</h2><ol type="1"><li>h5-dooring是一款可视化编辑器，底层是用react写的，使用此工具可以让我们快速生成h5页面。同时通过这个平台也能了解到低代码的相关知识。<ahref="https://github.com/MrXujiang/h5-Dooring/blob/master/zh.md">代码</a><a href="http://h5.dooring.cn/doc">文档</a></li><li>一套优秀的中后台前端解决方案<ahref="https://github.com/zuiidea/antd-admin/blob/master/README-zh_CN.md">代码</a><a href="https://antd-admin.zuiidea.com/">效果</a></li><li>网易云音乐第三方<ahref="https://github.com/trazyn/ieaseMusic">代码</a></li><li>饿了么，还原度相当高，实现了各类动效<ahref="https://github.com/stoneWeb/elm-react-native">代码</a></li></ol><h2 id="angular项目">Angular项目：</h2><ol type="1"><li><ahref="https://github.com/windiest/Angular-news">新闻客户端</a></li></ol><h2 id="node.js项目">Node.js项目：</h2><ol type="1"><li>基于 node.js + Mongodb 构建的后台系统<ahref="https://github.com/bailicangdu/node-elm">代码</a>根据饿了么官网接口写的，所以后台系统也保持了和官网一致的API接口。</li><li><ahref="https://github.com/tumobi/nideshop-mini-program">基于Node.js+MySQL开发的开源微信小程序商城（微信小程序）</a></li></ol>]]></content>
-    
-    
-    <categories>
-      
-      <category>tool</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>tool</tag>
-      
-      <tag>summary</tag>
       
     </tags>
     
@@ -2414,13 +2422,25 @@
   
   
   <entry>
-    <title></title>
+    <title>Sklearn——StandardScaler</title>
     <link href="/2022/07/04/Python/sklearn%E5%87%BD%E6%95%B0%E5%BA%93/preprocessing/"/>
     <url>/2022/07/04/Python/sklearn%E5%87%BD%E6%95%B0%E5%BA%93/preprocessing/</url>
     
-    <content type="html"><![CDATA[<h2id="standardscaler类是一个用来对数据进行归一化和标准化的类">StandardScaler类是一个用来对数据进行归一化和标准化的类。</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">scale_： 缩放比例，同时也是标准差</span><br><span class="hljs-string">mean_： 每个特征的平均值</span><br><span class="hljs-string">var_:每个特征的方差</span><br><span class="hljs-string">n_sample_seen_:样本数量，可以通过patial_fit 增加</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>x = np.array(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>ss = StandardScaler()<br>ss.fit(X=x)<br><span class="hljs-built_in">print</span>(x)<br><span class="hljs-built_in">print</span>(ss.n_samples_seen_)<br><span class="hljs-built_in">print</span>(ss.mean_)<br><span class="hljs-built_in">print</span>(ss.var_)<br><span class="hljs-built_in">print</span>(ss.scale_)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;标准化后的数据:&#x27;</span>)<br>y = ss.fit_transform(x)<br>y<br></code></pre></td></tr></table></figure><p>结果：</p><p><img src="2022-02-22-13-38-06-image.png" /></p><h2 id="关于standardscaler的api函数">关于StandardScaler()的api函数</h2><table><thead><tr class="header"><th>api</th><th>describe</th></tr></thead><tbody><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.fit"><code>fit</code></a>(X[,y, sample_weight])</td><td>Compute the mean and std to be used for later scaling.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.fit_transform"><code>fit_transform</code></a>(X[,y])</td><td>Fit to data, then transform it.</td></tr><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.get_feature_names_out"><code>get_feature_names_out</code></a>([input_features])</td><td>Get output feature names for transformation.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.get_params"><code>get_params</code></a>([deep])</td><td>Get parameters for this estimator.</td></tr><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.inverse_transform"><code>inverse_transform</code></a>(X[,copy])</td><td>Scale back the data to the original representation.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.partial_fit"><code>partial_fit</code></a>(X[,y, sample_weight])</td><td>Online computation of mean and std on X for later scaling.</td></tr><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.set_params"><code>set_params</code></a>(**params)</td><td>Set the parameters of this estimator.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.transform"><code>transform</code></a>(X[,copy])</td><td>Perform standardization by centering and scaling.</td></tr></tbody></table><h2 id="常用api方法">常用api方法：</h2><p>1、fit</p><p>用于计算训练数据的均值和方差， 后面就会用均值和方差来转换训练数据</p><p>2、fit_transform</p><p>不仅计算训练数据的均值和方差，还会基于计算出来的均值和方差来转换训练数据，从而把数据转换成标准的正太分布</p><p>3、transform</p><p>很显然，它只是进行转换，只是把训练数据转换成标准的正态分布</p><p>对于上述方法的使用：</p><ol type="a"><li>先用fit</li></ol><p><code>scaler = preprocessing.StandardScaler().fit(X)</code></p><p>这一步可以得到scaler，scaler里面存的有计算出来的均值和方差</p><ol start="2" type="a"><li>再用transform</li></ol><p><code>scaler.transform(X)</code></p><p>这一步再用scaler中的均值和方差来转换X，使X标准化</p><ol start="3" type="a"><li>那么在预测的时候，也要对数据做同样的标准化处理，即也要用上面的scaler中的均值和方差来对预测时候的特征进行标准化</li></ol><p>注意：测试数据和预测数据的标准化的方式要和训练数据标准化的方式一样，必须用同一个scaler来进行transform</p>]]></content>
+    <content type="html"><![CDATA[<h2id="standardscaler类是一个用来对数据进行归一化和标准化的类">StandardScaler类是一个用来对数据进行归一化和标准化的类。</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">scale_： 缩放比例，同时也是标准差</span><br><span class="hljs-string">mean_： 每个特征的平均值</span><br><span class="hljs-string">var_:每个特征的方差</span><br><span class="hljs-string">n_sample_seen_:样本数量，可以通过patial_fit 增加</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>x = np.array(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>ss = StandardScaler()<br>ss.fit(X=x)<br><span class="hljs-built_in">print</span>(x)<br><span class="hljs-built_in">print</span>(ss.n_samples_seen_)<br><span class="hljs-built_in">print</span>(ss.mean_)<br><span class="hljs-built_in">print</span>(ss.var_)<br><span class="hljs-built_in">print</span>(ss.scale_)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;标准化后的数据:&#x27;</span>)<br>y = ss.fit_transform(x)<br>y<br></code></pre></td></tr></table></figure><p>结果：<img src="/src/2022-02-22-13-38-06-image.png"alt="2022-02-22-13-38-06-image" /></p><h2 id="关于standardscaler的api函数">关于StandardScaler()的api函数</h2><table><thead><tr class="header"><th>api</th><th>describe</th></tr></thead><tbody><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.fit"><code>fit</code></a>(X[,y, sample_weight])</td><td>Compute the mean and std to be used for later scaling.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.fit_transform"><code>fit_transform</code></a>(X[,y])</td><td>Fit to data, then transform it.</td></tr><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.get_feature_names_out"><code>get_feature_names_out</code></a>([input_features])</td><td>Get output feature names for transformation.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.get_params"><code>get_params</code></a>([deep])</td><td>Get parameters for this estimator.</td></tr><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.inverse_transform"><code>inverse_transform</code></a>(X[,copy])</td><td>Scale back the data to the original representation.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.partial_fit"><code>partial_fit</code></a>(X[,y, sample_weight])</td><td>Online computation of mean and std on X for later scaling.</td></tr><tr class="odd"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.set_params"><code>set_params</code></a>(**params)</td><td>Set the parameters of this estimator.</td></tr><tr class="even"><td><ahref="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler.transform"><code>transform</code></a>(X[,copy])</td><td>Perform standardization by centering and scaling.</td></tr></tbody></table><h2 id="常用api方法">常用api方法：</h2><p>1、fit</p><p>用于计算训练数据的均值和方差， 后面就会用均值和方差来转换训练数据</p><p>2、fit_transform</p><p>不仅计算训练数据的均值和方差，还会基于计算出来的均值和方差来转换训练数据，从而把数据转换成标准的正太分布</p><p>3、transform</p><p>很显然，它只是进行转换，只是把训练数据转换成标准的正态分布</p><p>对于上述方法的使用：</p><ol type="a"><li>先用fit</li></ol><p><code>scaler = preprocessing.StandardScaler().fit(X)</code></p><p>这一步可以得到scaler，scaler里面存的有计算出来的均值和方差</p><ol start="2" type="a"><li>再用transform</li></ol><p><code>scaler.transform(X)</code></p><p>这一步再用scaler中的均值和方差来转换X，使X标准化</p><ol start="3" type="a"><li>那么在预测的时候，也要对数据做同样的标准化处理，即也要用上面的scaler中的均值和方差来对预测时候的特征进行标准化</li></ol><p>注意：测试数据和预测数据的标准化的方式要和训练数据标准化的方式一样，必须用同一个scaler来进行transform</p>]]></content>
     
     
+    <categories>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+    </tags>
     
   </entry>
   

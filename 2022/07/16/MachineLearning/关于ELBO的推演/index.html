@@ -24,12 +24,14 @@
 <meta property="og:description" content="当我们想研究一个变量的分布的时候，我们直接通过采样来推测整体分布，需要保持极大的个数。所以我们可以通过搭建一个隐变量，来计算出变量的分布。 \[ \phi: X \to Z \iff p_{\phi}(z|x)  \quad \text{variational parameter} \\ \theta: Z \to \hat{X} \iff p_{\theta}(\hat{x}|z) \qu">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-16T13:19:23.531Z">
-<meta property="article:modified_time" content="2022-07-16T14:04:22.120Z">
+<meta property="article:modified_time" content="2022-07-17T08:39:48.067Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Machine Learning">
 <meta property="article:tag" content="Auto Encoder">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>Machine Learning——关于ELBO的推演 - 相阳的小屋</title>
@@ -236,6 +238,14 @@
 
     
     
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
   </div>
 
 
@@ -438,25 +448,25 @@ Jensen\ Inequality:\quad if \ f(x) \ is \ convex, \ f(E(x)) \ge E(f(x))
             
   <article id="comments">
     
-  <div class="cusdis" style="width:100%">
-    <div id="cusdis_thread"
-      data-host="https://cusdis.com"
-      data-app-id="117a5354-4956-42b6-b340-2f853de97267"
-      data-page-id="13fd7f3733ee670d39d0050389d938d4"
-      data-page-url="2022/07/16/MachineLearning/关于ELBO的推演/"
-      data-page-title="Machine Learning——关于ELBO的推演"
-      data-theme="auto"
-    >
-    </div>
-  </div>
+  <div id="waline"></div>
   <script type="text/javascript">
-    Fluid.utils.loadComments('#cusdis_thread', function() {
-      Fluid.utils.createScript('https://cusdis.com/js/widget/lang/zh-cn.js');
-      Fluid.utils.createScript('https://cusdis.com/js/cusdis.es.js');
-      var schema = document.documentElement.getAttribute('data-user-color-scheme');
-      if (schema) {
-        document.querySelector('#cusdis_thread').dataset.theme = schema
-      }
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
     });
   </script>
   <noscript>Please enable JavaScript to view the comments</noscript>
@@ -569,6 +579,30 @@ Jensen\ Inequality:\quad if \ f(x) \ is \ convex, \ f(E(x)) \ge E(f(x))
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
   
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
   
   
   
@@ -804,6 +838,8 @@ Jensen\ Inequality:\quad if \ f(x) \ is \ convex, \ f(E(x)) \ge E(f(x))
   <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
