@@ -24,8 +24,9 @@
 <meta property="og:description" content="pickel pickel是能够实现任意对象与文本之间的相互转化，也可以实现任意对象与二进制之间的相互转化。也就是说，pickle 可以实现 Python 对象的存储及恢复。 pickle 模块提供了以下 4 个函数供我们使用：  dumps()：将 Python 中的对象序列化成二进制对象，并返回； loads()：读取给定的二进制对象数据，并将其转换为 Python 对象； du">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/src/image-20220710105542841.png">
+<meta property="og:image" content="http://example.com/src/屏幕截图%202022-07-18%20093729.png">
 <meta property="article:published_time" content="2022-07-16T13:19:23.692Z">
-<meta property="article:modified_time" content="2022-07-17T08:39:48.205Z">
+<meta property="article:modified_time" content="2022-07-20T04:27:26.584Z">
 <meta property="article:author" content="Chris·Yougn">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
@@ -221,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          4.5k 字
         
       </span>
     
@@ -232,7 +233,7 @@
         
         
         
-          25 分钟
+          38 分钟
         
       </span>
     
@@ -341,6 +342,45 @@ clone操作在一定程度上可以视为是一个identity-mapping函数。detac
 不存在张量回传的现象。但是可以求得clone后的张量导数</li>
 <li>detach()操作后的tensor requires_grad=False</li>
 </ul>
+<h1
+id="关于设置多gpu指定问题-torch.nn.dataparaller">关于设置多GPU指定问题
+torch.nn.DataParaller</h1>
+<p>这里指的是单机多卡的问题。在终端中可以利用<code>nvidia-smi</code>查看相关信息</p>
+<figure>
+<img src="/src/屏幕截图%202022-07-18%20093729.png"
+alt="屏幕截图 2022-07-18 093729" />
+<figcaption aria-hidden="true">屏幕截图 2022-07-18 093729</figcaption>
+</figure>
+<p>可以看见前面对于每张显卡都是有序号的。一般情况下，序号为0的显卡是主卡（可以理解为最先使用的显卡）</p>
+<p>我们通过<code>os.environ['CUDA_VISIBLE_DEVICES']</code>来设定主卡是哪一张，使用空闲资源，避免内存资源分配不够。</p>
+<p>例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">os.environ[<span class="hljs-string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="hljs-string">&quot;3,2,0,1&quot;</span><br><span class="hljs-comment"># os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = &#x27;,&#x27;.join(map(str, [3,2,0,1]))</span><br>model = torch.nn.DataParallel(model, device_ids=[<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]).cuda()<br></code></pre></td></tr></table></figure>
+<p>则实际的显卡编号与torch中显卡编号的对应关系为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">实际显卡编号-----&gt;运算显卡编号<br>    <span class="hljs-number">3</span>     -----&gt;     <span class="hljs-number">0</span>（主卡）<br>    <span class="hljs-number">2</span>     -----&gt;     <span class="hljs-number">1</span><br>    <span class="hljs-number">0</span>     -----&gt;     <span class="hljs-number">2</span><br>    <span class="hljs-number">1</span>     -----&gt;     <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p>当然如果不需要多卡并行计算的话，可以直接使用<code>torch.cuda.set_device(1)</code>来设定，但是这样设定后仍然会占据<code>device:0</code>的部分GPU资源</p>
+<p>在使用<code>os.environ['CUDA_VISIBLE_DEVICES']</code>一定要注意其放置的位置，要不然极有可能不生效。<strong>一定要放置在所有访问GPU代码之前，能放在<code>import torch</code>最好不过。</strong></p>
+<p>这里需要注意的是当你设定了可见的显卡后，在torch中设定的显卡的时候注意一下显卡编号问题。
+还有个小问题，就是当你设置多卡并行的时候，选定显卡需要包括主卡，要不然就会报错<code>报错RuntimeError: module must have its parameters and buffers on device cuda:1 (device_ids[0]) but found</code></p>
+<h1 id="关于self.__-dict-__.update">关于self.__ dict __.update</h1>
+<p>__dict__是用来存储对象属性的一个<strong>字典</strong>，其键为属性名，值为属性的值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.name = <span class="hljs-string">&#x27;xiaoming&#x27;</span><br>        self.age = <span class="hljs-number">18</span><br>        self.gender = <span class="hljs-string">&#x27;man&#x27;</span><br>    abc = <span class="hljs-number">666</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">print_dict</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(self.__dict__)<br></code></pre></td></tr></table></figure>
+<p>如果我们调用<code>print_dict</code>来使用<code>self.__dict__</code>我们可以发现<code>__dict__</code>中存储了对象的属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;xiaoming&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&#x27;gender&#x27;</span>: <span class="hljs-string">&#x27;man&#x27;</span>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样写起来特别方便，在面对很大键值对的时候，直接调用update函数来实现自动化实例变量。这样直接输入一个字典，就可以自动的生成对应的变量了，还是很方便的</p>
+<h1
+id="torch.autograd.detect_anomaly">torch.autograd.detect_anomaly()</h1>
+<p>为 autograd 引擎启用异常检测的上下文管理器。 这做了两件事：</p>
+<ul>
+<li>在启用检测的情况下运行正向传递将允许反向传递打印创建失败的反向函数的正向操作的回溯。</li>
+<li>任何产生“nan”值的反向计算都会引发错误。</li>
+</ul>
+<blockquote>
+<p>警告: 此模式应仅用于调试，因为不同的测试会减慢您的程序执行速度。</p>
+</blockquote>
+<h1 id="torch.spmm">torch.spmm</h1>
+<p>可以允许SparseMatrix * DenseMatrix，DenseMatrix* DenseMatrix，
+SparseMatrix * SparseMatrix</p>
+<p>但是不可以DenseMatrix* SparseMatrix x</p>
 
               
             </div>

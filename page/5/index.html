@@ -223,6 +223,130 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/07/16/DeepLearning/%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0/" target="_self">
+          Deep Learning—访问深度模型网络参数
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0/" target="_self">
+        <div>
+          如何访问网络模型的参数  Way1: net[2]指的是net模型中第2层 1234net[2].stat_dict()net[2].biasnet[2].bias.datanet[2].weight.grad Way2： 利用named_paramters()函数指示出所有网络参数， 进行迭代 1*[(name, param.shape) for name, param in net.
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Deep-Learning/">#Deep Learning</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/16/DeepLearning/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" target="_self">
+          Deep Learning—目标检测方法小记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" target="_self">
+        <div>
+          one-stage(YOLO,YOLO9000,YOLOV3,YOLOV4, YOLOV5,SSD等) two-stage(OverFeat，R-CNN，Fast R-CNN，Faster R-CNN 等) g)
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-16 21:19" pubdate>
+              2022-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Deep-Learning/">#Deep Learning</a>
+            
+              <a href="/tags/Python/">#Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/07/16/DeepLearning/%E7%82%BC%E4%B8%B9%E5%A4%A7%E6%B3%95/" target="_self">
           Deep Learning—炼丹经验小记
         </a>
@@ -353,7 +477,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" target="_self">
         <div>
-          损失函数小记 1. \(L_1\)范数损失 1torch.nn.L1Loss(reduction&#x3D;&amp;#x27;mean&amp;#x27;) 参数：reduction-三个值，none: 不使用约简；mean:返回loss和的平均值；sum:返回loss的和。默认：mean。 2. 均方误差损失 MSELoss 1torch.nn.MSELoss(reduction&#x3D;&amp;#x27;mean&amp;#
+          损失函数小记 1. \(L_1\)范数损失 1torch.nn.L1Loss（size_average &#x3D; None，reduce &#x3D; None，reduction &#x3D; &amp;#x27;mean&amp;#x27;） 参数： size_average、reduce已经弃用了 reduction-三个值，none: 不使用减少；mean:返回loss和的平均值；sum:返回loss的和。默认：mean。
         </div>
       </a>
 
@@ -702,128 +826,6 @@
               <a href="/tags/Deep-Learning/">#Deep Learning</a>
             
               <a href="/tags/Python/">#Python</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/16/DeepLearning/RNN/" target="_self">
-          Deep Learning—RNN小记
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/RNN/" target="_self">
-        <div>
-          循环神经网络 我们介绍了\(n\)元语法模型，其中单词\(x_t\)在时间步\(t\)的条件概率仅取决于前面\(n-1\)个单词。对于时间步\(t-(n-1)\)之前的单词，如果我们想将其可能产生的影响合并到\(x_t\)上，需要增加\(n\)，然而模型参数的数量也会随之呈指数增长，因为词表\(\mathcal{V}\)需要存储\(|\mathcal{V}|^n\)个数字，因此与其将\(P(x_
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-16 21:19" pubdate>
-              2022-07-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Deep-Learning/">#Deep Learning</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/16/DeepLearning/module%E5%92%8Cfunctional%E7%9A%84%E8%BE%A8%E6%9E%90/" target="_self">
-          Deep Learning—torch中nn与F的区别
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/16/DeepLearning/module%E5%92%8Cfunctional%E7%9A%84%E8%BE%A8%E6%9E%90/" target="_self">
-        <div>
-          nn 与 nn.functional的区别 两者的相同之处：  nn.Xxx和nn.functional.xxx的实际功能是相同的，即nn.Conv2d和nn.functional.conv2d 都是进行卷积，nn.Dropout 和nn.functional.dropout都是进行dropout，。。。。。； 运行效率也是近乎相同。  nn.functional.xxx是函数接口
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-16 21:19" pubdate>
-              2022-07-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Deep-Learning/">#Deep Learning</a>
             
           </div>
         
