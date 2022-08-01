@@ -1,0 +1,1298 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一．选题1.1 背景从 1934 年到 1963 年，旧金山因将一些世界上最臭名昭著的罪犯关押在无法逃脱的岛而臭名昭著恶魔 。 今天，这座城市以其科技场景而闻名，而不是它的犯罪历史。但是，随着财富不平等的加剧、住房短缺以及乘坐 BART 上班的昂贵数字玩具的激增，海湾边的城市并不缺乏犯罪。 从 Sunset 到 SOMA，从 Marina 到 Excelsior，本次比赛的数据集提供了旧金山所有社">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BigData——15.PySpark案例">
+<meta property="og:url" content="http://example.com/2022/02/01/BigData&Linux/PySpark%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="一．选题1.1 背景从 1934 年到 1963 年，旧金山因将一些世界上最臭名昭著的罪犯关押在无法逃脱的岛而臭名昭著恶魔 。 今天，这座城市以其科技场景而闻名，而不是它的犯罪历史。但是，随着财富不平等的加剧、住房短缺以及乘坐 BART 上班的昂贵数字玩具的激增，海湾边的城市并不缺乏犯罪。 从 Sunset 到 SOMA，从 Marina 到 Excelsior，本次比赛的数据集提供了旧金山所有社">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image008-1640092387227.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image010-16400923872271.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image012-16400923872271.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image014-16400923872271.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image016-16400923872271.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image018-16400923872281.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image024.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image026.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image034.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image036.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image038.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image040.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image042.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image044.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image046.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image048.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image050.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image052.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image054.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image056.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image058.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image060.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image064.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image066.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image068.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image070.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image072.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image074.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image076.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image078.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image080.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image082-1640092446805.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image084-1640092449858.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image086-1640092452099.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image088-1640092454204.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image090.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image092.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image093.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image095.png">
+<meta property="og:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image097.png">
+<meta property="article:published_time" content="2022-01-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.101Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="PySpark">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/xiang976young/note/raw/master/img/clip_image008-1640092387227.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>BigData——15.PySpark案例 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="BigData——15.PySpark案例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-02-01 00:00" pubdate>
+          2022年2月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          150 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">BigData——15.PySpark案例</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="一．选题"><a href="#一．选题" class="headerlink" title="一．选题"></a>一．选题</h1><h2 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h2><p>从 1934 年到 1963 年，旧金山因将一些世界上最臭名昭著的罪犯关押在无法逃脱的岛而臭名昭著恶魔 。</p>
+<p>今天，这座城市以其科技场景而闻名，而不是它的犯罪历史。但是，随着财富不平等的加剧、住房短缺以及乘坐 BART 上班的昂贵数字玩具的激增，海湾边的城市并不缺乏犯罪。</p>
+<p>从 Sunset 到 SOMA，从 Marina 到 Excelsior，本次比赛的数据集提供了旧金山所有社区近 12 年的犯罪报告。给定时间、地点和一定的描述，您必须预测发生的犯罪类别。</p>
+<h2 id="1-2-主要工作"><a href="#1-2-主要工作" class="headerlink" title="1.2 主要工作"></a>1.2 主要工作</h2><p>为了解决上述提出的问题，我们从kaggle网站上San Francisco Crime Classification比赛中下载了相关数据集。从数据集介绍、导入，进行数据探索性分析和数据可视化，数据预处理，到构建多种分类预测模型，在测试集上全方位评估模型分类性能。对机器学习模型进行可解释性分析，从各个角度打破模型黑箱子，解释特征重要度，解释样本哪些特征导致对模型预测结果造成影响，从海量数据中挖掘相似性，让我们对模型充分了解、信任。</p>
+<h1 id="二-准备数据"><a href="#二-准备数据" class="headerlink" title="二. 准备数据"></a>二. 准备数据</h1><h2 id="2-1数据集整体介绍"><a href="#2-1数据集整体介绍" class="headerlink" title="2.1数据集整体介绍"></a>2.1数据集整体介绍</h2><p>该数据集包含源自 SFPD 犯罪事件报告系统的事件。 数据范围从 1&#x2F;1&#x2F;2003 到 5&#x2F;13&#x2F;2015。 训练集和测试集每周轮换一次，即第 1、3、5、7.周属于测试集，第 2、4、6、8 周属于训练集。数据集整体介绍如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>数据集</strong></th>
+<th><strong>数据类型</strong></th>
+<th><strong>属性数</strong></th>
+<th><strong>实例数</strong></th>
+<th><strong>值缺失</strong></th>
+<th><strong>相关任务</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SFPD</strong></td>
+<td>字符类型</td>
+<td>9</td>
+<td>878049</td>
+<td>否</td>
+<td>分类预测</td>
+</tr>
+</tbody></table>
+<p>数据集来源：<a target="_blank" rel="noopener" href="https://www.kaggle.com/c/sf-crime/data">https://www.kaggle.com/c/sf-crime/data</a></p>
+<h2 id="2-2数据集属性介绍"><a href="#2-2数据集属性介绍" class="headerlink" title="2.2数据集属性介绍"></a>2.2数据集属性介绍</h2><p>如上表所示，该数据集总共有878049条记录数据，9个属性列，每个属性列均无缺失值，数据集中的数据类型均为字符类型，本实验主要用这个数据集进行数据分析和可视化，主要用到的机器学习中的分类算法。</p>
+<p>本数据集中共有9个属性列，其中有8个特征列和1个标签列，关于各属性列的详细介绍如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Explain</strong></th>
+<th><strong>Type</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Dates</strong></td>
+<td><strong>日期</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td><strong>类别</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>Descript</strong></td>
+<td><strong>描述</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>DayOfWeek</strong></td>
+<td><strong>星期几</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>PdDistrict</strong></td>
+<td><strong>辖区警察局</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>Resolution</strong></td>
+<td><strong>解决方案</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>Address</strong></td>
+<td><strong>发生地点</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>X</strong></td>
+<td><strong>经度</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+<tr>
+<td><strong>Y</strong></td>
+<td><strong>维度</strong></td>
+<td><strong>字符型</strong></td>
+</tr>
+</tbody></table>
+<h1 id="三．上传数据"><a href="#三．上传数据" class="headerlink" title="三．上传数据"></a>三．上传数据</h1><p>   Step1：在网站上把数据下载到本地。</p>
+<p>   Step2：利用Xftp把本地数据集放到集群的master节点上，目录为&#x2F;bigdata&#x2F;pyspark&#x2F;data</p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image008-1640092387227.png" alt="img"></p>
+<p>   Step3：在hdfs文件中创建文件夹&#x2F;pyspark</p>
+<table>
+<thead>
+<tr>
+<th><strong># hadoop fs  -mkdir &#x2F;pyspark</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong># hadoop fs -ls  &#x2F;</strong></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image010-16400923872271.png" alt="img"></p>
+<p>Step4：上传数据到指定hdfs文件夹</p>
+<table>
+<thead>
+<tr>
+<th><strong># hadoop fs -put &#x2F;bigdata&#x2F;pyspark&#x2F;data&#x2F;train.csv  &#x2F;pyspark</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong># hadoop fs -ls &#x2F;pyspark</strong></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image012-16400923872271.png" alt="img"></p>
+<h1 id="四．数据预处理和环境准备"><a href="#四．数据预处理和环境准备" class="headerlink" title="四．数据预处理和环境准备"></a>四．数据预处理和环境准备</h1><p>集群配置简介：</p>
+<p>三台虚拟机CentOS6.5 </p>
+<p>Master 192.168.174.101</p>
+<p>Node1 192.168.174.102</p>
+<p>Node2 192.168.174.103</p>
+<p>JDK 版本 1.8.0 安装路径 &#x2F;bigdata&#x2F;jdk1.8.0</p>
+<p>Hadoop 版本2.6.0 安装路径 &#x2F;bigdata&#x2F;hadoop-2.6.0</p>
+<p>Zookeeper 版本 3.4.6 安装路径 &#x2F;bigdata&#x2F;zookeeper-3.4.6</p>
+<p>Hbase 版本 1.0.1.1 安装路径 &#x2F;bigdata&#x2F;hbase-1.0.1.1</p>
+<p>MySQL 版本 5.1.73 安装路径 &#x2F;usr&#x2F;bin&#x2F;mysql</p>
+<p>Hive 版本 1.2.1 安装路径 &#x2F;bigdata&#x2F;hive-1.2.1</p>
+<p>Spark 版本 2.4.8 安装路径 &#x2F;bigdata&#x2F;spark-2.4.8</p>
+<p>Scala 版本 2.11.8 安装路径 &#x2F;bigdata&#x2F;scala-2.11.8</p>
+<p>Anaconda3 版本5.0.0 安装路径 &#x2F;root&#x2F;anaconda3</p>
+<p>Python 版本3.6.2 Anaconda自带</p>
+<p>Sqoop 版本 1.4.7 安装路径 &#x2F;bigdata&#x2F;sqoop-1.4.7</p>
+<p>我们需要查看数据信息，并对数据经行清洗。为我们接下来的可视化分析和数据建模提供良好的数据源，方便处理。</p>
+<p>Step1：加载数据并查看数据属性 <img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image014-16400923872271.png" alt="img"></p>
+<p>Step2: 查看部分数据</p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image016-16400923872271.png" alt="img"></p>
+<p>Step3：查看是否存在空置或异常值</p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image018-16400923872281.png" alt="img"></p>
+<p>发现没有明显异常数据和空值。</p>
+<p> <a target="_blank" rel="noopener" href="https://gitee.com/xiang976young/note/raw/master/img/">https://gitee.com/xiang976young/note/raw/master/img/</a></p>
+<h1 id="五．数据导入"><a href="#五．数据导入" class="headerlink" title="五．数据导入"></a>五．数据导入</h1><h2 id="5-1-创建Hive数据库和数据表"><a href="#5-1-创建Hive数据库和数据表" class="headerlink" title="5.1 创建Hive数据库和数据表"></a>5.1 创建Hive数据库和数据表</h2><p>进入hive shell环境，创建crime数据库和log外部表（外部表可以在修改表数据的同时不伤害本身原始数据，为数据做保护），并载入hdfs中的数据。</p>
+<table>
+<thead>
+<tr>
+<th><strong>hive&gt; create database crime;</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>hive&gt; use crime;</strong></td>
+</tr>
+<tr>
+<td><strong>hive&gt; create external table log( Dates string,  Category string, Descript String, PdDistrict string, Resolution string,  Address String, X string, Y string</strong>  <strong>)row format delimited fields  terminate by ‘,’</strong>  <strong>stored as  textfile location ‘&#x2F;spark’;</strong></td>
+</tr>
+<tr>
+<td><strong>hive&gt; select * from log limit 10;</strong></td>
+</tr>
+</tbody></table>
+<p>(数据一开始放在&#x2F;spark文件夹下，后来有创建了新的&#x2F;pyspark  数据一致)</p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image020.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image022.png" alt="img"></p>
+<p>为外部表log创建内部表inner_log</p>
+<table>
+<thead>
+<tr>
+<th><strong>hive&gt; create table inner_log( Dates string,  Category string, Descript String, DayOfWeek string ,PdDistrict string,  Resolution string, Address String, X string, Y string)</strong>   <strong>comment  ‘Welcome to XMU dblab! Now create inner table inner_log ‘</strong>   <strong>row format delimited fields  terminate by ‘,’</strong>  <strong>stored as  textfile;</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>hive&gt; select * from log limit 10;</strong></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image024.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image026.png" alt="img"></p>
+<h2 id="5-2-创建MySQL数据库和数据表"><a href="#5-2-创建MySQL数据库和数据表" class="headerlink" title="5.2 创建MySQL数据库和数据表"></a>5.2 创建MySQL数据库和数据表</h2><p>因为sqoop在抓取数据的时候，会把所有的数据都抓成string类型，所以在创建表的时候，要注意属性的类型。同时也要查看当前数据库下是否支持utf-8编码。以免出现中文乱码的情况。</p>
+<table>
+<thead>
+<tr>
+<th><strong>mysql&gt; create database crime;</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>mysql &gt; use crime;</strong></td>
+</tr>
+<tr>
+<td><strong>mysql &gt; show variables like “char%”;</strong></td>
+</tr>
+<tr>
+<td><strong>mysql  &gt;  CREATE TABLE <code>crime</code>.<code>log</code> (<code>Dates </code> varchar(255),<code> Category</code> varchar(255),<code>Descript</code> varchar(255),<code>DayOfWeek</code> varchar(20),<code> PdDistrict</code> varchar(255), <code>Resolution</code> varchar(255),<code>Address</code> varchar(255),<code>X</code>  varchar(255),<code>Y</code> varchar(255)) ENGINE&#x3D;InnoDB DEFAULT CHARSET&#x3D;utf8;</strong></td>
+</tr>
+<tr>
+<td><strong>mysql &gt; select * from log limit 10;<img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image028.png" alt="img"></strong></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image030.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image032.png" alt="img"></p>
+<h2 id="5-3-利用Sqoop从Hive中导出数据到MySQL"><a href="#5-3-利用Sqoop从Hive中导出数据到MySQL" class="headerlink" title="5.3 利用Sqoop从Hive中导出数据到MySQL"></a>5.3 利用Sqoop从Hive中导出数据到MySQL</h2><p>在利用sqoop处理数据的时候要注意，如果hive表中存在属性为数值行的none值，要注意切换为字符NULL，不然会报错。</p>
+<table>
+<thead>
+<tr>
+<th><strong># sqoop export –connect  jdbc:mysql:&#x2F;&#x2F;192.168.174.101:3306&#x2F;crime –username root –password 123456  –table log –export-dir ‘&#x2F;user&#x2F;hive&#x2F;wavehouse&#x2F;crime.db&#x2F;log’ –fields-terminated-by  ‘,’ -m 1;</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>mysql &gt; select * from crime.log limit 10;</strong></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image034.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image036.png" alt="img"></p>
+<h2 id="5-4-利用Sqoop从MySQL中导出数据到Hbase"><a href="#5-4-利用Sqoop从MySQL中导出数据到Hbase" class="headerlink" title="5.4 利用Sqoop从MySQL中导出数据到Hbase"></a>5.4 利用Sqoop从MySQL中导出数据到Hbase</h2><p>由于该数据集并没有主键的存在，并不能很好的标记各个记录。所以这里需要给mysql表添加一个id的主键，以标记各个记录。</p>
+<table>
+<thead>
+<tr>
+<th><code>**mysql &gt; alter table log add id int**</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>mysql &gt; alter  table <code>node_table</code> change id id int not null auto_increment primary key;</strong>  <strong>mysql &gt;  select * from log limit 10;</strong></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image038.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image040.png" alt="img"></p>
+<p>创建hbase表：</p>
+<table>
+<thead>
+<tr>
+<th><code>**hbase(main):003:0&gt; create ”log”,”info”**</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>**hbase(main):004:0&gt; list**</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image042.png" alt="img"></p>
+<p>利用sqoop从mysql导入数据到hbase：</p>
+<table>
+<thead>
+<tr>
+<th><code>**# sqoop import --connect jdbc:mysql://192.168.174.101:3306/crime --username root --password 123456 --table log --columns &quot;dates,category,descript,dayofweek,pddistrict,resolution,address,x,y,id&quot; --column-family &quot;info&quot; --hbase-create-table --hbase-table &quot;log&quot; --hbase-row-key &quot;id&quot; --num-mappers 1 --split-by id**</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>**hbase(main):001:0&gt; scan ‘log’**</code></td>
+</tr>
+</tbody></table>
+<p>(scan 查询数目太多，没有办法截下来)</p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image044.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image046.png" alt="img"></p>
+<h2 id="5-5-Hive与Hbase的数据映射"><a href="#5-5-Hive与Hbase的数据映射" class="headerlink" title="5.5  Hive与Hbase的数据映射"></a>5.5  Hive与Hbase的数据映射</h2><p>将HBase数据仓库中log数据映射到Hive数据库的外部表hive_log中</p>
+<table>
+<thead>
+<tr>
+<th><code>**hive&gt; create external table hive_log(Dates string, Category string, Descript String, DayOfWeek string ,PdDistrict string, Resolution string, Address String, X string, Y string,id int )STORED BY &#39;org.apache.hadoop.hive.hbase.HBaseStorageHandler&#39; WITH SERDEPROPERTIES (&quot;hbase.columns.mapping&quot; = &quot;info:dates,info:category,info:descript,info:dayofweek,info:pddistrict,info:resolution,info:address,info:x,info:y,:key&quot;) TBLPROPERTIES (&quot;hbase.table.name&quot; = &quot;log&quot;);**</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>**hive&gt; show tables;**</code></td>
+</tr>
+<tr>
+<td><code>**hive&gt; desc hive_log;**</code></td>
+</tr>
+</tbody></table>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image048.png" alt="img"></p>
+<p>至此，数据仓库、两个数据库之间的数据已经全部加载完成。</p>
+<h1 id="六．Hive数据分析"><a href="#六．Hive数据分析" class="headerlink" title="六．Hive数据分析"></a>六．Hive数据分析</h1><p>6.1 分析犯罪类型发生的次数最多的10个</p>
+<table>
+<thead>
+<tr>
+<th>hive&gt; select category,count(*) as category_count from  log group by category order by category_count desc limit 10;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image050.png" alt="img"></strong></td>
+</tr>
+</tbody></table>
+<p>6.2 分析发生犯罪最多的20个街区</p>
+<table>
+<thead>
+<tr>
+<th>hive&gt; select pddistrict,count(*) as pddistrict_count  from log group by pddistrict order by pddistrict_count desc limit 20;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image052.png" alt="img"></strong></td>
+</tr>
+</tbody></table>
+<p>6.3 分析每个星期内发证犯罪的情况</p>
+<table>
+<thead>
+<tr>
+<th>hive&gt; select dayofweek,count(*) from log group by dayofweek  ;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image054.png" alt="img"></strong></td>
+</tr>
+</tbody></table>
+<h1 id="七．Spark数据分析与可视化"><a href="#七．Spark数据分析与可视化" class="headerlink" title="七．Spark数据分析与可视化"></a>七．Spark数据分析与可视化</h1><p>这里的Spark的编程语言选择的Python，运行的平台是Jupyter</p>
+<h2 id="7-1-Spark数据可视化"><a href="#7-1-Spark数据可视化" class="headerlink" title="7.1 Spark数据可视化"></a>7.1 Spark数据可视化</h2><h3 id="7-1-1-各犯罪类型数量统计"><a href="#7-1-1-各犯罪类型数量统计" class="headerlink" title="7.1.1 各犯罪类型数量统计"></a>7.1.1 各犯罪类型数量统计</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.rcParams[<span class="hljs-string">&#x27;figure.figsize&#x27;</span>]=(<span class="hljs-number">20</span>,<span class="hljs-number">9</span>) plt.style.use(<span class="hljs-string">&#x27;dark_background&#x27;</span>) sns.countplot(dataset[<span class="hljs-string">&#x27;Category&#x27;</span>],palette=<span class="hljs-string">&#x27;gnuplot&#x27;</span>) plt.title(<span class="hljs-string">&#x27;Major Crimes in  Sanfrancisco&#x27;</span>,fontweight=<span class="hljs-number">30</span>,fontsize=<span class="hljs-number">20</span>) plt.xticks(rotation=<span class="hljs-number">90</span>)  plt.show() <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image056.png" alt="img"></p>
+<p>由图可以明显的看出来，在SanFrancisco LARCENY&#x2F;THEFT和OTHER OFFENSES这两类犯罪是最多的</p>
+<h3 id="7-1-2-各个街区的犯罪对比示意图"><a href="#7-1-2-各个街区的犯罪对比示意图" class="headerlink" title="7.1.2 各个街区的犯罪对比示意图"></a>7.1.2 各个街区的犯罪对比示意图</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">df =  pd.crosstab(dataset[<span class="hljs-string">&#x27;Category&#x27;</span>],dataset[<span class="hljs-string">&#x27;PdDistrict&#x27;</span>])<br>color =  plt.cm.Greys(np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>))<br>df.div(df.<span class="hljs-built_in">sum</span>(<span class="hljs-number">1</span>).astype(<span class="hljs-built_in">float</span>),  axis = <span class="hljs-number">0</span>).plot.bar(stacked = <span class="hljs-literal">True</span>, color = color, figsize = (<span class="hljs-number">18</span>, <span class="hljs-number">12</span>))<br>plt.title(<span class="hljs-string">&#x27;District vs Category of  Crime&#x27;</span>, fontweight = <span class="hljs-number">30</span>, fontsize = <span class="hljs-number">20</span>)<br>plt.xticks(rotation = <span class="hljs-number">90</span>)<br>plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image058.png" alt="img"></p>
+<p>有图可以观察到，地区之间差异还是挺大的，southern地区犯罪率较高，治安最好的是Richmond</p>
+<h3 id="7-1-3-按时间对犯罪进行划分并分析"><a href="#7-1-3-按时间对犯罪进行划分并分析" class="headerlink" title="7.1.3 按时间对犯罪进行划分并分析"></a>7.1.3 按时间对犯罪进行划分并分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset[<span class="hljs-string">&#x27;year&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.year  <br>dataset[<span class="hljs-string">&#x27;month&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.month  <br>dataset[<span class="hljs-string">&#x27;day&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.day  dataset[<span class="hljs-string">&#x27;hour&#x27;</span>] = dataset[<span class="hljs-string">&#x27;Dates&#x27;</span>].dt.hour  <br>plt.figure(figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">19</span>))  <br>plt.style.use(<span class="hljs-string">&#x27;fivethirtyeight&#x27;</span>)     <br>year_group = dataset.groupby(<span class="hljs-string">&#x27;year&#x27;</span>).size() <br>plt.subplot(<span class="hljs-number">311</span>) <br>plt.plot(year_group.index[:-<span class="hljs-number">1</span>],year_group[:-<span class="hljs-number">1</span>],<span class="hljs-string">&#x27;ks-&#x27;</span>) plt.xlabel(<span class="hljs-string">&#x27;year&#x27;</span>)  <br>month_group = dataset.groupby(<span class="hljs-string">&#x27;month&#x27;</span>).size()<br>plt.subplot(<span class="hljs-number">312</span>)  <br>plt.plot(month_group,<span class="hljs-string">&#x27;ks-&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;month&#x27;</span>)  <br>day_group = dataset.groupby(<span class="hljs-string">&#x27;day&#x27;</span>).size()  <br>plt.subplot(<span class="hljs-number">313</span>)  <br>plt.plot(day_group,<span class="hljs-string">&#x27;ks-&#x27;</span>)  <br>plt.xlabel(<span class="hljs-string">&#x27;day&#x27;</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image060.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image064.png" alt="img"></p>
+<p>从上图可知，在2011年前SF的犯罪数基本上呈递减趋势，2011后数量激增，案件高发期是在一年中的5月和10月，在每个月的月初会有涨幅。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">week_group =  dataset.groupby([<span class="hljs-string">&#x27;DayOfWeek&#x27;</span>,<span class="hljs-string">&#x27;hour&#x27;</span>]).size()<br><span class="hljs-comment">#多重分组  </span><br>week_group = week_group.unstack()<br><span class="hljs-comment">#对分组后的多重索引转为xy索引    </span><br>week_group.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">8</span>))<span class="hljs-comment">#行列互换后画</span><br>plt.xlabel(<span class="hljs-string">&#x27;hour of day&#x27;</span>,size=<span class="hljs-number">15</span>)  <br>plt.ylabel(<span class="hljs-string">&#x27;Number of crimes&#x27;</span>,size=<span class="hljs-number">15</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p>·<img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image066.png" alt="img"></p>
+<p>可以看出，案件高发时间是在12点和18点左右，凌晨后数量会显著减少，在周五周六的晚上8点后案件发生率会比平时要高。</p>
+<h3 id="7-1-4-高发案件的时间结合地点的分析"><a href="#7-1-4-高发案件的时间结合地点的分析" class="headerlink" title="7.1.4 高发案件的时间结合地点的分析"></a>7.1.4 高发案件的时间结合地点的分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">cate_group = dataset.groupby(by=<span class="hljs-string">&#x27;Category&#x27;</span>).size()  <br>top6 = <span class="hljs-built_in">list</span>(cate_group.index[:<span class="hljs-number">6</span>])  <br>tmp = dataset[dataset[<span class="hljs-string">&#x27;Category&#x27;</span>].isin(top6)]  <br>tmp_group = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;hour&#x27;</span>]).size()<br>tmp_group = tmp_group.unstack()  <br>tmp_group.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),style=<span class="hljs-string">&#x27;o-&#x27;</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image068.png" alt="img"></p>
+<p>时间上与上述分析是一致的，对于偷盗类案件在12、18点发生率更高；assault类案件在晚上6点后没有下降趋势。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">tmp2 = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;PdDistrict&#x27;</span>]).size() tmp2.unstack().T.plot(kind=<span class="hljs-string">&#x27;bar&#x27;</span>,figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),rot=<span class="hljs-number">45</span>) plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image070.png" alt="img"></p>
+<p>从上图可知，犯罪率最高的Southern地区，偷窃类、暴力冲突类案件数量最多，车辆失窃类案件较少，猜测可能属于贫困地区，治安很好的地区Park,Richmond中，毒品、人身攻击类案件比例明显较少.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">tmp3 = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;DayOfWeek&#x27;</span>]).size()  <br>tmp3 = tmp3.unstack()  <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):      <br>    tmp3.iloc[i] = tmp3.iloc[i]/tmp3.<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>)[i] <span class="hljs-built_in">print</span>(tmp3)  <br>tmp3.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),style=<span class="hljs-string">&#x27;o-&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&quot;weekday&quot;</span>,size=<span class="hljs-number">20</span>)  <br><span class="hljs-comment">#plt.axes.set_xticks([])  </span><br>plt.xticks([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-string">&#x27;Mon&#x27;</span>,<span class="hljs-string">&#x27;Tue&#x27;</span>,<span class="hljs-string">&#x27;Wed&#x27;</span>,<span class="hljs-string">&#x27;Thur&#x27;</span>,<span class="hljs-string">&#x27;Fri&#x27;</span>,<span class="hljs-string">&#x27;Sat&#x27;</span>,<span class="hljs-string">&#x27;Sun&#x27;</span>])  <br>plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image072.png" alt="img"></p>
+<p>趋势不太一样的是ＢＡＤ　ＣＨＥＣＫ类案件，在周三发生最多，周末有急剧下降的趋势；其余多数案件，除了other offenses外，都在周五周六有所增多。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">mon_g = tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,<span class="hljs-string">&#x27;month&#x27;</span>]).size()  <br>mon_g = mon_g.unstack()  <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):      <br>    mon_g.iloc[i] = mon_g.iloc[i]/mon_g.<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>)[i] mon_g.T.plot(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">6</span>),style=<span class="hljs-string">&#x27;o-&#x27;</span>)  <br>plt.show()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image074.png" alt="img"></p>
+<p>分类变化趋势与总体基本一致，2-6月和8-12月是案件高发期，1-2月badcheck案发率较低。</p>
+<h3 id="7-1-5-高发案件的时间趋势分析"><a href="#7-1-5-高发案件的时间趋势分析" class="headerlink" title="7.1.5 高发案件的时间趋势分析"></a>7.1.5 高发案件的时间趋势分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">ddf =  tmp.groupby([<span class="hljs-string">&#x27;Category&#x27;</span>,pd.Grouper(<span class="hljs-string">&#x27;Dates&#x27;</span>)]).size() ddf = ddf.unstack().fillna(<span class="hljs-number">0</span>)  <br>ddf = ddf.T  <br>df2 = ddf.resample(<span class="hljs-string">&#x27;m&#x27;</span>,how=<span class="hljs-string">&#x27;sum&#x27;</span>)<span class="hljs-comment">#按月求和</span><br>plt.style.use(<span class="hljs-string">&#x27;dark_background&#x27;</span>)  <br>moav = df2.rolling(<span class="hljs-number">12</span>).mean()<span class="hljs-comment">#每12个月统计平均，相当于加了个窗  </span><br>i = <span class="hljs-number">1</span>  <br><span class="hljs-keyword">for</span> cat <span class="hljs-keyword">in</span> df2.columns:      <br>    plt.figure(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">15</span>))    <br>    ax =  plt.subplot(<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,i)<br>    plt.plot(df2.index,df2[cat])<br>    plt.plot(df2.index,moav[cat])<br>    plt.title(cat)<br>    i+=<span class="hljs-number">1</span><br>df2.plot()  <br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image076.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image078.png" alt="img"></p>
+<p><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image080.png" alt="img"> <img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image082-1640092446805.png" alt="img"> <img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image084-1640092449858.png" alt="img"> <img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image086-1640092452099.png" alt="img"> <img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image088-1640092454204.png" alt="img"></p>
+<p>可见，不同种类的案件随时间是有不同变化的，如assault在15年后急剧下降，可能有专项整治等活动。</p>
+<h2 id="7-2-Spark数据分析"><a href="#7-2-Spark数据分析" class="headerlink" title="7.2 Spark数据分析"></a>7.2 Spark数据分析</h2><h3 id="7-2-1-Spark-Mlib介绍"><a href="#7-2-1-Spark-Mlib介绍" class="headerlink" title="7.2.1 Spark.Mlib介绍"></a>7.2.1 Spark.Mlib介绍</h3><p>Spark数据分析建模主要利用的是Spark.Mlib下的机器学习进行分类、预测、回归问题。Mlib其实就是将数据以RDD的形式进行表示，在分布式数据集上调用各种算法。</p>
+<p><strong>Mlib</strong>的使用方法：</p>
+<p>MLlib中包含能够在集群上运行良好的并行算法，如kmeans、分布式RF、交替最小二乘等，这能够让MLib中的每个算法都能够适用于大规模数据集</p>
+<p>也可以将同一算法的不同参数列表通过parallelize()，在不同节点上运行，最终找到性能最好的一组参数，这可以节省小规模数据集上参数选择的时间。</p>
+<p>  <strong>Mlib</strong>中的数据类型：</p>
+<p>  Vector：在mllib.linalg.vectors中，既支持稠密向量，也支持稀疏向量</p>
+<p>  LabeledPoint：在mllib.regression中，用于监督学习算法中，表示带有标签的数据点</p>
+<p>  Rating：在mllib.recommendation中，用于产品推荐，表示用户对一个产品的打分</p>
+<p>各种Label类：每个Model都是训练算法的结果，可以用train进行训练，用predict进行预测</p>
+<h3 id="7-2-2-基于Describe属性分词处理的数据分析"><a href="#7-2-2-基于Describe属性分词处理的数据分析" class="headerlink" title="7.2.2 基于Describe属性分词处理的数据分析"></a>7.2.2 基于Describe属性分词处理的数据分析</h3><p>流程和scikit-learn版本的很相似，包含3个步骤：</p>
+<p>1.regexTokenizer: 利用正则切分单词</p>
+<p>2.stopwordsRemover: 移除停用词</p>
+<p>3.countVectors: 构建词频向量</p>
+<p>RegexTokenizer：基于正则的方式进行文档切分成单词组 inputCol: 输入字段；outputCol: 输出字段；pattern： 匹配模式，根据匹配到的内容切分单词。</p>
+<p>CountVectorizer：构建词频向量；covabSize: 限制的词频数；minDF：如果是float，则表示出现的百分比小于minDF,不会被当做关键词</p>
+<p>StringIndexer将一列字符串label编码为一列索引号，根据label出现的频率排序，最频繁出现的label的index为0</p>
+<p>该例子中，label会被编码成从0-32的整数，最频繁的label被编码成0</p>
+<p>Pipeline是基于DataFrame的高层API，可以方便用户构建和调试机器学习流水线，可以使得多个机器学习算法顺序执行，达到高效的数据处理的目的。</p>
+<table>
+<thead>
+<tr>
+<th><strong>以词频作为特征，利用逻辑回归进行分类</strong>    LR用于监督式分类问题，可以使用SGD等方法对LR进行训练，    clearThreshold之后，LR会输出原始概率，也可以设置概率阈值，直接输出分类结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>drop_list  &#x3D; [‘Dates’, ‘DayOfWeek’, ‘PdDistrict’, ‘Resolution’, ‘Address’, ‘X’, ‘Y’]  data &#x3D;  data.select([column for column in data.columns if column not in drop_list])  from pyspark.ml.feature import RegexTokenizer,  StopWordsRemover, CountVectorizer  from pyspark.ml.classification import  LogisticRegression  # regular expression tokenizer  regexTokenizer &#x3D;  RegexTokenizer(inputCol&#x3D;”Descript”, outputCol&#x3D;”words”,  pattern&#x3D;”\W”)  # stop words  add_stopwords &#x3D;  [“http”,”https”,”amp”,”rt”,”t”,”c”,”the”]    stopwordsRemover &#x3D;  StopWordsRemover(inputCol&#x3D;”words”,  outputCol&#x3D;”filtered”).setStopWords(add_stopwords)  # bag of words count  countVectors &#x3D;  CountVectorizer(inputCol&#x3D;”filtered”,  outputCol&#x3D;”features”,vocabSize&#x3D;10000, minDF&#x3D;5)</td>
+</tr>
+<tr>
+<td>label_stringIdx &#x3D; StringIndexer(inputCol &#x3D; “Category”,  outputCol &#x3D; “label”)  pipeline &#x3D; Pipeline(stages&#x3D;[regexTokenizer, stopwordsRemover,  countVectors, label_stringIdx])  # Fit the pipeline to training documents.  pipelineFit &#x3D; pipeline.fit(data)  dataset &#x3D; pipelineFit.transform(data)  (trainingData, testData) &#x3D; dataset.randomSplit([0.7, 0.3], seed &#x3D; 100)     lr &#x3D; LogisticRegression(maxIter&#x3D;20, regParam&#x3D;0.3, elasticNetParam&#x3D;0)  lrModel &#x3D; lr.fit(trainingData)  predictions &#x3D; lrModel.transform(testData)  predictions.filter(predictions[‘prediction’] &#x3D;&#x3D; 0) \      .select(“Descript”,”Category”,”probability”,”label”,”prediction”)  \      .orderBy(“probability”, ascending&#x3D;False) \    .show(n &#x3D; 10, truncate &#x3D; 30)  evaluator &#x3D;  MulticlassClassificationEvaluator(predictionCol&#x3D;”prediction”)  evaluator.evaluate(predictions)</td>
+</tr>
+<tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image090.png" alt="img"></strong></td>
+</tr>
+<tr>
+<td><strong>以TF-ID作为特征，利用逻辑回归进行分类</strong>  TFIDF是一种从文本文档生成特征向量的简单方法，文档中的词有2个统计值：TF与IDF，TF指的是每个词咋文档中出现的次数，IDF用于衡量一个词在整个文档语料库中出现的(逆)频繁程度  HashingTF用于计算TF，IDF用于IDF，hashingTF用的是哈希的方法，生成稀疏向量</td>
+</tr>
+<tr>
+<td>from pyspark.ml.feature import HashingTF, IDF  hashingTF &#x3D; HashingTF(inputCol&#x3D;”filtered”,  outputCol&#x3D;”rawFeatures”, numFeatures&#x3D;10000)  idf &#x3D; IDF(inputCol&#x3D;”rawFeatures”,  outputCol&#x3D;”features”, minDocFreq&#x3D;5)   #minDocFreq: remove sparse terms  pipeline &#x3D; Pipeline(stages&#x3D;[regexTokenizer,  stopwordsRemover, hashingTF, idf, label_stringIdx])  pipelineFit &#x3D; pipeline.fit(data)  dataset &#x3D; pipelineFit.transform(data)     lr &#x3D; LogisticRegression(maxIter&#x3D;20, regParam&#x3D;0.3,  elasticNetParam&#x3D;0)  lrModel &#x3D; lr.fit(trainingData)  predictions &#x3D; lrModel.transform(testData)  predictions.filter(predictions[‘prediction’] &#x3D;&#x3D; 0) \      .select(“Descript”,”Category”,”probability”,”label”,”prediction”)  \      .orderBy(“probability”, ascending&#x3D;False) \    .show(n &#x3D; 10,  truncate &#x3D; 30)      evaluator &#x3D;  MulticlassClassificationEvaluator(predictionCol&#x3D;”prediction”)  evaluator.evaluate(predictions)</td>
+</tr>
+<tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image092.png" alt="img"></strong></td>
+</tr>
+<tr>
+<td><strong>交叉验证</strong>  用交叉验证来优化参数，这里针对基于词频特征的逻辑回归模型进行优化</td>
+</tr>
+<tr>
+<td>#交叉验证  from pyspark.ml import Pipeline  pipelinec &#x3D; Pipeline(stages&#x3D;[regexTokenizer,  stopwordsRemover, countVectors, label_stringIdx])  pipelineFit &#x3D; pipelinec.fit(data)  dataset &#x3D; pipelineFit.transform(data)  (trainingData, testData) &#x3D; dataset.randomSplit([0.7,  0.3], seed &#x3D; 100)  lr &#x3D; LogisticRegression(maxIter&#x3D;20, regParam&#x3D;0.3,  elasticNetParam&#x3D;0)  from pyspark.ml.tuning import ParamGridBuilder,  CrossValidator  # Create ParamGrid for Cross Validation  paramGrid &#x3D; (ParamGridBuilder()          .addGrid(lr.regParam, [0.1, 0.3, 0.5]) # regularization parameter          .addGrid(lr.elasticNetParam, [0.0, 0.1, 0.2])              # Elastic Net Parameter (Ridge &#x3D; 0)  #        .addGrid(model.maxIter, [10, 20, 50]) #Number of iterations  #        .addGrid(idf.numFeatures, [10, 100, 1000]) # Number of features          .build())  from pyspark.ml.evaluation import  MulticlassClassificationEvaluator  evaluator &#x3D;  MulticlassClassificationEvaluator(predictionCol&#x3D;”prediction”)  # Create 5-fold CrossValidator  cv &#x3D; CrossValidator(estimator&#x3D;lr, \              estimatorParamMaps&#x3D;paramGrid, \              evaluator&#x3D;evaluator, \              numFolds&#x3D;5)  cvModel &#x3D; cv.fit(trainingData)  predictions &#x3D; cvModel.transform(testData)  # Evaluate best model  evaluator.evaluate(predictions)</td>
+</tr>
+<tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image093.png" alt="img"></strong></td>
+</tr>
+<tr>
+<td><strong>朴素贝叶斯</strong></td>
+</tr>
+<tr>
+<td>from pyspark.ml.classification import NaiveBayes  nb &#x3D; NaiveBayes(smoothing&#x3D;1)  model &#x3D; nb.fit(trainingData)  predictions &#x3D; model.transform(testData)  predictions.filter(predictions[‘prediction’] &#x3D;&#x3D; 0) \      .select(“Descript”,”Category”,”probability”,”label”,”prediction”)  \      .orderBy(“probability”, ascending&#x3D;False) \    .show(n &#x3D; 10,  truncate &#x3D; 30)     from pyspark.ml.evaluation import  MulticlassClassificationEvaluator  evaluator &#x3D;  MulticlassClassificationEvaluator(predictionCol&#x3D;”prediction”)  evaluator.evaluate(predictions)</td>
+</tr>
+<tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image095.png" alt="img"></strong></td>
+</tr>
+<tr>
+<td><strong>随机森林</strong>  参数解释：  ata：由LabeledPoint组成的rdd  numClasses：分类任务时，有该参数，表示类别数量  impurity：节点的不纯度测量，对于分类可以使用gini系数或者信息熵，对回归只能是varainace  maxDepth：数的最大深度，默认为5。  maxBins：在构建各节点时，将数据分到多少个箱子中  cateoricalFeaturesInfo：指定哪些特征是用于分类的，以及有多少个分类。  numTrees，即决策树的个数。  * featureSubsetStrategy：在每个节点上做决定时所考虑的特征的数量，可以是auto、all、sqrt、log2、onethird等，数目越大，计算的代价越大。  * seed：采用的随机数种子</td>
+</tr>
+<tr>
+<td>from pyspark.ml.classification import  RandomForestClassifier  rf &#x3D; RandomForestClassifier(labelCol&#x3D;”label”,  \                  featuresCol&#x3D;”features”, \                numTrees &#x3D; 100, \                maxDepth &#x3D; 4, \                maxBins &#x3D; 32)  # Train model with Training Data  rfModel &#x3D; rf.fit(trainingData)  predictions &#x3D; rfModel.transform(testData)  predictions.filter(predictions[‘prediction’] &#x3D;&#x3D; 0) \      .select(“Descript”,”Category”,”probability”,”label”,”prediction”)  \      .orderBy(“probability”, ascending&#x3D;False) \    .show(n &#x3D; 10,  truncate &#x3D; 30)      evaluator &#x3D; MulticlassClassificationEvaluator(predictionCol&#x3D;”prediction”)  evaluator.evaluate(predictions)</td>
+</tr>
+<tr>
+<td><strong><img src="https://gitee.com/xiang976young/note/raw/master/img/clip_image097.png" alt="img"></strong></td>
+</tr>
+</tbody></table>
+<p>上面的结果可以看出：朴素贝叶斯是优秀的、鲁棒的通用模型。同样选择使用交叉验证的逻辑回归也是个明智的选择。但是选择交叉验证的逻辑回归时需要注意一点：由于使用了交叉验证，训练时间会过长，在实际的应用场景中要根据业务选择最合适的模型。</p>
+<h1 id="八．问题"><a href="#八．问题" class="headerlink" title="八．问题"></a>八．问题</h1><ol>
+<li><p>Question:Hbase出现ERROR: Can’t get master address from ZooKeeper; znode data &#x3D;&#x3D; null解决办法</p>
+<p>Reason: 出现此问题可能是zookeeper不稳定造成的，采用的是虚拟机，经常挂起的状态，使用hbase的list命令出现下面错误，这个可能是hbase的稳定性造成的。或者是运行hbase(zookeeper)的用户无法写入zookeeper文件，导致znode data为空。</p>
+<p>Solution：方法一：重启hbase。Stop-hbase.sh  start-hbase.sh</p>
+<p>​        			方法二：修改hbase-site.xml中的hbase.zookeeper.property.dataDir文件夹的权限，并注意rootdir中的IP设定很重要，需要设定对应的IP与hadoop下的core-site.xml中fs.defaultFS中的路径不相同，后重启hbase、zookeeper</p>
+</li>
+<li><p>Question：在使用sqoop进行一系列数据传输的小问题：</p>
+<p>2.1：ERROR tool.ImportTool: Encountered IOException running import job: java.io.IOException:</p>
+<p>2.2：ERROR mapreduce.ExportJobBase: Export job failed!</p>
+<p>​		ERROR tool.ExportTool: Error during export: </p>
+<p>​		Export job failed!</p>
+<p>Solution：2.1 这个是由于mysql-connector-java的bug造成的，出错时我用的是mysql-connector-java-5.1.10-bin.jar，更新成mysql-connector-java-5.1.32-bin.jar就可以了。同时也要注意语句中ip的拼写</p>
+<p>2.2 第一步：完整的检查mysql和hive表的结构(字段名称和数据类型)是否一致。</p>
+<p>第二步：查看数据有没有导入？如果数据没有导入，请在检查第一步操作，可以将mysql和hive中的时间类型都改成string或varchar类型试一下。如果有导入，但是导入的数据不全或者不对。说明肯定是你的数据类型和实际的数据不一致。下面分两种情况。</p>
+<p>第三步：在mysql到hive中，请务必检查你的数据中是否包含hive建表默认的换行符 \n (LINES TERMINATED BY ‘\n’)。 </p>
+<p>第四步：在mysql到hive中，请务必检查你的数据中是否包含hive建表常用的字段分隔符 \t(FIELDS TERMINATED BY ‘\t’)。如果有，则sqoop语句中 fields-terminated-by 参数不能用 \t</p>
+</li>
+<li><p>Question：Input path does not exist:hdfs:&#x2F;&#x2F;Master:9000&#x2F;user&#x2F;hive&#x2F;wavehouse&#x2F;crime.db&#x2F;log</p>
+<p>Reason：其实很简单，log是外部表，在对应hive数据库的存放地址内是访问不到的</p>
+<p>Solution：需要建一个内部表复制一下外部表就可以访问到了</p>
+</li>
+<li><p>Question：在挂起回复以后，hbsae的子节点上的进程HRegionServer挂掉。</p>
+<p>Reason：注意查看log日志报告的具体错误信息。ZooKeeper delete failed after 4 attempts，zookeeper对于Hmaster的选举产生了阻碍效果。Solution：</p>
+<p>首先关闭Hbase、Zookeeper。查看Hbase自带zookeeper是否占用2181端口。</p>
+<p>启动zookeeper</p>
+<ul>
+<li>直接启动客户端脚本 zkCli.sh</li>
+<li>查看Zookeeper节点信息 ls &#x2F;</li>
+<li>递归删除Hbase节点 rmr &#x2F;hbase</li>
+<li>退出客户端 quit</li>
+<li>重启Zookeeper服务  zkServer.sh restart</li>
+</ul>
+<p>当然也有可能是时间不一致导致的，注意同步各节点的时间</p>
+<p>再启动Hbase即可。</p>
+</li>
+</ol>
+<h1 id="九．小结"><a href="#九．小结" class="headerlink" title="九．小结"></a>九．小结</h1><p>本次大作业的设计尽可能地运用到了本课程中所有的学习部分：Hadoop分布式处理框架、Hdfs分布式文件系统、Hbase分布式列存储数据库、Hive数据仓库、Zookeeper分布式协作服务、Spark基于内存的分布式计算框架、Sqoop数据同步工具。当作是我对本次课程的一次检测。当然还存在很多基础的框架应用等待我们学习如Kafka分布式消息队列、Flume日志收集工具Strom、Flink分布式流计算框架、Oozie工作流调度器等。大数据的学习永无止境！</p>
+<p>本课设采用的数据集是旧金山的犯罪数据。虽然不是国内数据，时效也不太好，但是构成了一个完整的处理数据的流程。数据清洗，数据分析，数据建模，数据预测。当然在由于hive语句没有python熟练的缘故，Hql调用的比较少，只能简单查看一些。高级一些的数据属性之间的关联仍然是较少的。但好在在python可视化的时候，利用python做了一些数据的处理，也呈现出一些良好的效果，观察到一些有用的走势和波动。同样在数据建模的时候，运用的比较简单，对于数据降维，多属性数据的特征提取这类方法运用的不深。单纯的通过单一的模型来处理效果并不是很理想，需要我进一步利用网络对贝叶斯处理好的数据进行深层次的辨析。也许会得到更好的效果。当然在kaggle上也有很多大神在这个竞赛中提交了相当有趣的代码，例如xgboost和lightgbm，这值得我去学习，尝试着接下里来这些代码部署到spark中实现。</p>
+<p>本次作业的完成，预示一段学习的结束，是对我这段时间学习的评价。同样也为我揭开了下一步学习的序幕。在实现各个过程中的细节和不足都成我继续前进的动力，对于更好更便捷的框架更吸引着我。��</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/PySpark/">#PySpark</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>BigData——15.PySpark案例</div>
+      <div>http://example.com/2022/02/01/BigData&amp;Linux/PySpark案例/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年2月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/MachineLearning/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9F%BA%E7%A1%80/" title="Machine Learning Foundation——概率论和数理统计">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning Foundation——概率论和数理统计</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/01/BigData&amp;Linux/1.Hadoop%E7%9B%B8%E5%85%B3/" title="BigData——1.HADOOP相关知识">
+                        <span class="hidden-mobile">BigData——1.HADOOP相关知识</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

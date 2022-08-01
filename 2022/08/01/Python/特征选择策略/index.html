@@ -1,0 +1,998 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="太多的特征会增加模型的复杂性和过拟合，而太少的特征会导致模型的拟合不足。将模型优化为足够复杂以使其性能可推广，但又足够简单易于训练、维护和解释是特征选择的主要工作。 “特征选择”意味着可以保留一些特征并放弃其他一些特征。本文的目的是概述一些特征选择策略：  删除未使用的列 删除具有缺失值的列 不相关的特征 低方差特征 多重共线性 特征系数 p 值 方差膨胀因子 (VIF) 基于特征重要性的特征选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="特征选择示例">
+<meta property="og:url" content="http://example.com/2022/08/01/Python/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="太多的特征会增加模型的复杂性和过拟合，而太少的特征会导致模型的拟合不足。将模型优化为足够复杂以使其性能可推广，但又足够简单易于训练、维护和解释是特征选择的主要工作。 “特征选择”意味着可以保留一些特征并放弃其他一些特征。本文的目的是概述一些特征选择策略：  删除未使用的列 删除具有缺失值的列 不相关的特征 低方差特征 多重共线性 特征系数 p 值 方差膨胀因子 (VIF) 基于特征重要性的特征选择">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/640-16561438083483.png">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="http://example.com/src/640-16561438083495.png">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="http://example.com/src/640-16561438083496.png">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="http://example.com/src/640-16561438083497.png">
+<meta property="og:image" content="http://example.com/src/640-16561438083508.png">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="http://example.com/src/640-16561438083509.png">
+<meta property="article:published_time" content="2022-08-01T02:13:53.533Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.355Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/640-16561438083483.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>特征选择示例 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="特征选择示例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          85 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">特征选择示例</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>太多的特征会增加模型的复杂性和过拟合，而太少的特征会导致模型的拟合不足。将模型优化为足够复杂以使其性能可推广，但又足够简单易于训练、维护和解释是特征选择的主要工作。</p>
+<p>“特征选择”意味着可以保留一些特征并放弃其他一些特征。本文的目的是概述一些特征选择策略：</p>
+<ol>
+<li>删除未使用的列</li>
+<li>删除具有缺失值的列</li>
+<li>不相关的特征</li>
+<li>低方差特征</li>
+<li>多重共线性</li>
+<li>特征系数</li>
+<li>p 值</li>
+<li>方差膨胀因子 (VIF)</li>
+<li>基于特征重要性的特征选择</li>
+<li>使用 sci-kit learn 进行自动特征选择</li>
+<li>主成分分析 (PCA)</li>
+</ol>
+<p>该演示的数据集在 MIT 许可下发布，来自 PyCaret——一个开源的低代码机器学习库。</p>
+<p>数据集相当干净，但我做了一些预处理。请注意，我使用此数据集来演示不同的特征选择策略如何工作，而不是构建最终模型，因此模型性能无关紧要。</p>
+<p>首先加载数据集：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pddata = &#x27;https://raw.githubusercontent.com/pycaret/pycaret/master/datasets/automobile.csv&#x27;df = pd.read_csv(data)<br><span class="hljs-title">df</span>.sample(<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-16561438083483.png" alt="图片"></p>
+<p>该数据集包含 202 行和 26 列——每行代表一个汽车实例，每列代表其特征和相应的价格。这些列包括：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">df.columns<br>&gt;&gt; <span class="hljs-constructor">Index([&#x27;<span class="hljs-params">symboling</span>&#x27;, &#x27;<span class="hljs-params">normalized</span>-<span class="hljs-params">losses</span>&#x27;, &#x27;<span class="hljs-params">make</span>&#x27;, &#x27;<span class="hljs-params">fuel</span>-<span class="hljs-params">type</span>&#x27;, &#x27;<span class="hljs-params">aspiration</span>&#x27;, &#x27;<span class="hljs-params">num</span>-<span class="hljs-params">of</span>-<span class="hljs-params">doors</span>&#x27;, &#x27;<span class="hljs-params">body</span>-<span class="hljs-params">style</span>&#x27;, &#x27;<span class="hljs-params">drive</span>-<span class="hljs-params">wheels</span>&#x27;, &#x27;<span class="hljs-params">engine</span>-<span class="hljs-params">location</span>&#x27;,&#x27;<span class="hljs-params">wheel</span>-<span class="hljs-params">base</span>&#x27;, &#x27;<span class="hljs-params">length</span>&#x27;, &#x27;<span class="hljs-params">width</span>&#x27;, &#x27;<span class="hljs-params">height</span>&#x27;, &#x27;<span class="hljs-params">curb</span>-<span class="hljs-params">weight</span>&#x27;, &#x27;<span class="hljs-params">engine</span>-<span class="hljs-params">type</span>&#x27;, &#x27;<span class="hljs-params">num</span>-<span class="hljs-params">of</span>-<span class="hljs-params">cylinders</span>&#x27;, &#x27;<span class="hljs-params">engine</span>-<span class="hljs-params">size</span>&#x27;, &#x27;<span class="hljs-params">fuel</span>-<span class="hljs-params">system</span>&#x27;, &#x27;<span class="hljs-params">bore</span>&#x27;, &#x27;<span class="hljs-params">stroke</span>&#x27;, &#x27;<span class="hljs-params">compression</span>-<span class="hljs-params">ratio</span>&#x27;, &#x27;<span class="hljs-params">horsepower</span>&#x27;, &#x27;<span class="hljs-params">peak</span>-<span class="hljs-params">rpm</span>&#x27;, &#x27;<span class="hljs-params">city</span>-<span class="hljs-params">mpg</span>&#x27;, &#x27;<span class="hljs-params">highway</span>-<span class="hljs-params">mpg</span>&#x27;, &#x27;<span class="hljs-params">price</span>&#x27;], <span class="hljs-params">dtype</span>=&#x27;<span class="hljs-params">object</span>&#x27;)</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>现在让我们深入研究特征选择的 11 种策略。</p>
+<h2 id="1-删除未使用的列"><a href="#1-删除未使用的列" class="headerlink" title="1.删除未使用的列"></a><strong>1.删除未使用的列</strong></h2><p>当然，最简单的策略是你的直觉。虽然是直觉，但有时很有用的，某些列在最终模型中不会以任何形式使用（例如“ID”、“FirstName”、“LastName”等列）。如果您知道某个特定列将不会被使用，请随时将其删除。在我们的数据中，没有一列有这样的问题所以，我在此步骤中不删除任何列。</p>
+<h2 id="2-删除具有缺失值的列"><a href="#2-删除具有缺失值的列" class="headerlink" title="2.删除具有缺失值的列"></a><strong>2.删除具有缺失值的列</strong></h2><p>缺失值在机器学习中是不可接受的，因此我们会采用不同的策略来清理缺失数据（例如插补）。但是如果列中缺少大量数据，那么完全删除它是非常好的方法。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># total <span class="hljs-keyword">null</span> <span class="hljs-keyword">values</span> per columndf.<span class="hljs-keyword">isnull</span>().sum()<br>&gt;&gt;symboling             <span class="hljs-number">0</span>normalized-losses   <span class="hljs-number">35</span>make                 <span class="hljs-number">0</span>fuel-<span class="hljs-keyword">type</span>             <span class="hljs-number">0</span>aspiration           <span class="hljs-number">0</span>num-<span class="hljs-keyword">of</span>-doors         <span class="hljs-number">2</span>body-style           <span class="hljs-number">0</span>drive-wheels         <span class="hljs-number">0</span>engine-<span class="hljs-keyword">location</span>       <span class="hljs-number">0</span>wheel-base           <span class="hljs-number">0</span>length               <span class="hljs-number">0</span>width                 <span class="hljs-number">0</span>height               <span class="hljs-number">0</span>curb-weight           <span class="hljs-number">0</span>engine-<span class="hljs-keyword">type</span>           <span class="hljs-number">0</span>num-<span class="hljs-keyword">of</span>-cylinders     <span class="hljs-number">0</span>engine-size           <span class="hljs-number">0</span>fuel-<span class="hljs-keyword">system</span>           <span class="hljs-number">0</span>bore                 <span class="hljs-number">0</span>stroke               <span class="hljs-number">0</span>compression-ratio     <span class="hljs-number">0</span>horsepower           <span class="hljs-number">0</span>peak-rpm             <span class="hljs-number">0</span>city-mpg             <span class="hljs-number">0</span>highway-mpg           <span class="hljs-number">0</span>price                 <span class="hljs-number">0</span>dtype: int64<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-不相关的特征"><a href="#3-不相关的特征" class="headerlink" title="3.不相关的特征"></a><strong>3.不相关的特征</strong></h2><p>无论算法是回归（预测数字）还是分类（预测类别），特征都必须与目标相关。如果一个特征没有表现出相关性，它就是一个主要的消除目标。可以分别测试数值和分类特征的相关性。</p>
+<p><strong>数值变量</strong></p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp"># correlation between target and features(<span class="hljs-name">df</span>.corr().loc[&#x27;price&#x27;].plot(<span class="hljs-name">kind=</span>&#x27;barh&#x27;, figsize=(<span class="hljs-number">4</span>,<span class="hljs-number">10</span>)))<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<p>在此示例中，peak-rpm, compression-ratio, stroke, bore, height , symboling 等特征与价格几乎没有相关性，因此我们可以删除它们。</p>
+<p>可以手动删除列，但我更喜欢使用相关阈值（在本例中为 0.2）以编程方式进行：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"># <span class="hljs-keyword">drop</span> uncorrelated numeric features (threshold &lt;0.2)<span class="hljs-keyword">corr</span> = <span class="hljs-built_in">abs</span>(df.<span class="hljs-built_in">corr</span>().<span class="hljs-keyword">loc</span>[&#x27;price&#x27;])<span class="hljs-keyword">corr</span> = <span class="hljs-keyword">corr</span>[<span class="hljs-keyword">corr</span>&lt;0.2]cols_to_drop = <span class="hljs-keyword">corr</span>.index.to_list()df = df.<span class="hljs-keyword">drop</span>(cols_to_drop, axis=1)<br></code></pre></td></tr></table></figure>
+
+<p><strong>分类变量</strong></p>
+<p>可以使用箱线图查找目标和分类特征之间的相关性：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><span class="hljs-title">sns</span>.boxplot(y = &#x27;price&#x27;, x = &#x27;fuel-<span class="hljs-class"><span class="hljs-keyword">type</span>&#x27;, <span class="hljs-keyword">data</span>=df)</span><br></code></pre></td></tr></table></figure>
+
+<p>柴油车的中位价高于汽油车。这意味着这个分类变量可以解释汽车价格，所以应放弃它。可以像这样单独检查每个分类列。</p>
+<h2 id="4-低方差特征"><a href="#4-低方差特征" class="headerlink" title="4.低方差特征"></a><strong>4.低方差特征</strong></h2><p>检查一下我们的特征的差异：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br># variance <span class="hljs-keyword">of</span> numeric features(df.select_dtypes(include=np.number).var().astype(&#x27;str&#x27;))<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<p>这里的“bore”具有极低的方差，虽然这是删除的候选者。在这个特殊的例子中，我不愿意删除它，因为它的值在2.54和3.94之间，因此方差很低：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">df<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;bore&#x27;</span>]</span><span class="hljs-selector-class">.describe</span>()<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<h2 id="5-多重共线性"><a href="#5-多重共线性" class="headerlink" title="5.多重共线性"></a><strong>5.多重共线性</strong></h2><p>当任何两个特征之间存在相关性时，就会出现多重共线性。在机器学习中，期望每个特征都应该独立于其他特征，即它们之间没有共线性。高马力车辆往往具有高发动机尺寸。所以你可能想消除其中一个，让另一个决定目标变量——价格。</p>
+<p>我们可以分别测试数字和分类特征的多重共线性：</p>
+<p><strong>数值变量</strong></p>
+<p>Heatmap 是检查和寻找相关特征的最简单方法。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import matplotlib.pyplot as plt<br>sns.<span class="hljs-built_in">set</span>(rc=&#123;<span class="hljs-string">&#x27;figure.figsize&#x27;</span>:(16,10)&#125;)sns.heatmap(df.corr(),          <span class="hljs-attribute">annot</span>=<span class="hljs-literal">True</span>,          <span class="hljs-attribute">linewidths</span>=.5,          <span class="hljs-attribute">center</span>=0,          <span class="hljs-attribute">cbar</span>=<span class="hljs-literal">False</span>,          <span class="hljs-attribute">cmap</span>=<span class="hljs-string">&quot;PiYG&quot;</span>)plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<p>大多数特征在某种程度上相互关联，但有些特征具有非常高的相关性，例如长度与轴距以及发动机尺寸与马力。</p>
+<p>可以根据相关阈值手动或以编程方式删除这些功能。我将手动删除具有 0.80 共线性阈值的特征。</p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sml"># drop correlated featuresdf = df.drop([<span class="hljs-symbol">&#x27;length&#x27;</span>, <span class="hljs-symbol">&#x27;width&#x27;</span>, <span class="hljs-symbol">&#x27;curb</span>-weight&#x27;, <span class="hljs-symbol">&#x27;engine</span>-size&#x27;, <span class="hljs-symbol">&#x27;city</span>-mpg&#x27;], axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+<p>还可以使用称为方差膨胀因子 (VIF) 的方法来确定多重共线性并根据高 VIF 值删除特征。我稍后会展示这个例子。</p>
+<p><strong>分类变量</strong></p>
+<p>与数值特征类似，也可以检查分类变量之间的共线性。诸如独立性卡方检验之类的统计检验非常适合它。</p>
+<p>让我们检查一下数据集中的两个分类列——燃料类型和车身风格——是独立的还是相关的。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua">df_cat = df<span class="hljs-string">[[&#x27;fuel-type&#x27;, &#x27;body-style&#x27;]]</span>df_cat.sample(<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-16561438083495.png" alt="图片"></p>
+<p>然后我们将在每一列中创建一个类别的交叉表&#x2F;列联表。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">crosstab = pd<span class="hljs-selector-class">.crosstab</span>(df_cat<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;fuel-type&#x27;</span>]</span>, df_cat<span class="hljs-selector-attr">[<span class="hljs-string">&#x27;body-style&#x27;</span>]</span>)crosstab<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<p>最后，我们将在交叉表上运行卡方检验，这将告诉我们这两个特征是否独立。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">from scipy<span class="hljs-selector-class">.stats</span> import chi2_contingency<br><span class="hljs-function"><span class="hljs-title">chi2_contingency</span><span class="hljs-params">(crosstab)</span></span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>输出依次是卡方值、p 值、自由度和预期频率数组。</p>
+<p>p 值 &lt;0.05，因此我们可以拒绝特征之间没有关联的原假设，即两个特征之间存在统计上显着的关系。</p>
+<p>由于这两个特征之间存在关联，我们可以选择删除其中一个。</p>
+<p>到目前为止，我已经展示了在实现模型之前应用的特征选择策略。这些策略在第一轮特征选择以建立初始模型时很有用。但是一旦构建了模型，就可以获得有关模型性能中每个特征的适应度的更多信息。根据这些新信息，可以进一步确定要保留哪些功能。</p>
+<p>下面我们使用最简单的线性模型展示其中的一些方法。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-meta"># drop columns with missing valuesdf = df.dropna()</span><br><span class="hljs-title">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split# get dummies for categorical featuresdf = pd.get_dummies(<span class="hljs-title">df</span>, <span class="hljs-title">drop_first</span>=<span class="hljs-type">True</span>)# X featuresX = df.drop(&#x27;<span class="hljs-title">price&#x27;</span>, <span class="hljs-title">axis</span>=1)# y targety = df[&#x27;price&#x27;]# split data into training and testing setX_train, X_test, y_train, y_test = train_test_split(<span class="hljs-type">X</span>, <span class="hljs-title">y</span>, <span class="hljs-title">test_size</span>=0.3, <span class="hljs-title">random_state</span>=42)<br><span class="hljs-title">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression# scalingfrom sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScalerscaler = StandardScaler()X_train = scaler.fit_transform(<span class="hljs-type">X_train</span>)X_test = scaler.fit_transform(<span class="hljs-type">X_test</span>)# convert back to dataframeX_train = pd.DataFrame(<span class="hljs-type">X_train</span>, <span class="hljs-title">columns</span> = <span class="hljs-type">X</span>.<span class="hljs-title">columns</span>.<span class="hljs-title">to_list</span>())X_test = pd.DataFrame(<span class="hljs-type">X_test</span>, <span class="hljs-title">columns</span> = <span class="hljs-type">X</span>.<span class="hljs-title">columns</span>.<span class="hljs-title">to_list</span>())# instantiate modelmodel = LinearRegression()# fitmodel.fit(<span class="hljs-type">X_train</span>, <span class="hljs-title">y_train</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>现在我们已经拟合了模型，让我们进行另一轮特征选择。</p>
+<h2 id="6-特征系数"><a href="#6-特征系数" class="headerlink" title="6.特征系数"></a><strong>6.特征系数</strong></h2><p>如果正在运行回归任务，则特征适应度的一个关键指标是回归系数（所谓的 beta 系数），它显示了模型中特征的相对贡献。有了这些信息，可以删除贡献很小或没有贡献的功能。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"># feature coefficientscoeffs = model.coef_<br># visualizing coefficientsindex = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">X_train</span>.</span></span>columns.tolist<span class="hljs-literal">()</span><br>(pd.<span class="hljs-constructor">DataFrame(<span class="hljs-params">coeffs</span>, <span class="hljs-params">index</span> = <span class="hljs-params">index</span>, <span class="hljs-params">columns</span> = [&#x27;<span class="hljs-params">coeff</span>&#x27;])</span>.sort<span class="hljs-constructor">_values(<span class="hljs-params">by</span> = &#x27;<span class="hljs-params">coeff</span>&#x27;)</span>.plot(kind=&#x27;barh&#x27;, figsize=(<span class="hljs-number">4</span>,<span class="hljs-number">10</span>)))<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-16561438083496.png" alt="图片"></p>
+<p>某些特征beta 系数很小，对汽车价格的预测贡献不大。可以过滤掉这些特征：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># <span class="hljs-keyword">filter</span> variables near zero coefficient valuetemp = pd.DataFrame(coeffs, <span class="hljs-keyword">index</span> = <span class="hljs-keyword">index</span>, <span class="hljs-keyword">columns</span> = [<span class="hljs-string">&#x27;coeff&#x27;</span>]).sort_values(<span class="hljs-keyword">by</span> = <span class="hljs-string">&#x27;coeff&#x27;</span>)<span class="hljs-keyword">temp</span> = <span class="hljs-keyword">temp</span>[(<span class="hljs-keyword">temp</span>[<span class="hljs-string">&#x27;coeff&#x27;</span>]&gt;<span class="hljs-number">1</span>) | (<span class="hljs-keyword">temp</span>[<span class="hljs-string">&#x27;coeff&#x27;</span>]&lt; <span class="hljs-number">-1</span>)]<br># <span class="hljs-keyword">drop</span> those featurescols_coeff = <span class="hljs-keyword">temp</span>.<span class="hljs-keyword">index</span>.to_list()X_train = X_train[cols_coeff]X_test = X_test[cols_coeff]<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-p-值"><a href="#7-p-值" class="headerlink" title="7.p 值"></a><strong>7.p 值</strong></h2><p>在回归中，p 值告诉我们预测变量和目标之间的关系是否具有统计显著性。statsmodels 库提供了带有特征系数和相关 p 值的回归输出的函数。</p>
+<p>如果某些特征不显著，可以将它们一个一个移除，然后每次重新运行模型，直到找到一组具有显着 p 值的特征，并通过更高的调整 R2 提高性能。</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">import</span> statsmodels.api <span class="hljs-keyword">as</span> smols = sm.OLS(y, <span class="hljs-type">X</span>).fit()print(ols.summary())<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<h2 id="8-方差膨胀因子-VIF"><a href="#8-方差膨胀因子-VIF" class="headerlink" title="8.方差膨胀因子 (VIF)"></a><strong>8.方差膨胀因子 (VIF)</strong></h2><p>方差膨胀因子 (VIF) 是衡量多重共线性的另一种方法。它被测量为整体模型方差与每个独立特征的方差的比率。一个特征的高 VIF 表明它与一个或多个其他特征相关。根据经验：</p>
+<ul>
+<li>VIF &#x3D; 1 表示无相关性</li>
+<li>VIF &#x3D; 1-5 中等相关性</li>
+<li>VIF &gt;5 高相关</li>
+</ul>
+<p>VIF 是一种消除多重共线性特征的有用技术。对于我们的演示，将所有 VIF 高于10的删除。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">from statsmodels.stats.outliers_influence import variance_inflation_factor<br># calculate VIFvif = pd.<span class="hljs-constructor">Series([<span class="hljs-params">variance_inflation_factor</span>(X.<span class="hljs-params">values</span>, <span class="hljs-params">i</span>)</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">X</span>.</span></span>shape<span class="hljs-literal">[<span class="hljs-number">1</span>]</span>)], index=<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">X</span>.</span></span>columns)<br># display VIFs <span class="hljs-keyword">in</span> a tableindex = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">X_train</span>.</span></span>columns.tolist<span class="hljs-literal">()</span>vif_df = pd.<span class="hljs-constructor">DataFrame(<span class="hljs-params">vif</span>, <span class="hljs-params">index</span> = <span class="hljs-params">index</span>, <span class="hljs-params">columns</span> = [&#x27;<span class="hljs-params">vif</span>&#x27;])</span>.sort<span class="hljs-constructor">_values(<span class="hljs-params">by</span> = &#x27;<span class="hljs-params">vif</span>&#x27;, <span class="hljs-params">ascending</span>=False)</span>vif_df<span class="hljs-literal">[<span class="hljs-identifier">vif_df</span>[&#x27;<span class="hljs-identifier">vif</span>&#x27;]</span>&lt;<span class="hljs-number">10</span>]<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-16561438083497.png" alt="图片"></p>
+<h2 id="9-基于特征重要性选择"><a href="#9-基于特征重要性选择" class="headerlink" title="9.基于特征重要性选择"></a><strong>9.基于特征重要性选择</strong></h2><p>决策树&#x2F;随机森林使用一个特征来分割数据，该特征最大程度地减少了杂质(以基尼系数杂质或信息增益衡量)。找到最佳特征是算法如何在分类任务中工作的关键部分。我们可以通过 feature_importances_ 属性访问最好的特征。</p>
+<p>让我们在我们的数据集上实现一个随机森林模型并过滤一些特征。</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs clean"><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br># instantiate modelmodel = RandomForestClassifier(n_estimators=<span class="hljs-number">200</span>, random_state=<span class="hljs-number">0</span>)# fit modelmodel.fit(X,y)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>现在让我们看看特征重要性：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"># feature importanceimportances = model.feature_importances_<br># visualizationcols = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">X</span>.</span></span>columns(pd.<span class="hljs-constructor">DataFrame(<span class="hljs-params">importances</span>, <span class="hljs-params">cols</span>, <span class="hljs-params">columns</span> = [&#x27;<span class="hljs-params">importance</span>&#x27;])</span>.sort<span class="hljs-constructor">_values(<span class="hljs-params">by</span>=&#x27;<span class="hljs-params">importance</span>&#x27;, <span class="hljs-params">ascending</span>=True)</span>.plot(kind=&#x27;barh&#x27;, figsize=(<span class="hljs-number">4</span>,<span class="hljs-number">10</span>)))<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-16561438083508.png" alt="图片"></p>
+<p>上面的输出显示了每个特征在减少每个节点&#x2F;拆分处的重要性。</p>
+<p>由于随机森林分类器有很多估计量（例如上面例子中的 200 棵决策树），可以用置信区间计算相对重要性的估计值。</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"># calculate standard deviation of feature importancesstd = np<span class="hljs-number">.</span><span class="hljs-keyword">std</span>([i<span class="hljs-number">.</span>feature_importances_ for i <span class="hljs-keyword">in</span> model<span class="hljs-number">.</span>estimators_], axis=<span class="hljs-number">0</span>)<br># visualizationfeat_with_importance = pd<span class="hljs-number">.</span>Series(importances, X<span class="hljs-number">.</span>columns)fig, <span class="hljs-built_in">ax</span> = plt<span class="hljs-number">.</span>subplots(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">5</span>))feat_with_importance<span class="hljs-number">.</span>plot<span class="hljs-number">.</span>bar(yerr=<span class="hljs-keyword">std</span>, <span class="hljs-built_in">ax</span>=<span class="hljs-built_in">ax</span>)<span class="hljs-built_in">ax</span><span class="hljs-number">.</span>set_title(<span class="hljs-string">&quot;Feature importances&quot;</span>)<span class="hljs-built_in">ax</span><span class="hljs-number">.</span>set_ylabel(<span class="hljs-string">&quot;Mean decrease in impurity&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<p>现在我们知道了每个特征的重要性，可以手动（或以编程方式）确定保留哪些特征以及删除哪些特征。</p>
+<h2 id="10-使用-Scikit-Learn-自动选择特征"><a href="#10-使用-Scikit-Learn-自动选择特征" class="headerlink" title="10.使用 Scikit Learn 自动选择特征"></a><strong>10.使用 Scikit Learn 自动选择特征</strong></h2><p>sklearn 库中有一个完整的模块，只需几行代码即可处理特征选择。</p>
+<p>sklearn 中有许多自动化流程，但这里我只展示一些：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elm"># <span class="hljs-keyword">import</span> modulesfrom sklearn.feature_selection <span class="hljs-keyword">import</span> (<span class="hljs-type">SelectKBest</span>, chi2, <span class="hljs-type">SelectPercentile</span>, <span class="hljs-type">SelectFromModel</span>, <span class="hljs-type">SequentialFeatureSelector</span>, <span class="hljs-type">SequentialFeatureSelector</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>基于卡方的技术</strong></p>
+<p>基于卡方的技术根据一些预定义的分数选择特定数量的用户定义特征 (k)。这些分数是通过计算 X（独立）和 y（因）变量之间的卡方统计量来确定的。在 sklearn 中，需要做的就是确定要保留多少特征。如果想保留 10 个功能，实现将如下所示</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"># select K best featuresX_best = <span class="hljs-constructor">SelectKBest(<span class="hljs-params">chi2</span>, <span class="hljs-params">k</span>=10)</span>.fit<span class="hljs-constructor">_transform(X,<span class="hljs-params">y</span>)</span><br># number <span class="hljs-keyword">of</span> best featuresX_best.shape<span class="hljs-literal">[<span class="hljs-number">1</span>]</span><br>&gt;&gt; <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>如果有大量特征，可以指定要保留的特征百分比。假设我们想要保留 75% 的特征并丢弃剩余的 25%：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"># keep <span class="hljs-number">75</span>% top featuresX_top = <span class="hljs-constructor">SelectPercentile(<span class="hljs-params">chi2</span>, <span class="hljs-params">percentile</span> = 75)</span>.fit<span class="hljs-constructor">_transform(X,<span class="hljs-params">y</span>)</span><br># number <span class="hljs-keyword">of</span> best featuresX_top.shape<span class="hljs-literal">[<span class="hljs-number">1</span>]</span><br>&gt;&gt; <span class="hljs-number">36</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>正则化</strong></p>
+<p>正则化减少了过拟合。如果你有太多的特征，正则化控制它们的效果，或者通过缩小特征系数（称为 L2 正则化）或将一些特征系数设置为零（称为 L1 正则化）。</p>
+<p>一些模型具有内置的 L1&#x2F;L2 正则化作为超参数来惩罚特征。可以使用转换器 SelectFromModel 消除这些功能。</p>
+<p>让我们实现一个带有惩罚 &#x3D; ‘l1’ 的 LinearSVC 算法。然后使用 SelectFromModel 删除一些功能。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># implement algorithmfrom sklearn.svm <span class="hljs-keyword">import</span> LinearSVCmodel = LinearSVC(penalty= <span class="hljs-string">&#x27;l1&#x27;</span>, C = <span class="hljs-number">0.002</span>, dual=<span class="hljs-keyword">False</span>)model.fit(X,y)# <span class="hljs-keyword">select</span> features <span class="hljs-keyword">using</span> the meta transformerselector = SelectFromModel(estimator = model, prefit=<span class="hljs-keyword">True</span>)<br>X_new = selector.<span class="hljs-keyword">transform</span>(X)X_new.shape[<span class="hljs-number">1</span>]<br>&gt;&gt; <span class="hljs-number">2</span><br># names <span class="hljs-keyword">of</span> selected featuresfeature_names = np.<span class="hljs-keyword">array</span>(X.<span class="hljs-keyword">columns</span>)feature_names[selector.get_support()]<br>&gt;&gt; <span class="hljs-keyword">array</span>([<span class="hljs-string">&#x27;wheel-base&#x27;</span>, <span class="hljs-string">&#x27;horsepower&#x27;</span>], dtype=<span class="hljs-keyword">object</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>序贯法</strong></p>
+<p>序贯法是一种经典的统计技术。在这种情况下一次添加&#x2F;删除一个功能并检查模型性能，直到它针对需求进行优化。</p>
+<p>序贯法有两种变体。前向选择技术从 0 特征开始，然后添加一个最大程度地减少错误的特征；然后添加另一个特征，依此类推。</p>
+<p>向后选择在相反的方向上起作用。模型从包含的所有特征开始并计算误差；然后它消除了一个可以进一步减少误差的特征。重复该过程，直到保留所需数量的特征。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"># instantiate modelmodel = RandomForestClassifier(n_estimators=<span class="hljs-number">100</span>, random_state=<span class="hljs-number">0</span>)<br># <span class="hljs-keyword">select</span> featuresselector = SequentialFeatureSelector(estimator=model, n_features_to_select=<span class="hljs-number">10</span>, direction=<span class="hljs-string">&#x27;backward&#x27;</span>, cv=<span class="hljs-number">2</span>)selector.fit_transform(X,y)<br># <span class="hljs-keyword">check</span> names <span class="hljs-keyword">of</span> features selectedfeature_names = np.<span class="hljs-keyword">array</span>(X.<span class="hljs-keyword">columns</span>)feature_names[selector.get_support()]<br>&gt;&gt; <span class="hljs-keyword">array</span>([<span class="hljs-string">&#x27;bore&#x27;</span>, <span class="hljs-string">&#x27;make_mitsubishi&#x27;</span>, <span class="hljs-string">&#x27;make_nissan&#x27;</span>, <span class="hljs-string">&#x27;make_saab&#x27;</span>,      <span class="hljs-string">&#x27;aspiration_turbo&#x27;</span>, <span class="hljs-string">&#x27;num-of-doors_two&#x27;</span>, <span class="hljs-string">&#x27;body style_hatchback&#x27;</span>, <span class="hljs-string">&#x27;engine-type_ohc&#x27;</span>, <span class="hljs-string">&#x27;num-of-cylinders_twelve&#x27;</span>, <span class="hljs-string">&#x27;fuel-system_spdi&#x27;</span>], dtype=<span class="hljs-keyword">object</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="11-主成分分析-PCA"><a href="#11-主成分分析-PCA" class="headerlink" title="11.主成分分析 (PCA)"></a><strong>11.主成分分析 (PCA)</strong></h2><p>PCA的主要目的是降低高维特征空间的维数。原始特征被重新投影到新的维度（即主成分）。最终目标是找到最能解释数据方差的特征数量。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stata"># import <span class="hljs-keyword">PCA</span> modulefrom sklearn.decomposition import <span class="hljs-keyword">PCA</span># scaling dataX_scaled = scaler.fit_transform(X)# <span class="hljs-keyword">fit</span> <span class="hljs-keyword">PCA</span> to datapca = <span class="hljs-keyword">PCA</span>()<span class="hljs-keyword">pca</span>.<span class="hljs-keyword">fit</span>(X_scaled)evr = <span class="hljs-keyword">pca</span>.explained_variance_ratio_<br># visualizing the variance explained <span class="hljs-keyword">by</span> each principal componentsplt.figure(figsize=(12, 5))plt.<span class="hljs-keyword">plot</span>(<span class="hljs-keyword">range</span>(0, len(evr)), evr.cumsum(), marker=<span class="hljs-string">&quot;o&quot;</span>, linestyle=<span class="hljs-string">&quot;--&quot;</span>)plt.xlabel(<span class="hljs-string">&quot;Number of components&quot;</span>)plt.ylabel(<span class="hljs-string">&quot;Cumulative explained variance&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-16561438083509.png" alt="图片"></p>
+<p>20 个主成分解释了超过 80% 的方差，因此可以将模型拟合到这 20 个成分（特征）。可以预先确定方差阈值并选择所需的主成分数量。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2><p>这是对可应用于特征选择的各种技术的有用指南。在拟合模型之前应用了一些技术，例如删除具有缺失值的列、不相关的列、具有多重共线性的列以及使用 PCA 进行降维，而在基本模型实现之后应用其他技术，例如特征系数、p 值、 VIF 等。虽然不会在一个项目中完全使用所有策略，这些策略都是我们进行测试的方向</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GJy-7IEFNvYCnA5cBP4M9AYCnA5cBP4M9A">https://mp.weixin.qq.com/s/GJy-7IEFNvYCnA5cBP4M9AYCnA5cBP4M9A</a></p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>特征选择示例</div>
+      <div>http://example.com/2022/08/01/Python/特征选择策略/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86/" title="缺失值处理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">缺失值处理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/%E5%A6%99%E7%94%A8/" title="Python trick">
+                        <span class="hidden-mobile">Python trick</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

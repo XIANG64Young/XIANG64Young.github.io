@@ -1,0 +1,878 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="LOF is short for the Local Outlier Factor. LOF computes the degree of an object is an outlier and the degree depends on how isolated the object is with respect to its surrounding neighborhood. Note th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithms——LOF小记">
+<meta property="og:url" content="http://example.com/2022/07/22/Algorithms/LocalOutlierFactor/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="LOF is short for the Local Outlier Factor. LOF computes the degree of an object is an outlier and the degree depends on how isolated the object is with respect to its surrounding neighborhood. Note th">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/640-1640416354808-16579722103081.webp">
+<meta property="og:image" content="http://example.com/src/image-20220316145612429-165693987619524.png">
+<meta property="og:image" content="http://example.com/src/image-20211225151420414-165693987964027.png">
+<meta property="og:image" content="http://example.com/src/640-1640416819808-165693988344330.webp">
+<meta property="og:image" content="http://example.com/src/640-1640416819835-165693988642633.webp">
+<meta property="article:published_time" content="2022-07-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.080Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Algorithms">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/640-1640416354808-16579722103081.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Algorithms——LOF小记 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Algorithms——LOF小记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-22 00:00" pubdate>
+          2022年7月22日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Algorithms——LOF小记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>LOF is short for the Local Outlier Factor. LOF computes the degree of an object is an outlier and the degree depends on how isolated the object is with respect to its surrounding neighborhood. Note that LOF only</p>
+<p><strong>定义</strong></p>
+<p>首先，基于密度的离群点检测方法有一个基本假设：<strong>非离群点对象周围的密度与其邻域周围的密度类似，而离群点对象周围的密度显著不同于其邻域周围的密度。</strong></p>
+<p>什么意思呢？看下面图片感受下。</p>
+<p><img src="/src/640-1640416354808-16579722103081.webp" alt="图片"></p>
+<p>集群 <code>C1</code> 包含了 400 多个点，集群 <code>C2</code> 包含 100 个点。<code>C1</code> 和 <code>C2</code> 都是一类集群点，区别是 <code>C1</code> 位置比较集中，或者说密度比较大。而像 <code>o1</code>、<code>o2</code>点均为异常点，因为基于我们的假设，这两个点周围的密度显著不同于周围点的密度。</p>
+<p>LOF 就是基于密度来判断异常点的，通过给每个数据点都分配一个依赖于邻域密度的离群因子 LOF，进而判断该数据点是否为离群点。 如果 ，则该点为离群点，如果 ，则该点为正常数据点。</p>
+<p><strong>LOF分数计算</strong></p>
+<ol>
+<li><p>K近邻距离。在距离数据点P最近的几个点中，第k个最近的点跟点P之间的距离称为点P的 K-邻近距离，记为 k-distance (p)，公式如下：<br>$$<br>d_k(p)&#x3D;d(P,O)<br>$$</p>
+</li>
+<li><p>K近邻领域。以点P的圆心，以K近邻距离$d_k(P)$为半径画圆，这个圈以内的范围就是K距离领域<br>$$<br>N_k(P)&#x3D;{ d(P,O’) \le d_k({P}) }<br>$$</p>
+</li>
+<li><p>可达距离。点P到点O的第K可达距离<br>$$<br>reach_dist_k(O,P)&#x3D;max{d_k(O),d(O,P) }<br>$$<br><img src="/src/image-20220316145612429-165693987619524.png" alt="image-20220316145612429"><br>$p_2$距离$o$点远，那么可达距离就是他们的实际距离。但是$p_1$离$o$点的距离近，小于K近邻距离，那么实际距离就会被K近邻距离所代替 </p>
+</li>
+<li><p><strong>局部可达密度</strong>。数据点P的局部可达密度就是基于P的最近邻的平均可达距离的倒数。距离越大，密度越小。<br>$$<br>lrd_k(P)&#x3D;\frac{1}{\frac{\sum_{O \ni N_k(P)}reach_dist_k(P,O)}{|N_k(P)|}}<br>$$</p>
+</li>
+<li><p><strong>局部异常因子</strong>。</p>
+</li>
+</ol>
+<p><strong>实现流程</strong></p>
+<p>了解了 LOF 的定义以后，整个算法也就显而易见了：</p>
+<ol>
+<li>对于每个数据点，计算它与其它所有点的距离，并按从近到远排序；</li>
+<li>对于每个数据点，找到它的 k-nearest-neighbor，计算 LOF 得分;</li>
+<li>如果LOF值越大，说明越异常，反之如果越小，说明越趋于正常。</li>
+</ol>
+<p><img src="/src/image-20211225151420414-165693987964027.png" alt="image-20211225151420414"></p>
+<p><strong>优缺点</strong></p>
+<p><strong>优点</strong></p>
+<p>LOF 的一个优点是它同时考虑了数据集的局部和全局属性。异常值不是按绝对值确定的，而是相对于它们的邻域点密度确定的。当数据集中存在不同密度的不同集群时，LOF表现良好，比较适用于中等高维的数据集。</p>
+<p><strong>缺点</strong></p>
+<p>LOF算法中关于局部可达密度的定义其实暗含了一个假设，即：<strong>不存在大于等于 k 个重复的点。</strong></p>
+<p>当这样的重复点存在的时候，这些点的平均可达距离为零，局部可达密度就变为无穷大，会给计算带来一些麻烦。在实际应用时，为了避免这样的情况出现，可以把 k-distance 改为 k-distinct-distance，不考虑重复的情况。或者，还可以考虑给可达距离都加一个很小的值，避免可达距离等于零。</p>
+<p>另外，LOF 算法需要计算数据点两两之间的距离，造成整个算法时间复杂度为 。为了提高算法效率，后续有算法尝试改进。FastLOF （Goldstein，2012）先将整个数据随机的分成多个子集，然后在每个子集里计算 LOF 值。对于那些 LOF 异常得分小于等于 1 的，从数据集里剔除，剩下的在下一轮寻找更合适的 nearest-neighbor，并更新 LOF 值。</p>
+<p><strong>代码实现</strong></p>
+<p>有两个库可以计算LOF，分别是<code>PyOD</code>和<code>Sklearn</code>，下面分别介绍。</p>
+<p>使用<code>pyod</code>自带的方法生成200个训练样本和100个测试样本的数据集。正态样本由多元高斯分布生成，异常样本是使用均匀分布生成的。</p>
+<p>训练和测试数据集都有 5 个特征，10% 的行被标记为异常。并且在数据中添加了一些随机噪声，让完美分离正常点和异常点变得稍微困难一些。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pyod.utils.data <span class="hljs-keyword">import</span> generate_data<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>X_train, y_train, X_test, y_test = \<br>        generate_data(n_train=<span class="hljs-number">200</span>,<br>                      n_test=<span class="hljs-number">100</span>,<br>                      n_features=<span class="hljs-number">5</span>,<br>                      contamination=<span class="hljs-number">0.1</span>,<br>                      random_state=<span class="hljs-number">3</span>) <br>X_train = X_train * np.random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, size=X_train.shape)<br>X_test = X_test * np.random.uniform(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>, size=X_test.shape)<br></code></pre></td></tr></table></figure>
+
+<p><strong>PyOD</strong></p>
+<p>下面将训练数据拟合了 LOF 模型并将其应用于合成测试数据。</p>
+<p>在 <code>PyOD</code> 中，有两个关键方法：<code>decision_function</code> 和 <code>predict</code>。</p>
+<ul>
+<li>decision_function：返回每一行的异常分数</li>
+<li>predict：返回一个由 0 和 1 组成的数组，指示每一行被预测为正常 (0) 还是异常值 (1)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pyod.models.lof <span class="hljs-keyword">import</span> LOF<br>clf_name = <span class="hljs-string">&#x27;LOF&#x27;</span><br>clf = LOF()<br>clf.fit(X_train)<br><br>test_scores = clf.decision_function(X_test)<br><br>roc = <span class="hljs-built_in">round</span>(roc_auc_score(y_test, test_scores), ndigits=<span class="hljs-number">4</span>)<br>prn = <span class="hljs-built_in">round</span>(precision_n_scores(y_test, test_scores), ndigits=<span class="hljs-number">4</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;clf_name&#125;</span> ROC:<span class="hljs-subst">&#123;roc&#125;</span>, precision @ rank n:<span class="hljs-subst">&#123;prn&#125;</span>&#x27;</span>)<br>&gt;&gt; LOF ROC:<span class="hljs-number">0.9656</span>, precision @ rank n:<span class="hljs-number">0.8</span><br></code></pre></td></tr></table></figure>
+
+<p>可以通过 LOF 模型方法查看 LOF 分数的分布。在下图中看到正常数据（蓝色）的分数聚集在 1.0 左右。离群数据点（橙色）的得分均大于 1.0，一般高于正常数据。</p>
+<p><img src="/src/640-1640416819808-165693988344330.webp" alt="图片"></p>
+<p><strong>Sklearn</strong></p>
+<p>在<code>scikit-learn</code>中实现 <code>LOF</code> 进行异常检测时，有两种模式选择：异常检测模式 <code>(novelty=False)</code> 和 novelty检测模式 <code>(novelty=True)</code>。</p>
+<p>在异常检测模式下，只有<code>fit_predict</code>生成离群点预测的方法可用。可以使用<code>negative_outlier_factor_</code>属性检索训练数据的异常值分数，但无法为未见过的数据生成分数。模型会根据<code>contamination</code>参数（默认值为 0.1）自动选择异常值的阈值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br>detector = LOF()<br>scores = detector.fit(X_train).decision_function(X_test)<br><br>sns.distplot(scores[y_test==<span class="hljs-number">0</span>], label=<span class="hljs-string">&quot;inlier scores&quot;</span>)<br>sns.distplot(scores[y_test==<span class="hljs-number">1</span>], label=<span class="hljs-string">&quot;outlier scores&quot;</span>).set_title(<span class="hljs-string">&quot;Distribution of Outlier Scores from LOF Detector&quot;</span>)<br>plt.legend()<br>plt.xlabel(<span class="hljs-string">&quot;Outlier score&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>在novelty检测模式下，只有<code>decision_function</code>用于生成异常值可用。<code>fit_predict</code>方法不可用，但<code>predict</code>方法可用于生成异常值预测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">clf = LocalOutlierFactor(novelty=<span class="hljs-literal">True</span>)<br>clf = clf.fit(X_train)<br>test_scores = clf.decision_function(X_test)<br><br>test_scores = -<span class="hljs-number">1</span>*test_scores<br><br>roc = <span class="hljs-built_in">round</span>(roc_auc_score(y_test, test_scores), ndigits=<span class="hljs-number">4</span>)<br>prn = <span class="hljs-built_in">round</span>(precision_n_scores(y_test, test_scores), ndigits=<span class="hljs-number">4</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;clf_name&#125;</span> ROC:<span class="hljs-subst">&#123;roc&#125;</span>, precision @ rank n:<span class="hljs-subst">&#123;prn&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>该模式下模型的异常值分数被反转，异常值的分数低于正常值。</p>
+<p><img src="/src/640-1640416819835-165693988642633.webp" alt="图片">2633.webp)2633.webp)</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithms/" class="category-chain-item">Algorithms</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Algorithms/">#Algorithms</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Algorithms——LOF小记</div>
+      <div>http://example.com/2022/07/22/Algorithms/LocalOutlierFactor/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月22日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/31/Essay/Safe-Semi-Supervised/" title="Essay——安全半监督">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Essay——安全半监督</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/22/Essay/MetaLearning/" title="Essay——元学习小记">
+                        <span class="hidden-mobile">Essay——元学习小记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

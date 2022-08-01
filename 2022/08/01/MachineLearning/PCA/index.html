@@ -1,0 +1,1052 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、PCA算法的直觉理解从直觉上看，PCA主成分分析类似于依次寻找一群样本点的各个位置差异最大的方向长轴。  假定把一个人身上的所有细胞看成一个一个的样本点。这些样本点可以用3个坐标来表示，从左到右为x方向，从前到后为y方向，从下到上为z方向。 那么它们的第一个主成分是什么呢？第一个主成分对应的长轴是沿着人的脚到头的方向，也就是通常的上下方向，即z方向。这个方向是最主要的长轴。这些样本点的位置差异">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——PCA">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/PCA/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="一、PCA算法的直觉理解从直觉上看，PCA主成分分析类似于依次寻找一群样本点的各个位置差异最大的方向长轴。  假定把一个人身上的所有细胞看成一个一个的样本点。这些样本点可以用3个坐标来表示，从左到右为x方向，从前到后为y方向，从下到上为z方向。 那么它们的第一个主成分是什么呢？第一个主成分对应的长轴是沿着人的脚到头的方向，也就是通常的上下方向，即z方向。这个方向是最主要的长轴。这些样本点的位置差异">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/640-1640494499177.webp">
+<meta property="og:image" content="http://example.com/src/640-1640494499121.webp">
+<meta property="og:image" content="http://example.com/src/640-1640494499120.webp">
+<meta property="og:image" content="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
+<meta property="og:image" content="http://example.com/src/640-1640494499119.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441440.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441325.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441323.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441408.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441352.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441314.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441328.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441327.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441325.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441318.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441354.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441408.webp">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/951TjTgiabky2jXhnzqYC7JdLQBWPVKFGc68nlISpkibRGs2uWYyqPIVnwYZUx6GfcExtLkbzUCqaTSib1oHSQ5JA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://example.com/src/640-1640495441322.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441323.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441437.webp">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/951TjTgiabkyQPnnP8sxicPCfWP6sZKy4VY6cTVl9YN0Q6EpFqRA3EB02zqvAicKqutInibic1SCVfXNAKIcCvX0rsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://example.com/src/640-1640495441353.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441327.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441324.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441409.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441326.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441438.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441432.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441433.webp">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/951TjTgiabky2jXhnzqYC7JdLQBWPVKFGg6kzxoUe6Aa2GZ7BktHDtVicKz5eKWLicaPfA5pk34VEtaPXqUY3IYlw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="http://example.com/src/640-1640495441434.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441435.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441436.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441436.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441438.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441440.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441441.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441442.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441442.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441443.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441443.webp">
+<meta property="og:image" content="http://example.com/src/640-1640495441464.webp">
+<meta property="article:published_time" content="2022-08-01T02:13:53.490Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.225Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/640-1640494499177.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——PCA - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——PCA"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          98 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——PCA</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h2 id="一、PCA算法的直觉理解"><a href="#一、PCA算法的直觉理解" class="headerlink" title="一、PCA算法的直觉理解"></a>一、PCA算法的直觉理解</h2><p>从直觉上看，PCA主成分分析类似于依次寻找一群样本点的各个位置差异最大的方向长轴。</p>
+<p><img src="/src/640-1640494499177.webp" alt="图片"></p>
+<p>假定把一个人身上的所有细胞看成一个一个的样本点。这些样本点可以用3个坐标来表示，从左到右为x方向，从前到后为y方向，从下到上为z方向。</p>
+<p>那么它们的第一个主成分是什么呢？第一个主成分对应的长轴是沿着人的脚到头的方向，也就是通常的上下方向，即z方向。这个方向是最主要的长轴。这些样本点的位置差异基本上70%以上来自于这个方向上的差异。</p>
+<p>它们的第二个主成分是什么呢？第二个主成分对应的方向是沿着人的左臂到右臂的方向，也就通常的左右方向，即y方向。这个方向和第一个主成分长轴垂直，这些样本点的位置差异大概有20%左右来自这个方向上的差异。</p>
+<p>它们的第三个主成分是什么呢？第三个主成分方向是沿着人的前胸到后背的方向，也就是通常的前后方向，即x方向。这个方向和前两个主成分长轴垂直，样本点的位置差异有一般只有不到10%来自这个方向的差异，当然，有些身材比较圆润的同学除外。</p>
+<p>现在，如果要将这些样本点的坐标减少到用2个来表示，并尽可能多的保留样本点之间位置差异的信息，那么，显然，应该保留第一个主成分坐标和第二个主成分坐标。</p>
+<p>现在，假定这个人躺在一个斜的躺椅上，那么现在这些样本点的第一主成分显然不再是从下到上的z方向。我们应该将我们的坐标系作一个旋转，让z轴和斜着的躺椅方向一致，这个新的z方向是这些样本点的第一主成分方向。类似地，也需要旋转x轴和y轴得到新的第二主成分方向和第三主成分方向。</p>
+<p>这个旋转旧坐标系以找到主成分方向的过程就是PCA主成分分析。</p>
+<h2 id="二、PCA算法的数学说明"><a href="#二、PCA算法的数学说明" class="headerlink" title="二、PCA算法的数学说明"></a>二、PCA算法的数学说明</h2><p>PCA主成分分析(Principal Components Analysis)是一种通过正交线性组合方式，最大化保留样本间方差的降维方法。</p>
+<p>用几何观点来看，PCA主成分分析方法可以看成通过<strong>正交变换</strong>，对坐标系进行旋转和平移，并保留样本点投影坐标方差最大的前几个新的坐标。</p>
+<p>这里有几个关键词需要说明:</p>
+<ul>
+<li><strong>降维：</strong>将样本原来的m维特征用更少的k个特征取代。降维算法可以理解成一种数据压缩方法，它可能会丢失一些信息。</li>
+<li><strong>正交线性组合：</strong>k个新特征是通过对m个旧特征进行线性组合产生的，并且k个线性组合的系数向量为单位向量，且彼此相互正交。</li>
+<li><strong>最大化保留样本间方差：</strong>第1个主成分特征最大化样本间特征方差，第2个主成分特征在满足与第1个主成分正交约束条件下最大化样本间特征方差……</li>
+</ul>
+<p><img src="/src/640-1640494499121.webp" alt="图片"></p>
+<h2 id="三、PCA算法的调包范例"><a href="#三、PCA算法的调包范例" class="headerlink" title="三、PCA算法的调包范例"></a>三、PCA算法的调包范例</h2><p>下面的范例我们调用sklearn中的PCA降维算法接口，对波士顿房价数据集进行降维(13维降到7维)。</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-title">from</span> sklearn <span class="hljs-keyword">import</span> datasets<br><br><span class="hljs-title">boston</span> = datasets.load_boston()<br><span class="hljs-title">dfdata</span> = pd.<span class="hljs-type">DataFrame</span>(boston.<span class="hljs-class"><span class="hljs-keyword">data</span>,columns = boston.feature_names)</span><br><span class="hljs-title">dfdata</span>.head()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-1640494499120.webp" alt="图片"></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 不同特征取值范围相差较大，我们首先进行标准正态归一化</span><br><span class="hljs-comment"># 归一化的结果作为 PCA降维的输入</span><br><span class="hljs-keyword">from</span> sklearn.preprocessing import StandardScaler<br>scaler = StandardScaler()<br>scaler.fit(dfdata.values)<br>X_input = scaler.transform(dfdata.values)<br><br><span class="hljs-comment"># 我们的输入有506个样本，13维特征</span><br><span class="hljs-built_in">print</span>(X_input.shape)<br>(506, 13)<br><span class="hljs-comment"># 应用PCA进行降维</span><br><br><span class="hljs-keyword">from</span> sklearn.decomposition import PCA<br>pca = PCA(<span class="hljs-attribute">n_components</span>=7)<br>pca.fit(X_input)<br>X_output = pca.transform(X_input)<br><br><span class="hljs-comment"># 降维后，只有7维特征</span><br><span class="hljs-built_in">print</span>(X_output.shape)<br>(506, 7)<br><span class="hljs-comment"># 查看各个主成分对应的方差大小和占全部方差的比例</span><br><span class="hljs-comment"># 可以看到前7个主成分已经解释了样本分布的90%的差异了。</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;explained_variance:&quot;</span>)<br><span class="hljs-built_in">print</span>(pca.explained_variance_)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;explained_variance_ratio:&quot;</span>)<br><span class="hljs-built_in">print</span>(pca.explained_variance_ratio_)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;total explained variance ratio of first 7 principal components:&quot;</span>)<br><span class="hljs-built_in">print</span>(sum(pca.explained_variance_ratio_)<br>explained_variance:<br>[6.1389812  1.43611329 1.2450773  0.85927328 0.83646904 0.65870897<br> 0.5364162 ]<br>explained_variance_ratio:<br>[0.47129606 0.11025193 0.0955859  0.06596732 0.06421661 0.05056978<br> 0.04118124]<br>total explained variance ratio of first 7 principal components:<br>0.8990688406240493<br><span class="hljs-comment">#可视化各个主成分贡献的方差</span><br>%matplotlib inline<br>%config InlineBackend.figure_format = <span class="hljs-string">&#x27;svg&#x27;</span><br><br>import matplotlib.pyplot as plt<br>plt.figure()<br>plt.plot(np.arange(1,8),pca.explained_variance_,<span class="hljs-attribute">linewidth</span>=2)<br>plt.xlabel(<span class="hljs-string">&#x27;components_n&#x27;</span>, <span class="hljs-attribute">fontsize</span>=16)<br>plt.ylabel(<span class="hljs-string">&#x27;explained_variance_&#x27;</span>, <span class="hljs-attribute">fontsize</span>=16)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="图片"></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs subunit"># 查看降维对应的正交变换矩阵，即各个投影向量<br>W = pca.components_<br># 验证正交关系<br>np.round(np.dot(W,np.transpose(W)),6)<br>array([[ 1.,  0., <span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>.,  0., <span class="hljs-string">-0</span>.],<br>       [ 0.,  1., <span class="hljs-string">-0</span>.,  0.,  0., <span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>.],<br>       [<span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>.,  1.,  0., <span class="hljs-string">-0</span>.,  0., <span class="hljs-string">-0</span>.],<br>       [<span class="hljs-string">-0</span>.,  0.,  0.,  1., <span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>.,  0.],<br>       [<span class="hljs-string">-0</span>.,  0., <span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>.,  1.,  0.,  0.],<br>       [ 0., <span class="hljs-string">-0</span>.,  0., <span class="hljs-string">-0</span>.,  0.,  1., <span class="hljs-string">-0</span>.],<br>       [<span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>., <span class="hljs-string">-0</span>.,  0.,  0., <span class="hljs-string">-0</span>.,  1.]])<br># 对降维后的数据的前两维进行散点图可视化<br><br>%matplotlib inline<br>%config InlineBackend.figure_format = &#x27;svg&#x27;<br><br>plt.scatter(X_output[:,0],X_output[:,1])<br>plt.xlabel(&quot;components_1&quot;)<br>plt.ylabel(&quot;components_2&quot;)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/640-1640494499119.webp" alt="图片"></p>
+<h2 id="四、PCA算法的数学原理"><a href="#四、PCA算法的数学原理" class="headerlink" title="四、PCA算法的数学原理"></a>四、PCA算法的数学原理</h2><p>前方高数提醒。</p>
+<p>下面进行PCA算法的数学原理推演，证明第k个主成分投影向量恰好是样本的协方差矩阵的第k大特征值对应的特征向量。</p>
+<p>下面的推演会会用到高等数学中的一些线性代数知识和微积分知识。</p>
+<p>没有相关数学基础的同学可以跳过，在实践中只要掌握PCA算法的直觉概念和调包使用方法，基本就够用了。</p>
+<p>假定样本特征用矩阵$X$表示， 其每一行表示一个样本，每一列表示一个特征。</p>
+<p>假定$X$是$n \times m$维的，即$n$个样本，$m$维特征。</p>
+<p>现在寻找$X$的第一个主成分。</p>
+<p>假定第一个主成分投影向量是$w$，它是一个单位列向量，维数为$m$，</p>
+<p>则$X$投影后的坐标是<br>$$<br>y&#x3D;Xw<br>$$<br>投影后的样本间的坐标方差可以表示为<br>$$<br>var(y)&#x3D;(Xw-\bar{Xw})^T(Xw-\bar{Xw})<br>$$<br>杠杠表示对样本求平均，由于与样本无关，可以化简为:<br>$$<br>var(y)&#x3D;((X-\bar{X})w)^T((X-\bar{X})w)\<br>var(y)&#x3D;w^T(X-\bar{X})^T(X-\bar{X})w<br>$$<br>注意到$(X-\bar{X})^T(X-\bar{X})$恰好为$X$的协方差矩阵。</p>
+<p>下面我们要让这个坐标方差最大化，同时$w$要满足单位长度约束:<br>$$<br>w^Tw&#x3D;1<br>$$<br>对于含有约束条件的极值条件求解，我们可以应用微积分中的拉格朗日乘子法。构造如下拉格朗日函数。<br>$$<br>L(w,\lambda)&#x3D;w^T(X-\bar{X})^T(X-\bar{X})w-\lambda(w^Tw-1)<br>$$<br>可以利用下标表示方法证明，对于二次型，存在如下向量求导公式：<br>$$<br>\frac{\partial x^TAx}{\partial x}&#x3D;A^Tx+Ax<br>$$<br>可以推导得到：</p>
+<p>$$<br>\frac{\partial L}{\partial w}&#x3D;2(X-\bar{X})^T(X-\bar{X})w-2\lambda w&#x3D;0\<br>(X-\bar{X})^T(X-\bar{X})w&#x3D;\lambda w<br>$$<br>可以看出， $\lambda$为$X$协方差矩阵的特征值，$w$为对应的特征向量。由于协方差矩阵为实对称矩阵，其特征值必定大于等于0。</p>
+<p>同时，投影后的样本间的坐标方差可以表示为：</p>
+<p>$$<br>var(y)&#x3D;w^T(X-\bar{X})^T(X-\bar{X})w&#x3D;\lambda w^Tw&#x3D;\lambda \ge 0<br>$$<br>为了最大化样本间的坐标方差，$\lambda$应当取$X$协方差矩阵的最大的特征值，则$w$应为$X$协方差矩阵最大特征值对应的特征向量。</p>
+<p>类似地，可以证明第k个主成分投影向量为$X$协方差矩阵的第k大特征值对应的特征向量。</p>
+<p>由于矩阵不同特征值的特征向量相互正交，因此这些投影向量满足正交条件。</p>
+<hr>
+<p>PCA（Principal Component Analysis）是一种常用的数据分析方法。PCA通过线性变换将原始数据变换为一组各维度线性无关的表示，可用于提取数据的主要特征分量，常用于高维数据的降维。网上关于PCA的文章有很多，但是大多数只描述了PCA的分析过程，而没有讲述其中的原理。这篇文章的目的是介绍PCA的基本数学原理，帮助读者了解PCA的工作机制是什么。</p>
+<p>数据的向量表示及降维问题</p>
+<p>一般情况下，在数据挖掘和机器学习中，数据被表示为向量。例如某个淘宝店2012年全年的流量及交易情况可以看成一组记录的集合，其中每一天的数据是一条记录，格式如下：</p>
+<p>(日期, 浏览量, 访客数, 下单数, 成交数, 成交金额)</p>
+<p>其中“日期”是一个记录标志而非度量值，而数据挖掘关心的大多是度量值，因此如果我们忽略日期这个字段后，我们得到一组记录，每条记录可以被表示为一个五维向量，其中一条看起来大约是这个样子：</p>
+<p><img src="/src/640-1640495441440.webp" alt="图片"></p>
+<p>注意这里我用了转置，因为习惯上使用列向量表示一条记录（后面会看到原因），本文后面也会遵循这个准则。不过为了方便有时我会省略转置符号，但我们说到向量默认都是指列向量。</p>
+<p>我们当然可以对这一组五维向量进行分析和挖掘，不过我们知道，很多机器学习算法的复杂度和数据的维数有着密切关系，甚至与维数呈指数级关联。当然，这里区区五维的数据，也许还无所谓，但是实际机器学习中处理成千上万甚至几十万维的情况也并不罕见，在这种情况下，机器学习的资源消耗是不可接受的，因此我们必须对数据进行降维。</p>
+<p>降维当然意味着信息的丢失，不过鉴于实际数据本身常常存在的相关性，我们可以想办法在降维的同时将信息的损失尽量降低。</p>
+<p>举个例子，假如某学籍数据有两列M和F，其中M列的取值是如何此学生为男性取值1，为女性取值0；而F列是学生为女性取值1，男性取值0。此时如果我们统计全部学籍数据，会发现对于任何一条记录来说，当M为1时F必定为0，反之当M为0时F必定为1。在这种情况下，我们将M或F去掉实际上没有任何信息的损失，因为只要保留一列就可以完全还原另一列。</p>
+<p>当然上面是一个极端的情况，在现实中也许不会出现，不过类似的情况还是很常见的。例如上面淘宝店铺的数据，从经验我们可以知道，“浏览量”和“访客数”往往具有较强的相关关系，而“下单数”和“成交数”也具有较强的相关关系。这里我们非正式的使用“相关关系”这个词，可以直观理解为“当某一天这个店铺的浏览量较高（或较低）时，我们应该很大程度上认为这天的访客数也较高（或较低）”。后面的章节中我们会给出相关性的严格数学定义。</p>
+<p>这种情况表明，如果我们删除浏览量或访客数其中一个指标，我们应该期待并不会丢失太多信息。因此我们可以删除一个，以降低机器学习算法的复杂度。</p>
+<p>上面给出的是降维的朴素思想描述，可以有助于直观理解降维的动机和可行性，但并不具有操作指导意义。例如，我们到底删除哪一列损失的信息才最小？亦或根本不是单纯删除几列，而是通过某些变换将原始数据变为更少的列但又使得丢失的信息最小？到底如何度量丢失信息的多少？如何根据原始数据决定具体的降维操作步骤？</p>
+<p>要回答上面的问题，就要对降维问题进行数学化和形式化的讨论。而PCA是一种具有严格数学基础并且已被广泛采用的降维方法。下面我不会直接描述PCA，而是通过逐步分析问题，让我们一起重新“发明”一遍PCA。</p>
+<p>向量的表示及基变换</p>
+<p>既然我们面对的数据被抽象为一组向量，那么下面有必要研究一些向量的数学性质。而这些数学性质将成为后续导出PCA的理论基础。</p>
+<p><strong>内积与投影</strong></p>
+<p>下面先来看一个高中就学过的向量运算：内积。两个维数相同的向量的内积被定义为：</p>
+<p><img src="/src/640-1640495441325.webp" alt="图片"></p>
+<p>内积运算将两个向量映射为一个实数。其计算方式非常容易理解，但是其意义并不明显。下面我们分析内积的几何意义。假设A和B是两个n维向量，我们知道n维向量可以等价表示为n维空间中的一条从原点发射的有向线段，为了简单起见我们假设A和B均为二维向量，则A&#x3D;(x1,y1)A&#x3D;(x1,y1)，B&#x3D;(x2,y2)B&#x3D;(x2,y2)。则在二维平面上A和B可以用两条发自原点的有向线段表示，见下图：</p>
+<p><img src="/src/640-1640495441323.webp" alt="图片"></p>
+<p>好，现在我们从A点向B所在直线引一条垂线。我们知道垂线与B的交点叫做A在B上的投影，再设A与B的夹角是a，则投影的矢量长度为<img src="/src/640-1640495441408.webp" alt="图片">其中</p>
+<p><img src="/src/640-1640495441352.webp" alt="图片">是向量A的模，也就是A线段的标量长度。</p>
+<p>注意这里我们专门区分了矢量长度和标量长度，标量长度总是大于等于0，值就是线段的长度；而矢量长度可能为负，其绝对值是线段长度，而符号取决于其方向与标准方向相同或相反。</p>
+<p>到这里还是看不出内积和这东西有什么关系，不过如果我们将内积表示为另一种我们熟悉的形式：</p>
+<p>A⋅B&#x3D;|A||B|cos(a)</p>
+<p>现在事情似乎是有点眉目了：A与B的内积等于A到B的投影长度乘以B的模。再进一步，如果我们假设B的模为1，即让|B|&#x3D;1，那么就变成了：</p>
+<p>A⋅B&#x3D;|A|cos(a)</p>
+<p>也就是说，设向量B的模为1，则A与B的内积值等于A向B所在直线投影的矢量长度！这就是内积的一种几何解释，也是我们得到的第一个重要结论。在后面的推导中，将反复使用这个结论。</p>
+<p><strong>基</strong></p>
+<p>下面我们继续在二维空间内讨论向量。上文说过，一个二维向量可以对应二维笛卡尔直角坐标系中从原点出发的一个有向线段。例如下面这个向量：</p>
+<p><img src="/src/640-1640495441314.webp" alt="图片"></p>
+<p>在代数表示方面，我们经常用线段终点的点坐标表示向量，例如上面的向量可以表示为(3,2)，这是我们再熟悉不过的向量表示。</p>
+<p>不过我们常常忽略，只有一个(3,2)本身是不能够精确表示一个向量的。我们仔细看一下，这里的3实际表示的是向量在x轴上的投影值是3，在y轴上的投影值是2。也就是说我们其实隐式引入了一个定义：以x轴和y轴上正方向长度为1的向量为标准。那么一个向量(3,2)实际是说在x轴投影为3而y轴的投影为2。注意投影是一个矢量，所以可以为负。</p>
+<p>更正式的说，向量(x,y)实际上表示线性组合：</p>
+<p><img src="/src/640-1640495441328.webp" alt="图片"></p>
+<p>不难证明所有二维向量都可以表示为这样的线性组合。此处(1,0)和(0,1)叫做二维空间中的一组基。</p>
+<p><img src="/src/640-1640495441327.webp" alt="图片"></p>
+<p>所以，要准确描述向量，首先要确定一组基，然后给出在基所在的各个直线上的投影值，就可以了。只不过我们经常省略第一步，而默认以(1,0)和(0,1)为基。</p>
+<p>我们之所以默认选择(1,0)和(0,1)为基，当然是比较方便，因为它们分别是x和y轴正方向上的单位向量，因此就使得二维平面上点坐标和向量一一对应，非常方便。但实际上任何两个线性无关的二维向量都可以成为一组基，所谓线性无关在二维平面内可以直观认为是两个不在一条直线上的向量。</p>
+<p>例如，(1,1)和(-1,1)也可以成为一组基。一般来说，我们希望基的模是1，因为从内积的意义可以看到，如果基的模是1，那么就可以方便的用向量点乘基而直接获得其在新基上的坐标了！实际上，对应任何一个向量我们总可以找到其同方向上模为1的向量，只要让两个分量分别除以模就好了。例如，上面的基可以变为<img src="/src/640-1640495441325.webp" alt="图片"></p>
+<p>现在，我们想获得(3,2)在新基上的坐标，即在两个方向上的投影矢量值，那么根据内积的几何意义，我们只要分别计算(3,2)和两个基的内积，不难得到新的坐标为<img src="/src/640-1640495441318.webp" alt="图片"></p>
+<p>下图给出了新的基以及(3,2)在新基上坐标值的示意图：</p>
+<p><img src="/src/640-1640495441354.webp" alt="图片"></p>
+<p>另外这里要注意的是，我们列举的例子中基是正交的（即内积为0，或直观说相互垂直），但可以成为一组基的唯一要求就是线性无关，非正交的基也是可以的。不过因为正交基有较好的性质，所以一般使用的基都是正交的。</p>
+<p><strong>基变换的矩阵表示</strong></p>
+<p>下面我们找一种简便的方式来表示基变换。还是拿上面的例子，想一下，将(3,2)变换为新基上的坐标，就是用(3,2)与第一个基做内积运算，作为第一个新的坐标分量，然后用(3,2)与第二个基做内积运算，作为第二个新坐标的分量。实际上，我们可以用矩阵相乘的形式简洁的表示这个变换：</p>
+<p><img src="/src/640-1640495441408.webp" alt="图片"></p>
+<p>太漂亮了！其中矩阵的两行分别为两个基，乘以原向量，其结果刚好为新基的坐标。可以稍微推广一下，如果我们有m个二维向量，只要将二维向量按列排成一个两行m列矩阵，然后用“基矩阵”乘以这个矩阵，就得到了所有这些向量在新基下的值。例如(1,1)，(2,2)，(3,3)，想变换到刚才那组基上，则可以这样表示：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/951TjTgiabky2jXhnzqYC7JdLQBWPVKFGc68nlISpkibRGs2uWYyqPIVnwYZUx6GfcExtLkbzUCqaTSib1oHSQ5JA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p>于是一组向量的基变换被干净的表示为矩阵的相乘。</p>
+<p>一般的，如果我们有M个N维向量，想将其变换为由R个N维向量表示的新空间中，那么首先将R个基按行组成矩阵A，然后将向量按列组成矩阵B，那么两矩阵的乘积AB就是变换结果，其中AB的第m列为A中第m列变换后的结果。</p>
+<p>数学表示为：</p>
+<p><img src="/src/640-1640495441322.webp" alt="图片"></p>
+<p>其中pi是一个行向量，表示第i个基，aj是一个列向量，表示第j个原始数据记录</p>
+<p>特别要注意的是，这里R可以小于N，而R决定了变换后数据的维数。也就是说，我们可以将一N维数据变换到更低维度的空间中去，变换后的维度取决于基的数量。因此这种矩阵相乘的表示也可以表示降维变换。</p>
+<p>最后，上述分析同时给矩阵相乘找到了一种物理解释：两个矩阵相乘的意义是将右边矩阵中的每一列列向量变换到左边矩阵中每一行行向量为基所表示的空间中去。更抽象的说，一个矩阵可以表示一种线性变换。很多同学在学线性代数时对矩阵相乘的方法感到奇怪，但是如果明白了矩阵相乘的物理意义，其合理性就一目了然了。</p>
+<p>协方差矩阵及优化目标</p>
+<p>上面我们讨论了选择不同的基可以对同样一组数据给出不同的表示，而且如果基的数量少于向量本身的维数，则可以达到降维的效果。但是我们还没有回答一个最最关键的问题：如何选择基才是最优的。或者说，如果我们有一组N维向量，现在要将其降到K维（K小于N），那么我们应该如何选择K个基才能最大程度保留原有的信息？</p>
+<p>要完全数学化这个问题非常繁杂，这里我们用一种非形式化的直观方法来看这个问题。</p>
+<p>为了避免过于抽象的讨论，我们仍以一个具体的例子展开。假设我们的数据由五条记录组成，将它们表示成矩阵形式：</p>
+<p><img src="/src/640-1640495441323.webp" alt="图片"></p>
+<p>其中每一列为一条数据记录，而一行为一个字段。为了后续处理方便，我们首先将每个字段内所有值都减去字段均值，其结果是将每个字段都变为均值为0（这样做的道理和好处后面会看到）。</p>
+<p>我们看上面的数据，第一个字段均值为2，第二个字段均值为3，所以变换后：</p>
+<p><img src="/src/640-1640495441437.webp" alt="图片"></p>
+<p>我们可以看下五条数据在平面直角坐标系内的样子：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/951TjTgiabkyQPnnP8sxicPCfWP6sZKy4VY6cTVl9YN0Q6EpFqRA3EB02zqvAicKqutInibic1SCVfXNAKIcCvX0rsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p>现在问题来了：如果我们必须使用一维来表示这些数据，又希望尽量保留原始的信息，你要如何选择？</p>
+<p>通过上一节对基变换的讨论我们知道，这个问题实际上是要在二维平面中选择一个方向，将所有数据都投影到这个方向所在直线上，用投影值表示原始记录。这是一个实际的二维降到一维的问题。</p>
+<p>那么如何选择这个方向（或者说基）才能尽量保留最多的原始信息呢？一种直观的看法是：希望投影后的投影值尽可能分散。</p>
+<p>以上图为例，可以看出如果向x轴投影，那么最左边的两个点会重叠在一起，中间的两个点也会重叠在一起，于是本身四个各不相同的二维点投影后只剩下两个不同的值了，这是一种严重的信息丢失，同理，如果向y轴投影最上面的两个点和分布在x轴上的两个点也会重叠。所以看来x和y轴都不是最好的投影选择。我们直观目测，如果向通过第一象限和第三象限的斜线投影，则五个点在投影后还是可以区分的。</p>
+<p>下面，我们用数学方法表述这个问题。</p>
+<p><strong>方差</strong></p>
+<p>上文说到，我们希望投影后投影值尽可能分散，而这种分散程度，可以用数学上的方差来表述。此处，一个字段的方差可以看做是每个元素与字段均值的差的平方和的均值，即：</p>
+<p><img src="/src/640-1640495441353.webp" alt="图片"></p>
+<p>由于上面我们已经将每个字段的均值都化为0了，因此方差可以直接用每个元素的平方和除以元素个数表示：</p>
+<p><img src="/src/640-1640495441327.webp" alt="图片"></p>
+<p>于是上面的问题被形式化表述为：寻找一个一维基，使得所有数据变换为这个基上的坐标表示后，方差值最大。</p>
+<p><strong>协方差</strong></p>
+<p>对于上面二维降成一维的问题来说，找到那个使得方差最大的方向就可以了。不过对于更高维，还有一个问题需要解决。考虑三维降到二维问题。与之前相同，首先我们希望找到一个方向使得投影后方差最大，这样就完成了第一个方向的选择，继而我们选择第二个投影方向。</p>
+<p>如果我们还是单纯只选择方差最大的方向，很明显，这个方向与第一个方向应该是“几乎重合在一起”，显然这样的维度是没有用的，因此，应该有其他约束条件。从直观上说，让两个字段尽可能表示更多的原始信息，我们是不希望它们之间存在（线性）相关性的，因为相关性意味着两个字段不是完全独立，必然存在重复表示的信息。</p>
+<p>数学上可以用两个字段的协方差表示其相关性，由于已经让每个字段均值为0，则：</p>
+<p><img src="/src/640-1640495441324.webp" alt="图片"></p>
+<p>可以看到，在字段均值为0的情况下，两个字段的协方差简洁的表示为其内积除以元素数m。</p>
+<p>当协方差为0时，表示两个字段完全独立。为了让协方差为0，我们选择第二个基时只能在与第一个基正交的方向上选择。因此最终选择的两个方向一定是正交的。</p>
+<p>至此，我们得到了降维问题的优化目标：将一组N维向量降为K维（K大于0，小于N），其目标是选择K个单位（模为1）正交基，使得原始数据变换到这组基上后，各字段两两间协方差为0，而字段的方差则尽可能大（在正交的约束下，取最大的K个方差）。</p>
+<p><strong>协方差矩阵</strong></p>
+<p>上面我们导出了优化目标，但是这个目标似乎不能直接作为操作指南（或者说算法），因为它只说要什么，但根本没有说怎么做。所以我们要继续在数学上研究计算方案。</p>
+<p>我们看到，最终要达到的目的与字段内方差及字段间协方差有密切关系。因此我们希望能将两者统一表示，仔细观察发现，两者均可以表示为内积的形式，而内积又与矩阵相乘密切相关。于是我们来了灵感：</p>
+<p>假设我们只有a和b两个字段，那么我们将它们按行组成矩阵X：</p>
+<p><img src="/src/640-1640495441409.webp" alt="图片"></p>
+<p>然后我们用X乘以X的转置，并乘上系数1&#x2F;m：</p>
+<p><img src="/src/640-1640495441326.webp" alt="图片"></p>
+<p>奇迹出现了！这个矩阵对角线上的两个元素分别是两个字段的方差，而其它元素是a和b的协方差。两者被统一到了一个矩阵的。</p>
+<p>根据矩阵相乘的运算法则，这个结论很容易被推广到一般情况：</p>
+<p>设我们有m个n维数据记录，将其按列排成n乘m的矩阵X，设<img src="/src/640-1640495441438.webp" alt="图片"></p>
+<p>则C是一个对称矩阵，其对角线分别个各个字段的方差，而第i行j列和j行i列元素相同，表示i和j两个字段的协方差。</p>
+<p><strong>协方差矩阵对角化</strong></p>
+<p>根据上述推导，我们发现要达到优化目前，等价于将协方差矩阵对角化：即除对角线外的其它元素化为0，并且在对角线上将元素按大小从上到下排列，这样我们就达到了优化目的。这样说可能还不是很明晰，我们进一步看下原矩阵与基变换后矩阵协方差矩阵的关系：</p>
+<p>设原始数据矩阵X对应的协方差矩阵为C，而P是一组基按行组成的</p>
+<p>矩阵，设Y&#x3D;PX，则Y为X对P做基变换后的数据。设Y的协方差矩阵为D，我们推导一下D与C的关系：</p>
+<p><img src="/src/640-1640495441432.webp" alt="图片"></p>
+<p>现在事情很明白了！我们要找的P不是别的，而是能让原始协方差矩阵对角化的P。换句话说，优化目标变成了寻找一个矩阵P，<img src="/src/640-1640495441433.webp" alt="图片">满足 是一个对角矩阵，并且对角元素按从大到小依次排列，那么P的前K行就是要寻找的基，用P的前K行组成的矩阵乘以X就使得X从N维降到了K维并满足上述优化条件。</p>
+<p>至此，我们离“发明”PCA还有仅一步之遥！</p>
+<p>现在所有焦点都聚焦在了协方差矩阵对角化问题上，有时，我们真应该感谢数学家的先行，因为矩阵对角化在线性代数领域已经属于被玩烂了的东西，所以这在数学上根本不是问题。</p>
+<p>由上文知道，协方差矩阵C是一个是对称矩阵，在线性代数上，实对称矩阵有一系列非常好的性质：</p>
+<p>1）实对称矩阵不同特征值对应的特征向量必然正交。</p>
+<p>2）设特征向量λ重数为r，则必然存在r个线性无关的特征向量对应于λλ，因此可以将这r个特征向量单位正交化。</p>
+<p>由上面两条可知，一个n行n列的实对称矩阵一定可以找到n个单位正交特征向量，设这n个特征向量为e1,e2,⋯,en，我们将其按列组成矩阵：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/951TjTgiabky2jXhnzqYC7JdLQBWPVKFGg6kzxoUe6Aa2GZ7BktHDtVicKz5eKWLicaPfA5pk34VEtaPXqUY3IYlw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p>则对协方差矩阵C有如下结论：</p>
+<p><img src="/src/640-1640495441434.webp" alt="图片"></p>
+<p>其中Λ为对角矩阵，其对角元素为各特征向量对应的特征值（可能有重复）。</p>
+<p>以上结论不再给出严格的数学证明，对证明感兴趣的朋友可以参考线性代数书籍关于“实对称矩阵对角化”的内容。</p>
+<p>到这里，我们发现我们已经找到了需要的矩阵P:</p>
+<p><img src="/src/640-1640495441435.webp" alt="图片"></p>
+<p>P是协方差矩阵的特征向量单位化后按行排列出的矩阵，其中每一行都是C的一个特征向量。如果设P按照Λ中特征值的从大到小，将特征向量从上到下排列，则用P的前K行组成的矩阵乘以原始数据矩阵X，就得到了我们需要的降维后的数据矩阵Y。</p>
+<p>至此我们完成了整个PCA的数学原理讨论。在下面的一节，我们将给出PCA的一个实例。</p>
+<p>算法及实例</p>
+<p>为了巩固上面的理论，我们在这一节给出一个具体的PCA实例。</p>
+<p><strong>PCA算法</strong></p>
+<p>总结一下PCA的算法步骤：</p>
+<p>设有m条n维数据。</p>
+<p>1）将原始数据按列组成n行m列矩阵X</p>
+<p>2）将X的每一行（代表一个属性字段）进行零均值化，即减去这一行的均值</p>
+<p>3）求出协方差矩阵<img src="/src/640-1640495441436.webp" alt="图片"></p>
+<p>4）求出协方差矩阵的特征值及对应的特征向量</p>
+<p>5）将特征向量按对应特征值大小从上到下按行排列成矩阵，取前k行组成矩阵P</p>
+<p>6）Y&#x3D;PX即为降维到k维后的数据</p>
+<p><strong>实例</strong></p>
+<p>这里是上文提到的</p>
+<p><img src="/src/640-1640495441436.webp" alt="图片"></p>
+<p>为例，我们用PCA方法将这组二维数据其降到一维。</p>
+<p>因为这个矩阵的每行已经是零均值，这里我们直接求协方差矩阵：</p>
+<p><img src="/src/640-1640495441438.webp" alt="图片"></p>
+<p>然后求其特征值和特征向量，具体求解方法不再详述，可以参考相关资料。求解后特征值为：</p>
+<p><img src="/src/640-1640495441440.webp" alt="图片"></p>
+<p>其对应的特征向量分别是：</p>
+<p><img src="/src/640-1640495441441.webp" alt="图片"></p>
+<p>其中对应的特征向量分别是一个通解，c1c1和c2c2可取任意实数。那么标准化后的特征向量为：</p>
+<p><img src="/src/640-1640495441442.webp" alt="图片"></p>
+<p>因此我们的矩阵P是：</p>
+<p><img src="/src/640-1640495441442.webp" alt="图片"></p>
+<p>可以验证协方差矩阵C的对角化：</p>
+<p><img src="/src/640-1640495441443.webp" alt="图片"></p>
+<p>最后我们用P的第一行乘以数据矩阵，就得到了降维后的表示：</p>
+<p><img src="/src/640-1640495441443.webp" alt="图片"></p>
+<p>降维投影结果如下图：</p>
+<p><img src="/src/640-1640495441464.webp" alt="图片"></p>
+<p>进一步讨论</p>
+<p>根据上面对PCA的数学原理的解释，我们可以了解到一些PCA的能力和限制。PCA本质上是将方差最大的方向作为主要特征，并且在各个正交方向上将数据“离相关”，也就是让它们在不同正交方向上没有相关性。</p>
+<p>因此，PCA也存在一些限制，例如它可以很好的解除线性相关，但是对于高阶相关性就没有办法了，对于存在高阶相关性的数据，可以考虑Kernel PCA，通过Kernel函数将非线性相关转为线性相关，关于这点就不展开讨论了。另外，PCA假设数据各主特征是分布在正交方向上，如果在非正交方向上存在几个方差较大的方向，PCA的效果就大打折扣了。</p>
+<p>最后需要说明的是，PCA是一种无参数技术，也就是说面对同样的数据，如果不考虑清洗，谁来做结果都一样，没有主观参数的介入，所以PCA便于通用实现，但是本身无法个性化的优化。</p>
+<p>在机器学习的领域中，我们对原始数据进行特征提取，经常会得到高维度的特征向量。在这些多特征的高维空间中，会包含一些冗余和噪声。所以我们希望通过降维的方式来寻找数据内部的特性，提升特征表达能力，降低模型的训练成本。PCA是一种降维的经典算法，属于<strong>线性、非监督、全局</strong>的降维方法。��维的经典算法，属于<strong>线性、非监督、全局</strong>的降维方法。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——PCA</div>
+      <div>http://example.com/2022/08/01/MachineLearning/PCA/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/Perceptron/" title="Machine Learning——Perceptron">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——Perceptron</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/Norm&amp;Distance/" title="Machine Learning——Norm">
+                        <span class="hidden-mobile">Machine Learning——Norm</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

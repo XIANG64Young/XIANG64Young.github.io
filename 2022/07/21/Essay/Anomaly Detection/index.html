@@ -1,0 +1,1051 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="What is Anomaly Detection在数据分析中，异常检测（也称为异常值检测）是识别与大多数数据显着不同而引起怀疑的稀有项目、事件或观察结果。通常，异常项目会转化为某种问题，例如银行欺诈、结构缺陷、医疗问题或文本错误。异常也被称为异常值、新奇事物、噪音、偏差和异常。 特别是在滥用和网络入侵检测的背景下，感兴趣的对象往往不是稀有对象，而是突发的活动。这种模式不符合作为稀有对象的异常值的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Essay——异常检测小记">
+<meta property="og:url" content="http://example.com/2022/07/21/Essay/Anomaly%20Detection/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="What is Anomaly Detection在数据分析中，异常检测（也称为异常值检测）是识别与大多数数据显着不同而引起怀疑的稀有项目、事件或观察结果。通常，异常项目会转化为某种问题，例如银行欺诈、结构缺陷、医疗问题或文本错误。异常也被称为异常值、新奇事物、噪音、偏差和异常。 特别是在滥用和网络入侵检测的背景下，感兴趣的对象往往不是稀有对象，而是突发的活动。这种模式不符合作为稀有对象的异常值的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f-16569395567949.png">
+<meta property="og:image" content="http://example.com/src/image-20211222150026654-165693956096012.png">
+<meta property="og:image" content="http://example.com/src/heart-165693956441115.jpg">
+<meta property="og:image" content="http://example.com/src/fraud-165693956683718.png">
+<meta property="og:image" content="http://example.com/src/v2-62be70e77861d1b33dcbb83e002d5b26_720w-1640143042828-165693957305421.jpg">
+<meta property="article:published_time" content="2022-07-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.162Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Essay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f-16569395567949.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Essay——异常检测小记 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Essay——异常检测小记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-21 00:00" pubdate>
+          2022年7月21日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          106 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Essay——异常检测小记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="What-is-Anomaly-Detection"><a href="#What-is-Anomaly-Detection" class="headerlink" title="What is Anomaly Detection"></a>What is Anomaly Detection</h1><p>在数据分析中，异常检测（也称为异常值检测）是识别与大多数数据显着不同而引起怀疑的稀有项目、事件或观察结果。通常，异常项目会转化为某种问题，例如银行欺诈、结构缺陷、医疗问题或文本错误。异常也被称为异常值、新奇事物、噪音、偏差和异常。</p>
+<p>特别是在滥用和网络入侵检测的背景下，感兴趣的对象往往不是稀有对象，而是突发的活动。这种模式不符合作为稀有对象的异常值的常见统计定义，并且许多异常值检测方法（特别是无监督方法）在此类数据上将失败，除非对其进行了适当的聚合。相反，聚类分析算法可能能够检测由这些模式形成的微聚类。</p>
+<p>存在三大类异常检测技术。 无监督异常检测技术在假设数据集中的大多数实例是正常的情况下通过寻找似乎最不适合数据集其余部分的实例来检测未标记测试数据集中的异常。有监督的异常检测技术需要一个被标记为“正常”和“异常”的数据集，并涉及训练分类器（与许多其他统计分类问题的主要区别在于异常值检测的固有不平衡性质）。半监督异常检测技术构建一个模型，表示从给定的正常行为正常训练数据集，然后测试使用模型生成测试实例的可能性。</p>
+<p>对于异常值的解释：样本中的正常值应该属于同一总体；而异常值有两种情况：第一种情况异常值不属于该总体，抽样抽错了，从另外一个总体抽出一个数据，其值与总体平均值相差较大；第二种情况异常值虽属于该总体，但是肯呢个是该总体固有随机变异性的极端表现，比如说超过$3\sigma$的数据，出现的概率很小但是依旧存在。那么对于异常值来说一般会出一下几种情况</p>
+<ul>
+<li>将本来不属于该总体的、第一种情况的异常值判断出来舍去  √</li>
+<li>将本来属于该总体的、出现概率小的，第二种情况的异常值判断出来舍去  ×</li>
+<li>不属于该总体但数值和该总体的平均值接近的数据被抽样抽出来，这有判断不出来是一个异常值。  ×</li>
+</ul>
+<h1 id="Anomaly-Detections’-Application"><a href="#Anomaly-Detections’-Application" class="headerlink" title="Anomaly Detections’ Application"></a>Anomaly Detections’ Application</h1><p>数据需求</p>
+<ul>
+<li>无标签或者类别极不平均</li>
+<li>异常数据和样本大多数数据的差异性很大</li>
+<li>异常数据在总体数据样本中所占的比例很大</li>
+</ul>
+<p>如果数据存在标签，而且异常数据与正常数据的比值是均衡的，且每个数据保持$i.i.d$。那么异常检测完全就没有必要，使用SVM或者随机森林就可以解决问题。</p>
+<p>场景：</p>
+<ol>
+<li>金融领域：从金融数据中识别”欺诈用户“，如识别信用卡申请欺诈、信用卡盗刷、信贷欺诈等；</li>
+<li>安全领域：判断流量数据波动以及是否受到攻击等等；</li>
+<li>电商领域：从交易等数据中识别”恶意买家“，如羊毛党、恶意刷屏团伙；</li>
+<li>生态灾难预警：基于天气指标数据，判断未来可能出现的极端天气；</li>
+<li>医疗监控：从医疗设备数据，发现可能会显示疾病状况的异常数据；</li>
+</ol>
+<p>挑战：因为异常本身存在的未知性，异质性，特殊性及多样性等复杂情况</p>
+<ul>
+<li>1）最具挑战性的问题之一是难以实现高异常检测召回率。由于异常非常罕见且具有异质性，因此很难识别所有异常。</li>
+<li>2）异常检测模型要提高精确度（precision）往往要深度结合业务特征，否则效果不佳，且容易导致对少数群体产生算法偏见。</li>
+<li>3）<strong>未知性</strong>：异常与许多未知因素有关，例如，具有未知的突发行为、数据结构和分布的实例。它们直到真正发生时才为人所知，比如恐怖袭击、诈骗和网络入侵等应用；</li>
+<li>4）异常类的<strong>异构性</strong>： 异常是不规则的，一类异常可能表现出与另一类异常完全不同的异常特征。例如，在视频监控中，抢劫、交通事故和盗窃等异常事件在视觉上有很大差异；</li>
+<li>5）<strong>类别不均衡</strong>：异常通常是罕见的数据实例，而正常实例通常占数据的绝大部分。因此，收集大量标了标签的异常实例是困难的，甚至是不可能的。这导致在大多数应用程序中无法获得大规模的标记数据。</li>
+</ul>
+<h1 id="Anomaly-Detection-Data-Type"><a href="#Anomaly-Detection-Data-Type" class="headerlink" title="Anomaly Detection Data Type"></a>Anomaly Detection Data Type</h1><ul>
+<li><p>统计性数据 static data （文本、网络流）</p>
+</li>
+<li><p>序列型数据 sequential data </p>
+</li>
+<li><p>空间性数据 spatial data（图像、视频）</p>
+</li>
+</ul>
+<h1 id="Anomaly-Detections’-Classification"><a href="#Anomaly-Detections’-Classification" class="headerlink" title="Anomaly Detections’ Classification"></a>Anomaly Detections’ Classification</h1><p>按照训练集是否包含异常值可以划分为异常值检测（outlier detection）及新颖点检测（novelty detection），新颖点检测的代表方法如One-Class SVM。</p>
+<p>按照异常类别的不同，异常检测可划分为：<strong>异常点检测</strong>(如异常消费用户)，<strong>上下文异常检测</strong>，又称条件异常（如时间序列异常，空间区域、图形、时序、客户段等都是上下文的范围），<strong>组异常检测</strong>（如异常团伙。相关数据实例集合对于整个数据集异常，并不仅仅是单个值。有序的例如：心电图中的节律紊乱；无序的：购买大量昂贵的物品）。</p>
+<p>按照学习方式的不同，异常检测可划分为：</p>
+<ul>
+<li><p><strong>有监督异常检测</strong>（Supervised Anomaly Detection）在训练集中的正常实例和异常实例都有标签，这类方法的缺点在于数据标签难以获得或数据不均衡（正常样本数量远大于异常样本数量）。</p>
+</li>
+<li><p><strong>半监督异常检测</strong>（Semi-Supervised Anomaly Detection）在训练集中只有单一类别（正常实例）的实例，没有异常实例参与训练，目前很多异常检测研究都集中在半监督方法上。</p>
+</li>
+<li><p><strong>无监督异常检测</strong>（Unsupervised Anomaly Detection）在训练集中既有正常实例也可能存在异常实例，但假设数据的比例是正常实例远大于异常实例，模型训练过程中没有标签进行校正。</p>
+</li>
+<li><p><strong>弱监督异常检测</strong>（Weakly Anomaly Detection）。主要是针对异常实例不完全、粗粒度标签、部分实例标签错误等情况进行算法设计。</p>
+<p>现实情况的异常检测问题，由于收集异常标签样本的难度大，往往是没有标签的，所以无监督异常检测应用最为广泛。</p>
+</li>
+</ul>
+<p>根据数据的维度来划分：<strong>单维度数据集</strong>下，可以使用的是3-sigma原理以及他的一些变种形式。例如 Grubbs 算法，T Test 等等。在高维度领域，通常来说有两种处理方式。一种是降低到单维度，然后使用 3-sigma 之类的算法判断新的序列是否异常，从而推断出原始序列是否异常。另外一种方法是在高维度上直接建立模型，然后判断。在<strong>多维数据检测</strong>的话，方法就比较多可以参考其他部分。</p>
+<p><strong>3-sigma原理</strong>：前提：数据只含有随机误差。当质量特性呈现正态分布的时候（实际上，当样本足够大的时候，泊松分布、二项分布等均趋近于正态分布的）。3-sigma水平代表了99.73%的合格率。</p>
+<p><img src="/src/7af40ad162d9f2d35daa1e0aa4ec8a136227cc9f-16569395567949.png" alt="img"></p>
+<p><strong>Grubbs原理</strong>：计算可疑值的G值($G_i&#x3D;\frac{x_i-x^-}{s}$)，将其与格拉布斯表匹配，判断临界值的大小。若大于，则是异常值舍去。若小于则不是异常值应该保留。</p>
+<p><img src="/src/image-20211222150026654-165693956096012.png" alt="image-20211222150026654"></p>
+<h2 id="静态规则方法（最基础）"><a href="#静态规则方法（最基础）" class="headerlink" title="静态规则方法（最基础）"></a>静态规则方法（最基础）</h2><p>想法是识别已知异常的列表，然后编写规则来检测这些异常。规则识别是由领域专家通过模式挖掘技术或者通过两者的组合来完成。</p>
+<p>静态规则用于假设异常遵循80&#x2F;20规则，其中大多数的异常事件属于少数异常类型。如果假设为真，那么我们可以通过找到描述这些异常的少数规则来检测大多数异常。</p>
+<p>可以使用一下三种方法之一来实现这些规则：</p>
+<ul>
+<li>如果他们很简单并且不需要推理，可以使用任意编程语言对其编码</li>
+<li>如果决策需要推理，那么可以使用基于规则或专家系统</li>
+<li>如果决策有时间约束，可以使用复杂事件处理系统</li>
+</ul>
+<p>虽然简单，但是基于静态规则的系统往往脆弱而复杂。此外，识别这些规则通常是一项复杂且主观的任务。<em><strong>因此，自动学习一般规则的基于统计或机器学习的方法要优于静态规则。</strong></em></p>
+<h2 id="有训练数据（有监督）"><a href="#有训练数据（有监督）" class="headerlink" title="有训练数据（有监督）"></a>有训练数据（有监督）</h2><p>大多数情况下，异常检测是很难获取到训练数据的。对于一个数据集中，你没有办法保证所有的数据都是正常的，哪怕他已经被打上了一个“正常”的标签。所以对于这些可用的训练数据集，在几百万的常规数据中仍是会存在几个或者几十个异常也是个正常现象。即使如此，利用SVM或者随机森林这些分类算法的准确路仍然是可以到达99.8以上。</p>
+<p>通常我们的想法可使利用多次重采样数据构建的集成方式来解决不平衡问题。这个想法首先通过获取所有异常的数据点并添加正常数据点的子集（例如作为异常数据点的4倍）来创建一个新的数据集。然后利用SVM等算法为每一个数据集构建一个分类器，最后使用集成学习组合这些分类器。这种方法运作良好并产生了非常好的效果</p>
+<p>但是，如果数据点彼此关联，那么多次重采样就会出现问题，丢失了数据之间的联系。简单的分类器就没有办法正常的工作。这时候可以使用时间序列技术或者循环神经网络来处理</p>
+<h2 id="无训练数据（点异常-无监督或半监督）"><a href="#无训练数据（点异常-无监督或半监督）" class="headerlink" title="无训练数据（点异常  无监督或半监督）"></a>无训练数据（点异常  无监督或半监督）</h2><p>点异常在数据集中往往就是一个记录中的某个字段。所以我们通常可以使用3-sigma原则这样的百分位数方式来检测数据异常。用直方图来检测分类数据中的检测点异常。无论那种情况，我们都可以从数据中获得罕见的数据范围或字段值，并在再次发生时将其预测为异常。在构建模型时，我们通常会尽可能使用移动平均值而不是点值，因为他们对噪声更稳定。</p>
+<h2 id="无训练数据（单变量集体异常）"><a href="#无训练数据（单变量集体异常）" class="headerlink" title="无训练数据（单变量集体异常）"></a>无训练数据（单变量集体异常）</h2><p>例如时间序列数据是单变量数据集中集体异常值的最佳案例。在这种情况下，异常值的发生是因为值以意外的顺序出现。例如如下图：</p>
+<p><img src="/src/heart-165693956441115.jpg" alt="心"></p>
+<p>第三次心跳可能是异常的，不是因为值超出范围，而是因为他们以错误的顺序发生。</p>
+<p>一般处理这种情况的方法：</p>
+<ol>
+<li><p>构建一个预测器并使用残差寻找异常值：这是基于启发式的，即模型未解释的值是异常的。因此我们可以建立一个模型来预测下一个值，然后如前所述对误差（预测值-实际值）应用百分位数。该模型可以使用回归、时间序列模型或者循环神经网络构建</p>
+</li>
+<li><p>Markov Chain或者Hidden Markov Chain可以衡量一系列事件发生的概率。当一系列事件发生的时候，我们可以使用Markov Chain来衡量该序列发生的概率，并用他来检测任何稀有序列。<br><img src="/src/fraud-165693956683718.png" alt="Fraud"></p>
+<p>例如，让我们考虑信用卡交易。未来使用MarkovChain对整个事件进行建模，让我们使用两个值来表示每个交易：交易价值$(L,H)$和自上次交易以来的时间$(L,H)$。由于MarkovChain的状态必须是有限的，我们将选择两个值$Low(L),High(H)$来表示变量值。然后MarkovChain将用状态LL、LH、HL、HH表示。每笔交易都是从一个状态到另一个状态的转换。我们可以使用历史数据构建MarkovChain，并用该链来计算序列概率。然后，我们可以找到任何新序列发生的概率，然后将稀有序列标记为异常。</p>
+</li>
+</ol>
+<h2 id="无训练数据（多元集体异常值-无序）"><a href="#无训练数据（多元集体异常值-无序）" class="headerlink" title="无训练数据（多元集体异常值 无序）"></a>无训练数据（多元集体异常值 无序）</h2><p>这里的数据一般都是多次读写，数据本身没有顺序。例如，从许多人哪里收集的生命体征就是一个多变量但是没有排序的数据集。例如，即使温度和心跳本身都在正常范围内，但较高的温度和缓慢的心跳都是异常的情况。</p>
+<p>一般的处理方法有：</p>
+<ol>
+<li>聚类</li>
+<li>最紧邻技术</li>
+</ol>
+<h2 id="无训练数据（多元集体异常值-有序）"><a href="#无训练数据（多元集体异常值-有序）" class="headerlink" title="无训练数据（多元集体异常值 有序）"></a>无训练数据（多元集体异常值 有序）</h2><p>此类情况应当是最常见的，需要考虑排序和值的组合。例如，考虑取自同一患者的一系列重要读书。某些读数可能在组合中是正常的，但是由于组合以错误的顺序发生而异常。例如，给一个包含血压、体温和心跳频率的读书，每个读数本身可能都是正常的，但是如果在短时间震荡太快，则不正常了。</p>
+<p>处理这类的方法可以使用MarkovChain和聚类结合。首先对数据进行聚类没然后使用簇作为MarkovChain中的状态并构建MarkovChain。聚类将捕获常见的值组合，而MarkovChain将捕获他的顺序。当然也存在深层网络的方法。</p>
+<h1 id="Anomaly-Detections’-Method"><a href="#Anomaly-Detections’-Method" class="headerlink" title="Anomaly Detections’ Method"></a>Anomaly Detections’ Method</h1><p>对于任意现实任务来说，异常检测都是至关重要的一部分。它可以保障模型运行的正常，模型处理更高效。异常检测的广泛应用，印证了其多样的方法设计。监督方法到无监督方法，静态方法到动态方法，非深度方法到深度方法。由于异常自身的特性，极其稀缺，且无法准确分类。所以异常检测方法大多以无监督的方法为主。</p>
+<h2 id="Supervised-learning-method"><a href="#Supervised-learning-method" class="headerlink" title="Supervised learning method"></a>Supervised learning method</h2><p>EGADS：使用 AdaBoost 选择异常，其架构主要包括三个组件：预测、异常检测和警报。 </p>
+<p>Opprentice ：集成了 14 种广泛使用的统计算法来提取数据点的特征，然后使用随机森林训练分类器。</p>
+<p>这种方法需要一个完全标签的数据集。但是，对所有数据进行手动标记是不可行的</p>
+<h2 id="Unsupervised-learning-method"><a href="#Unsupervised-learning-method" class="headerlink" title="Unsupervised learning method"></a>Unsupervised learning method</h2><ul>
+<li>非深度学习<ol>
+<li>矩阵分解（matrix factorization, MF）方法：Radar、ANOMALOUS、ITAD(对分解张量进行聚类)、.</li>
+<li>基于密度的聚类方法：<a href="/Algorithms/LocalOutlierFactor.md">Local Outlier Factor</a>、COF(连通性离群值因子)、DAGMM、MPPCACD(整合高斯混合模型以估计表示的密度)、<a href="/Algorithms/DBSCAN.md">DBSCAN</a>、<a href="/Algorithms/SVDD.md">SVDD</a>、Deep SVDD(整合高斯混合模型以估计表示的密度)、THOC(通过层次聚类机制融合中间层的多尺度时间特征，并通过多层距离检测异常)、SCAN、Fraudar、.</li>
+<li>关系学习方法：SPEAGLE、.</li>
+<li>其他：OC-SVM、<a href="/Algorithms/IsoForest.md">Isolation Forest(孤立森林)</a>、<a href="/Algorithms/GrubbsTest.md">统计假设检验(Grubbs Test)</a>、[Numeric Oulier（IQR)](&#x2F;Algorithms&#x2F;Numeric Oulier–IQR.md)、[Winsorization Method](&#x2F;Algorithms&#x2F;Winsorization Method.md)、.</li>
+</ol>
+</li>
+<li>深度学习<ol>
+<li>自编码结构方法：InterFusion、LSTM-VAE、OmniAbnormaly、Donut、Buzz 、Bagel、Dominant、Anomalydae、GUIDE、.</li>
+<li>图神经网络方法：OCGNN、PAMFUL、.</li>
+<li>生成对抗网络方法：BeatGAN、GAAN、.</li>
+</ol>
+</li>
+</ul>
+<p><a href="/Algorithms/IsoForest.md">Isolation Forest(孤立森林)</a>：是一种用于异常值检测的经典树集成方法。它构建一个基树集合来隔离数据点，并将决策边界定义为单个实例与树的根节点的接近程度。它只使用数据的节点属性。模型假设异常很少且不同，对于点，越接近树的根，越异常。</p>
+<p>Donut、Buzz  和 Bagel 是基于 VAE 的模型，它们专注于学习正常数据的模式而不是异常并计算重建概率以进行检测。 虽然这些算法不需要数据标签，但它们并不能达到令人满意的效果。</p>
+<h2 id="Semi-supervised-learning-method"><a href="#Semi-supervised-learning-method" class="headerlink" title="Semi-supervised learning method"></a>Semi-supervised learning method</h2><p>ADS 使用聚类和 CPLE（对比悲观似然估计）来检测时间序列中的异常。</p>
+<p>半监督学习方法使用未标记的数据来修改仅从标记数据中获得的参数或模型，以最大化学习性能。它们确实降低了手动标记的成本，但是，操作员仍然难以标记和检查那些指定时间序列段中的所有异常。</p>
+<p>对大多数实际场景下，我们面临的既不是完全无样本标签的数据，也不是完备样本标签的数据。大多数公司一般都有一些人工标记的样本，剩下一堆无标签样本，因此半监督学习方法可能更贴近实际应用的场景。</p>
+<p>蚂蚁金服在WWW大会投中过类似的paper</p>
+<p>这个算法ADOA适用的场景是：仅有部分样本有标签，剩下大部分样本都无标签；异常样本的类型不止一种，往往是多种异常情形同时存在；有标签的异常样本可能并没有区分出不同的异常类型；</p>
+<p>这个算法的主要流程分成两个阶段。在第一阶段，对已知异常样本进行聚类，并从未标记样本中挖掘潜在异常样本以及可靠正常样本；第二阶段，基于以上的样本，构建带权重的多分类模型。</p>
+<p><img src="/src/v2-62be70e77861d1b33dcbb83e002d5b26_720w-1640143042828-165693957305421.jpg" alt="img"></p>
+<p><strong>问题</strong>:这个算法的假设情形很适合国内的风控业务</p>
+<h1 id="Anomaly-Detection-SOTA-Model："><a href="#Anomaly-Detection-SOTA-Model：" class="headerlink" title="Anomaly Detection SOTA Model："></a>Anomaly Detection SOTA Model：</h1><ol>
+<li>LSTM-NDT <a target="_blank" rel="noopener" href="https://github.com/khundman/telemanom">https://github.com/khundman/telemanom</a></li>
+<li>openGauss <a target="_blank" rel="noopener" href="https://gitee.com/opengauss/openGauss-AI">https://gitee.com/opengauss/openGauss-AI</a></li>
+<li>DAGMM <a target="_blank" rel="noopener" href="https://github.com/tnakae/DAGMM">https://github.com/tnakae/DAGMM</a></li>
+<li>OmniAnomaly <a target="_blank" rel="noopener" href="https://github.com/NetManAIOps/OmniAnomaly">https://github.com/NetManAIOps/OmniAnomaly</a></li>
+<li>MSCRED <a target="_blank" rel="noopener" href="https://github.com/7fantasysz/MSCRED">https://github.com/7fantasysz/MSCRED</a></li>
+<li>MAD-GAN <a target="_blank" rel="noopener" href="https://github.com/LiDan456/MAD-GANs">https://github.com/LiDan456/MAD-GANs</a></li>
+</ol>
+<h1 id="Anomaly-Detection-Datasets："><a href="#Anomaly-Detection-Datasets：" class="headerlink" title="Anomaly Detection Datasets："></a>Anomaly Detection Datasets：</h1><ol>
+<li>Numenta Aboration  Benchmark（<strong>NAB</strong>）：是一个包含多个真实世界数据跟踪的数据集，包括来自温度传感器的读数、云机器的CPU利用率、服务请求延迟和纽约市的出租车需求。然而，已知该数据集的序列带有不正确的异常标签，例如我们在实验中排除的纽约出租车追踪。 </li>
+<li>HexagonML（<strong>UCR</strong>）数据集：是KDD 2021  cup中使用的多个单变量时间序列的数据集（仅为完整性而包括）。我们只包括从自然来源获得的数据集（内出血和ECG数据集），而忽略了合成序列。 </li>
+<li>MIT-BIH室上性心律失常数据库（MBA）：是四名患者的心电图记录的集合，包含两种不同类型异常的多个实例（室上收缩或早搏）。这是数据管理社区中流行的大型数据集。 </li>
+<li>土壤水分主动-被动（<strong>SMAP</strong>）数据集：是美国宇航局（NASA）使用火星探测器收集土壤样本和遥测信息的数据集。 </li>
+<li>火星科学实验室（MSL）数据集：是一个类似于SMAP的数据集，但与火星探测车本身的传感器和执行器数据相对应。然而，已知该数据集有许多琐碎的序列；因此，我们只考虑指出的三个非平凡的因素（A4、C2和T1）。 </li>
+<li>安全水处理（<strong>SWaT</strong>）数据集：该数据集收集自现实世界中正常运行7天、异常运行4天的水处理厂。该数据集包括传感器值（水位、流速等）和执行机构操作（阀门和泵）。 </li>
+<li>水分配（<strong>WADI</strong>）数据集：这是SWaT系统的扩展，但传感器和执行器的数量是SWaT模型的两倍多。在正常和攻击情况下，数据集的收集持续时间也更长，分别为14天和2天。 </li>
+<li>服务器机器数据集（<strong>SMD</strong>）：这是一个为期五周的数据集，包含计算集群中28台机器的资源利用率的叠加跟踪。与MSL类似，我们在该数据集中使用了非平凡序列，特别是名为machine-1-1、2-1、3-2和3-7的跟踪</li>
+<li>多源分布式系统（<strong>MSDS</strong>）数据集：这是一个最近的高质量多源数据集，由分布式跟踪、应用程序日志和来自复杂分布式系统的度量组成。该数据集专门为人工智能操作构建，包括自动异常检测、根本原因分析和补救。 </li>
+<li>无监督节点异常检测基准(<strong>UNOD</strong>): 图离群点检测  Benchmarking Node Outlier Detection on Graphs, NeuraIPS2022</li>
+</ol>
+<h1 id="Deal-With-Anomaly"><a href="#Deal-With-Anomaly" class="headerlink" title="Deal With Anomaly"></a>Deal With Anomaly</h1><p><strong>异常值的危害：</strong></p>
+<ul>
+<li>异常值严重影响数据集的均值和标准差。这些可能在统计学上给出错误的结果。</li>
+<li>它增加了误差方差并降低了统计检验的功效。</li>
+<li>如果异常值是非随机分布的，则它们会降低正态性。</li>
+<li>大多数机器学习算法在存在异常值的情况下不能很好地工作。因此，最好检测并删除异常值。</li>
+<li>它们还会影响回归、方差分析和其他统计模型假设的基本假设。</li>
+</ul>
+<p>由于所有这些原因，我们必须小心异常值，并在构建统计&#x2F;机器学习模型之前对其进行处理。有一些技术用于处理异常值。</p>
+<ol>
+<li><p>删除观测值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">drop_outliers</span>(<span class="hljs-params">df, field_name</span>):<br>    iqr = <span class="hljs-number">1.5</span> * (np.percentile(df[field_name], <span class="hljs-number">75</span>) - np.percentile(df[field_name], <span class="hljs-number">25</span>))<br>    df.drop(df[df[field_name] &gt; (iqr + np.percentile(df[field_name], <span class="hljs-number">75</span>))].index, inplace=<span class="hljs-literal">True</span>)<br>    df.drop(df[df[field_name] &lt; (np.percentile(df[field_name], <span class="hljs-number">25</span>) - iqr)].index, inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>转变变量。</p>
+<ol>
+<li>Scalling</li>
+<li>Log transformation</li>
+<li>Cube Root Normalization</li>
+<li>Box-Cox transformation</li>
+</ol>
+<p>这些技术将数据集中的值转换为较小的值。如果数据具有许多极值或偏斜，则此方法有助于使数据正常。但这些技术并不总是能给你最好的结果。这些方法不会丢失数据。 在所有这些方法中，Box-Cox变换给出了最好的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#Scalling 归一化</span><br><span class="hljs-keyword">from</span> sklearn <span class="hljs-keyword">import</span> preprocessing<br>scaler = preprocessing.StandardScaler()<br>train[<span class="hljs-string">&#x27;Cost of Living Index&#x27;</span>] = scaler.fit_transform(train[<span class="hljs-string">&#x27;Cost of Living Index&#x27;</span>].values.reshape(-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<br><br><span class="hljs-comment">#Log transformation</span><br>train[<span class="hljs-string">&#x27;Cost of Living Index&#x27;</span>] = np.log(train[<span class="hljs-string">&#x27;Cost of Living Index&#x27;</span>])<br><br><span class="hljs-comment">#Cube Root Normalization</span><br>train[<span class="hljs-string">&#x27;Age&#x27;</span>] = (train[<span class="hljs-string">&#x27;Age&#x27;</span>]**(<span class="hljs-number">1</span>/<span class="hljs-number">3</span>))<br><br><span class="hljs-comment">#Box-Cox transformation</span><br><span class="hljs-keyword">import</span> scipy<br>train[<span class="hljs-string">&#x27;Rent Index&#x27;</span>],fitted_lambda= scipy.stats.boxcox(train[<span class="hljs-string">&#x27;Rent Index&#x27;</span>] ,lmbda=<span class="hljs-literal">None</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>归因。<br>与缺失值的插补一样，我们也可以插补异常值。我们可以在此方法中使用均值、中位数、零值。由于我们插补，因此不会丢失数据。此处的中位数是合适的，因为它不受异常值的影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">q1 = train[<span class="hljs-string">&#x27;Age&#x27;</span>].quantile(<span class="hljs-number">0.25</span>)<br>q3 = train[<span class="hljs-string">&#x27;Age&#x27;</span>].quantile(<span class="hljs-number">0.75</span>)<br>iqr = q3-q1<br>Lower_tail = q1 - <span class="hljs-number">1.5</span> * iqr<br>Upper_tail = q3 + <span class="hljs-number">1.5</span> * iqr<br>m = np.mean(train[<span class="hljs-string">&#x27;Age&#x27;</span>])<br><span class="hljs-comment">#med = np.median(train[&#x27;Age&#x27;])</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> train[<span class="hljs-string">&#x27;Age&#x27;</span>]:<br>    <span class="hljs-keyword">if</span> i &gt; Upper_tail <span class="hljs-keyword">or</span> i &lt; Lower_tail:<br>            train[<span class="hljs-string">&#x27;Age&#x27;</span>] = train[<span class="hljs-string">&#x27;Age&#x27;</span>].replace(i, m)<br>            <span class="hljs-comment">#train[&#x27;Age&#x27;] = train[&#x27;Age&#x27;].replace(i, med)</span><br>            <span class="hljs-comment">#train[&#x27;Age&#x27;] = train[&#x27;Age&#x27;].replace(i, 0)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>单独处理.<br>如果异常值数量很大，数据集很小，我们应该在统计模型中分别处理它们。其中一种方法是将两个组视为两个不同的组，并为两个组构建单独的模型，然后合并输出。但是，当数据集很大时，这种技术很繁琐。</p>
+</li>
+</ol>
+<h1 id="Lessons"><a href="#Lessons" class="headerlink" title="Lessons"></a>Lessons</h1><p>1.Perfect Density Models cannot Guarantee Anomly Detection</p>
+<p>​    lesson: </p>
+<ul>
+<li><p>The repersentational space matter</p>
+</li>
+<li><p>We want to apply density estimation in a meaningful space</p>
+<ul>
+<li>This is not the input image&#x2F;pixal space</li>
+<li>We do not want to compute $PR[x \in V_x] &#x3D; \int_{x \in V}P(x)dx$</li>
+</ul>
+</li>
+<li><p>We want to learn a good latent space Z such that images of similar contents(same objects, same label, etc) are close together</p>
+</li>
+<li><p>Then apply density estimation in that space</p>
+</li>
+</ul>
+<p>2.可以用画图的方式，显性的表示出异常点</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">Box_plots</span>(<span class="hljs-params">df</span>):<br>    plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">4</span>))<br>    plt.title(<span class="hljs-string">&quot;Box Plot&quot;</span>)<br>    sns.boxplot(df)<br>    plt.show()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">hist_plots</span>(<span class="hljs-params">df</span>):<br>    plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">4</span>))<br>    plt.hist(df)<br>    plt.title(<span class="hljs-string">&quot;Histogram Plot&quot;</span>)<br>    plt.show()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">scatter_plots</span>(<span class="hljs-params">df1,df2</span>):<br>    fig, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">4</span>))<br>    ax.scatter(df1,df2)<br>    ax.set_xlabel(<span class="hljs-string">&#x27;Age&#x27;</span>)<br>    ax.set_ylabel(<span class="hljs-string">&#x27;Fare&#x27;</span>)<br>    plt.title(<span class="hljs-string">&quot;Scatter Plot&quot;</span>)<br>    plt.show()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dist_plots</span>(<span class="hljs-params">df</span>):<br>    plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">4</span>))<br>    sns.distplot(df)<br>    plt.title(<span class="hljs-string">&quot;Distribution plot&quot;</span>)<br>    sns.despine()<br>    plt.show()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">qq_plots</span>(<span class="hljs-params">df</span>):<br>    plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">4</span>))<br>    qqplot(df,line=<span class="hljs-string">&#x27;s&#x27;</span>)<br>    plt.title(<span class="hljs-string">&quot;Normal QQPlot&quot;</span>)<br>    plt.show()<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li></li>
+</ol>
+<ul>
+<li>中位数是数据具有异常值或偏斜时中心趋势的最佳度量。</li>
+<li>Winsorization 方法或百分位封顶是比其他方法更好的异常值检测技术。</li>
+<li>中位数插补完全消除异常值。</li>
+</ul>
+<blockquote>
+<p>参考：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/XIANG64Young/anomaly-detection-resources#2-coursesseminarsvideos">https://github.com/XIANG64Young/anomaly-detection-resources#2-coursesseminarsvideos</a></li>
+</ol>
+</blockquote>
+<blockquote>
+<p>论文参考：</p>
+<ol>
+<li>Radar：Residual analysis for anomaly detection in attributed networks.  IJCAI,  2017. </li>
+<li>ANOMALOUS： A joint modeling approach for anomaly detection on attributed networks.  IJCAI, 2018.</li>
+<li>LOF: identifying density-based local outliers.  SIGMOD, 2000</li>
+<li>DAGMM:  Deep Autoencoding Gaussian Mixture Model for Unsupervised Anomaly Detection. ICLR, 2018</li>
+<li>DBSCAN: A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise. KDD 1996</li>
+<li>SVDD: Support Vector Data Description. Machine Learning, 2004</li>
+<li>Deep SVDD: Deep Support Vector Data Description. ICML 2018</li>
+<li>THOC: Timeseries Anomaly Detection using Temporal Hierarchical One-Class Network. NeurIPS 2020</li>
+<li>SCAN:  Scan: a structural clustering algorithm for networks. KDD, 2007</li>
+<li>Fraudar：Bounding graph fraud in the face of camouflage. KDD, 2016.</li>
+<li>SPEAGLE: Collective Opinion Spam Detection: Bridging Review Networks and Metadata. KDD, 2015</li>
+<li>OC-SVM: Support Vector Method for Novelty Detection.  NIPS , 1999</li>
+<li>InterFusion: Multivariate Time Series Anomaly Detection and InterPretation using Hierarchical Inter-Metirc and Temporal Embedding. KDD, 2021</li>
+<li>LSTM-VAE: Improved Variational Autoencoders for Text Modeling using Dilated Convolutions. Arxiv, 2017</li>
+<li>OmniAbnormaly: Robust Anomaly Detection for Multivariate Time Series through Stochastic Recurrent Neural Network. KDD, 2019</li>
+<li>Donut: Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications. WWW, 2018</li>
+<li>Buzz: Unsupervised Anomaly Detection for Intricate KPIs via Adversarial Training of VAE. INFOCOM, 2019</li>
+<li>Bagel: Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder. IPCCC 2018</li>
+<li>Dominant:　Deep Anomaly Detection on Attributed Networks. SDM, 2019</li>
+<li>Anomalydae: Dual autoencoder for anomaly detection on attributed networks. ICASSP, 2000</li>
+<li>GUIDE: Higher-order Structure Based Anomaly Detection on Attributed Networks. BIG DATA, 2021</li>
+<li>OCGNN: One-class graph neural networks for anomaly detection in attributed networks. Neural computing and applications, 2021</li>
+<li>PAMFUL: A Synergistic Approach for Graph Anomaly Detection With Pattern Mining and Feature Learning.IEEE Transactions on Neural Networks and Learning Systems, 2021</li>
+<li>BeatGAN: Anomalous Rhythm Detection using Adversarially Generated Time Series. IJCAI, 2019</li>
+<li>GAAN: Generative Adversarial Attributed Network Anomaly Detection. CIKM, 2020 </li>
+<li>ADOA: Anomaly Detection with Partially Observed Anomlies. WWW, 2018</li>
+<li>UNOD： Benchmarking Node Outlier Detection on Graphs, NeurIPS, 2022 </li>
+<li>Exathlon: A Benchmark for Explainable Anomaly Detection over Time Series, Proc. VLDB Endow. ,2020<br>Time Series, Proc. VLDB Endow. ,2020</li>
+</ol>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Essay/">#Essay</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Essay——异常检测小记</div>
+      <div>http://example.com/2022/07/21/Essay/Anomaly Detection/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月21日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/22/Essay/MetaLearning/" title="Essay——元学习小记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Essay——元学习小记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/21/Python/PythonNote/" title="Python Note">
+                        <span class="hidden-mobile">Python Note</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

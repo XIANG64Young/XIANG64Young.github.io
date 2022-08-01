@@ -1,0 +1,885 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="PyTorch——配置深度学习环境还在为各种包的版本匹配发愁，还在冥想这个错误到底从何而来。放弃吧，重装才是王道。 安装Cudatensor在GPU上运行是可以提高一定的处理效果的首先需要检查一下你的GPU，查看一下版本很简单进入任务管理器，打开性能，就能看见你GPU的参数啦（一般游戏笔记本是有两张显卡的，一张独显，一张集显）  前往Cuda官网 下载驱动，安装即可  下载后，默认安装就好。然后打">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning——安装深度学习环境 torch、pyg">
+<meta property="og:url" content="http://example.com/2022/07/01/DeepLearning/%E5%AE%89%E8%A3%85pytorch/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="PyTorch——配置深度学习环境还在为各种包的版本匹配发愁，还在冥想这个错误到底从何而来。放弃吧，重装才是王道。 安装Cudatensor在GPU上运行是可以提高一定的处理效果的首先需要检查一下你的GPU，查看一下版本很简单进入任务管理器，打开性能，就能看见你GPU的参数啦（一般游戏笔记本是有两张显卡的，一张独显，一张集显）  前往Cuda官网 下载驱动，安装即可  下载后，默认安装就好。然后打">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/1339557184.png">
+<meta property="og:image" content="http://example.com/src/1206934061.png">
+<meta property="og:image" content="http://example.com/src/1805709415.png">
+<meta property="og:image" content="http://example.com/src/1358582774.png">
+<meta property="og:image" content="http://example.com/src/1001831579.png">
+<meta property="og:image" content="http://example.com/src/842195767.png">
+<meta property="og:image" content="http://example.com/src/1271380634.png">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.144Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/1339557184.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Deep Learning——安装深度学习环境 torch、pyg - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Deep Learning——安装深度学习环境 torch、pyg"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-01 00:00" pubdate>
+          2022年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          45 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Deep Learning——安装深度学习环境 torch、pyg</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="PyTorch——配置深度学习环境"><a href="#PyTorch——配置深度学习环境" class="headerlink" title="PyTorch——配置深度学习环境"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/young978/p/15686819.html">PyTorch——配置深度学习环境</a></h1><p>还在为各种包的版本匹配发愁，还在冥想这个错误到底从何而来。<br><strong>放弃吧，重装才是王道。</strong></p>
+<h2 id="安装Cuda"><a href="#安装Cuda" class="headerlink" title="安装Cuda"></a>安装Cuda</h2><p>tensor在GPU上运行是可以提高一定的处理效果的<br>首先需要检查一下你的GPU，查看一下版本<br>很简单进入任务管理器，打开性能，就能看见你GPU的参数啦（一般游戏笔记本是有两张显卡的，一张独显，一张集显）</p>
+<p><img src="/src/1339557184.png" alt="img"></p>
+<p>前往<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local">Cuda官网</a> 下载驱动，安装即可</p>
+<p><img src="/src/1206934061.png" alt="img"></p>
+<p>下载后，默认安装就好。然后打开cmd，输入 nvidia-smi 即可查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs visual">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ <br>conda config --add channels http://mirrors.ustc.edu.cn/anaconda/pkgs/free/<br>conda config --set show_channel_urls yes<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/1805709415.png" alt="img"></p>
+<h2 id="安装Anaconda"><a href="#安装Anaconda" class="headerlink" title="安装Anaconda"></a>安装Anaconda</h2><p>硬件好了，我们需要一个集成环境帮我们管理包和他们之间的依赖 anaconda当然是很好的选择</p>
+<p>这里推荐两个路径：<a target="_blank" rel="noopener" href="https://www.anaconda.com/products/individual">Anaconda官网</a>和<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华软件镜像园</a></p>
+<p>同样也是下载安装即可，注意勾选默认到Path环境变量就行。</p>
+<p>这里我们需要注意，修改一下anaconda的源：清华大学开源软件镜像站和中国科技大学镜像站 方便我们下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">conda config --add channels http://mirrors.ustc.edu.cn/anaconda/pkgs/free/<br>conda config --add channels http://mirrors.ustc.edu.cn/anaconda/pkgs/main/<br>conda config --add channels http://mirrors.ustc.edu.cn/anaconda/cloud/menpo/<br>conda config --add channels http://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/<br>conda config --add channels http://mirrors.ustc.edu.cn/anaconda/cloud/msys2/<br>conda config --add channels http://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/<br><br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ <br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/<br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/ <br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/<br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/<br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/peterjc123/<br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/<br>conda config --add channels http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/    #安装pytorch的小伙伴这个源一定不要漏<br><br>conda config --set show_channel_urls yes<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>衷心提醒网址一定要是<strong>http</strong> 不能是<strong>https</strong>，要不然会访问报错。 网址也不需要加引号<strong>切记</strong></p>
+</blockquote>
+<p>当然也可以自己手动去 C：用户下修改.condarc（这里贴出我的文件内容）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sh">ssl_verify: <span class="hljs-literal">true</span><br>channels:<br>  - defaults<br>show_channel_urls: <span class="hljs-literal">true</span><br>channel_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda<br>default_channels:<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/peterjc123/<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/<br>  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/<br>custom_channels:<br>  conda-forge: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud<br>  msys2: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud<br>  bioconda: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud<br>  menpo: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud<br>  pytorch: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud<br>  simpleitk: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud<br></code></pre></td></tr></table></figure>
+
+<p>查看conda版本 <code>conda -version</code></p>
+<p>升级conda工具包 <code>conda upgrade --all</code> </p>
+<p>查看当前conda环境 <code>conda env list</code> </p>
+<p>生成所需环境的txt文件 <code>pip freeze &gt; requirements.txt</code></p>
+<p>conda安装txt  <code>conda install --yes --file requirements.txt</code></p>
+<p>conda环境，导出格式为.yml文件或.txt文件： <code>conda env export &gt; requirements.yml</code></p>
+<p><code>conda list -e &gt; requirements.txt</code></p>
+<p>安装环境 : <code>conda env create -f requirements.yml</code></p>
+<p>创建虚拟环境 <code>conda create -n &lt;name&gt; python=3.8</code> 这样anaconda就会去找python对应的包 耐心等待就好</p>
+<p>删除环境<code>conda remove -n &lt;name&gt; --all</code></p>
+<p>激活环境 <code>conda activate py38</code> 我这里的py38就是我新建的虚拟环境名称</p>
+<p>conda还有一个好处 就是可以版本回滚 方便回到之间的状态</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">conda list <span class="hljs-comment">--revisions</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/1358582774.png" alt="img"></p>
+<p> 若想回滚到某个时刻，直接输入那个版本号就行了，例如我想回滚到第10个版本，即</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">conda install <span class="hljs-comment">--revision 10</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="安装torch"><a href="#安装torch" class="headerlink" title="安装torch"></a>安装torch</h2><p>直接在<a target="_blank" rel="noopener" href="https://pytorch.org/">官网</a>寻找就好了，对应好自己的操作平台，和cuda版本下载即可</p>
+<p><img src="/src/1001831579.png" alt="img"></p>
+<p> 之前设置的源，会为我们找到国内的镜像路径，加快下载速度</p>
+<h2 id="测试torch"><a href="#测试torch" class="headerlink" title="测试torch"></a>测试torch</h2><p>如果在Pycharm内，直接进入project选择新建虚拟环境的python.exe即可<br>如果在Jupyter Notebook中，则需要多安装一个包  nb_conda<br>安装完以后你就会发现你的jupyter会多一个conda插卡，可以查看conda的虚拟环境</p>
+<p><img src="/src/842195767.png" alt="img"></p>
+<p>运行的程序的时候，注意选择kernel是哪个环境的 以免发生版本错误<br>这些都是显示torch信息的一些命令可以用于测试的哦</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">import torch<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(torch.__version__)</span></span><br>torch<span class="hljs-selector-class">.cuda</span><span class="hljs-selector-class">.is_available</span>()<br>torch<span class="hljs-selector-class">.cuda</span><span class="hljs-selector-class">.device_count</span>()<br>torch<span class="hljs-selector-class">.cuda</span><span class="hljs-selector-class">.get_device_name</span>(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/src/1271380634.png" alt="img"></p>
+<h2 id="安装PyG"><a href="#安装PyG" class="headerlink" title="安装PyG"></a>安装PyG</h2><p>首先安装torch-geometric之前需要准备的是，要查看好你当前的环境需要配置的文件</p>
+<p>硬性要求python版本在3.7-3.10之间、Pytorch版本最低为1.8。</p>
+<p>同样也是要在<a target="_blank" rel="noopener" href="https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html">官网</a>寻找，对应好自己的操作平台，和torch版本、cuda版本。详细的版本对应在<a target="_blank" rel="noopener" href="https://data.pyg.org/whl/">这</a></p>
+<p>对于目前比较稳定的torch1.12版本，在conda的镜像源中没直接的版本对应pyg。即使换成1.11版本的 运行<code>conda install pyg -c pyg</code>代码后测试的仍然存在一点小问题</p>
+<p>这里我之前安装的环境是python3.8和torch1.11.0，cuda11.5</p>
+<p>所以我这里安装的代码就是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install torch-scatter -f https://data.pyg.org/whl/torch-1.11.0+cu113.html<br>pip install torch-sparse -f https://data.pyg.org/whl/torch-1.11.0+cu113.html<br>pip install torch-geometric<br>pip install torch-cluster -f https://data.pyg.org/whl/torch-1.11.0+cu113.html<br>pip install torch-spline-conv -f https://data.pyg.org/whl/torch-1.11.0+cu113.html<br></code></pre></td></tr></table></figure>
+
+<p>当然如果安装出现错误，不妨看看pyg官网最下面有一些<a target="_blank" rel="noopener" href="https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html#id1">Frequently Asked Questions</a>还是相当不错的</p>
+<blockquote>
+<p>在Neural Network 2022 关于GTN的文章中，涉及到一个关于torch-sparse-old的包</p>
+<p>从作者的md中可以看到，为了解决torch.geometric删除了稀疏矩阵的backward()这个bug，他们把自己的torch-sparse上传到pip上，名字是torch-sparse-old。</p>
+<p>但是<code>pip install torch-sparse-old</code> 会出现错误</p>
+<p><code>cuda/spspmm_kernel.cu(76): error: identifier &quot;cusparseXcsrgemmNnz&quot; is undefined</code><br><code>cuda/spspmm_kernel.cu(84): error: identifier &quot;cusparseScsrgemm&quot; is undefined</code><br><code>cuda/spspmm_kernel.cu(84): error: identifier &quot;cusparseDcsrgemm&quot; is undefined</code></p>
+<p>这个问题我尝试了很多方法，包括但不仅限于修改gcc，修改cuda版本，修改python、torch版本，以及删除环境重新来过。在这个关于pytorch_sparse的<a target="_blank" rel="noopener" href="https://github.com/rusty1s/pytorch_sparse/issues/167">issue</a>内我也同样发现一个朋友有同样的错误。但是并没有看到好的解决方法</p>
+<p>我后来直接在代码中把 import torch_sparse_old 修正为 import torch_sparse as  torch_sparse_old.</p>
+<p>竟然惊奇的发现可以运行代码， 按理说backward()存在问题，model的train是无法正常进行的。那么一个合理的解释就是，新的torch-sparse、torch-geometric已经修正了这里无法传播的问题。</p>
+</blockquote>
+<p>�问题。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Deep Learning——安装深度学习环境 torch、pyg</div>
+      <div>http://example.com/2022/07/01/DeepLearning/安装pytorch/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/%E5%90%84%E4%B8%AA%E5%B1%82%E7%9A%84%E8%A7%A3%E9%87%8A/" title="Deep Learning—Layer说明">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Deep Learning—Layer说明</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" title="Deep Learning—损失函数小记">
+                        <span class="hidden-mobile">Deep Learning—损失函数小记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

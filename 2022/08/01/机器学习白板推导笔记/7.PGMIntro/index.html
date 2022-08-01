@@ -1,0 +1,966 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="概率图模型概率图模型使用图的方式表示概率分布。为了在图中添加各种概率，首先总结一下随机变量分布的一些规则：$$\begin{align}&amp;Sum\ Rule:p(x_1)&#x3D;\int p(x_1,x_2)dx_2\&amp;Product\ Rule:p(x_1,x_2)&#x3D;p(x_1|x_2)p(x_2)\&amp;Chain\ Rule:p(x_1,x_2,\cdots">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——概率图模型">
+<meta property="og:url" content="http://example.com/2022/08/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/7.PGMIntro/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="概率图模型概率图模型使用图的方式表示概率分布。为了在图中添加各种概率，首先总结一下随机变量分布的一些规则：$$\begin{align}&amp;Sum\ Rule:p(x_1)&#x3D;\int p(x_1,x_2)dx_2\&amp;Product\ Rule:p(x_1,x_2)&#x3D;p(x_1|x_2)p(x_2)\&amp;Chain\ Rule:p(x_1,x_2,\cdots">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T02:13:53.693Z">
+<meta property="article:modified_time" content="2022-07-16T12:27:27.049Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——概率图模型 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——概率图模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——概率图模型</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年7月16日 晚上
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="概率图模型"><a href="#概率图模型" class="headerlink" title="概率图模型"></a>概率图模型</h1><p>概率图模型使用图的方式表示概率分布。为了在图中添加各种概率，首先总结一下随机变量分布的一些规则：<br>$$<br>\begin{align}<br>&amp;Sum\ Rule:p(x_1)&#x3D;\int p(x_1,x_2)dx_2\<br>&amp;Product\ Rule:p(x_1,x_2)&#x3D;p(x_1|x_2)p(x_2)\<br>&amp;Chain\ Rule:p(x_1,x_2,\cdots,x_p)&#x3D;\prod\limits_{i&#x3D;1}^pp(x_i|x_{i+1,x_{i+2} \cdots}x_p)\<br>&amp;Bayesian\ Rule:p(x_1|x_2)&#x3D;\frac{p(x_2|x_1)p(x_1)}{p(x_2)}<br>\end{align}<br>$$<br>可以看到，在链式法则中，如果数据维度特别高，那么的采样和计算非常困难，我们需要在一定程度上作出简化，在朴素贝叶斯中，作出了条件独立性假设。在 Markov 假设中，给定数据的维度是以时间顺序出现的，给定当前时间的维度，那么下一个维度与之前的维度独立。在 HMM 中，采用了齐次 Markov 假设。在 Markov 假设之上，更一般的，加入条件独立性假设，对维度划分集合 $A,B,C$，使得 $X_A\perp X_B|X_C$。</p>
+<p>概率图模型采用图的特点表示上述的条件独立性假设，节点表示随机变量，边表示条件概率。概率图模型可以分为三大理论部分：</p>
+<ol>
+<li>表示：<ol>
+<li>有向图（离散）：贝叶斯网络</li>
+<li>高斯图（连续）：高斯贝叶斯和高斯马尔可夫网路</li>
+<li>无向图（离散）：马尔可夫网络</li>
+</ol>
+</li>
+<li>推断<ol>
+<li>精确推断</li>
+<li>近似推断<ol>
+<li>确定性近似（如变分推断）</li>
+<li>随机近似（如 MCMC）</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>学习<ol>
+<li>参数学习<ol>
+<li>完备数据</li>
+<li>隐变量：E-M 算法</li>
+</ol>
+</li>
+<li>结构学习</li>
+</ol>
+</li>
+</ol>
+<h2 id="有向图-贝叶斯网络"><a href="#有向图-贝叶斯网络" class="headerlink" title="有向图-贝叶斯网络"></a>有向图-贝叶斯网络</h2><p>已知联合分布中，各个随机变量之间的依赖关系，那么可以通过拓扑排序（根据依赖关系）可以获得一个有向图。而如果已知一个图，也可以直接得到联合概率分布的因子分解：<br>$$<br>p(x_1,x_2,\cdots,x_p)&#x3D;\prod\limits_{i&#x3D;1}^pp(x_i|x_{parent(i)})<br>$$<br>那么实际的图中条件独立性是如何体现的呢？在局部任何三个节点，可以有三种结构：</p>
+<ol>
+<li><pre><code class="mermaid">graph TB;
+    A((A))--&gt;B((B));
+    B--&gt;C((C));
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs coq"><br>    $$<br>    p(A,B,C)=p(A)p(B|<span class="hljs-type">A</span>)p(C|<span class="hljs-type">B</span>)=p(A)p(B|<span class="hljs-type">A</span>)p(C|<span class="hljs-type">B</span>,A)\\<br>    \Longrightarrow p(C|<span class="hljs-type">B</span>)=p(C|<span class="hljs-type">B</span>,A)\\<br>    \Leftrightarrow p(C|<span class="hljs-type">B</span>)p(A|<span class="hljs-type">B</span>)=p(C|<span class="hljs-type">A</span>,B)p(A|<span class="hljs-type">B</span>)=p(C,A|<span class="hljs-type">B</span>)\\<br>    \Longrightarrow C\perp A|<span class="hljs-type">B</span><br>    $$<br><br><span class="hljs-number">2.</span>  ```mermaid<br>    graph TB;<br>    	B((B))--&gt;A((A));<br>    	B--&gt;C((C));<br></code></pre></td></tr></table></figure>
+
+$$
+p(A,B,C)=p(A|B)p(B)p(C|B)=p(B)p(A|B)p(C|A,B)\\
+\Longrightarrow p(C|B)=p(C|B,A)\\
+\Leftrightarrow p(C|B)p(A|B)=p(C|A,B)p(A|B)=p(C,A|B)\\
+\Longrightarrow C\perp A|B
+$$
+</code></pre>
+</li>
+<li><pre><code class="mermaid">graph TB;
+    A((A))--&gt;B((B));
+    C((C))--&gt;B
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs gams"><br>    <span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>    p(A,B,C)=p(A)p(C)p(B|C,A)=p(A)p(C|A)p(B|C,A)\\<br>    \Longrightarrow p(C)=p(C|A)\\<br>    \Leftrightarrow C\perp A\\<br>    <span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br><br>    对这种结构，<span class="hljs-symbol">$</span>A,C<span class="hljs-symbol">$</span> 不与 <span class="hljs-symbol">$</span>B<span class="hljs-symbol">$</span> 条件独立。<br><br>从整体的图来看，可以引入 D 划分的概念。对于类似上面图 <span class="hljs-number">1</span>和图 <span class="hljs-number">2</span>的关系，引入集合A，B，那么满足 <span class="hljs-symbol">$</span>A\perp B|C<span class="hljs-symbol">$</span> 的 <span class="hljs-symbol">$</span>C<span class="hljs-symbol">$</span> 集合中的点与 <span class="hljs-symbol">$</span>A,B<span class="hljs-symbol">$</span>  中的点的关系都满足图 <span class="hljs-number">1</span>，<span class="hljs-number">2</span>，满足图<span class="hljs-number">3</span> 关系的点都不在 <span class="hljs-symbol">$</span>C<span class="hljs-symbol">$</span> 中。D 划分应用在贝叶斯定理中：<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>p(x_i|x_&#123;-i&#125;)=\<span class="hljs-built_in">frac</span>&#123;p(x)&#125;&#123;\int p(x)dx_&#123;i&#125;&#125;=\<span class="hljs-built_in">frac</span>&#123;\<span class="hljs-keyword">prod</span>\limits_&#123;j=<span class="hljs-number">1</span>&#125;^pp(x_j|x_&#123;parents(j)&#125;)&#125;&#123;\int\<span class="hljs-keyword">prod</span>\limits_&#123;j=<span class="hljs-number">1</span>&#125;^pp(x_j|x_&#123;parents(j)&#125;)dx_i&#125;<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>可以发现，上下部分可以分为两部分，一部分是和 <span class="hljs-symbol">$</span>x_i<span class="hljs-symbol">$</span> 相关的，另一部分是和 <span class="hljs-symbol">$</span>x_i<span class="hljs-symbol">$</span> 无关的，而这个无关的部分可以相互约掉。于是计算只涉及和 <span class="hljs-symbol">$</span>x_i<span class="hljs-symbol">$</span> 相关的部分。<br><br>与 <span class="hljs-symbol">$</span>x_i<span class="hljs-symbol">$</span> 相关的部分可以写成：<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>p(x_i|x_&#123;parents(i)&#125;)p(x_&#123;child(i)&#125;|x_i)<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>这些相关的部分又叫做 Markov 毯。<br><br>实际应用的模型中，对这些条件独立性作出了假设，从单一到混合，从有限到无限（时间，空间）可以分为：<br><br><span class="hljs-number">1.</span>  朴素贝叶斯，单一的条件独立性假设 <span class="hljs-symbol">$</span>p(x|y)=\<span class="hljs-keyword">prod</span>\limits_&#123;i=<span class="hljs-number">1</span>&#125;^pp(x_i|y)<span class="hljs-symbol">$</span>，在 D 划分后，所有条件依赖的集合就是单个元素。<br><span class="hljs-number">2.</span>  高斯混合模型：混合的条件独立。引入多类别的隐变量 <span class="hljs-symbol">$</span>z_1, z_2,\cdots,z_k<span class="hljs-symbol">$</span>， <span class="hljs-symbol">$</span>p(x|z)=\mathcal&#123;N&#125;(\mu,\Sigma)<span class="hljs-symbol">$</span>，条件依赖集合为多个元素。<br><span class="hljs-number">3.</span>  与时间相关的条件依赖<br>    <span class="hljs-number">1.</span>  Markov 链<br>    <span class="hljs-number">2.</span>  高斯过程（无限维高斯分布）<br><span class="hljs-number">4.</span>  连续：高斯贝叶斯网络<br><span class="hljs-number">5.</span>  组合上面的分类<br>    *   GMM 与时序结合：动态模型<br>        *   HMM（离散）<br>        *   线性动态系统 LDS（Kalman 滤波）<br>        *   粒子滤波（非高斯，非线性）<br><br>## 无向图-马尔可夫网络（马尔可夫随机场）<br><br>无向图没有了类似有向图的局部不同结构，在马尔可夫网络中，也存在 D 划分的概念。直接将条件独立的集合 <span class="hljs-symbol">$</span>x_A\perp x_B|x_C<span class="hljs-symbol">$</span> 划分为三个集合。这个也叫全局 Markov。对局部的节点，<span class="hljs-symbol">$</span>x\perp (X-Neighbour(\mathcal&#123;x&#125;))|Neighbour(x)<span class="hljs-symbol">$</span>。这也叫局部 Markov。对于成对的节点：<span class="hljs-symbol">$</span>x_i\perp x_j|x_&#123;-i-j&#125;<span class="hljs-symbol">$</span>，其中 <span class="hljs-symbol">$</span>i,j<span class="hljs-symbol">$</span> 不能相邻。这也叫成对 Markov。事实上上面三个点局部全局成对是相互等价的。<br><br>有了这个条件独立性的划分，还需要因子分解来实际计算。引入团的概念：<br><br>&gt;   团，最大团：图中节点的集合，集合中的节点之间相互都是连接的叫做团，如果不能再添加节点，那么叫最大团。<br><br>利用这个定义进行的 <span class="hljs-symbol">$</span>x<span class="hljs-symbol">$</span> 所有维度的联合概率分布的因子分解为，假设有 <span class="hljs-symbol">$</span>K<span class="hljs-symbol">$</span> 个团，<span class="hljs-symbol">$</span>Z<span class="hljs-symbol">$</span> 就是对所有可能取值求和：<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>\begin&#123;align&#125;p(x)=\<span class="hljs-built_in">frac</span>&#123;<span class="hljs-number">1</span>&#125;&#123;Z&#125;\<span class="hljs-keyword">prod</span>\limits_&#123;i=<span class="hljs-number">1</span>&#125;^&#123;K&#125;\phi(x_&#123;ci&#125;)\\<br>Z=\<span class="hljs-keyword">sum</span>\limits_&#123;x\in\mathcal&#123;X&#125;&#125;\<span class="hljs-keyword">prod</span>\limits_&#123;i=<span class="hljs-number">1</span>&#125;^&#123;K&#125;\phi(x_&#123;ci&#125;)<br>\end&#123;align&#125;<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>其中 <span class="hljs-symbol">$</span>\phi(x_&#123;ci&#125;)<span class="hljs-symbol">$</span> 叫做势函数，它必须是一个正值，可以记为：<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br>\phi(x_&#123;ci&#125;)=\<span class="hljs-built_in">exp</span>(-E(x_&#123;ci&#125;))<br><span class="hljs-symbol">$</span><span class="hljs-symbol">$</span><br> 这个分布叫做 Gibbs 分布（玻尔兹曼分布）。于是也可以记为：<span class="hljs-symbol">$</span>p(x)=\<span class="hljs-built_in">frac</span>&#123;<span class="hljs-number">1</span>&#125;&#123;Z&#125;\<span class="hljs-built_in">exp</span>(-\<span class="hljs-keyword">sum</span>\limits_&#123;i=<span class="hljs-number">1</span>&#125;^KE(x_&#123;ci&#125;))<span class="hljs-symbol">$</span>。这个分解和条件独立性等价（Hammesley-Clifford 定理），这个分布的形式也和指数族分布形式上相同，于是满足最大熵原理。<br><br>## 两种图的转换-道德图<br><br>我们常常想将有向图转为无向图，从而应用更一般的表达式。<br><br><span class="hljs-number">1.</span>  链式：<br><br>    ```mermaid<br>    graph TB;<br>    	A((A))--&gt;B((B));<br>    	B--&gt;C((C));<br></code></pre></td></tr></table></figure>
+
+直接去掉箭头，$p(a,b,c)=p(a)p(b|a)p(c|b)=\phi(a,b)\phi(b,c)$：
+
+<pre><code class=" mermaid">graph TB;
+	A((A))---B((B));
+	B---C((C));
+</code></pre>
+</code></pre>
+</li>
+<li><p>V 形：</p>
+<pre><code class=" mermaid">graph TB;
+	B((B))--&gt;A((A));
+	B--&gt;C((C));
+</code></pre>
+
+<p>由于 $p(a,b,c)&#x3D;p(b)p(a|b)p(c|b)&#x3D;\phi(a,b)\phi(b,c)$，直接去掉箭头：</p>
+<pre><code class=" mermaid">graph TB;
+	B((B))---A((A));
+	B---C((C));
+</code></pre>
+</li>
+<li><p>倒 V 形：</p>
+<pre><code class=" mermaid">graph TB;
+	A((A))--&gt;B((B));
+	C((C))--&gt;B
+</code></pre>
+
+<p>由于 $p(a,b,c)&#x3D;p(a)p(c)p(b|a,c)&#x3D;\phi(a,b,c)$，于是在 $a,c$ 之间添加线：</p>
+<pre><code class=" mermaid">graph TD;
+	a((a))---b((b));
+	b---c((c));
+	a---c;
+</code></pre>
+
+<p>观察着三种情况可以概括为：</p>
+<ol>
+<li>将每个节点的父节点两两相连</li>
+<li>将有向边替换为无向边</li>
+</ol>
+</li>
+</ol>
+<h2 id="更精细的分解-因子图"><a href="#更精细的分解-因子图" class="headerlink" title="更精细的分解-因子图"></a>更精细的分解-因子图</h2><p>对于一个有向图，可以通过引入环的方式，可以将其转换为无向图（Tree-like graph），这个图就叫做道德图。但是我们上面的 BP 算法只对无环图有效，通过因子图可以变为无环图。</p>
+<p>考虑一个无向图：</p>
+<pre><code class=" mermaid">graph TD;
+	a((a))---b((b));
+	b---c((c));
+	a---c;
+</code></pre>
+
+<p>可以将其转为：</p>
+<pre><code class=" mermaid">graph TD;
+	a((a))---f;
+	f---b((b));
+	f---c((c))
+</code></pre>
+
+<p>其中 $f&#x3D;f(a,b,c)$。因子图不是唯一的，这是由于因式分解本身就对应一个特殊的因子图，将因式分解：$p(x)&#x3D;\prod\limits_{s}f_s(x_s)$ 可以进一步分解得到因子图。</p>
+<h2 id="推断"><a href="#推断" class="headerlink" title="推断"></a>推断</h2><p>推断的主要目的是求各种概率分布，包括边缘概率，条件概率，以及使用 MAP 来求得参数。通常推断可以分为：</p>
+<ol>
+<li>精确推断<ol>
+<li>Variable Elimination(VE)</li>
+<li>Belief Propagation(BP, Sum-Product Algo)，从 VE 发展而来</li>
+<li>Junction Tree，上面两种在树结构上应用，Junction Tree 在图结构上应用</li>
+</ol>
+</li>
+<li>近似推断<ol>
+<li>Loop Belief Propagation（针对有环图）</li>
+<li>Mente Carlo Interference：例如 Importance Sampling，MCMC</li>
+<li>Variational Inference</li>
+</ol>
+</li>
+</ol>
+<h3 id="推断-变量消除（VE）"><a href="#推断-变量消除（VE）" class="headerlink" title="推断-变量消除（VE）"></a>推断-变量消除（VE）</h3><p>变量消除的方法是在求解概率分布的时候，将相关的条件概率先行求和或积分，从而一步步地消除变量，例如在马尔可夫链中：</p>
+<pre><code class=" mermaid">graph LR;
+	a((a))--&gt;b((b));
+	b--&gt;c((c));
+	c--&gt;d((d))
+</code></pre>
+
+<p>$$<br>p(d)&#x3D;\sum\limits_{a,b,c}p(a,b,c,d)&#x3D;\sum\limits_cp(d|c)\sum\limits_bp(c|b)\sum\limits_ap(b|a)p(a)<br>$$</p>
+<p>变量消除的缺点很明显：</p>
+<ol>
+<li>计算步骤无法存储</li>
+<li>消除的最优次序是一个 NP-hard 问题</li>
+</ol>
+<h3 id="推断-信念传播（BP）"><a href="#推断-信念传播（BP）" class="headerlink" title="推断-信念传播（BP）"></a>推断-信念传播（BP）</h3><p>为了克服 VE 的第一个缺陷-计算步骤无法存储。我们进一步地对上面的马尔可夫链进行观察：</p>
+<pre><code class=" mermaid">graph LR;
+	a((a))--&gt;b((b));
+	b--&gt;c((c));
+	c--&gt;d((d));
+	d--&gt;e((e));
+</code></pre>
+
+<p>要求 $p(e)$，当然使用 VE，从 $a$ 一直消除到 $d$，记 $\sum\limits_ap(a)p(b|a)&#x3D;m_{a\to b(b)}$，表示这是消除 $a$ 后的关于 $b$ 的概率，类似地，记 $\sum\limits_bp(c|b)m_{a\to b}(b)&#x3D;m_{b\to c}(c)$。于是 $p(e)&#x3D;\sum\limits_dp(e|d)m_{b\to c}(c)$。</p>
+<p>进一步观察，对 $p(c)$：<br>$$<br>p(c)&#x3D;[\sum\limits_bp(c|b)\sum\limits_ap(b|a)p(a)]\cdot[\sum\limits_dp(d|c)\sum\limits_ep(e)p(e|d)]<br>$$<br>我们发现了和上面计算 $p(e)$ 类似的结构，这个式子可以分成两个部分，一部分是从 $a$ 传播过来的概率，第二部分是从 $ e$ 传播过来的概率。</p>
+<p>一般地，对于图（只对树形状的图）：</p>
+<pre><code class=" mermaid">graph TD;
+	a((a))---b((b));
+	b---c((c));
+	b---d((d));
+</code></pre>
+
+<p>这四个团（对于无向图是团，对于有向图就是概率为除了根的节点为1），有四个节点，三个边：<br>$$<br>p(a,b,c,d)&#x3D;\frac{1}{Z}\phi_a(a)\phi_b(b)\phi_c(c)\phi_d(d)\cdot\phi_{ab}(a,b)\phi_{bc}(c,b)\phi_{bd}(d,b)<br>$$<br>套用上面关于有向图的观察，如果求解边缘概率 $p(a)$，定义 $m_{c\to b}(b)&#x3D;\sum\limits_c\phi_c(c)\phi_{bc}(bc)$，$m_{d\to b}(b)&#x3D;\sum\limits_d\phi_d(d)\phi_{bd}(bd)$，$m_{b\to a}(a)&#x3D;\sum\limits_b\phi_{ba}(ba)\phi_b(b)m_{c\to b}(b)<em>{d\to b}m(b)$，这样概率就一步步地传播到了 $a$：<br>$$<br>p(a)&#x3D;\phi_a(a)m</em>{b\to a}(a)<br>$$<br>写成一般的形式，对于相邻节点 $i,j$：<br>$$<br>m_{j\to i}(i)&#x3D;\sum\limits_j\phi_j(j)\phi_{ij}(ij)\prod\limits_{k\in Neighbour(j)-i}m_{k\to j}(j)<br>$$<br>这个表达式，就可以保存计算过程了，只要对每条边的传播分别计算，对于一个无向树形图可以递归并行实现：</p>
+<ol>
+<li>任取一个节点 $a$ 作为根节点</li>
+<li>对这个根节点的邻居中的每一个节点，收集信息（计算入信息）</li>
+<li>对根节点的邻居，分发信息（计算出信息）</li>
+</ol>
+<h3 id="推断-Max-Product-算法"><a href="#推断-Max-Product-算法" class="headerlink" title="推断-Max-Product 算法"></a>推断-Max-Product 算法</h3><p>在推断任务中，MAP 也是常常需要的，MAP 的目的是寻找最佳参数：<br>$$<br>(\hat{a},\hat{b},\hat{c},\hat{d})&#x3D;\mathop{argmax}<em>{a,b,c,d}p(a,b,c,d|E)<br>$$<br>类似 BP，我们采用信息传递的方式来求得最优参数，不同的是，我们在所有信息传递中，传递的是最大化参数的概率，而不是将所有可能求和：<br>$$<br>m</em>{j\to i}&#x3D;\max\limits_{j}\phi_j\phi_{ij}\prod\limits_{k\in Neighbour(j)-i}m_{k\to j}<br>$$<br>于是对于上面的图：<br>$$<br>\max_a p(a,b,c,d)&#x3D;\max_a\phi_a\phi_{ab}m_{c\to b}m_{d\to b}<br>$$<br>这个算法是 Sum-Product 算法的改进，也是在 HMM 中应用给的 Viterbi 算法的推广。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——概率图模型</div>
+      <div>http://example.com/2022/08/01/机器学习白板推导笔记/7.PGMIntro/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/8.EM/" title="Machine Learning——期望最大">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——期望最大</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/6.Exponentialfamily/" title="Machine Learning——指数族分布">
+                        <span class="hidden-mobile">Machine Learning——指数族分布</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

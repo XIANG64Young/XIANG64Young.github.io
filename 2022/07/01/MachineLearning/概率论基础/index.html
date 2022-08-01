@@ -1,0 +1,1193 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="概率论和数理统计1. 概率的基本要素为了定义集合上的概率，我们需要一些基本元素，  样本空间$\Omega $：随机实验的所有结果的集合。在这里，每个结果 $w \in \Omega $ 可以被认为是实验结束时现实世界状态的完整描述。  事件集（事件空间）$\mathcal{F}$：元素 $A \in \mathcal{F}$ 的集合（称为事件）是 $\Omega $ 的子集（即每个 $A \su">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Foundation——概率论和数理统计">
+<meta property="og:url" content="http://example.com/2022/07/01/MachineLearning/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="概率论和数理统计1. 概率的基本要素为了定义集合上的概率，我们需要一些基本元素，  样本空间$\Omega $：随机实验的所有结果的集合。在这里，每个结果 $w \in \Omega $ 可以被认为是实验结束时现实世界状态的完整描述。  事件集（事件空间）$\mathcal{F}$：元素 $A \in \mathcal{F}$ 的集合（称为事件）是 $\Omega $ 的子集（即每个 $A \su">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/c89fd93c5d6dccce89762d57fcd66dac.png">
+<meta property="og:image" content="http://example.com/src/b958c16cfdce9e6bd2b810b10d71416e.png">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.244Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Mathematics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/c89fd93c5d6dccce89762d57fcd66dac.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning Foundation——概率论和数理统计 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning Foundation——概率论和数理统计"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-01 00:00" pubdate>
+          2022年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          25k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          212 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning Foundation——概率论和数理统计</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="概率论和数理统计"><a href="#概率论和数理统计" class="headerlink" title="概率论和数理统计"></a>概率论和数理统计</h1><h3 id="1-概率的基本要素"><a href="#1-概率的基本要素" class="headerlink" title="1. 概率的基本要素"></a>1. 概率的基本要素</h3><p>为了定义集合上的概率，我们需要一些基本元素，</p>
+<ul>
+<li><p>样本空间$\Omega $：随机实验的所有结果的集合。在这里，每个结果 $w \in \Omega $ 可以被认为是实验结束时现实世界状态的完整描述。</p>
+</li>
+<li><p>事件集（事件空间）$\mathcal{F}$：元素 $A \in \mathcal{F}$ 的集合（称为事件）是 $\Omega $ 的子集（即每个 $A \subseteq \Omega$ 是一个实验可能结果的集合）。</p>
+<p>备注：$\mathcal{F}$需要满足以下三个条件：</p>
+<p>(1) $\emptyset  \in \mathcal{F}$</p>
+<p>(2) $A \in \mathcal{F} \Longrightarrow \Omega \backslash A \in \mathcal{F}$</p>
+<p>(3) $A_1,A_2,\cdots A_{i} \in \mathcal{F}\Longrightarrow\cup_{i} A_{i} \in \mathcal{F}$</p>
+</li>
+<li><p>概率度量$P$：函数$P$是一个$  \mathcal{F} \rightarrow \mathbb{R}$的映射，满足以下性质：</p>
+<ul>
+<li><p>对于每个 $A \in \mathcal{F}$，$P(A) \geq 0$, </p>
+</li>
+<li><p>$P(\Omega) &#x3D; 1$</p>
+</li>
+<li><p>如果$A_1 ,A_2 ,\cdots$ 是互不相交的事件 (即 当$ i \neq j$时，$A_{i} \cap A_{j}&#x3D;\emptyset$ ), 那么：</p>
+<p>$$<br>P\left(\cup_{i} A_{i}\right)&#x3D;\sum_{i} P\left(A_{i}\right)<br>$$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>以上三条性质被称为<strong>概率公理</strong>。</p>
+<p><strong>举例</strong>：</p>
+<p>考虑投掷六面骰子的事件。样本空间为$\Omega&#x3D; {1，2，3，4，5，6}$。最简单的事件空间是平凡事件空间$\mathcal{F} &#x3D; {\emptyset,\Omega}$.另一个事件空间是$\Omega$的所有子集的集合。对于第一个事件空间，满足上述要求的唯一概率度量由$P(\emptyset) &#x3D; 0$，$p(\Omega)&#x3D; 1$给出。对于第二个事件空间，一个有效的概率度量是将事件空间中每个事件的概率分配为$i&#x2F;6$，这里$i$ 是这个事件集合中元素的数量；例如$P({1,2,3,4}) &#x3D;4&#x2F;6$，$P({1,2,3}) &#x3D;3&#x2F;6$。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>如果$A \subseteq B$，则：$ P(A) \leq P(B)$</li>
+<li>$P(A \cap B) \leq min(P(A),P(B) )$</li>
+<li>(布尔不等式)：$P(A \cup B) \leq P(A)+P(B)$</li>
+<li>$P(\Omega |A ) &#x3D;1-P(A)$</li>
+<li>(全概率定律)：如果$A_1，\cdots，A_k$是一些互不相交的事件并且它们的并集是$\Omega$，那么它们的概率之和是1</li>
+</ul>
+<h4 id="1-1-事件的关系与运算"><a href="#1-1-事件的关系与运算" class="headerlink" title="1.1 事件的关系与运算"></a><strong>1.1 事件的关系与运算</strong></h4><p>(1) 子事件：$A \subset B$，若$A$发生，则$B$发生。</p>
+<p>(2) 相等事件：$A &#x3D; B$，即$A \subset B$，且$B \subset A$ 。</p>
+<p>(3) 和事件：$A\bigcup B$（或$A + B$），$A$与$B$中至少有一个发生。</p>
+<p>(4) 差事件：$A - B$，$A$发生但$B$不发生。</p>
+<p>(5) 积事件：$A\bigcap B$（或${AB}$），$A$与$B$同时发生。</p>
+<p>(6) 互斥事件（互不相容）：$A\bigcap B$&#x3D;$\varnothing$。</p>
+<p>(7) 互逆事件（对立事件）：<br>$A\bigcap B&#x3D;\varnothing ,A\bigcup B&#x3D;\Omega ,A&#x3D;\bar{B},B&#x3D;\bar{A}$</p>
+<h4 id="1-2-运算律"><a href="#1-2-运算律" class="headerlink" title="1.2 运算律"></a><strong>1.2 运算律</strong></h4><p>(1) 交换律：$A\bigcup B&#x3D;B\bigcup A,A\bigcap B&#x3D;B\bigcap A$<br>(2) 结合律：$(A\bigcup B)\bigcup C&#x3D;A\bigcup (B\bigcup C)$<br>(3) 分配律：$(A\bigcap B)\bigcap C&#x3D;A\bigcap (B\bigcap C)$</p>
+<h4 id="1-3-德-centerdot-摩根律"><a href="#1-3-德-centerdot-摩根律" class="headerlink" title="1.3 德$\centerdot $摩根律"></a><strong>1.3 德$\centerdot $摩根律</strong></h4><p>$\overline{A\bigcup B}&#x3D;\bar{A}\bigcap \bar{B}$</p>
+<p> $\overline{A\bigcap B}&#x3D;\bar{A}\bigcup \bar{B}$</p>
+<h4 id="1-4-完全事件组"><a href="#1-4-完全事件组" class="headerlink" title="1.4 完全事件组"></a><strong>1.4 完全事件组</strong></h4><p>${ {A}<em>{1} }{ {A}</em>{2} }\cdots { {A}<em>{n} }$两两互斥，且和事件为必然事件，即${ {A}</em>{i} }\bigcap { {A}<em>{j} }&#x3D;\varnothing, i\ne j ,U</em>{i&#x3D;1}^n &#x3D; \Omega$</p>
+<h4 id="1-5-概率的基本公式"><a href="#1-5-概率的基本公式" class="headerlink" title="1.5 概率的基本公式"></a><strong>1.5 概率的基本公式</strong></h4><p><strong>(1)条件概率:</strong><br>$P(A | B) \triangleq \frac{P(A \cap B)}{P(B)}$,表示$A$发生的条件下，$B$发生的概率。</p>
+<p><strong>(2)全概率公式：</strong><br>$P(A)&#x3D;\sum\limits_{i&#x3D;1}^{n}{P(A|{ {B}<em>{i} })P({ {B}</em>{i} }),{ {B}<em>{i} }{ {B}</em>{j} } }&#x3D;\varnothing ,i\ne j,\underset{i&#x3D;1}{\overset{n}{\mathop{\bigcup } } },{ {B}_{i} }&#x3D;\Omega$</p>
+<p><strong>(3) Bayes 公式：</strong><br>$$<br>P({ {B}<em>{j} }|A)&#x3D;\frac{P(A|{ {B}</em>{j} })P({ {B}<em>{j} })}{\sum\limits</em>{i&#x3D;1}^{n}{P(A|{ {B}<em>{i} })P({ {B}</em>{i} })} },j&#x3D;1,2,\cdots ,n<br>$$</p>
+<p>注：上述公式中事件${ {B}_{i} }$的个数可为可列个。</p>
+<p><strong>(4)乘法公式：</strong><br>$P({ {A}<em>{1} }{ {A}</em>{2} })&#x3D;P({ {A}<em>{1} })P({ {A}</em>{2} }|{ {A}<em>{1} })&#x3D;P({ {A}</em>{2} })P({ {A}<em>{1} }|{ {A}</em>{2} })$<br>$P({ {A}<em>{1} }{ {A}</em>{2} }\cdots { {A}<em>{n} })&#x3D;P({ {A}</em>{1} })P({ {A}<em>{2} }|{ {A}</em>{1} })P({ {A}<em>{3} }|{ {A}</em>{1} }{ {A}<em>{2} })\cdots P({ {A}</em>{n} }|{ {A}<em>{1} }{ {A}</em>{2} }\cdots { {A}_{n-1} })$</p>
+<h4 id="1-6-事件的独立性"><a href="#1-6-事件的独立性" class="headerlink" title="1.6.事件的独立性"></a><strong>1.6.事件的独立性</strong></h4><p>(1)$A$与$B$相互独立</p>
+<p>$\Leftrightarrow P(AB)&#x3D;P(A)P(B)$</p>
+<p>(2)$A$，$B$，$C$两两独立<br>$\Leftrightarrow P(AB)&#x3D;P(A)P(B)$;$P(BC)&#x3D;P(B)P(C)$ ;$P(AC)&#x3D;P(A)P(C)$;</p>
+<p>(3)$A$，$B$，$C$相互独立<br>$\Leftrightarrow P(AB)&#x3D;P(A)P(B)$; $P(BC)&#x3D;P(B)P(C)$ ;<br>$P(AC)&#x3D;P(A)P(C)$ ; $P(ABC)&#x3D;P(A)P(B)P(C)$</p>
+<h4 id="1-7-独立重复试验"><a href="#1-7-独立重复试验" class="headerlink" title="1.7 独立重复试验"></a><strong>1.7 独立重复试验</strong></h4><p>将某试验独立重复$n$次，若每次实验中事件 A 发生的概率为$p$，则$n$次试验中$A$发生$k$次的概率为：<br>$P(X&#x3D;k)&#x3D;C_{n}^{k}{ {p}^{k} }{ {(1-p)}^{n-k} }$</p>
+<h4 id="1-8-重要公式与结论"><a href="#1-8-重要公式与结论" class="headerlink" title="1.8 重要公式与结论"></a><strong>1.8 重要公式与结论</strong></h4><p>$(1)P(\bar{A})&#x3D;1-P(A)$</p>
+<p>$(2)P(A\bigcup B)&#x3D;P(A)+P(B)-P(AB)$<br>$P(A\bigcup B\bigcup C)&#x3D;P(A)+P(B)+P(C)-P(AB)-P(BC)-P(AC)+P(ABC)$</p>
+<p>$(3)P(A-B)&#x3D;P(A)-P(AB)$</p>
+<p>$(4)P(A\bar{B})&#x3D;P(A)-P(AB),P(A)&#x3D;P(AB)+P(A\bar{B}),$<br>$P(A\bigcup B)&#x3D;P(A)+P(\bar{A}B)&#x3D;P(AB)+P(A\bar{B})+P(\bar{A}B)$</p>
+<p>(5)条件概率$P(\centerdot |B)$满足概率的所有性质，<br>例如：. $P({ {\bar{A} }<em>{1} }|B)&#x3D;1-P({ {A}</em>{1} }|B)$<br>$P({ {A}<em>{1} }\bigcup { {A}</em>{2} }|B)&#x3D;P({ {A}<em>{1} }|B)+P({ {A}</em>{2} }|B)-P({ {A}<em>{1} }{ {A}</em>{2} }|B)$<br>$P({ {A}<em>{1} }{ {A}</em>{2} }|B)&#x3D;P({ {A}<em>{1} }|B)P({ {A}</em>{2} }|{ {A}_{1} }B)$</p>
+<p>(6)若${ {A}<em>{1} },{ {A}</em>{2} },\cdots ,{ {A}<em>{n} }$相互独立，则$P(\bigcap\limits</em>{i&#x3D;1}^{n}{ { {A}<em>{i} }})&#x3D;\prod\limits</em>{i&#x3D;1}^{n}{P({ {A}<em>{i} })},$<br>$P(\bigcup\limits</em>{i&#x3D;1}^{n}{ { {A}<em>{i} }})&#x3D;\prod\limits</em>{i&#x3D;1}^{n}{(1-P({ {A}_{i} }))}$</p>
+<p>(7)互斥、互逆与独立性之间的关系：<br>$A$与$B$互逆$\Rightarrow$ $A$与$B$互斥，但反之不成立，$A$与$B$互斥（或互逆）且均非零概率事件$\Rightarrow $$A$与$B$不独立.</p>
+<p>(8)若${ {A}<em>{1} },{ {A}</em>{2} },\cdots ,{ {A}<em>{m} },{ {B}</em>{1} },{ {B}<em>{2} },\cdots ,{ {B}</em>{n} }$相互独立，则$f({ {A}<em>{1} },{ {A}</em>{2} },\cdots ,{ {A}<em>{m} })$与$g({ {B}</em>{1} },{ {B}<em>{2} },\cdots ,{ {B}</em>{n} })$也相互独立，其中$f(\centerdot ),g(\centerdot )$分别表示对相应事件做任意事件运算后所得的事件，另外，概率为 1（或 0）的事件与任何事件相互独立.</p>
+<h3 id="2-随机变量"><a href="#2-随机变量" class="headerlink" title="2. 随机变量"></a>2. 随机变量</h3><p>考虑一个实验，我们翻转10枚硬币，我们想知道正面硬币的数量。这里，样本空间$\Omega$的元素是长度为10的序列。例如，我们可能有$w_0 &#x3D; {H，H，T，H，T，H，H，T，T，T}\in\Omega$。然而，在实践中，我们通常不关心获得任何特定正反序列的概率。相反，我们通常关心结果的实值函数，比如我们10次投掷中出现的正面数，或者最长的背面长度。在某些技术条件下，这些函数被称为<strong>随机变量</strong>。</p>
+<p>更正式地说，随机变量$X$是一个的$\Omega \longrightarrow \mathbb{R}$函数。通常，我们将使用大写字母$X(\omega)$或更简单的$X$(其中隐含对随机结果$\omega$的依赖)来表示随机变量。我们将使用小写字母$x$来表示随机变量的值。</p>
+<p><strong>举例：</strong><br>在我们上面的实验中，假设$X(\omega)$是在投掷序列$\omega$中出现的正面的数量。假设投掷的硬币只有10枚，那么$X(\omega)$只能取有限数量的值，因此它被称为<strong>离散随机变量</strong>。这里，与随机变量$X$相关联的集合取某个特定值$k$的概率为：<br>$$<br>P(X&#x3D;k) :&#x3D;P({\omega : X(\omega) &#x3D;k})<br>$$<br><strong>举例：</strong><br>假设$X(\omega)$是一个随机变量，表示放射性粒子衰变所需的时间。在这种情况下，$X(\omega)$具有无限多的可能值，因此它被称为<strong>连续随机变量</strong>。我们将$X$在两个实常数$a$和$b$之间取值的概率(其中$a &lt; b$)表示为：<br>$$<br>P(a \leq X \leq b) :&#x3D;P({\omega : a \leq X(\omega) \leq b})<br>$$</p>
+<h4 id="2-1-累积分布函数"><a href="#2-1-累积分布函数" class="headerlink" title="2.1 累积分布函数"></a>2.1 累积分布函数</h4><p>为了指定处理随机变量时使用的概率度量，通常可以方便地指定替代函数(<strong>CDF</strong>、<strong>PDF</strong>和<strong>PMF</strong>)，在本节和接下来的两节中，我们将依次描述这些类型的函数。</p>
+<p><strong>累积分布函数(CDF)<strong>（简称分布函数）是函数$F_{X} : \mathbb{R} \rightarrow[0,1]$，它将概率度量指定为：<br>$$<br>F_{X}(x) \triangleq P(X \leq x)<br>$$<br>通过使用这个函数，我们可以计算任意事件发生的概率。图1显示了一个样本</strong>CDF</strong>函数。</p>
+<p><img src="/src/c89fd93c5d6dccce89762d57fcd66dac.png"></p>
+<center>图1：一个累计分布函数(CDF)</center>
+
+<p><strong>性质：</strong></p>
+<ul>
+<li>$0 \leq F_{X}(x)\leq 1$</li>
+<li>$\lim <em>{x \rightarrow-\infty} F</em>{X}(x)&#x3D;0$</li>
+<li>$\lim <em>{x \rightarrow\infty} F</em>{X}(x)&#x3D;1$</li>
+<li>$x \leq y \Longrightarrow  F_{X}(x)\leq F_{X}(y)$</li>
+</ul>
+<h4 id="2-2-概率质量函数"><a href="#2-2-概率质量函数" class="headerlink" title="2.2 概率质量函数"></a>2.2 概率质量函数</h4><p>当随机变量$X$取有限种可能值(即，$X$是离散随机变量)时，表示与随机变量相关联的概率度量的更简单的方法是直接指定随机变量可以假设的每个值的概率。特别地，概率质量函数(<strong>PMF</strong>)是函数 $p_{X} : \Omega \rightarrow \mathbb{R}$，这样：<br>$$<br>p_{X}(x) \triangleq P(X&#x3D;x)<br>$$</p>
+<p>在离散随机变量的情况下，我们使用符号$Val(X)$表示随机变量$X$可能假设的一组可能值。例如，如果$X(\omega)$是一个随机变量，表示十次投掷硬币中的正面数，那么$Val(X) &#x3D;{0，1，2，.，10}$。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>$0 \leq p_{X}(x)\leq 1$</li>
+<li>$\sum_{x \in V \text { al }(X)} p_{X}(x)&#x3D;1$</li>
+<li>$\sum_{x \in A} p_{X}(x)&#x3D;P(X \in A)$</li>
+</ul>
+<h4 id="2-3-概率密度函数"><a href="#2-3-概率密度函数" class="headerlink" title="2.3 概率密度函数"></a>2.3 概率密度函数</h4><p>对于一些连续随机变量，累积分布函数$F_X (x)$处可微。在这些情况下，我们将**概率密度函数(PDF)**定义为累积分布函数的导数，即：<br>$$<br>f_{X}(x) \triangleq \frac{d F_{X}(x)}{d x}<br>$$</p>
+<p>请注意，连续随机变量的概率密度函数可能并不总是存在的(即，如果它不是处处可微)。 </p>
+<p>根据微分的性质，对于很小的$\Delta x$，<br>$$<br>P(x \leq X \leq x+\Delta x) \approx f_{X}(x) \Delta x<br>$$<br><strong>CDF</strong>和**PDF(<strong>当它们存在时！)都可用于计算不同事件的概率。但是应该强调的是，任意给定点的</strong>概率密度函数(PDF)**的值不是该事件的概率，即$f _X (x) \not &#x3D; P(X &#x3D; x)$。例如，$f _X (x)$可以取大于1的值(但是$f _X (x)$在$\mathbb{R}$的任何子集上的积分最多为1)。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>$f_X(x)\geq 0$</li>
+<li>$\int_{-\infty}^{\infty} f_{X}(x)&#x3D;1$</li>
+<li>$\int_{x \in A} f_{X}(x) d x&#x3D;P(X \in A)$</li>
+</ul>
+<h4 id="2-4-期望"><a href="#2-4-期望" class="headerlink" title="2.4 期望"></a>2.4 期望</h4><p>假设$X$是一个离散随机变量，其<strong>PMF</strong>为 $p_X (x)$，$g : \mathbb{R} \longrightarrow \mathbb{R}$是一个任意函数。在这种情况下，$g(X)$可以被视为随机变量，我们将$g(X)$的期望值定义为：<br>$$<br>E[g(X)] \triangleq \sum_{x \in V a l(X)} g(x) p_{X}(x)<br>$$<br>如果$X$是一个连续的随机变量，其<strong>PDF</strong> 为$f <em>X (x)$，那么$g(X)$的期望值被定义为：<br>$$<br>E[g(X)] \triangleq \int</em>{-\infty}^{\infty} g(x) f_{X}(x) d x<br>$$</p>
+<p>直觉上，$g(X)$的期望值可以被认为是$g(x)$对于不同的$x$值可以取的值的“加权平均值”，其中权重由$p_X(x)$或$f_X(x)$给出。作为上述情况的特例，请注意，随机变量本身的期望值，是通过令$g(x) &#x3D; x$得到的，这也被称为随机变量的平均值。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>对于任意常数 $a \in \mathbb{R}$，$E[a]&#x3D;a$</li>
+<li>对于任意常数 $a \in \mathbb{R}$，$E[af(X)]&#x3D;aE[f(X)]$</li>
+<li>(线性期望)：$E[f(X)+g(X)]&#x3D;E[f(X)]+E[g(X)]$</li>
+<li>对于一个离散随机变量$X$，$E[1{X&#x3D;k}]&#x3D;P(X&#x3D;k)$</li>
+</ul>
+<h4 id="2-5-方差"><a href="#2-5-方差" class="headerlink" title="2.5 方差"></a>2.5 方差</h4><p>随机变量$X$的<strong>方差</strong>是随机变量$X$的分布围绕其平均值集中程度的度量。形式上，随机变量$X$的方差定义为：<br>$\operatorname{Var}[X] \triangleq E\left[(X-E(X))^{2}\right]$<br>使用上一节中的性质，我们可以导出方差的替代表达式:<br>$\begin{aligned} E\left[(X-E[X])^{2}\right] &amp;&#x3D;E\left[X^{2}-2 E[X] X+E[X]^{2}\right] \ &amp;&#x3D;E\left[X^{2}\right]-2 E[X] E[X]+E[X]^{2} \ &amp;&#x3D;E\left[X^{2}\right]-E[X]^{2} \end{aligned}$</p>
+<p>其中第二个等式来自期望的线性，以及$E[X]$相对于外层期望实际上是常数的事实。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>对于任意常数 $a \in \mathbb{R}$，$Val[a]&#x3D;0$</li>
+<li>对于任意常数 $a \in \mathbb{R}$，$Var[af(X)]&#x3D;a^2Var[f(X)]$</li>
+</ul>
+<p><strong>举例：</strong></p>
+<p>计算均匀随机变量$X$的平均值和方差，任意$x \in [0，1]$，其<strong>PDF</strong>为 $p_X(x)&#x3D; 1$，其他地方为0。</p>
+<p>$$<br>E[X]&#x3D;\int_{-\infty}^{\infty} x f_{X}(x) d x&#x3D;\int_{0}^{1} x d x&#x3D;\frac{1}{2}<br>$$</p>
+<p>$$<br>E\left[X^{2}\right]&#x3D;\int_{-\infty}^{\infty} x^{2} f_{X}(x) d x&#x3D;\int_{0}^{1} x^{2} d x&#x3D;\frac{1}{3}<br>$$</p>
+<p>$$<br>Var[X]&#x3D;E[X^2]-E[X]^2&#x3D;\frac{1}{3}-\frac{1}{4}&#x3D;\frac{1}{12}<br>$$</p>
+<p><strong>举例：</strong></p>
+<p>假设对于一些子集$A \subseteq \Omega$，有$g(x) &#x3D; 1{x \in A}$，计算$E[g(X)]$?</p>
+<p><strong>离散情况：</strong><br>$<br>E[g(X)]&#x3D;\sum_{x \in V a l(X)} 1{x \in A} P_{X}(x) d x&#x3D;\sum_{x \in A} P_{X}(x) d x&#x3D;P(x \in A)<br>$</p>
+<p><strong>连续情况：</strong><br>$<br>E[g(X)]&#x3D;\int_{-\infty}^{\infty} 1{x \in A} f_{X}(x) d x&#x3D;\int_{x \in A} f_{X}(x) d x&#x3D;P(x \in A)<br>$</p>
+<h4 id="2-6-一些常见的随机变量"><a href="#2-6-一些常见的随机变量" class="headerlink" title="2.6 一些常见的随机变量"></a>2.6 一些常见的随机变量</h4><p><strong>离散随机变量</strong></p>
+<ul>
+<li><p>伯努利分布：硬币掷出正面的概率为$p$（其中：$0 \leq p \leq 1$），如果正面发生，则为1，否则为0。</p>
+<p>$$<br>p(x)&#x3D;\left{\begin{array}{ll}{p} &amp; {\text { if } p&#x3D;1} \ {1-p} &amp; {\text { if } p&#x3D;0}\end{array}\right.<br>$$</p>
+</li>
+<li><p>二项式分布：掷出正面概率为$p$（其中：$0 \leq p \leq 1$）的硬币$n$次独立投掷中正面的数量。</p>
+<p>$$<br>p(x)&#x3D;\left(\begin{array}{l}{n} \ {x}\end{array}\right) p^{x}(1-p)^{n-x}<br>$$</p>
+</li>
+<li><p>泊松分布：用于模拟罕见事件频率的非负整数的概率分布（其中：$\lambda &gt;0$）。</p>
+<p>$$<br>p(x)&#x3D;e^{-\lambda} \frac{\lambda^{x} }{x !}<br>$$</p>
+</li>
+<li><p>几何分布：掷出正面概率为$p$（其中：$p &gt;0$）的硬币第一次掷出正面所需要的次数。</p>
+<p>$$<br>G(p):P(X &#x3D; k) &#x3D; {(1 - p)}^{k - 1}p,0 &lt; p &lt; 1,k &#x3D; 1,2,\cdots.<br>$$</p>
+</li>
+<li><p>超几何分布：$H(N,M,n):P(X &#x3D; k) &#x3D; \frac{C_{M}^{k}C_{N - M}^{n -k} }{C_{N}^{n} },k &#x3D;0,1,\cdots,min(n,M)$</p>
+</li>
+</ul>
+<p><strong>连续随机变量</strong></p>
+<ul>
+<li><p>均匀分布：在$a$和$b$之间每个点概率密度相等的分布（其中：$a&lt;b$）。</p>
+<p>$$<br>f(x)&#x3D;\left{\begin{array}{ll}{\frac{1}{b-a} } &amp; {\text { if } a \leq x \leq b} \ {0} &amp; {\text { otherwise } }\end{array}\right.<br>$$</p>
+</li>
+<li><p>指数分布：在非负实数上有衰减的概率密度（其中：$\lambda &gt;0$）。</p>
+<p>$$<br>f(x)&#x3D;\left{\begin{array}{ll}{\lambda e^{-\lambda x} } &amp; {\text { if } x \geq 0} \ {0} &amp; {\text { otherwise } }\end{array}\right.<br>$$</p>
+</li>
+<li><p>正态分布：又被称为高斯分布。</p>
+<p>$$<br>f(x)&#x3D;\frac{1}{\sqrt{2 \pi} \sigma} e^{-\frac{1}{2 \sigma^{2} }(x-\mu)^{2} }<br>$$</p>
+</li>
+</ul>
+<p>一些随机变量的概率密度函数和累积分布函数的形状如图2所示。</p>
+<p><img src="/src/b958c16cfdce9e6bd2b810b10d71416e.png"></p>
+<center>图2：一些随机变量的概率密度函数(PDF)和累积分布函数(CDF)</center>
+
+<p>下表总结了这些分布的一些特性：</p>
+<table>
+<thead>
+<tr>
+<th align="center">分布</th>
+<th align="center">概率密度函数(PDF)或者概率质量函数(<strong>PMF</strong>)</th>
+<th align="center">均值</th>
+<th align="center">方差</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$Bernoulli(p)$(伯努利分布)</td>
+<td align="center">$\left{\begin{array}{ll}{p} &amp; {\text { if } x&#x3D;1} \ {1-p} &amp; {\text { if } x&#x3D;0}\end{array}\right.$</td>
+<td align="center">$p$</td>
+<td align="center">$p(1-p)$</td>
+</tr>
+<tr>
+<td align="center">$Binomial(n,p)$(二项式分布)</td>
+<td align="center">$\left(\begin{array}{l}{n} \ {k}\end{array}\right) p^{k}(1-p)^{n-k}$  其中：$0 \leq k \leq n$</td>
+<td align="center">$np$</td>
+<td align="center">$npq$</td>
+</tr>
+<tr>
+<td align="center">$Geometric(p)$(几何分布)</td>
+<td align="center">$p(1-p)^{k-1}$  其中：$k&#x3D;1,2,\cdots$</td>
+<td align="center">$\frac{1}{p}$</td>
+<td align="center">$\frac {1-p}{p^2}$</td>
+</tr>
+<tr>
+<td align="center">$Poisson(\lambda)$(泊松分布)</td>
+<td align="center">$e^{-\lambda} \lambda^{x} &#x2F; x !$  其中：$k&#x3D;1,2,\cdots$</td>
+<td align="center">$\lambda$</td>
+<td align="center">$\lambda$</td>
+</tr>
+<tr>
+<td align="center">$Uniform(a,b)$(均匀分布)</td>
+<td align="center">$\frac{1}{b-a}$ 存在$x \in (a,b)$</td>
+<td align="center">$\frac{a+b}{2}$</td>
+<td align="center">$\frac{(b-a)^2}{12}$</td>
+</tr>
+<tr>
+<td align="center">$Gaussian(\mu,\sigma^2)$(高斯分布)</td>
+<td align="center">$\frac{1}{\sqrt{2 \pi} \sigma} e^{-\frac{1}{2 \sigma^{2} }(x-\mu)^{2} }$</td>
+<td align="center">$\mu$</td>
+<td align="center">$\sigma^2$</td>
+</tr>
+<tr>
+<td align="center">$Exponential(\lambda)$(指数分布)</td>
+<td align="center">$\lambda e^{-\lambda x}$   $x\geq0,\lambda&gt;0$</td>
+<td align="center">$\frac{1}{\lambda}$</td>
+<td align="center">$\frac{1}{\lambda^2}$</td>
+</tr>
+</tbody></table>
+<h4 id="2-7-重要公式与结论"><a href="#2-7-重要公式与结论" class="headerlink" title="2.7 重要公式与结论"></a>2.7 重要公式与结论</h4><p>(1) $X\sim N(0,1) \Rightarrow \varphi(0) &#x3D; \frac{1}{\sqrt{2\pi} },\Phi(0) &#x3D;\frac{1}{2},$ $\Phi( - a) &#x3D; P(X \leq - a) &#x3D; 1 - \Phi(a)$</p>
+<p>(2) $X\sim N\left( \mu,\sigma^{2} \right) \Rightarrow \frac{X -\mu}{\sigma}\sim N\left( 0,1 \right),P(X \leq a) &#x3D; \Phi(\frac{a -\mu}{\sigma})$</p>
+<p>(3) $X\sim E(\lambda) \Rightarrow P(X &gt; s + t|X &gt; s) &#x3D; P(X &gt; t)$</p>
+<p>(4) $X\sim G(p) \Rightarrow P(X &#x3D; m + k|X &gt; m) &#x3D; P(X &#x3D; k)$</p>
+<p>(5) 离散型随机变量的分布函数为阶梯间断函数；连续型随机变量的分布函数为连续函数，但不一定为处处可导函数。</p>
+<p>(6) 存在既非离散也非连续型随机变量。</p>
+<h3 id="3-两个随机变量"><a href="#3-两个随机变量" class="headerlink" title="3. 两个随机变量"></a>3. 两个随机变量</h3><p>到目前为止，我们已经考虑了单个随机变量。然而，在许多情况下，在随机实验中，我们可能有不止一个感兴趣的量。例如，在一个我们掷硬币十次的实验中，我们可能既关心$X(\omega) &#x3D;$出现的正面数量，也关心$Y (\omega) &#x3D;$连续最长出现正面的长度。在本节中，我们考虑两个随机变量的设置。</p>
+<h4 id="3-1-联合分布和边缘分布"><a href="#3-1-联合分布和边缘分布" class="headerlink" title="3.1 联合分布和边缘分布"></a>3.1 联合分布和边缘分布</h4><p>假设我们有两个随机变量，一个方法是分别考虑它们。如果我们这样做，我们只需要$F_X (x)$和$F_Y (y)$。但是如果我们想知道在随机实验的结果中，$X$和$Y$同时假设的值，我们需要一个更复杂的结构，称为$X$和$Y$的<strong>联合累积分布函数</strong>，定义如下:<br>$$<br>F_{XY}(x,y)&#x3D;P(X \leq x,Y \leq y)<br>$$</p>
+<p>可以证明，通过了解联合累积分布函数，可以计算出任何涉及到$X$和$Y$的事件的概率。</p>
+<p>联合<strong>CDF</strong>: $F_{XY }(x,y)$和每个变量的联合分布函数$F_X(x)$和$F_Y (y)$分别由下式关联:<br>$$<br>F_{X}(x)&#x3D;\lim <em>{y \rightarrow \infty} F</em>{X Y}(x, y) d y<br>$$</p>
+<p>$$<br>F_{Y}(y)&#x3D;\lim <em>{y \rightarrow \infty} F</em>{X Y}(x, y) dx<br>$$</p>
+<p>这里我们称$F_X(x)$和$F_Y (y)$为 $F_{XY }(x,y)$的<strong>边缘累积概率分布函数</strong>。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>$0 \leq F_{XY }(x,y) \leq 1$</li>
+<li>$\lim <em>{x, y \rightarrow \infty} F</em>{X Y}(x, y)&#x3D;1$</li>
+<li>$\lim <em>{x, y \rightarrow -\infty} F</em>{X Y}(x, y)&#x3D;0$</li>
+<li>$F_{X}(x)&#x3D;\lim <em>{y \rightarrow \infty} F</em>{X Y}(x, y)$</li>
+</ul>
+<h4 id="3-2-联合概率和边缘概率质量函数"><a href="#3-2-联合概率和边缘概率质量函数" class="headerlink" title="3.2 联合概率和边缘概率质量函数"></a>3.2 联合概率和边缘概率质量函数</h4><p>如果$X$和$Y$是离散随机变量，那么<strong>联合概率质量函数</strong>  $p_{X Y} : \mathbb{R} \times \mathbb{R} \rightarrow [0,1]$由下式定义：</p>
+<p>$$<br>p_{X Y}(x,y)&#x3D;P(X&#x3D;x,Y&#x3D;y)<br>$$</p>
+<p>这里, 对于任意$x$，$y$，$0 \leq P_{XY} (x,y) \leq 1$, 并且 $\sum_{x \in V a l(X)} \sum_{y \in V a l(Y)} P_{X Y}(x, y)&#x3D;1$</p>
+<p>两个变量上的<strong>联合PMF</strong>分别与每个变量的概率质量函数有什么关系？事实上：<br>$$<br>p_{X}(x)&#x3D;\sum_{y} p_{X Y}(x, y)<br>$$</p>
+<p>对于$p_Y (y)$类似。在这种情况下，我们称$p_X(x)$为$X$的边际概率质量函数。在统计学中，将一个变量相加形成另一个变量的边缘分布的过程通常称为“边缘化”。</p>
+<h4 id="3-3-联合概率和边缘概率密度函数"><a href="#3-3-联合概率和边缘概率密度函数" class="headerlink" title="3.3 联合概率和边缘概率密度函数"></a>3.3 联合概率和边缘概率密度函数</h4><p>假设$X$和$Y$是两个连续的随机变量，具有联合分布函数$F_{XY}$。在$F_{XY}(x,y)$在$x$和$y$中处处可微的情况下，我们可以定义<strong>联合概率密度函数</strong>：<br>$$<br>f_{X Y}(x, y)&#x3D;\frac{\partial^{2} F_{X Y}(x, y)}{\partial x \partial y}<br>$$<br>如同在一维情况下，$f_{XY}(x,y)\not&#x3D; P(X &#x3D; x,Y &#x3D; y)$，而是：<br>$$<br>\iint_{x \in A} f_{X Y}(x, y) d x d y&#x3D;P((X, Y) \in A)<br>$$</p>
+<p>请注意，概率密度函数$f_{XY}(x,y)$的值总是非负的，但它们可能大于1。尽管如此，可以肯定的是 $\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f_{X Y}(x, y)&#x3D;1$</p>
+<p>与离散情况相似，我们定义:<br>$$<br>f_{X}(x)&#x3D;\int_{-\infty}^{\infty} f_{X Y}(x, y) d y<br>$$<br>作为$X$的<strong>边际概率密度函数</strong>(或<strong>边际密度</strong>)，对于$f_Y (y)$也类似。</p>
+<h4 id="3-4-条件概率分布"><a href="#3-4-条件概率分布" class="headerlink" title="3.4 条件概率分布"></a>3.4 条件概率分布</h4><p>条件分布试图回答这样一个问题，当我们知道$X$必须取某个值$x$时，$Y$上的概率分布是什么？在离散情况下，给定$Y$的条件概率质量函数是简单的：<br>$$<br>p_{Y | X}(y | x)&#x3D;\frac{p_{X Y}(x, y)}{p_{X}(x)}<br>$$<br>假设分母不等于0。</p>
+<p>在连续的情况下，在技术上要复杂一点，因为连续随机变量的概率等于零。忽略这一技术点，我们通过类比离散情况，简单地定义给定$X &#x3D; x$的条件概率密度为：<br>$$<br>f_{Y | X}(y | x)&#x3D;\frac{f_{X Y}(x, y)}{f_{X}(x)}<br>$$<br>假设分母不等于0。</p>
+<h4 id="3-5-贝叶斯定理"><a href="#3-5-贝叶斯定理" class="headerlink" title="3.5 贝叶斯定理"></a>3.5 贝叶斯定理</h4><p>当试图推导一个变量给定另一个变量的条件概率表达式时，经常出现的一个有用公式是<strong>贝叶斯定理</strong>。</p>
+<p>对于离散随机变量$X$和$Y$：<br>$$<br>P_{Y | X}(y | x)&#x3D;\frac{ {P_{XY} }(x, y)}{P_{X}(x)}&#x3D;\frac{P_{X | Y}(x | y) P_{Y}(y)}{\sum_{y^{\prime} \in V a l(Y)} P_{X | Y}\left(x | y^{\prime}\right) P_{Y}\left(y^{\prime}\right)}<br>$$</p>
+<p>对于连续随机变量$X$和$Y$：</p>
+<p>$$<br>f_{Y | X}(y | x)&#x3D;\frac{f_{X Y}(x, y)}{f_{X}(x)}&#x3D;\frac{f_{X | Y}(x | y) f_{Y}(y)}{\int_{-\infty}^{\infty} f_{X | Y}\left(x | y^{\prime}\right) f_{Y}\left(y^{\prime}\right) d y^{\prime} }<br>$$</p>
+<h4 id="3-6-独立性"><a href="#3-6-独立性" class="headerlink" title="3.6 独立性"></a>3.6 独立性</h4><p>如果对于$X$和$Y$的所有值，$F_{XY}(x,y) &#x3D; F_X(x)F_Y(y)$，则两个随机变量$X$和$Y$是独立的。等价地，</p>
+<ul>
+<li>对于离散随机变量, 对于任意$x \in Val(X)$, $y \in Val(Y)$ ，$p_{XY}(x,y) &#x3D; p_X (x)p_Y (y)$。</li>
+<li>对于离散随机变量, $p_Y |X (y|x) &#x3D; p_Y (y)$当对于任意$y \in Val(Y)$且$p_X (x) \not&#x3D; 0$。</li>
+<li>对于连续随机变量, $f_{XY}(x,y) &#x3D; f_X (x)f_Y(y)$ 对于任意 $x,y \in \mathbb{R}$。</li>
+<li>对于连续随机变量, $f_{Y |X} (y|x) &#x3D; f_Y (y)$ ，当$f_X (x)\not &#x3D; 0$对于任意$y \in \mathbb{R}$。</li>
+</ul>
+<p>非正式地说，如果“知道”一个变量的值永远不会对另一个变量的条件概率分布有任何影响，那么两个随机变量$X$和$Y$是独立的，也就是说，你只要知道$f(x)$和$f(y)$就知道关于这对变量$(X，Y)$的所有信息。以下引理将这一观察形式化:</p>
+<p><strong>引理3.1</strong> </p>
+<p>如果$X$和$Y$是独立的，那么对于任何$A，B⊆ \mathbb{R}$，我们有：<br>$$<br>P(X \in A, Y \in B)&#x3D;P(X \in A) P(Y \in B)<br>$$<br>利用上述引理，我们可以证明如果$X$与$Y$无关，那么$X$的任何函数都与$Y$的任何函数无关。</p>
+<h4 id="3-7-期望和协方差"><a href="#3-7-期望和协方差" class="headerlink" title="3.7 期望和协方差"></a>3.7 期望和协方差</h4><p>假设我们有两个离散的随机变量$X$，$Y$并且$g : \mathbf{R}^{2} \longrightarrow \mathbf{R}$是这两个随机变量的函数。那么$g$的期望值以如下方式定义：<br>$$<br>E[g(X, Y)] \triangleq \sum_{x \in V a l(X)} \sum_{y \in V a l(Y)} g(x, y) p_{X Y}(x, y)<br>$$<br>对于连续随机变量$X$，$Y$，类似的表达式是：<br>$$<br>E[g(X, Y)]&#x3D;\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x, y) f_{X Y}(x, y) d x d y<br>$$<br>我们可以用期望的概念来研究两个随机变量之间的关系。特别地，两个随机变量的<strong>协方差</strong>定义为：<br>$$<br>{Cov}[X, Y] \triangleq E[(X-E[X])(Y-E[Y])]<br>$$<br>使用类似于方差的推导，我们可以将它重写为：<br>$$<br>\begin{aligned} {Cov}[X, Y] &amp;&#x3D;E[(X-E[X])(Y-E[Y])] \ &amp;&#x3D;E[X Y-X E[Y]-Y E[X]+E[X] E[Y]] \ &amp;&#x3D;E[X Y]-E[X] E[Y]-E[Y] E[X]+E[X] E[Y]] \ &amp;&#x3D;E[X Y]-E[X] E[Y] \end{aligned}<br>$$</p>
+<p>在这里，说明两种协方差形式相等的关键步骤是第三个等号，在这里我们使用了这样一个事实，即$E[X]$和$E[Y]$实际上是常数，可以被提出来。当$cov[X，Y] &#x3D; 0$时，我们说$X$和$Y$不相关。</p>
+<p><strong>性质：</strong></p>
+<ul>
+<li>(期望线性) $E[f(X,Y ) + g(X,Y)] &#x3D; E[f(X,Y )] + E[g(X,Y)]$</li>
+<li>$V ar[X + Y ] &#x3D; V ar[X] + V ar[Y ] + 2Cov[X,Y]$</li>
+<li>如果$X$和$Y$相互独立, 那么 $Cov[X,Y ] &#x3D; 0$</li>
+<li>如果$X$和$Y$相互独立, 那么 $E[f(X)g(Y )] &#x3D; E[f(X)]E[g(Y)]$.</li>
+</ul>
+<h4 id="3-8-常见的二维随机变量"><a href="#3-8-常见的二维随机变量" class="headerlink" title="3.8 常见的二维随机变量"></a>3.8 常见的二维随机变量</h4><p>(1) 二维均匀分布：$(x,y) \sim U(D)$ ,$f(x,y) &#x3D; \begin{cases} \frac{1}{S(D)},(x,y) \in D \   0,其他  \end{cases}$</p>
+<p>(2) 二维正态分布：$(X,Y)\sim N(\mu_{1},\mu_{2},\sigma_{1}^{2},\sigma_{2}^{2},\rho)$,$(X,Y)\sim N(\mu_{1},\mu_{2},\sigma_{1}^{2},\sigma_{2}^{2},\rho)$</p>
+<p>$f(x,y) &#x3D; \frac{1}{2\pi\sigma_{1}\sigma_{2}\sqrt{1 - \rho^{2} }}.\exp\left{ \frac{- 1}{2(1 - \rho^{2})}\lbrack\frac{ {(x - \mu_{1})}^{2} }{\sigma_{1}^{2} } - 2\rho\frac{(x - \mu_{1})(y - \mu_{2})}{\sigma_{1}\sigma_{2} } + \frac{ {(y - \mu_{2})}^{2} }{\sigma_{2}^{2} }\rbrack \right}$</p>
+<h4 id="3-9-重要公式与结论"><a href="#3-9-重要公式与结论" class="headerlink" title="3.9 重要公式与结论"></a>3.9 重要公式与结论</h4><p>(1) 边缘密度公式： $f_{X}(x) &#x3D; \int_{- \infty}^{+ \infty}{f(x,y)dy,}$<br>$f_{Y}(y) &#x3D; \int_{- \infty}^{+ \infty}{f(x,y)dx}$</p>
+<p>(2) $P\left{ \left( X,Y \right) \in D \right} &#x3D; \iint_{D}^{}{f\left( x,y \right){dxdy} }$</p>
+<p>(3) 若$(X,Y)$服从二维正态分布$N(\mu_{1},\mu_{2},\sigma_{1}^{2},\sigma_{2}^{2},\rho)$<br>则有：</p>
+<ol>
+<li><p>$X\sim N\left( \mu_{1},\sigma_{1}^{2} \right),Y\sim N(\mu_{2},\sigma_{2}^{2}).$</p>
+</li>
+<li><p>$X$与$Y$相互独立$\Leftrightarrow \rho &#x3D; 0$，即$X$与$Y$不相关。</p>
+</li>
+<li><p>$C_{1}X + C_{2}Y\sim N(C_{1}\mu_{1} + C_{2}\mu_{2},C_{1}^{2}\sigma_{1}^{2} + C_{2}^{2}\sigma_{2}^{2} + 2C_{1}C_{2}\sigma_{1}\sigma_{2}\rho)$</p>
+</li>
+<li><p>${\ X}$关于$Y&#x3D;y$的条件分布为： $N(\mu_{1} + \rho\frac{\sigma_{1} }{\sigma_{2} }(y - \mu_{2}),\sigma_{1}^{2}(1 - \rho^{2}))$</p>
+</li>
+<li><p>$Y$关于$X &#x3D; x$的条件分布为： $N(\mu_{2} + \rho\frac{\sigma_{2} }{\sigma_{1} }(x - \mu_{1}),\sigma_{2}^{2}(1 - \rho^{2}))$</p>
+</li>
+</ol>
+<p>(4) 若$X$与$Y$独立，且分别服从$N(\mu_{1},\sigma_{1}^{2}),N(\mu_{1},\sigma_{2}^{2}),$<br>则：$\left( X,Y \right)\sim N(\mu_{1},\mu_{2},\sigma_{1}^{2},\sigma_{2}^{2},0),$</p>
+<p>$C_{1}X + C_{2}Y\tilde{\ }N(C_{1}\mu_{1} + C_{2}\mu_{2},C_{1}^{2}\sigma_{1}^{2} C_{2}^{2}\sigma_{2}^{2}).$</p>
+<p>(5) 若$X$与$Y$相互独立，$f\left( x \right)$和$g\left( x \right)$为连续函数， 则$f\left( X \right)$和$g(Y)$也相互独立。</p>
+<h3 id="4-多个随机变量"><a href="#4-多个随机变量" class="headerlink" title="4. 多个随机变量"></a>4. 多个随机变量</h3><p>上一节介绍的概念和想法可以推广到两个以上的随机变量。特别是，假设我们有$n$个连续随机变量，$X _1 (\omega),X_2 (\omega),\cdots X_n (\omega)$。在本节中，为了表示简单，我们只关注连续的情况，对离散随机变量的推广工作类似。</p>
+<h4 id="4-1-基本性质"><a href="#4-1-基本性质" class="headerlink" title="4.1 基本性质"></a>4.1 基本性质</h4><p>我们可以定义$X_1,X_2,\cdots,X_n$的<strong>联合累积分布函数</strong>、<strong>联合概率密度函数</strong>，以及给定$X_2,\cdots,X_n$时$X_1$的<strong>边缘概率密度函数</strong>为：<br>$$<br>F_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right)&#x3D;P\left(X_{1} \leq x_{1}, X_{2} \leq x_{2}, \ldots, X_{n} \leq x_{n}\right)<br>$$</p>
+<p>$$<br>f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right)&#x3D;\frac{\partial^{n} F_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right)}{\partial x_{1} \ldots \partial x_{n} }<br>$$</p>
+<p>$$<br>f_{X_{1} }\left(X_{1}\right)&#x3D;\int_{-\infty}^{\infty} \cdots \int_{-\infty}^{\infty} f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right) d x_{2} \ldots d x_{n}<br>$$</p>
+<p>$$<br>f_{X_{1} | X_{2}, \ldots, X_{n} }\left(x_{1} | x_{2}, \dots x_{n}\right)&#x3D;\frac{f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \dots x_{n}\right)}{f_{X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right)}<br>$$</p>
+<p>为了计算事件$A \subseteq \mathbb{R}^{n}$的概率，我们有：<br>$$<br>P\left(\left(x_{1}, x_{2}, \ldots x_{n}\right) \in A\right)&#x3D;\int_{\left(x_{1}, x_{2}, \ldots x_{n}\right) \in A} f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right) d x_{1} d x_{2} \ldots d x_{n}<br>$$<br><strong>链式法则：</strong></p>
+<p>从多个随机变量的条件概率的定义中，可以看出：<br>$$<br>\begin{aligned} f\left(x_{1}, x_{2}, \ldots, x_{n}\right) &amp;&#x3D;f\left(x_{n} | x_{1}, x_{2} \ldots, x_{n-1}\right) f\left(x_{1}, x_{2} \ldots, x_{n-1}\right) \ &amp;&#x3D;f\left(x_{n} | x_{1}, x_{2} \ldots, x_{n-1}\right) f\left(x_{n-1} | x_{1}, x_{2} \ldots, x_{n-2}\right) f\left(x_{1}, x_{2} \ldots, x_{n-2}\right) \ &amp;&#x3D;\cdots&#x3D;f\left(x_{1}\right) \prod_{i&#x3D;2}^{n} f\left(x_{i} | x_{1}, \ldots, x_{i-1}\right) \end{aligned}<br>$$</p>
+<p>独立性:对于多个事件，$A_1,\cdots ,A_k$,我们说$A_1,\cdots ,A_k$ 是相互独立的,当对于任何子集$S \subseteq {1，2,\cdots,k}$，我们有：<br>$$<br>P\left(\cap_{i \in S} A_{i}\right)&#x3D;\prod_{i \in S} P\left(A_{i}\right)<br>$$</p>
+<p>同样，我们说随机变量$X_1,X_2,\cdots,X_n$是独立的，如果：</p>
+<p>$$<br>f(x_1,\cdots,x_n)&#x3D;f(x_1)f(x_2)\cdots f(x_n)<br>$$</p>
+<p>这里，相互独立性的定义只是两个随机变量独立性到多个随机变量的自然推广。 </p>
+<p>独立随机变量经常出现在机器学习算法中，其中我们假设属于训练集的训练样本代表来自某个未知概率分布的独立样本。为了明确独立性的重要性，考虑一个“坏的”训练集，我们首先从某个未知分布中抽取一个训练样本$(x^{ (1)},y^{(1)})$，然后将完全相同的训练样本的$m-1$个副本添加到训练集中。在这种情况下，我们有：<br>$$<br>P\left(\left(x^{(1)}, y^{(1)}\right), \ldots .\left(x^{(m)}, y^{(m)}\right)\right) \neq \prod_{i&#x3D;1}^{m} P\left(x^{(i)}, y^{(i)}\right)<br>$$</p>
+<p>尽管训练集的大小为$m$，但这些例子并不独立！虽然这里描述的过程显然不是为机器学习算法建立训练集的明智方法，但是事实证明，在实践中，样本的不独立性确实经常出现，并且它具有减小训练集的“有效大小”的效果。</p>
+<h4 id="4-2-随机向量"><a href="#4-2-随机向量" class="headerlink" title="4.2 随机向量"></a>4.2 随机向量</h4><p>假设我们有n个随机变量。当把所有这些随机变量放在一起工作时，我们经常会发现把它们放在一个向量中是很方便的.我们称结果向量为随机向量(更正式地说，随机向量是从$\Omega$到$\mathbb{R}^n$的映射)。应该清楚的是，随机向量只是处理$n$个随机变量的一种替代符号，因此联合概率密度函数和综合密度函数的概念也将适用于随机向量。</p>
+<p><strong>期望:</strong></p>
+<p>考虑$g : \mathbb{R}^n \rightarrow \mathbb{R}$中的任意函数。这个函数的期望值 被定义为<br>$$<br>E[g(X)]&#x3D;\int_{\mathbb{R}^{n} } g\left(x_{1}, x_{2}, \ldots, x_{n}\right) f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right) d x_{1} d x_{2} \ldots d x_{n}E[g(X)]\&#x3D;\int_{\mathbb{R}^{n} } g\left(x_{1}, x_{2}, \ldots, x_{n}\right) f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots x_{n}\right) d x_{1} d x_{2} \ldots d x_{n}<br>$$<br>其中，$\int_{\mathbb{R}^{n} }$是从$-\infty$到$\infty$的$n$个连续积分。如果$g$是从$\mathbb{R}^n$到$\mathbb{R}^m$的函数，那么$g$的期望值是输出向量的元素期望值，即，如果$g$是：</p>
+<p>$$<br>g(x)&#x3D;\left[\begin{array}{c}{g_{1}(x)} \ {g_{2}(x)} \ {\vdots} \ {g_{m}(x)}\end{array}\right]<br>$$</p>
+<p>那么，<br>$$<br>E[g(X)]&#x3D;\left[\begin{array}{c}{E\left[g_{1}(X)\right]} \ {E\left[g_{2}(X)\right]} \ {\vdots} \ {E\left[g_{m}(X)\right]}\end{array}\right]<br>$$</p>
+<p>协方差矩阵：对于给定的随机向量$X:\Omega\rightarrow \mathbb{R}^n$，其协方差矩阵$\Sigma$是$n \times n$平方矩阵，其输入由$\Sigma_{i j}&#x3D;{Cov}\left[X_{i}, X_{j}\right]$给出。从协方差的定义来看，我们有：<br>$$<br>\begin{aligned}<br>\begin{equation}<br>\Sigma&#x3D;\left[\begin{array}{ccc}{ {Cov}\left[X_{1}, X_{1}\right]} &amp; {\cdots} &amp; { {Cov}\left[X_{1}, X_{n}\right]} \ {\vdots} &amp; {\ddots} &amp; {\vdots} \ { {Cov}\left[X_{n}, X_{1}\right]} &amp; {\cdots} &amp; { {Cov}\left[X_{n}, X_{n}\right]}\end{array}\right]\</p>
+<p>&#x3D;\left[\begin{array}{ccc}{E\left[X_{1}^{2}\right]-E\left[X_{1}\right] E\left[X_{1}\right]} &amp; {\cdots} &amp; {E\left[X_{1} X_{n}\right]-E\left[X_{1}\right] E\left[X_{n}\right]} \ {\vdots} &amp; {\ddots} &amp; {\vdots} \ {E\left[X_{n} X_{1}\right]-E\left[X_{n}\right] E\left[X_{1}\right]} &amp; {\cdots} &amp; {E\left[X_{n}^{2}\right]-E\left[X_{n}\right] E\left[X_{n}\right]}\end{array}\right]\</p>
+<p>&#x3D;\left[\begin{array}{ccc}{E\left[X_{1}^{2}\right]} &amp; {\cdots} &amp; {E\left[X_{1} X_{n}\right]} \ {\vdots} &amp; {\ddots} &amp; {\vdots} \ {E\left[X_{n} X_{1}\right]} &amp; {\cdots} &amp; {E\left[X_{n}^{2}\right]}\end{array}\right]-\left[\begin{array}{ccc}{E\left[X_{1}\right] E\left[X_{1}\right]} &amp; {\cdots} &amp; {E\left[X_{1}\right] E\left[X_{n}\right]} \ {\vdots} &amp; {\ddots} &amp; {\vdots} \ {E\left[X_{n}\right] E\left[X_{1}\right]} &amp; {\cdots} &amp; {E\left[X_{n}\right] E\left[X_{n}\right]}\end{array}\right]\<br>&#x3D;E\left[X X^{T}\right]-E[X] E[X]^{T}&#x3D;\ldots&#x3D;E\left[(X-E[X])(X-E[X])^{T}\right]</p>
+<p>\end{equation}<br>\end{aligned}<br>$$<br>其中矩阵期望以明显的方式定义。<br>协方差矩阵有许多有用的属性:</p>
+<ul>
+<li>$\Sigma \succeq 0$；也就是说，$\Sigma$是正半定的。 </li>
+<li>$\Sigma&#x3D;\Sigma^T$；也就是说，$\Sigma$是对称的。</li>
+</ul>
+<h4 id="4-3-多元高斯分布"><a href="#4-3-多元高斯分布" class="headerlink" title="4.3 多元高斯分布"></a>4.3 多元高斯分布</h4><p>随机向量上概率分布的一个特别重要的例子叫做多元高斯或多元正态分布。随机向量$X\in \mathbb{R}^n$被认为具有多元正态(或高斯)分布，当其具有均值$\mu \in \mathbb{R}^n$和协方差矩阵$\Sigma \in \mathbb{S}<em>{++}^{n}$(其中$ \mathbb{S}</em>{++}^{n}$指对称正定$n \times n$矩阵的空间)</p>
+<p>$f_{X_{1}, X_{2}, \ldots, X_{n} }\left(x_{1}, x_{2}, \ldots, x_{n} ; \mu, \Sigma\right)&#x3D;\frac{1}{(2 \pi)^{n &#x2F; 2}|\Sigma|^{1 &#x2F; 2} } \exp \left(-\frac{1}{2}(x-\mu)^{T} \Sigma^{-1}(x-\mu)\right)$</p>
+<p>我们把它写成$X \sim \mathcal{N}(\mu, \Sigma)$。请注意，在$n &#x3D; 1$的情况下，它降维成普通正态分布，其中均值参数为$\mu_1$，方差为$\Sigma_{11}$。 </p>
+<p>一般来说，高斯随机变量在机器学习和统计中非常有用，主要有两个原因：</p>
+<p>首先，在统计算法中对“噪声”建模时，它们非常常见。通常，噪声可以被认为是影响测量过程的大量小的独立随机扰动的累积；根据中心极限定理，独立随机变量的总和将趋向于“看起来像高斯”。</p>
+<p>其次，高斯随机变量便于许多分析操作，因为实际中出现的许多涉及高斯分布的积分都有简单的封闭形式解。我们将在本课程稍后遇到这种情况。</p>
+<h3 id="5-随机变量的数字特征"><a href="#5-随机变量的数字特征" class="headerlink" title="5. 随机变量的数字特征"></a>5. 随机变量的数字特征</h3><p>一些具体的推导前文有过详细的阐述，这里不加缀述，此处仅作总结用</p>
+<h4 id="5-1-数学期望"><a href="#5-1-数学期望" class="headerlink" title="5.1 数学期望"></a><strong>5.1 数学期望</strong></h4><p>离散型：$P\left{ X &#x3D; x_{i} \right} &#x3D; p_{i},E(X) &#x3D; \sum_{i}^{}{x_{i}p_{i} }$；</p>
+<p>连续型： $X\sim f(x),E(X) &#x3D; \int_{- \infty}^{+ \infty}{xf(x)dx}$</p>
+<p>性质：</p>
+<p>(1) $E(C) &#x3D; C,E\lbrack E(X)\rbrack &#x3D; E(X)$</p>
+<p>(2) $E(C_{1}X + C_{2}Y) &#x3D; C_{1}E(X) + C_{2}E(Y)$</p>
+<p>(3) 若$X$和$Y$独立，则$E(XY) &#x3D; E(X)E(Y)$</p>
+<p>(4)$\left\lbrack E(XY) \right\rbrack^{2} \leq E(X^{2})E(Y^{2})$</p>
+<h4 id="5-2-方差："><a href="#5-2-方差：" class="headerlink" title="5.2 方差："></a><strong>5.2 方差</strong>：</h4><p>$D(X) &#x3D; E\left\lbrack X - E(X) \right\rbrack^{2} &#x3D; E(X^{2}) - \left\lbrack E(X) \right\rbrack^{2}$</p>
+<h4 id="5-3-标准差："><a href="#5-3-标准差：" class="headerlink" title="5.3 标准差："></a><strong>5.3 标准差</strong>：</h4><ul>
+<li><strong>离散型：</strong>$D(X) &#x3D; \sum_{i}^{}{\left\lbrack x_{i} - E(X) \right\rbrack^{2}p_{i} }$</li>
+<li><strong>连续型：</strong>$D(X) &#x3D; {\int_{- \infty}^{+ \infty}\left\lbrack x - E(X) \right\rbrack}^{2}f(x)dx$</li>
+</ul>
+<p>性质：</p>
+<p>(1)$\ D(C) &#x3D; 0,D\lbrack E(X)\rbrack &#x3D; 0,D\lbrack D(X)\rbrack &#x3D; 0$</p>
+<p>(2) $X$与$Y$相互独立，则$D(X \pm Y) &#x3D; D(X) + D(Y)$</p>
+<p>(3)$\ D\left( C_{1}X + C_{2} \right) &#x3D; C_{1}^{2}D\left( X \right)$</p>
+<p>(4) 一般有 $D(X \pm Y) &#x3D; D(X) + D(Y) \pm 2Cov(X,Y) &#x3D; D(X) + D(Y) \pm<br>2\rho\sqrt{D(X)}\sqrt{D(Y)}$</p>
+<p>(5)$\ D\left( X \right) &lt; E\left( X - C \right)^{2},C \neq E\left( X \right)$</p>
+<p>(6)$\ D(X) &#x3D; 0 \Leftrightarrow P\left{ X &#x3D; C \right} &#x3D; 1$</p>
+<h4 id="5-4-随机变量函数的数学期望"><a href="#5-4-随机变量函数的数学期望" class="headerlink" title="5.4 随机变量函数的数学期望"></a><strong>5.4 随机变量函数的数学期望</strong></h4><p>(1) 对于函数$Y &#x3D; g(x)$</p>
+<p>$X$为离散型：$P{ X &#x3D; x_{i}} &#x3D; p_{i},E(Y) &#x3D; \sum_{i}^{}{g(x_{i})p_{i} }$；</p>
+<p>$X$为连续型：$X\sim f(x),E(Y) &#x3D; \int_{- \infty}^{+ \infty}{g(x)f(x)dx}$</p>
+<p>(2) $Z &#x3D; g(X,Y)$;$\left( X,Y \right)\sim P{ X &#x3D; x_{i},Y &#x3D; y_{j}} &#x3D; p_{ {ij} }$; $E(Z) &#x3D; \sum_{i}^{}{\sum_{j}^{}{g(x_{i},y_{j})p_{ {ij} }} }$ $\left( X,Y \right)\sim f(x,y)$;$E(Z) &#x3D; \int_{- \infty}^{+ \infty}{\int_{- \infty}^{+ \infty}{g(x,y)f(x,y)dxdy} }$</p>
+<h4 id="5-5-协方差"><a href="#5-5-协方差" class="headerlink" title="5.5 协方差"></a><strong>5.5 协方差</strong></h4><p>$Cov(X,Y) &#x3D; E\left\lbrack (X - E(X)(Y - E(Y)) \right\rbrack$</p>
+<h4 id="5-6-相关系数"><a href="#5-6-相关系数" class="headerlink" title="5.6 相关系数"></a><strong>5.6 相关系数</strong></h4><p>$\rho_{ {XY} } &#x3D; \frac{Cov(X,Y)}{\sqrt{D(X)}\sqrt{D(Y)} }$,$k$阶原点矩 $E(X^{k})$;<br>$k$阶中心矩 $E\left{ {\lbrack X - E(X)\rbrack}^{k} \right}$</p>
+<p>性质：</p>
+<p>(1)$\ Cov(X,Y) &#x3D; Cov(Y,X)$</p>
+<p>(2)$\ Cov(aX,bY) &#x3D; abCov(Y,X)$</p>
+<p>(3)$\ Cov(X_{1} + X_{2},Y) &#x3D; Cov(X_{1},Y) + Cov(X_{2},Y)$</p>
+<p>(4)$\ \left| \rho\left( X,Y \right) \right| \leq 1$</p>
+<p>(5) $\ \rho\left( X,Y \right) &#x3D; 1 \Leftrightarrow P\left( Y &#x3D; aX + b \right) &#x3D; 1$ ，其中$a &gt; 0$</p>
+<p>$\rho\left( X,Y \right) &#x3D; - 1 \Leftrightarrow P\left( Y &#x3D; aX + b \right) &#x3D; 1$<br>，其中$a &lt; 0$</p>
+<h4 id="5-7-重要公式与结论"><a href="#5-7-重要公式与结论" class="headerlink" title="5.7 重要公式与结论"></a><strong>5.7 重要公式与结论</strong></h4><p>(1)$\ D(X) &#x3D; E(X^{2}) - E^{2}(X)$</p>
+<p>(2)$\ Cov(X,Y) &#x3D; E(XY) - E(X)E(Y)$</p>
+<p>(3) $\left| \rho\left( X,Y \right) \right| \leq 1,$且 $\rho\left( X,Y \right) &#x3D; 1 \Leftrightarrow P\left( Y &#x3D; aX + b \right) &#x3D; 1$，其中$a &gt; 0$</p>
+<p>$\rho\left( X,Y \right) &#x3D; - 1 \Leftrightarrow P\left( Y &#x3D; aX + b \right) &#x3D; 1$，其中$a &lt; 0$</p>
+<p>(4) 下面 5 个条件互为充要条件：</p>
+<p>$\rho(X,Y) &#x3D; 0$ $\Leftrightarrow Cov(X,Y) &#x3D; 0$ $\Leftrightarrow E(X,Y) &#x3D; E(X)E(Y)$ $\Leftrightarrow D(X + Y) &#x3D; D(X) + D(Y)$ $\Leftrightarrow  D(X - Y) &#x3D; D(X) + D(Y)$</p>
+<p>注：$X$与$Y$独立为上述 5 个条件中任何一个成立的充分条件，但非必要条件。</p>
+<h3 id="6-数理统计的基本概念"><a href="#6-数理统计的基本概念" class="headerlink" title="6. 数理统计的基本概念"></a>6. 数理统计的基本概念</h3><h4 id="6-1-基本概念"><a href="#6-1-基本概念" class="headerlink" title="6.1 基本概念"></a><strong>6.1 基本概念</strong></h4><p>总体：研究对象的全体，它是一个随机变量，用$X$表示。</p>
+<p>个体：组成总体的每个基本元素。</p>
+<p>简单随机样本：来自总体$X$的$n$个相互独立且与总体同分布的随机变量$X_{1},X_{2}\cdots,X_{n}$，称为容量为$n$的简单随机样本，简称样本。</p>
+<p>统计量：设$X_{1},X_{2}\cdots,X_{n},$是来自总体$X$的一个样本，$g(X_{1},X_{2}\cdots,X_{n})$）是样本的连续函数，且$g()$中不含任何未知参数，则称$g(X_{1},X_{2}\cdots,X_{n})$为统计量。</p>
+<p>样本均值：$\overline{X} &#x3D; \frac{1}{n}\sum_{i &#x3D; 1}^{n}X_{i}$</p>
+<p>样本方差：$S^{2} &#x3D; \frac{1}{n - 1}\sum_{i &#x3D; 1}^{n}{(X_{i} - \overline{X})}^{2}$</p>
+<p>样本矩：样本$k$阶原点矩：$A_{k} &#x3D; \frac{1}{n}\sum_{i &#x3D; 1}^{n}X_{i}^{k},k &#x3D; 1,2,\cdots$</p>
+<p>样本$k$阶中心矩：$B_{k} &#x3D; \frac{1}{n}\sum_{i &#x3D; 1}^{n}{(X_{i} - \overline{X})}^{k},k &#x3D; 1,2,\cdots$</p>
+<h4 id="6-2-常用分布"><a href="#6-2-常用分布" class="headerlink" title="6.2 常用分布"></a><strong>6.2 常用分布</strong></h4><p>$\chi^{2}$分布：$\chi^{2} &#x3D; X_{1}^{2} + X_{2}^{2} + \cdots + X_{n}^{2}\sim\chi^{2}(n)$，其中$X_{1},X_{2}\cdots,X_{n},$相互独立，且同服从$N(0,1)$</p>
+<p>$t$分布：$T &#x3D; \frac{X}{\sqrt{Y&#x2F;n} }\sim t(n)$ ，其中$X\sim N\left( 0,1 \right),Y\sim\chi^{2}(n),$且$X$，$Y$ 相互独立。</p>
+<p>$F$分布：$F &#x3D; \frac{X&#x2F;n_{1} }{Y&#x2F;n_{2} }\sim F(n_{1},n_{2})$，其中$X\sim\chi^{2}\left( n_{1} \right),Y\sim\chi^{2}(n_{2}),$且$X$，$Y$相互独立。</p>
+<p>分位数：若$P(X \leq x_{\alpha}) &#x3D; \alpha,$则称$x_{\alpha}$为$X$的$\alpha$分位数</p>
+<h4 id="6-3-正态总体的常用样本分布"><a href="#6-3-正态总体的常用样本分布" class="headerlink" title="6.3 正态总体的常用样本分布"></a><strong>6.3 正态总体的常用样本分布</strong></h4><p>(1) 设$X_{1},X_{2}\cdots,X_{n}$为来自正态总体$N(\mu,\sigma^{2})$的样本，</p>
+<p>$\overline{X} &#x3D; \frac{1}{n}\sum_{i &#x3D; 1}^{n}X_{i},S^{2} &#x3D; \frac{1}{n - 1}\sum_{i &#x3D; 1}^{n}{ {(X_{i} - \overline{X})}^{2},}$则：</p>
+<ol>
+<li><p>$\overline{X}\sim N\left( \mu,\frac{\sigma^{2} }{n} \right){\ \ }$或者$\frac{\overline{X} - \mu}{\frac{\sigma}{\sqrt{n} }}\sim N(0,1)$</p>
+</li>
+<li><p>$\frac{(n - 1)S^{2} }{\sigma^{2} } &#x3D; \frac{1}{\sigma^{2} }\sum_{i &#x3D; 1}^{n}{ {(X_{i} - \overline{X})}^{2}\sim\chi^{2}(n - 1)}$</p>
+</li>
+<li><p>$\frac{1}{\sigma^{2} }\sum_{i &#x3D; 1}^{n}{ {(X_{i} - \mu)}^{2}\sim\chi^{2}(n)}$</p>
+</li>
+</ol>
+<p>4)${\ \ }\frac{\overline{X} - \mu}{S&#x2F;\sqrt{n} }\sim t(n - 1)$</p>
+<h4 id="6-4-重要公式与结论"><a href="#6-4-重要公式与结论" class="headerlink" title="6.4 重要公式与结论"></a><strong>6.4 重要公式与结论</strong></h4><p>(1) 对于$\chi^{2}\sim\chi^{2}(n)$，有$E(\chi^{2}(n)) &#x3D; n,D(\chi^{2}(n)) &#x3D; 2n;$</p>
+<p>(2) 对于$T\sim t(n)$，有$E(T) &#x3D; 0,D(T) &#x3D; \frac{n}{n - 2}(n &gt; 2)$；</p>
+<p>(3) 对于$F\tilde{\ }F(m,n)$，有 $\frac{1}{F}\sim F(n,m),F_{a&#x2F;2}(m,n) &#x3D; \frac{1}{F_{1 - a&#x2F;2}(n,m)};$</p>
+<p>(4) 对于任意总体$X$，有 $E(\overline{X}) &#x3D; E(X),E(S^{2}) &#x3D; D(X),D(\overline{X}) &#x3D; \frac{D(X)}{n}$(X)}{n}$</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+        <a href="/tags/Mathematics/">#Mathematics</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning Foundation——概率论和数理统计</div>
+      <div>http://example.com/2022/07/01/MachineLearning/概率论基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/MachineLearning/%E5%88%86%E6%9E%90%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/" title="Machine Learning——分析思维模型">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——分析思维模型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/01/BigData&amp;Linux/PySpark%E6%A1%88%E4%BE%8B/" title="BigData——15.PySpark案例">
+                        <span class="hidden-mobile">BigData——15.PySpark案例</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

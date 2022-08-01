@@ -1,0 +1,907 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、缺失值类型在pandas中，缺失数据显示为NaN。缺失值有3种表示方法，np.nan，none，pd.NA。 1、np.nan缺失值有个特点（坑），它不等于任何值，连自己都不相等。如果用nan和任何其它值比较都会返回nan。 12np.nan &#x3D;&#x3D; np.nan&gt;&gt; False  也正由于这个特点，在数据集读入以后，不论列是什么类型的数据，默认的缺失值全为np.nan。 因为nan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas  losing data deal">
+<meta property="og:url" content="http://example.com/2022/08/01/Python/pandas%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="一、缺失值类型在pandas中，缺失数据显示为NaN。缺失值有3种表示方法，np.nan，none，pd.NA。 1、np.nan缺失值有个特点（坑），它不等于任何值，连自己都不相等。如果用nan和任何其它值比较都会返回nan。 12np.nan &#x3D;&#x3D; np.nan&gt;&gt; False  也正由于这个特点，在数据集读入以后，不论列是什么类型的数据，默认的缺失值全为np.nan。 因为nan">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T02:13:53.525Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.348Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Pandas  losing data deal - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Pandas  losing data deal"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Pandas  losing data deal</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h2 id="一、缺失值类型"><a href="#一、缺失值类型" class="headerlink" title="一、缺失值类型"></a>一、缺失值类型</h2><p>在<code>pandas</code>中，缺失数据显示为<strong>NaN</strong>。缺失值有3种表示方法，<code>np.nan</code>，<code>none</code>，<code>pd.NA</code>。</p>
+<h3 id="1、np-nan"><a href="#1、np-nan" class="headerlink" title="1、np.nan"></a>1、np.nan</h3><p>缺失值有个特点（坑），它不等于任何值，连自己都不相等。如果用<code>nan</code>和任何其它值比较都会返回<code>nan</code>。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">np.<span class="hljs-literal">nan</span> == np.<span class="hljs-literal">nan</span><br>&gt;&gt; <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p>也正由于这个特点，在数据集读入以后，不论列是什么类型的数据，默认的缺失值全为<code>np.nan</code>。</p>
+<p><strong>因为<code>nan</code>在<code>Numpy</code>中的类型是浮点，因此整型列会转为浮点；而字符型由于无法转化为浮点型，只能归并为object类型（’O’），原来是浮点型的则类型不变。</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">type</span><span class="hljs-params">(np.nan)</span></span><br>&gt;&gt; <span class="hljs-attribute">float</span><br>pd<span class="hljs-selector-class">.Series</span>(<span class="hljs-selector-attr">[1,2,3]</span>)<span class="hljs-selector-class">.dtype</span><br>&gt;&gt; <span class="hljs-built_in">dtype</span>(<span class="hljs-string">&#x27;int64&#x27;</span>)<br>pd<span class="hljs-selector-class">.Series</span>(<span class="hljs-selector-attr">[1,np.nan,3]</span>)<span class="hljs-selector-class">.dtype</span><br>&gt;&gt; <span class="hljs-built_in">dtype</span>(<span class="hljs-string">&#x27;float64&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>初学者做数据处理遇见object类型会发懵，不知道这是个啥，明明是字符型，导入后就变了，其实是因为缺失值导致的。</p>
+<p>除此之外，还要介绍一种针对时间序列的缺失值，它是单独存在的，用<strong>NaT</strong>表示，是<code>pandas</code>的内置类型，**可以视为时间序列版的<code>np.nan</code>**，也是与自己不相等。</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs subunit">s_time = pd.Series([pd.Timestamp(&#x27;20220101&#x27;)]*3)<br>s_time<br>&gt;&gt; 0 2022<span class="hljs-string">-01</span><span class="hljs-string">-01</span><br>   1 2022<span class="hljs-string">-01</span><span class="hljs-string">-01</span><br>   2 2022<span class="hljs-string">-01</span><span class="hljs-string">-01</span><br>   dtype:datetime64[ns]<br>-----------------<br>s_time[2] = pd.NaT<br>s_time<br>&gt;&gt; 0 2022<span class="hljs-string">-01</span><span class="hljs-string">-01</span><br>   1 2022<span class="hljs-string">-01</span><span class="hljs-string">-01</span><br>   2 NaT<br>   dtype:datetime64[ns]<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、None"><a href="#2、None" class="headerlink" title="2、None"></a>2、None</h3><p>还有一种就是<code>None</code>，它要比<code>nan</code>好那么一点，因为它至少自己与自己相等。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">None</span> <span class="hljs-operator">=</span><span class="hljs-operator">=</span> None<br>&gt;&gt; True<br></code></pre></td></tr></table></figure>
+
+<p>在传入数值类型后，会自动变为<code>np.nan</code>。</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">type</span>(pd.<span class="hljs-type">Series</span>([1,<span class="hljs-type">None</span>])[1])<br>&gt;&gt; numpy.float64<br></code></pre></td></tr></table></figure>
+
+<p>只有当传入<code>object</code>类型时是不变的，因此可以认为如果不是人工命名为<code>None</code>的话，它基本不会自动出现在<code>pandas</code>中，所以<code>None</code>大家基本也看不到。</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">type</span>(pd.<span class="hljs-type">Series</span>([1,<span class="hljs-type">None</span>],dtype=&#x27;<span class="hljs-type">O</span>&#x27;)[1])<br>&gt;&gt; <span class="hljs-type">NoneType</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3、NA标量"><a href="#3、NA标量" class="headerlink" title="3、NA标量"></a>3、NA标量</h3><p>pandas1.0以后的版本中引入了一个专门表示缺失值的标量<strong>pd.NA</strong>，它代表空整数、空布尔值、空字符，这个功能目前处于实验阶段。</p>
+<p>开发者也注意到了这点，对于不同数据类型采取不同的缺失值表示会很乱。pd.NA就是为了统一而存在的。<strong>pd.NA的目标是提供一个缺失值指示器，可以在各种数据类型中一致使用(而不是np.nan、None或者NaT分情况使用)。</strong></p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-title">s_new</span> = pd.<span class="hljs-type">Series</span>([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], d<span class="hljs-keyword">type</span>=&quot;<span class="hljs-type">Int64</span>&quot;)<br><span class="hljs-title">s_new</span><br>&gt;&gt; <span class="hljs-number">0</span>   <span class="hljs-number">1</span><br>   <span class="hljs-number">1</span>   <span class="hljs-number">2</span><br>   d<span class="hljs-keyword">type</span>: <span class="hljs-type">Int64</span><br><span class="hljs-comment">-----------------</span><br><span class="hljs-title">s_new</span>[<span class="hljs-number">1</span>] = pd.<span class="hljs-type">NaT</span><br><span class="hljs-title">s_new</span><br>&gt;&gt; <span class="hljs-number">0</span>    <span class="hljs-number">1</span><br>   <span class="hljs-number">1</span>  &lt;<span class="hljs-type">NA</span>&gt;<br>   d<span class="hljs-keyword">type</span>: <span class="hljs-type">Int64</span><br></code></pre></td></tr></table></figure>
+
+<p>同理，对于布尔型、字符型一样不会改变原有数据类型,这样就解决了原来动不动就变成<code>object</code>类型的麻烦了。</p>
+<p>下面是pd.NA的一些常用算术运算和比较运算的示例：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">##### 算术运算<br># 加法<br>pd.NA + 1<br><span class="hljs-section">&gt;&gt; &lt;NA&gt;</span><br><span class="hljs-section">-----------</span><br># 乘法<br>&quot;a&quot; * pd.NA<br><span class="hljs-section">&gt;&gt; &lt;NA&gt;</span><br><span class="hljs-section">-----------</span><br># 以下两种其中结果为1<br>pd.NA <span class="hljs-strong">** 0</span><br><span class="hljs-strong">&gt;&gt; 1</span><br><span class="hljs-strong">-----------</span><br><span class="hljs-strong">1 **</span> pd.NA<br>&gt;&gt; 1<br><br>##### 比较运算<br>pd.NA == pd.NA<br><span class="hljs-section">&gt;&gt; &lt;NA&gt;</span><br><span class="hljs-section">-----------</span><br>pd.NA &lt; 2.5<br><span class="hljs-section">&gt;&gt; &lt;NA&gt;</span><br><span class="hljs-section">-----------</span><br>np.log(pd.NA)<br><span class="hljs-section">&gt;&gt; &lt;NA&gt;</span><br><span class="hljs-section">-----------</span><br>np.add(pd.NA, 1)<br>&gt;&gt; &lt;NA&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、缺失值判断"><a href="#二、缺失值判断" class="headerlink" title="二、缺失值判断"></a>二、缺失值判断</h2><p>了解了缺失值的几种形式后，我们要知道如何判断缺失值。对于一个<code>dataframe</code>而言，判断缺失的主要方法就是<code>isnull()</code>或者<code>isna()</code>，这两个方法会直接返回<code>True</code>和<code>False</code>的布尔值。可以是对整个<code>dataframe</code>或者某个列。</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nsis">df = pd.DataFrame(&#123;<br>      <span class="hljs-string">&#x27;A&#x27;</span>:[<span class="hljs-string">&#x27;a1&#x27;</span>,<span class="hljs-string">&#x27;a1&#x27;</span>,<span class="hljs-string">&#x27;a2&#x27;</span>,<span class="hljs-string">&#x27;a3&#x27;</span>],<br>      <span class="hljs-string">&#x27;B&#x27;</span>:[<span class="hljs-string">&#x27;b1&#x27;</span>,<span class="hljs-literal">None</span>,<span class="hljs-string">&#x27;b2&#x27;</span>,<span class="hljs-string">&#x27;b3&#x27;</span>],<br>      <span class="hljs-string">&#x27;C&#x27;</span>:[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>],<br>      <span class="hljs-string">&#x27;D&#x27;</span>:[<span class="hljs-number">5</span>,<span class="hljs-literal">None</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>]&#125;)<br><span class="hljs-comment"># 将无穷设置为缺失值      </span><br>pd.options.mode.use_inf_as_na = <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1、对整个dataframe判断缺失"><a href="#1、对整个dataframe判断缺失" class="headerlink" title="1、对整个dataframe判断缺失"></a>1、对整个dataframe判断缺失</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-variable">df</span><span class="hljs-operator">.</span><span class="hljs-variable">isnull</span><span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span><br><span class="hljs-operator">&gt;&gt;</span> <span class="hljs-variable">A</span> <span class="hljs-variable">B</span> <span class="hljs-built_in">C</span> <span class="hljs-built_in">D</span><br><span class="hljs-number">0</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span><br><span class="hljs-number">1</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">True</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">True</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span> <span class="hljs-built_in">False</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2、对某个列判断缺失"><a href="#2、对某个列判断缺失" class="headerlink" title="2、对某个列判断缺失"></a>2、对某个列判断缺失</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">df[<span class="hljs-string">&#x27;C&#x27;</span>].<span class="hljs-keyword">isnull</span>()<br>&gt;&gt; <span class="hljs-number">0</span>    <span class="hljs-keyword">False</span><br>   <span class="hljs-number">1</span>    <span class="hljs-keyword">False</span><br>   <span class="hljs-number">2</span>    <span class="hljs-keyword">False</span><br>   <span class="hljs-number">3</span>    <span class="hljs-keyword">False</span><br><span class="hljs-type">Name</span>: C, dtype: <span class="hljs-type">bool</span><br></code></pre></td></tr></table></figure>
+
+<p>如果想取非缺失可以用<code>notna()</code>，使用方法是一样的，结果相反。</p>
+<h2 id="三、缺失值统计"><a href="#三、缺失值统计" class="headerlink" title="三、缺失值统计"></a>三、缺失值统计</h2><h3 id="1、列缺失"><a href="#1、列缺失" class="headerlink" title="1、列缺失"></a>1、列缺失</h3><p>一般我们会对一个<code>dataframe</code>的<strong>列</strong>进行缺失统计，查看每个列有多少缺失，如果缺失率过高再进行删除或者插值等操作。那么直接在上面的<code>isnull()</code>返回的结果上直接应用<code>.sum()</code>即可，<code>axis</code>默认等于0，0是列，1是行。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">## 列缺失统计</span><br>isnull<span class="hljs-params">()</span><span class="hljs-string">.sum</span><span class="hljs-params">(<span class="hljs-attr">axis</span>=0)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2、行缺失"><a href="#2、行缺失" class="headerlink" title="2、行缺失"></a>2、行缺失</h3><p>但是很多情况下，我们也需要对<strong>行</strong>进行缺失值判断。比如一行数据可能一个值都没有，如果这个样本进入模型，会造成很大的干扰。因此，行列两个缺失率通常都要查看并统计。</p>
+<p>操作很简单，只需要在<code>sum()</code>中设置<code>axis=1</code>即可。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">## 行缺失统计</span><br>isnull<span class="hljs-params">()</span><span class="hljs-string">.sum</span><span class="hljs-params">(<span class="hljs-attr">axis</span>=1)</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3、缺失率"><a href="#3、缺失率" class="headerlink" title="3、缺失率"></a>3、缺失率</h3><p>有时我不仅想要知道缺失的数量，我更想知道缺失的比例，即缺失率。正常可能会想到用上面求得数值再比上总行数。但其实这里有个小技巧可以一步就实现。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">## 缺失率</span><br>df.isnull<span class="hljs-params">()</span><span class="hljs-string">.sum</span><span class="hljs-params">(<span class="hljs-attr">axis</span>=0)</span><span class="hljs-string">/df.shape</span>[0]<br><br><span class="hljs-comment">## 缺失率（一步到位）</span><br>isnull<span class="hljs-params">()</span><span class="hljs-string">.mean</span><span class="hljs-params">()</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="四、缺失值筛选"><a href="#四、缺失值筛选" class="headerlink" title="四、缺失值筛选"></a>四、缺失值筛选</h2><p>筛选需要loc配合完成，对于行和列的缺失筛选如下：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"># 筛选有缺失值的行<br>df.loc[df.isnull().any(1)]<br>&gt;&gt; A B C D<br><span class="hljs-section">1 a1 None 2 NaN</span><br><span class="hljs-section">-----------------</span><br># 筛选有缺失值的列<br>df.loc[:,df.isnull().any()]<br>&gt;&gt; B D<br>0 b1 5.0<br>1 None NaN<br>2 b2 9.0<br>3 b3 10.0<br></code></pre></td></tr></table></figure>
+
+<p>如果要查询没有缺失值的行和列，可以对表达式用取反<code>~</code>操作：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">df.loc[~(df.isnull().any(<span class="hljs-number">1</span>))]<br>&gt;&gt; A <span class="hljs-keyword">B </span>C D<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-keyword">b2 </span><span class="hljs-number">3</span> <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-keyword">b3 </span><span class="hljs-number">4</span> <span class="hljs-number">10</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p>上面使用了<code>any</code>判断只要有缺失就进行筛选，也可以用<code>all</code>判断是否全部缺失，同样可以对行里进行判断，如果整列或者整行都是缺失值，那么这个变量或者样本就失去了分析的意义，可以考虑删除。</p>
+<h2 id="五、缺失值填充"><a href="#五、缺失值填充" class="headerlink" title="五、缺失值填充"></a>五、缺失值填充</h2><p>一般我们对缺失值有两种处理方法，一种是直接删除，另外一种是保留并填充。下面先介绍填充的方法<code>fillna</code>。</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"># 将dataframe所有缺失值填充为0<br>df.fillna(0)<br>&gt;&gt; A B C D<br>0 a1 b1 1 5.0<br>1 a1 0 2 0.0<br>2 a2 b2 3 9.0<br><span class="hljs-section">3 a3 b3 4 10.0</span><br><span class="hljs-section">--------------</span><br># 将D列缺失值填充为-999<br>df.D.fillna(<span class="hljs-emphasis">&#x27;-999&#x27;</span>)<br>&gt;&gt; 0       5<br><span class="hljs-code">   1    -999</span><br><span class="hljs-code">   2       9</span><br><span class="hljs-code">   3      10</span><br>Name: D, dtype: object<br></code></pre></td></tr></table></figure>
+
+<p>方法很简单，但使用时需要注意一些参数。</p>
+<ul>
+<li>inplace：可以设置<code>fillna(0, inplace=True)</code>来让填充生效，原dataFrame被填充。</li>
+<li>methond：可以设置<code>methond</code>方法来实现向前或者向后填充，<code>pad/ffill</code>为向前填充，<code>bfill/backfill</code>为向后填充，比如<code>df.fillna(methond=&#39;ffill&#39;)</code>，也可以简写为<code>df.ffill()</code>。</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">df.ffill()<br>&gt;&gt; A <span class="hljs-keyword">B </span>C D<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">1</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">2</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-keyword">b2 </span><span class="hljs-number">3</span> <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-keyword">b3 </span><span class="hljs-number">4</span> <span class="hljs-number">10</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p>原缺失值都会按照前一个值来填充(B列1行，D列1行)。</p>
+<p>除了用前后值来填充，也可以用整个列的均值来填充，比如对D列的其它非缺失值的平均值8来填充缺失值。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">df<span class="hljs-selector-class">.D</span><span class="hljs-selector-class">.fillna</span>(df<span class="hljs-selector-class">.D</span><span class="hljs-selector-class">.mean</span>())<br>&gt;&gt; <span class="hljs-number">0</span>     <span class="hljs-number">5.0</span><br>   <span class="hljs-number">1</span>     <span class="hljs-number">8.0</span><br>   <span class="hljs-number">2</span>     <span class="hljs-number">9.0</span><br>   <span class="hljs-number">3</span>    <span class="hljs-number">10.0</span><br>Name: D, dtype: float64<br></code></pre></td></tr></table></figure>
+
+<h2 id="六、缺失值删除"><a href="#六、缺失值删除" class="headerlink" title="六、缺失值删除"></a>六、缺失值删除</h2><p>删除缺失值也非情况，比如是全删除还是删除比较高缺失率，这个要看自己的容忍程度，真实的数据必然会存在缺失的，这个无法避免。而且缺失在某些情况下也代表了一定的含义，要视情况而定。</p>
+<h3 id="1、全部直接删除"><a href="#1、全部直接删除" class="headerlink" title="1、全部直接删除"></a>1、全部直接删除</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 全部直接删除</span><br>df.dropna()<br>&gt;&gt; A <span class="hljs-keyword">B </span>C D<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-keyword">b2 </span><span class="hljs-number">3</span> <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-keyword">b3 </span><span class="hljs-number">4</span> <span class="hljs-number">10</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2、行缺失删除"><a href="#2、行缺失删除" class="headerlink" title="2、行缺失删除"></a>2、行缺失删除</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 行缺失删除</span><br>df.dropna(axis=<span class="hljs-number">0</span>)<br>&gt;&gt; A <span class="hljs-keyword">B </span>C D<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-keyword">b2 </span><span class="hljs-number">3</span> <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-keyword">b3 </span><span class="hljs-number">4</span> <span class="hljs-number">10</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3、列缺失删除"><a href="#3、列缺失删除" class="headerlink" title="3、列缺失删除"></a>3、列缺失删除</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 列缺失删除</span><br>df.dropna(axis=<span class="hljs-number">1</span>)<br>&gt;&gt; A C<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-number">1</span><br><span class="hljs-number">1</span> <span class="hljs-built_in">a1</span> <span class="hljs-number">2</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-number">3</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-number">4</span><br>-------------<br><span class="hljs-comment"># 删除指定列范围内的缺失,因为C列无缺失，所以最后没有变化</span><br>df.dropna(<span class="hljs-keyword">subset=[&#x27;C&#x27;])</span><br><span class="hljs-keyword"></span>&gt;&gt; A <span class="hljs-keyword">B </span>C D<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">1</span> <span class="hljs-built_in">a1</span> None <span class="hljs-number">2</span> NaN<br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-keyword">b2 </span><span class="hljs-number">3</span> <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-keyword">b3 </span><span class="hljs-number">4</span> <span class="hljs-number">10</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4、按缺失率删除"><a href="#4、按缺失率删除" class="headerlink" title="4、按缺失率删除"></a>4、按缺失率删除</h3><p>这个可以考虑用筛选的方法来实现，比如要删除列缺失大于0.1的（即筛选小于0.1的）。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">df.loc[:,df.isnull().mean(axis=<span class="hljs-number">0</span>) &lt; <span class="hljs-number">0</span>.<span class="hljs-number">1</span>]<br>&gt;&gt; A C<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-number">1</span><br><span class="hljs-number">1</span> <span class="hljs-built_in">a1</span> <span class="hljs-number">2</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-number">3</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-number">4</span><br>-------------<br><span class="hljs-comment"># 删除行缺失大于0.1的</span><br>df.loc[df.isnull().mean(axis=<span class="hljs-number">1</span>) &lt; <span class="hljs-number">0</span>.<span class="hljs-number">1</span>]<br>&gt;&gt; A <span class="hljs-keyword">B </span>C D<br><span class="hljs-number">0</span> <span class="hljs-built_in">a1</span> <span class="hljs-keyword">b1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span>.<span class="hljs-number">0</span><br><span class="hljs-number">2</span> <span class="hljs-built_in">a2</span> <span class="hljs-keyword">b2 </span><span class="hljs-number">3</span> <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br><span class="hljs-number">3</span> <span class="hljs-built_in">a3</span> <span class="hljs-keyword">b3 </span><span class="hljs-number">4</span> <span class="hljs-number">10</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="七、缺失值参与计算"><a href="#七、缺失值参与计算" class="headerlink" title="七、缺失值参与计算"></a>七、缺失值参与计算</h2><p>如果不对缺失值处理，那么缺失值会按照什么逻辑进行计算呢？</p>
+<p>下面我们一起看一下各种运算下缺失值的参与逻辑。</p>
+<p><strong>1、加法</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">df<br>&gt;&gt;A B C D<br>0 a1 b1 1 5.0<br>1 a1 None 2 NaN<br>2 a2 b2 3 9.0<br><span class="hljs-section">3 a3 b3 4 10.0</span><br><span class="hljs-section">---------------</span><br># 对所有列求和<br>df.sum()<br>&gt;&gt; A    a1a1a2a3<br><span class="hljs-code">   C          10</span><br><span class="hljs-code">   D          24</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看到，加法是会忽略缺失值的。</p>
+<p><strong>2、累加</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"># 对D列进行累加<br>df.D.cumsum()<br>&gt;&gt; 0     5.0<br><span class="hljs-code">   1     NaN</span><br><span class="hljs-code">   2    14.0</span><br><span class="hljs-code">   3    24.0</span><br><span class="hljs-section">Name: D, dtype: float64</span><br><span class="hljs-section">---------------</span><br>df.D.cumsum(skipna=False)<br>&gt;&gt; 0    5.0<br><span class="hljs-code">   1    NaN</span><br><span class="hljs-code">   2    NaN</span><br><span class="hljs-code">   3    NaN</span><br>Name: D, dtype: float64<br></code></pre></td></tr></table></figure>
+
+<p><code>cumsum</code>累加会忽略NA，但值会保留在列中，可以使用<code>skipna=False</code>跳过有缺失值的计算并返回缺失值。</p>
+<p><strong>3、计数</strong></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-meta"># 对列计数</span><br>df.<span class="hljs-keyword">count</span>()<br>&gt;&gt; A    <span class="hljs-number">4</span><br>   B    <span class="hljs-number">3</span><br>   C    <span class="hljs-number">4</span><br>   D    <span class="hljs-number">3</span><br>dtype: <span class="hljs-built_in">int64</span><br></code></pre></td></tr></table></figure>
+
+<p>缺失值不进入计数范围里。</p>
+<p><strong>4、聚合分组</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">df.groupby(<span class="hljs-emphasis">&#x27;B&#x27;</span>).sum()<br>&gt;&gt; C D<br>B  <br>b1 1 5.0<br>b2 3 9.0<br><span class="hljs-section">b3 4 10.0</span><br><span class="hljs-section">---------------</span><br>df.groupby(<span class="hljs-emphasis">&#x27;B&#x27;</span>,dropna=False).sum()<br>&gt;&gt; C D<br>B  <br>b1 1 5.0<br>b2 3 9.0<br>b3 4 10.0<br>NaN 2 0.0<br></code></pre></td></tr></table></figure>
+
+<p>聚合时会默认忽略缺失值，如果要缺失值计入到分组里，可以设置<code>dropna=False</code>。这个用法和其它比如<code>value_counts</code>是一样的，有的时候需要看缺失值的数量。</p>
+<p>以上就是所有关于缺失值的常用操作了，从理解缺失值的3种表现形式开始，到缺失值判断、统计、处理、计算等。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Pandas  losing data deal</div>
+      <div>http://example.com/2022/08/01/Python/pandas缺失值处理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/Pandas%E9%87%8D%E5%A4%8D%E5%80%BC%E5%A4%84%E7%90%86/" title="Pandas duplicated data dealing">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pandas duplicated data dealing</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/pandas%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="Pandas trick">
+                        <span class="hidden-mobile">Pandas trick</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

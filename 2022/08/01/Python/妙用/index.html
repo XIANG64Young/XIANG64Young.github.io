@@ -1,0 +1,903 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 重复元素判定以下方法可以检查给定列表是不是存在重复元素，它会使用 set() 函数来移除所有重复元素。 123456def all_unique(lst):    return len(lst) &#x3D;&#x3D; len(set(lst))x &#x3D; [1,1,2,2,3,2,3,4,5,6]y &#x3D; [1,2,3,4,5]all_unique(x) # Falseall_unique(y) # True">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python trick">
+<meta property="og:url" content="http://example.com/2022/08/01/Python/%E5%A6%99%E7%94%A8/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="1. 重复元素判定以下方法可以检查给定列表是不是存在重复元素，它会使用 set() 函数来移除所有重复元素。 123456def all_unique(lst):    return len(lst) &#x3D;&#x3D; len(set(lst))x &#x3D; [1,1,2,2,3,2,3,4,5,6]y &#x3D; [1,2,3,4,5]all_unique(x) # Falseall_unique(y) # True">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T02:13:53.532Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.351Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python trick - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python trick"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          55 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python trick</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h2 id="1-重复元素判定"><a href="#1-重复元素判定" class="headerlink" title="1. 重复元素判定"></a><strong>1. 重复元素判定</strong></h2><p>以下方法可以检查给定列表是不是存在重复元素，它会使用 set() 函数来移除所有重复元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">all_unique</span>(<span class="hljs-params">lst</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(lst) == <span class="hljs-built_in">len</span>(<span class="hljs-built_in">set</span>(lst))<br>x = [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]<br>y = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>all_unique(x) <span class="hljs-comment"># False</span><br>all_unique(y) <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="2-字符元素组成判定"><a href="#2-字符元素组成判定" class="headerlink" title="2. 字符元素组成判定"></a><strong>2. 字符元素组成判定</strong></h2><p>检查两个字符串的组成元素是不是一样的。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-keyword">from</span> collections import Counter<br><br>def anagram(<span class="hljs-keyword">first</span>, <span class="hljs-keyword">second</span>):<br><span class="hljs-built_in">    return</span> Counter(<span class="hljs-keyword">first</span>) == Counter(<span class="hljs-keyword">second</span>)<br>anagram(<span class="hljs-string">&quot;abcd3&quot;</span>, <span class="hljs-string">&quot;3acdb&quot;</span>) <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="3-内存占用"><a href="#3-内存占用" class="headerlink" title="3. 内存占用"></a><strong>3. 内存占用</strong></h2><p>下面的代码块可以检查变量 variable 所占用的内存。</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">import</span> sys <br>variable = <span class="hljs-number">30</span> <br><span class="hljs-built_in">print</span>(sys.getsizeof(variable)) <span class="hljs-comment"># 24</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-字节占用"><a href="#4-字节占用" class="headerlink" title="4. 字节占用"></a><strong>4. 字节占用</strong></h2><p>下面的代码块可以检查字符串占用的字节数。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">def <span class="hljs-built_in">byte_size</span>(string):<br>    <span class="hljs-built_in">return</span>(<span class="hljs-built_in">len</span>(string.<span class="hljs-built_in">encode</span>(<span class="hljs-string">&#x27;utf-8&#x27;</span>)))<br><br><span class="hljs-built_in">byte_size</span>(<span class="hljs-string">&#x27;😀&#x27;</span>) # <span class="hljs-number">4</span><br><span class="hljs-built_in">byte_size</span>(<span class="hljs-string">&#x27;Hello World&#x27;</span>) # <span class="hljs-number">11</span>   <br></code></pre></td></tr></table></figure>
+
+<h2 id="5-打印-N-次字符串"><a href="#5-打印-N-次字符串" class="headerlink" title="5. 打印 N 次字符串"></a><strong>5. 打印 N 次字符串</strong></h2><p>该代码块不需要循环语句就能打印 N 次字符串。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile">n = 2; <br>s =<span class="hljs-string">&quot;Programming&quot;</span>; <br><br>print(s * n);<br><span class="hljs-comment"># ProgrammingProgramming  </span><br></code></pre></td></tr></table></figure>
+
+<h2 id="6-大写第一个字母"><a href="#6-大写第一个字母" class="headerlink" title="6. 大写第一个字母"></a><strong>6. 大写第一个字母</strong></h2><p>以下代码块会使用 title() 方法，从而大写字符串中每一个单词的首字母。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">s = <span class="hljs-string">&quot;programming is awesome&quot;</span><br><br><span class="hljs-built_in">print</span>(s.title())<br><span class="hljs-comment"># Programming Is Awesome</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="7-分块"><a href="#7-分块" class="headerlink" title="7. 分块"></a><strong>7. 分块</strong></h2><p>给定具体的大小，定义一个函数以按照这个大小切割列表。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs processing">from math <span class="hljs-keyword">import</span> <span class="hljs-built_in">ceil</span><br><br>def <span class="hljs-title function_">chunk</span>(lst, <span class="hljs-built_in">size</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">list</span>(<br>        <span class="hljs-built_in">map</span>(lambda x: lst[x * <span class="hljs-built_in">size</span>:x * <span class="hljs-built_in">size</span> + <span class="hljs-built_in">size</span>],<br>            <span class="hljs-title function_">list</span>(<span class="hljs-title function_">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">ceil</span>(<span class="hljs-title function_">len</span>(lst) / <span class="hljs-built_in">size</span>)))))<br><br><span class="hljs-title function_">chunk</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>],<span class="hljs-number">2</span>)<br># [[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>],<span class="hljs-number">5</span>]<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-压缩"><a href="#8-压缩" class="headerlink" title="8. 压缩"></a><strong>8. 压缩</strong></h2><p>这个方法可以将布尔型的值去掉，例如<code>(False, None, 0, &quot;&quot;)</code>，它使用 <code>filter()</code> 函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compact</span>(<span class="hljs-params">lst</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">list</span>(<span class="hljs-built_in">filter</span>(<span class="hljs-built_in">bool</span>, lst))<br>compact([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">False</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;s&#x27;</span>, <span class="hljs-number">34</span>])<br><span class="hljs-comment"># [ 1, 2, 3, &#x27;a&#x27;, &#x27;s&#x27;, 34 ]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="9-解包"><a href="#9-解包" class="headerlink" title="9. 解包"></a><strong>9. 解包</strong></h2><p>如下代码段可以将打包好的成对列表解开成两组不同的元组。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs prolog">array = [[<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>], [<span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>], [<span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>]]<br>transposed = zip(*array)<br>print(transposed)<br># [(<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>), (<span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>)]<br></code></pre></td></tr></table></figure>
+
+<h2 id="10-链式对比"><a href="#10-链式对比" class="headerlink" title="10. 链式对比"></a><strong>10. 链式对比</strong></h2><p>我们可以在一行代码中使用不同的运算符对比多个不同的元素。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">a = 3<br><span class="hljs-built_in">print</span>( 2 &lt; a &lt; 8) # <span class="hljs-literal">True</span><br><span class="hljs-built_in">print</span>(1 == a &lt; 2) # <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="11-逗号连接"><a href="#11-逗号连接" class="headerlink" title="11. 逗号连接"></a><strong>11. 逗号连接</strong></h2><p>下面的代码可以将列表连接成单个字符串，且每一个元素间的分隔方式设置为了逗号。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs axapta">hobbies = [<span class="hljs-string">&quot;basketball&quot;</span>, <span class="hljs-string">&quot;football&quot;</span>, <span class="hljs-string">&quot;swimming&quot;</span>]<br><br><span class="hljs-keyword">print</span>(<span class="hljs-string">&quot;My hobbies are: &quot;</span> + <span class="hljs-string">&quot;, &quot;</span>.<span class="hljs-keyword">join</span>(hobbies))<br><span class="hljs-meta"># My hobbies are: basketball, football, swimming</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="12-元音统计"><a href="#12-元音统计" class="headerlink" title="12. 元音统计"></a><strong>12. 元音统计</strong></h2><p>以下方法将统计字符串中的元音<code>(‘a’, ‘e’, ‘i’, ‘o’, ‘u’)</code>的个数，它是通过正则表达式做的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">count_vowels</span>(<span class="hljs-params"><span class="hljs-built_in">str</span></span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(<span class="hljs-built_in">len</span>(re.findall(<span class="hljs-string">r&#x27;[aeiou]&#x27;</span>, <span class="hljs-built_in">str</span>, re.IGNORECASE)))<br><br>count_vowels(<span class="hljs-string">&#x27;foobar&#x27;</span>) <span class="hljs-comment"># 3</span><br>count_vowels(<span class="hljs-string">&#x27;gym&#x27;</span>) <span class="hljs-comment"># 0</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="13-首字母小写"><a href="#13-首字母小写" class="headerlink" title="13. 首字母小写"></a><strong>13. 首字母小写</strong></h2><p>如下方法将令给定字符串的第一个字符统一为小写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">decapitalize</span>(<span class="hljs-params">string</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>[:<span class="hljs-number">1</span>].lower() + <span class="hljs-built_in">str</span>[<span class="hljs-number">1</span>:]<br><br>decapitalize(<span class="hljs-string">&#x27;FooBar&#x27;</span>) <span class="hljs-comment"># &#x27;fooBar&#x27;</span><br>decapitalize(<span class="hljs-string">&#x27;FooBar&#x27;</span>) <span class="hljs-comment"># &#x27;fooBar&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="14-展开列表"><a href="#14-展开列表" class="headerlink" title="14. 展开列表"></a><strong>14. 展开列表</strong></h2><p>该方法将通过递归的方式将列表的嵌套展开为单个列表。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">spread</span>(<span class="hljs-params">arg</span>):<br>    ret = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> arg:<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(i, <span class="hljs-built_in">list</span>):<br>            ret.extend(i)<br>        <span class="hljs-keyword">else</span>:<br>            ret.append(i)<br>    <span class="hljs-keyword">return</span> ret<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">deep_flatten</span>(<span class="hljs-params">lst</span>):<br>    result = []<br>    result.extend(<br>        spread(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x: deep_flatten(x) <span class="hljs-keyword">if</span> <span class="hljs-built_in">type</span>(x) == <span class="hljs-built_in">list</span> <span class="hljs-keyword">else</span> x, lst))))<br>    <span class="hljs-keyword">return</span> result<br><br>deep_flatten([<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>], [[<span class="hljs-number">3</span>], <span class="hljs-number">4</span>], <span class="hljs-number">5</span>]) <span class="hljs-comment"># [1,2,3,4,5]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="15-列表的差"><a href="#15-列表的差" class="headerlink" title="15. 列表的差"></a><strong>15. 列表的差</strong></h2><p>该方法将返回第一个列表的元素，其不在第二个列表内。如果同时要反馈第二个列表独有的元素，还需要加一句 <code>set_b.difference(set_a)</code>。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">def <span class="hljs-built_in">difference</span>(<span class="hljs-keyword">a</span>, b):<br>    set_a = <span class="hljs-built_in">set</span>(<span class="hljs-keyword">a</span>)<br>    set_b = <span class="hljs-built_in">set</span>(b)<br>    comparison = set_a.<span class="hljs-built_in">difference</span>(set_b)<br>    <span class="hljs-literal">return</span> list(comparison)<br><br><span class="hljs-built_in">difference</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>]) <span class="hljs-comment"># [3]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="16-通过函数取差"><a href="#16-通过函数取差" class="headerlink" title="16. 通过函数取差"></a><strong>16. 通过函数取差</strong></h2><p>如下方法首先会应用一个给定的函数，然后再返回应用函数后结果有差别的列表元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">difference_by</span>(<span class="hljs-params">a, b, fn</span>):<br>    b = <span class="hljs-built_in">set</span>(<span class="hljs-built_in">map</span>(fn, b))<br>    <span class="hljs-keyword">return</span> [item <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> a <span class="hljs-keyword">if</span> fn(item) <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> b]<br><br><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> floor<br>difference_by([<span class="hljs-number">2.1</span>, <span class="hljs-number">1.2</span>], [<span class="hljs-number">2.3</span>, <span class="hljs-number">3.4</span>],floor) <span class="hljs-comment"># [1.2]</span><br>difference_by([&#123; <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">2</span> &#125;, &#123; <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span> &#125;], [&#123; <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span> &#125;], <span class="hljs-keyword">lambda</span> v : v[<span class="hljs-string">&#x27;x&#x27;</span>])<br><span class="hljs-comment"># [ &#123; x: 2 &#125; ]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="17-链式函数调用"><a href="#17-链式函数调用" class="headerlink" title="17. 链式函数调用"></a><strong>17. 链式函数调用</strong></h2><p>你可以在一行代码内调用多个函数。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">def <span class="hljs-built_in">add</span>(<span class="hljs-keyword">a</span>, b):<br>    <span class="hljs-literal">return</span> <span class="hljs-keyword">a</span> + b<br><br>def <span class="hljs-built_in">subtract</span>(<span class="hljs-keyword">a</span>, b):<br>    <span class="hljs-literal">return</span> <span class="hljs-keyword">a</span> - b<br><br><span class="hljs-keyword">a</span>, b = <span class="hljs-number">4</span>, <span class="hljs-number">5</span><br>print((<span class="hljs-built_in">subtract</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">a</span> &gt; b <span class="hljs-keyword">else</span> <span class="hljs-built_in">add</span>)(<span class="hljs-keyword">a</span>, b)) <span class="hljs-comment"># 9 </span><br></code></pre></td></tr></table></figure>
+
+<h2 id="18-检查重复项"><a href="#18-检查重复项" class="headerlink" title="18. 检查重复项"></a><strong>18. 检查重复项</strong></h2><p>如下代码将检查两个列表是不是有重复项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">has_duplicates</span>(<span class="hljs-params">lst</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(lst) != <span class="hljs-built_in">len</span>(<span class="hljs-built_in">set</span>(lst))<br><br>x = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>]<br>y = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>has_duplicates(x) <span class="hljs-comment"># True</span><br>has_duplicates(y) <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="19-合并两个字典"><a href="#19-合并两个字典" class="headerlink" title="19. 合并两个字典"></a><strong>19. 合并两个字典</strong></h2><p>下面的方法将用于合并两个字典。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vim">def merge_two_dicts(<span class="hljs-keyword">a</span>, <span class="hljs-keyword">b</span>):<br>    <span class="hljs-keyword">c</span> = <span class="hljs-keyword">a</span>.<span class="hljs-keyword">copy</span>()   # <span class="hljs-keyword">make</span> <span class="hljs-keyword">a</span> <span class="hljs-keyword">copy</span> of <span class="hljs-keyword">a</span> <br>    <span class="hljs-keyword">c</span>.<span class="hljs-keyword">update</span>(<span class="hljs-keyword">b</span>)    # modify <span class="hljs-built_in">keys</span> <span class="hljs-built_in">and</span> <span class="hljs-built_in">values</span> of <span class="hljs-keyword">a</span> with the ones from <span class="hljs-keyword">b</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">c</span><br><br><span class="hljs-keyword">a</span> = &#123; <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>&#125;<br><span class="hljs-keyword">b</span> = &#123; <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">4</span>&#125;<br><span class="hljs-keyword">print</span>(merge_two_dicts(<span class="hljs-keyword">a</span>, <span class="hljs-keyword">b</span>))<br># &#123;<span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">4</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在 Python 3.5 或更高版本中，我们也可以用以下方式合并字典：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">def</span> merge_dictionaries(a, b)<br>   <span class="hljs-keyword">return</span> &#123;**a, **b&#125;<br><br>a = &#123; <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>&#125;<br>b = &#123; <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">4</span>&#125;<br><span class="hljs-keyword">print</span>(merge_dictionaries(a, b))<br># &#123;<span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">4</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>20. 将两个列表转化为字典</strong></p>
+<p>如下方法将会把两个列表转化为单个字典。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs vim">def to_dictionary(<span class="hljs-built_in">keys</span>, <span class="hljs-built_in">values</span>):<br>    <span class="hljs-keyword">return</span> dict(zip(<span class="hljs-built_in">keys</span>, <span class="hljs-built_in">values</span>))<br><br><span class="hljs-built_in">keys</span> = [<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>]    <br><span class="hljs-built_in">values</span> = [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]<br><span class="hljs-keyword">print</span>(to_dictionary(<span class="hljs-built_in">keys</span>, <span class="hljs-built_in">values</span>))<br># &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">3</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="21-使用枚举"><a href="#21-使用枚举" class="headerlink" title="21. 使用枚举"></a><strong>21. 使用枚举</strong></h2><p>我们常用 For 循环来遍历某个列表，同样我们也能枚举列表的索引与值。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs autoit">list = [<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>]<br><span class="hljs-keyword">for</span> index, element <span class="hljs-keyword">in</span> enumerate(list): <br>    print(<span class="hljs-string">&quot;Value&quot;</span>, element, <span class="hljs-string">&quot;Index &quot;</span>, index, )<br><br><span class="hljs-meta"># (<span class="hljs-string">&#x27;Value&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;Index &#x27;</span>, 0)</span><br><span class="hljs-meta"># (<span class="hljs-string">&#x27;Value&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;Index &#x27;</span>, 1)</span><br><span class="hljs-meta">#(<span class="hljs-string">&#x27;Value&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;Index &#x27;</span>, 2)</span><br><span class="hljs-meta"># (<span class="hljs-string">&#x27;Value&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;Index &#x27;</span>, 3)    </span><br></code></pre></td></tr></table></figure>
+
+<p><strong>22. 执行时间</strong></p>
+<p>如下代码块可以用来计算执行特定代码所花费的时间。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">import <span class="hljs-built_in">time</span><br><br>start_time = <span class="hljs-built_in">time</span>.<span class="hljs-built_in">time</span>()<br><br><span class="hljs-keyword">a</span> = <span class="hljs-number">1</span><br>b = <span class="hljs-number">2</span><br>c = <span class="hljs-keyword">a</span> + b<br>print(c) <span class="hljs-comment">#3</span><br><br>end_time = <span class="hljs-built_in">time</span>.<span class="hljs-built_in">time</span>()<br>total_time = end_time - start_time<br>print(<span class="hljs-string">&quot;Time: &quot;</span>, total_time)<br><br><span class="hljs-comment"># (&#x27;Time: &#x27;, 1.1205673217773438e-05)  </span><br></code></pre></td></tr></table></figure>
+
+<h2 id="23-Try-else"><a href="#23-Try-else" class="headerlink" title="23.Try else"></a><strong>23.Try else</strong></h2><p>我们在使用 try&#x2F;except 语句的时候也可以加一个 else 子句，如果没有触发错误的话，这个子句就会被运行。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">try:<br>    2<span class="hljs-number">*3</span><br>except TypeError:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;An exception was raised&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Thank God, no exceptions were raised.&quot;</span>)<br><br><span class="hljs-comment">#Thank God, no exceptions were raised.</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="24-元素频率"><a href="#24-元素频率" class="headerlink" title="24. 元素频率"></a><strong>24. 元素频率</strong></h2><p>下面的方法会根据元素频率取列表中最常见的元素。</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams">def most_frequent(list):<br>    return <span class="hljs-built_in">max</span>(<span class="hljs-keyword">set</span>(list), key <span class="hljs-comment">= list.count)</span><br><br>list <span class="hljs-comment">= [1,2,1,2,3,2,1,4,2]</span><br>most_frequent(list)  <br></code></pre></td></tr></table></figure>
+
+<h2 id="25-回文序列"><a href="#25-回文序列" class="headerlink" title="25. 回文序列"></a><strong>25. 回文序列</strong></h2><p>以下方法会检查给定的字符串是不是回文序列，它首先会把所有字母转化为小写，并移除非英文字母符号。最后，它会对比字符串与反向字符串是否相等，相等则表示为回文序列。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">def palindrome(<span class="hljs-keyword">string</span>):<br>    <span class="hljs-built_in">from</span> re import sub<br>    s = sub(<span class="hljs-string">&#x27;[\W_]&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-keyword">string</span>.<span class="hljs-built_in">lower</span>())<br>    <span class="hljs-literal">return</span> s == s[::<span class="hljs-number">-1</span>]<br><br>palindrome(<span class="hljs-string">&#x27;taco cat&#x27;</span>) <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="26-不使用-if-else-的计算子"><a href="#26-不使用-if-else-的计算子" class="headerlink" title="26. 不使用 if-else 的计算子"></a><strong>26. 不使用 if-else 的计算子</strong></h2><p>这一段代码可以不使用条件语句就实现加减乘除、求幂操作，它通过字典这一数据结构实现：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">import</span> <span class="hljs-keyword">operator</span><br>action = &#123;<br>    <span class="hljs-string">&quot;+&quot;</span>: <span class="hljs-keyword">operator</span>.add,<br>    <span class="hljs-string">&quot;-&quot;</span>: <span class="hljs-keyword">operator</span>.sub,<br>    <span class="hljs-string">&quot;/&quot;</span>: <span class="hljs-keyword">operator</span>.truediv,<br>    <span class="hljs-string">&quot;*&quot;</span>: <span class="hljs-keyword">operator</span>.mul,<br>    <span class="hljs-string">&quot;**&quot;</span>: pow<br>&#125;<br><span class="hljs-built_in">print</span>(action[<span class="hljs-string">&#x27;-&#x27;</span>](<span class="hljs-number">50</span>, <span class="hljs-number">25</span>)) # <span class="hljs-number">25</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="27-Shuffle"><a href="#27-Shuffle" class="headerlink" title="27.Shuffle"></a><strong>27.Shuffle</strong></h2><p>该算法会打乱列表元素的顺序，它主要会通过 Fisher-Yates 算法对新列表进行排序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> copy <span class="hljs-keyword">import</span> deepcopy<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">shuffle</span>(<span class="hljs-params">lst</span>):<br>    temp_lst = deepcopy(lst)<br>    m = <span class="hljs-built_in">len</span>(temp_lst)<br>    <span class="hljs-keyword">while</span> (m):<br>        m -= <span class="hljs-number">1</span><br>        i = randint(<span class="hljs-number">0</span>, m)<br>        temp_lst[m], temp_lst[i] = temp_lst[i], temp_lst[m]<br>    <span class="hljs-keyword">return</span> temp_lst<br><br><br>foo = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br>shuffle(foo) <span class="hljs-comment"># [2,3,1] , foo = [1,2,3]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="28-展开列表"><a href="#28-展开列表" class="headerlink" title="28. 展开列表"></a><strong>28. 展开列表</strong></h2><p>将列表内的所有元素，包括子列表，都展开成一个列表。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">def</span> spread(arg):<br>    <span class="hljs-attribute">ret</span> =<span class="hljs-meta"> []</span><br>    <span class="hljs-attribute">for</span> i in arg:<br>        <span class="hljs-attribute">if</span> isinstance(i, list):<br>            <span class="hljs-attribute">ret</span>.extend(i)<br>        <span class="hljs-attribute">else</span>:<br>            <span class="hljs-attribute">ret</span>.append(i)<br>    <span class="hljs-attribute">return</span> ret<br><br><span class="hljs-attribute">spread</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">7</span>],<span class="hljs-number">8</span>,<span class="hljs-number">9</span>]) #<span class="hljs-meta"> [1,2,3,4,5,6,7,8,9]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="29-交换值"><a href="#29-交换值" class="headerlink" title="29. 交换值"></a><strong>29. 交换值</strong></h2><p>不需要额外的操作就能交换两个变量的值。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">def</span> swap(a, b):<br>  <span class="hljs-attribute">return</span> b, a<br><br><span class="hljs-attribute">a</span>, b = -<span class="hljs-number">1</span>, <span class="hljs-number">14</span><br><span class="hljs-attribute">swap</span>(a, b) # (<span class="hljs-number">14</span>, -<span class="hljs-number">1</span>)<br><span class="hljs-attribute">spread</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">7</span>],<span class="hljs-number">8</span>,<span class="hljs-number">9</span>]) #<span class="hljs-meta"> [1,2,3,4,5,6,7,8,9]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="30-字典默认值"><a href="#30-字典默认值" class="headerlink" title="30. 字典默认值"></a><strong>30. 字典默认值</strong></h2><p>通过 Key 取对应的 Value 值，可以通过以下方式设置默认值。如果 get() 方法没有设置默认值，那么如果遇到不存在的 Key，则会返回 None。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros">d = &#123;<span class="hljs-string">&#x27;a&#x27;</span>: 1, <span class="hljs-string">&#x27;b&#x27;</span>: 2&#125;<br><br><span class="hljs-built_in">print</span>(d.<span class="hljs-built_in">get</span>(<span class="hljs-string">&#x27;c&#x27;</span>, 3)) # 3<br></code></pre></td></tr></table></figure>
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python trick</div>
+      <div>http://example.com/2022/08/01/Python/妙用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5/" title="特征选择示例">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">特征选择示例</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/Pytorch/" title="Pytorch Note">
+                        <span class="hidden-mobile">Pytorch Note</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

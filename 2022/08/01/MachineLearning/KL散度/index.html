@@ -1,0 +1,919 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="如何理解K-L散度（相对熵）Kullback-Leibler Divergence，即K-L散度，是一种量化两种概率分布P和Q之间差异的方式，又叫相对熵。在概率学和统计学上，我们经常会使用一种更简单的、近似的分布来替代观察数据或太复杂的分布。K-L散度能帮助我们度量使用一个分布来近似另一个分布时所损失的信息量。 K-L散度定义见文末附录1。另外在附录5中解释了为什么在深度学习中，训练模型时使用的是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——KL散度">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/KL%E6%95%A3%E5%BA%A6/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="如何理解K-L散度（相对熵）Kullback-Leibler Divergence，即K-L散度，是一种量化两种概率分布P和Q之间差异的方式，又叫相对熵。在概率学和统计学上，我们经常会使用一种更简单的、近似的分布来替代观察数据或太复杂的分布。K-L散度能帮助我们度量使用一个分布来近似另一个分布时所损失的信息量。 K-L散度定义见文末附录1。另外在附录5中解释了为什么在深度学习中，训练模型时使用的是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/webp.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590384367879.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590384766882.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590386927085.webp">
+<meta property="og:image" content="http://example.com/src/75110-b049f7fc560bd8d8.png">
+<meta property="og:image" content="http://example.com/src/webp.webp">
+<meta property="og:image" content="http://example.com/src/webp-165694178715996.webp">
+<meta property="og:image" content="http://example.com/src/webp-165694178859698.webp">
+<meta property="og:image" content="http://example.com/src/webp-1656941790199100.webp">
+<meta property="og:image" content="http://example.com/src/75110-f682f83675fa42ee.png">
+<meta property="og:image" content="http://example.com/src/webp-1656941798226108.webp">
+<meta property="og:image" content="http://example.com/src/webp-1656941800646111.webp">
+<meta property="og:image" content="http://example.com/img/webp-165590387792790.webp">
+<meta property="og:image" content="http://example.com/src/webp-1656941803774114.webp">
+<meta property="og:image" content="http://example.com/src/webp-165590388157393.webp">
+<meta property="og:image" content="http://example.com/src/75110-857b751b045a3aa2.png">
+<meta property="og:image" content="http://example.com/src/75110-5d773218b2511d9a.png">
+<meta property="og:image" content="http://example.com/src/75110-f55d663d60503fa4.png">
+<meta property="og:image" content="http://example.com/src/webp-1656941818267121.webp">
+<meta property="article:published_time" content="2022-08-01T02:13:53.486Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.179Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/webp.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——KL散度 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——KL散度"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——KL散度</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="如何理解K-L散度（相对熵）"><a href="#如何理解K-L散度（相对熵）" class="headerlink" title="如何理解K-L散度（相对熵）"></a>如何理解K-L散度（相对熵）</h1><p><code>Kullback-Leibler Divergence</code>，即<code>K-L散度</code>，是一种<strong>量化两种概率分布P和Q之间差异</strong>的方式，又叫<code>相对熵</code>。在概率学和统计学上，我们经常会使用一种<code>更简单的、近似的分布</code>来替代<code>观察数据</code>或<code>太复杂的分布</code>。K-L散度能帮助我们度量使用一个分布来近似另一个分布时所损失的信息量。</p>
+<p>K-L散度定义见文末附录1。另外在附录5中解释了为什么在深度学习中，训练模型时使用的是<code>Cross Entropy</code> 而非<code>K-L Divergence</code>。</p>
+<p>我们从下面这个问题出发思考K-L散度。</p>
+<blockquote>
+<p>假设我们是一群太空科学家，经过遥远的旅行，来到了一颗新发现的星球。在这个星球上，生存着一种长有牙齿的蠕虫，引起了我们的研究兴趣。我们发现这种蠕虫生有10颗牙齿，但是因为不注意口腔卫生，又喜欢嚼东西，许多蠕虫会掉牙。收集大量样本之后，我们得到关于蠕虫牙齿数量的经验分布，如下图所示</p>
+</blockquote>
+<p><img src="/src/webp.webp" alt="img"></p>
+<p>牙齿数量分布</p>
+<p><img src="/src/webp-165590384367879.webp" alt="img"></p>
+<p>会掉牙的外星蠕虫</p>
+<p>这些数据很有价值，但是也有点问题。我们距离地球🌍太远了，把这些概率分布数据发送回地球过于昂贵。还好我们是一群聪明的科学家，用一个只有一两个参数的简单模型来近似原始数据会减小数据传送量。最简单的近似模型是<code>均分布</code>，因为蠕虫牙齿不会超过10颗，所以有11个可能值，那蠕虫的牙齿数量概率都为 <code>1/11</code>。分布图如下：</p>
+<p><img src="/src/webp-165590384766882.webp" alt="img"></p>
+<p>uniform distribution</p>
+<p>显然我们的原始数据并非均分布的，但也不是我们已知的分布，至少不是常见的分布。作为备选，我们想到的另一种简单模型是<code>二项式分布binomial distribution</code>。蠕虫嘴里面共有<code>n=10</code>个牙槽，每个牙槽出现牙齿与否为独立事件，且概率均为<code>p</code>。则蠕虫牙齿数量即为期望值<code>E[x]=n*p</code>，真实期望值即为观察数据的平均值，比如说<code>5.7</code>，则<code>p=0.57</code>，得到如下图所示的二项式分布：</p>
+<p><img src="/src/webp-165590386927085.webp" alt="img"></p>
+<p>binomial</p>
+<p>对比一下原始数据，可以看出均分布和二项分布都不能完全描述原始分布。</p>
+<p><img src="/src/75110-b049f7fc560bd8d8.png" alt="img"></p>
+<p>all distributions</p>
+<p>可是，我们不禁要问，哪一种分布更加接近原始分布呢？<br>已经有许多度量误差的方式存在，但是我们所要考虑的是减小发送的信息量。上面讨论的均分布和二项式分布都把问题规约到只需要两个参数，牙齿数量和概率值（均分布只需要牙齿数量即可）。那么哪个分布保留了更多的原始数据分布的信息呢？这个时候就需要K-L散度登场了。</p>
+<h2 id="数据的熵"><a href="#数据的熵" class="headerlink" title="数据的熵"></a>数据的熵</h2><p>K-L散度源于信息论。信息论主要研究如何量化数据中的信息。最重要的信息度量单位是<code>熵</code>Entropy，一般用<code>H</code>表示。分布的熵的公式如下：</p>
+<p><img src="/src/webp.webp" alt="img"></p>
+<p>Entropy</p>
+<p>上面对数没有确定底数，可以是<code>2</code>、<code>e</code>或<code>10</code>，等等。如果我们使用以<code>2</code>为底的对数计算H值的话，可以把这个值看作是编码信息所需要的最少二进制位个数bits。上面空间蠕虫的例子中，信息指的是根据观察所得的经验分布给出的蠕虫牙齿数量。计算可以得到原始数据概率分布的熵值为<code>3.12 bits</code>。这个值只是告诉我们编码蠕虫牙齿数量概率的信息需要的二进制位<code>bit</code>的位数。</p>
+<p>可是熵值并没有给出压缩数据到最小熵值的方法，即如何编码数据才能达到最优（存储空间最优）。优化信息编码是一个非常有意思的主题，但并不是理解K-L散度所必须的。熵的主要作用是告诉我们最优编码信息方案的理论下界（存储空间），以及度量数据的信息量的一种方式。理解了熵，我们就知道有多少信息蕴含在数据之中，现在我们就可以计算当我们用一个带参数的概率分布来近似替代原始数据分布的时候，到底损失了多少信息。请继续看下节内容。↓↓↓</p>
+<h2 id="K-L散度度量信息损失"><a href="#K-L散度度量信息损失" class="headerlink" title="K-L散度度量信息损失"></a>K-L散度度量信息损失</h2><p>只需要稍加修改<code>熵H</code>的计算公式就能得到<code>K-L散度</code>的计算公式。设<code>p</code>为观察得到的概率分布，<code>q</code>为另一分布来近似<code>p</code>，则<code>p</code>、<code>q</code>的<code>K-L散度</code>为：</p>
+<p><img src="/src/webp-165694178715996.webp" alt="img"></p>
+<p>entropy-p-q</p>
+<p>显然，根据上面的公式，K-L散度其实是数据的原始分布p和近似分布q之间的对数差值的期望。如果继续用<code>2</code>为底的对数计算，则<strong>K-L散度值表示信息损失的二进制位数</strong>。下面公式以期望表达K-L散度：</p>
+<p><img src="/src/webp-165694178859698.webp" alt="img"></p>
+<p>DKL1</p>
+<p>一般，K-L散度以下面的书写方式更常见：</p>
+<p><img src="/src/webp-1656941790199100.webp" alt="img"></p>
+<p>DKL2</p>
+<p>注：<code>log a - log b = log (a/b)</code></p>
+<p>OK，现在我们知道当用一个分布来近似另一个分布时如何计算信息损失量了。接下来，让我们重新回到最开始的蠕虫牙齿数量概率分布的问题。</p>
+<h2 id="对比两种分布"><a href="#对比两种分布" class="headerlink" title="对比两种分布"></a>对比两种分布</h2><p>首先是用均分布来近似原始分布的K-L散度：</p>
+<p><img src="/src/75110-f682f83675fa42ee.png" alt="img"></p>
+<p>DKL-uniform</p>
+<p>接下来计算用二项式分布近似原始分布的K-L散度：</p>
+<p><img src="/src/webp-1656941798226108.webp" alt="img"></p>
+<p>DKL-binomial</p>
+<p>通过上面的计算可以看出，使用均分布近似原始分布的信息损失要比用二项式分布近似小。所以，如果要从均分布和二项式分布中选择一个的话，均分布更好些。</p>
+<h2 id="散度并非距离"><a href="#散度并非距离" class="headerlink" title="散度并非距离"></a>散度并非距离</h2><p>很自然地，一些同学把K-L散度看作是不同分布之间距离的度量。这是不对的，因为从K-L散度的计算公式就可以看出它不符合对称性（距离度量应该满足对称性）。如果用我们上面观察的数据分布来近似二项式分布，得到如下结果：</p>
+<p><img src="/src/webp-1656941800646111.webp" alt="img"></p>
+<p>DKL-notdistance</p>
+<p>所以，<code>Dkl (Observed || Binomial) != Dkl (Binomial || Observed)</code>。<br>也就是说，用<code>p</code>近似<code>q</code>和用<code>q</code>近似<code>p</code>，二者所损失的信息并不是一样的。</p>
+<h2 id="使用K-L散度优化模型"><a href="#使用K-L散度优化模型" class="headerlink" title="使用K-L散度优化模型"></a>使用K-L散度优化模型</h2><p>前面使用的二项式分布的参数是概率 <code>p=0.57</code>，是原始数据的均值。<code>p</code>的值域在 [0, 1] 之间，我们要选择一个<code>p</code>值，建立二项式分布，目的是最小化近似误差，即K-L散度。那么<code>0.57</code>是最优的吗？<br>下图是原始数据分布和二项式分布的K-L散度变化随二项式分布参数<code>p</code>变化情况：</p>
+<p><img src="/img/webp-165590387792790.webp" alt="img"></p>
+<p>二项分布K-L值变化曲线</p>
+<p>通过上面的曲线图可以看出，K-L散度值在圆点处最小，即<code>p=0.57</code>。所以我们之前的二项式分布模型已经是最优的二项式模型了。注意，我已经说了，是而像是模型，这里只限定在二项式模型范围内。</p>
+<p>前面只考虑了均分布模型和二项式分布模型，接下来我们考虑另外一种模型来近似原始数据。首先把原始数据分成两部分，1）0-5颗牙齿的概率和 2）6-10颗牙齿的概率。概率值如下：</p>
+<p><img src="/src/webp-1656941803774114.webp" alt="img"></p>
+<p>ad hoc model</p>
+<p>即，一只蠕虫的牙齿数量<code>x=i</code>的概率为<code>p/5</code>; <code>x=j</code>的概率为<code>(1-p) / 6</code>，<code>i=0,1,2,3,4,5</code>; <code>j=6,7,8,9,10</code>。<br>Aha，我们自己建立了一个新的（奇怪的）模型来近似原始的分布，模型只有一个参数<code>p</code>，像前面那样优化二项式分布的时候所做的一样，让我们画出K-L散度值随<code>p</code>变化的情况：</p>
+<p><img src="/src/webp-165590388157393.webp" alt="img"></p>
+<p>finding an optimal parameter value for our ad hoc model</p>
+<p>当<code>p=0.47</code>时，K-L值取最小值<code>0.338</code>。似曾相识吗？对，这个值和使用均分布的K-L散度值是一样的（这并不能说明什么）！下面我们继续画出这个奇怪模型的概率分布图，看起来确实和均分布的概率分布图相似：</p>
+<p><img src="/src/75110-857b751b045a3aa2.png" alt="img"></p>
+<p>ad hoc model distribution</p>
+<p>我们自己都说了，这是个奇怪的模型，在K-L值相同的情况下，更倾向于使用更常见的、更简单的均分布模型。</p>
+<p>回头看，我们在这一小节中使用K-L散度作为目标方程，分别找到了二项式分布模型的参数<code>p=0.57</code>和上面这个随手建立的模型的参数<code>p=0.47</code>。是的，这就是本节的重点：<strong>使用K-L散度作为目标方程来优化模型</strong>。当然，本节中的模型都只有一个参数，也可以拓展到有更多参数的高维模型中。</p>
+<h2 id="变分自编码器VAEs和变分贝叶斯法"><a href="#变分自编码器VAEs和变分贝叶斯法" class="headerlink" title="变分自编码器VAEs和变分贝叶斯法"></a>变分自编码器VAEs和变分贝叶斯法</h2><p>如果你熟悉神经网络，你肯能已经猜到我们接下来要学习的内容。除去神经网络结构的细节信息不谈，整个神经网络模型其实是在构造一个参数数量巨大的函数（百万级，甚至更多），不妨记为<code>f(x)</code>，通过设定目标函数，可以训练神经网络逼近非常复杂的真实函数<code>g(x)</code>。训练的关键是要设定目标函数，反馈给神经网络当前的表现如何。训练过程就是不断减小目标函数值的过程。</p>
+<p>我们已经知道K-L散度用来度量在逼近一个分布时的信息损失量。K-L散度能够赋予神经网络近似表达非常复杂数据分布的能力。变分自编码器（Variational Autoencoders，VAEs）是一种能够学习最佳近似数据集中信息的常用方法，<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://arxiv.org/abs/1606.05908">Tutorial on Variational Autoencoders 2016</a>是一篇关于VAEs的非常不错的教程，里面讲述了如何构建VAE的细节。 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://medium.com/@dmonn/what-are-variational-autoencoders-a-simple-explanation-ea7dccafb0e3">What are Variational Autoencoders? A simple explanation</a>简单介绍了VAEs，<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://blog.keras.io/building-autoencoders-in-keras.html">Building Autoencoders in Keras</a>介绍了如何利用Keras库实现几种自编码器。</p>
+<p>变分贝叶斯方法（Variational Bayesian Methods）是一种更常见的方法。<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.countbayesie.com/blog/2015/3/3/6-amazing-trick-with-monte-carlo-simulations">这篇文章</a>介绍了强大的蒙特卡洛模拟方法能够解决很多概率问题。蒙特卡洛模拟能够帮助解决许多贝叶斯推理问题中的棘手积分问题，尽管计算开销很大。包括VAE在内的变分贝叶斯方法，都能用K-L散度生成优化的近似分布，这种方法对棘手积分问题能进行更高效的推理。更多变分推理（Variational Inference）的知识可以访问<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://edwardlib.org/">Edward library for python</a>。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ol>
+<li><p>K-L 散度的定义</p>
+<p><img src="/src/75110-5d773218b2511d9a.png" alt="img"></p>
+<p>define K-L divergence</p>
+</li>
+<li><p>计算K-L的注意事项</p>
+<p><img src="/src/75110-f55d663d60503fa4.png" alt="img"></p>
+<p>notice</p>
+</li>
+<li><p>遇到<code>log 0</code>时怎么办</p>
+<p><img src="/src/webp-1656941818267121.webp" alt="img"></p>
+<p>example for K-L smoothing</p>
+</li>
+<li><p>信息熵、交叉熵、相对熵</p>
+</li>
+</ol>
+<ul>
+<li>信息熵，即熵，香浓熵。编码方案完美时，最短平均编码长度。</li>
+<li>交叉熵，cross-entropy。编码方案不一定完美时（由于对概率分布的估计不一定正确），平均编码长度。是神经网络常用的损失函数。</li>
+<li>相对熵，即K-L散度，relative entropy。编码方案不一定完美时，平均编码长度相对于最小值的增加值。<br>更详细对比，见知乎<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.zhihu.com/question/41252833">如何通俗的解释交叉熵与相对熵?</a></li>
+</ul>
+<ol>
+<li>为什么在神经网络中使用交叉熵损失函数，而不是K-L散度？<br>K-L散度&#x3D;交叉熵-熵，即 <code>DKL( p||q )=H(p,q)−H(p)</code>。<br>在神经网络所涉及到的范围内，<code>H(p)</code>不变，则<code>DKL( p||q )</code>等价<code>H(p,q)</code>。<br>更多讨论见<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://stats.stackexchange.com/questions/265966/why-do-we-use-kullback-leibler-divergence-rather-than-cross-entropy-in-the-t-sne">Why do we use Kullback-Leibler divergence rather than cross entropy in the t-SNE objective function?</a>和<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.reddit.com/r/MachineLearning/comments/4mebvf/why_train_with_crossentropy_instead_of_kl/">Why train with cross-entropy instead of KL divergence in classification?</a>in_with_crossentropy_instead_of_kl%2F)</li>
+</ol>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——KL散度</div>
+      <div>http://example.com/2022/08/01/MachineLearning/KL散度/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/MLP/" title="Machine Learning——MultiLayer Perceptron">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——MultiLayer Perceptron</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/introduce/" title="Machine Learning——机器学习引言">
+                        <span class="hidden-mobile">Machine Learning——机器学习引言</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,932 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="优化的目标尽管优化提供了一种最大限度地减少深度学习损失函数的方法，但实质上，优化和深度学习的目标是根本不同的。前者主要关注的是最小化目标，后者则关注在给定有限数据量的情况下寻找合适的模型。 深度学习优化的挑战其中一些最令人烦恼的是局部最小值、鞍点和梯度消失。让我们来看看它们。 局部最小值对于任何目标函数$f(x)$，如果在$x$处对应的$𝑓(𝑥)$值小于在$x$附近任何其他点的$f(x)$值，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning—Optimizer">
+<meta property="og:url" content="http://example.com/2022/07/01/DeepLearning/%E4%BC%98%E5%8C%96%E5%99%A8/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="优化的目标尽管优化提供了一种最大限度地减少深度学习损失函数的方法，但实质上，优化和深度学习的目标是根本不同的。前者主要关注的是最小化目标，后者则关注在给定有限数据量的情况下寻找合适的模型。 深度学习优化的挑战其中一些最令人烦恼的是局部最小值、鞍点和梯度消失。让我们来看看它们。 局部最小值对于任何目标函数$f(x)$，如果在$x$处对应的$𝑓(𝑥)$值小于在$x$附近任何其他点的$f(x)$值，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cimage-20220309141205687.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cimage-20220309141416324.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cimage-20220309141507927.png">
+<meta property="og:image" content="http://example.com/src%5Cimage-20220309141749050.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cimage-20220309160114281.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cimage-20220309160122493.png">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.133Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/%5Csrc%5Cimage-20220309141205687.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Deep Learning—Optimizer - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Deep Learning—Optimizer"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-01 00:00" pubdate>
+          2022年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          59 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Deep Learning—Optimizer</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="优化的目标"><a href="#优化的目标" class="headerlink" title="优化的目标"></a>优化的目标</h1><p>尽管优化提供了一种最大限度地减少深度学习损失函数的方法，但实质上，优化和深度学习的目标是根本不同的。<br>前者主要关注的是最小化目标，后者则关注在给定有限数据量的情况下寻找合适的模型。</p>
+<h1 id="深度学习优化的挑战"><a href="#深度学习优化的挑战" class="headerlink" title="深度学习优化的挑战"></a>深度学习优化的挑战</h1><p>其中一些最令人烦恼的是局部最小值、鞍点和梯度消失。让我们来看看它们。</p>
+<h3 id="局部最小值"><a href="#局部最小值" class="headerlink" title="局部最小值"></a>局部最小值</h3><p>对于任何目标函数$f(x)$，如果在$x$处对应的$𝑓(𝑥)$值小于在$x$附近任何其他点的$f(x)$值，那么$f(x)$可能是局部最小值。如果$f(x)$在$x$处的值是整个域上目标函数的最小值，那么$f(x)$是全局最小值。</p>
+<p><img src="/%5Csrc%5Cimage-20220309141205687.png" alt="image-20220309141205687"></p>
+<p>深度学习模型的目标函数通常有许多局部最优解。当优化问题的数值解接近局部最优值时，随着目标函数解的梯度接近或变为零，通过最终迭代获得的数值解可能仅使目标函数<em>局部</em>最优，而不是<em>全局</em>最优。只有一定程度的噪声可能会使参数超出局部最小值。事实上，这是小批量随机梯度下降的有利特性之一，在这种情况下，小批量上梯度的自然变化能够将参数从局部极小值中移出。</p>
+<h3 id="鞍点"><a href="#鞍点" class="headerlink" title="鞍点"></a>鞍点</h3><p>除了局部最小值之外，鞍点也是梯度消失的另一个原因。<em>鞍点</em>（saddle point）是指函数的所有梯度都消失但既不是全局最小值也不是局部最小值的任何位置。考虑这个函数$𝑓(𝑥)&#x3D;𝑥^3$。它的一阶和二阶导数在$𝑥&#x3D;0$时消失。这时优化可能会停止，尽管它不是最小值。</p>
+<p><img src="/%5Csrc%5Cimage-20220309141416324.png" alt="image-20220309141416324"></p>
+<p>较高维度的鞍点甚至更加隐蔽。考虑这个函数$𝑓(𝑥,𝑦)&#x3D;𝑥^2−𝑦^2$。它的鞍点为(0,0)。这是关于$y$的最大值，也是关于$x$的最小值。此外，它<em>看起来</em>像马鞍，这就是这个数学属性的名字由来。</p>
+<p><img src="/%5Csrc%5Cimage-20220309141507927.png" alt="image-20220309141507927"></p>
+<p>我们假设函数的输入是k维向量，其输出是标量，因此其Hessian矩阵（也称黑塞矩阵）将有k特征值函数的解决方案可以是局部最小值、局部最大值或函数梯度为零的位置处的鞍点：</p>
+<ul>
+<li>当函数在零梯度位置处的Hessian矩阵的特征值全部为正值时，我们有该函数的局部最小值。</li>
+<li>当函数在零梯度位置处的Hessian矩阵的特征值全部为负值时，我们有该函数的局部最大值。</li>
+<li>当函数在零梯度位置处的Hessian矩阵的特征值为负值和正值时，我们对函数有一个鞍点。</li>
+</ul>
+<p>对于高维度问题，至少<em>部分</em>特征值为负的可能性相当高。这使得鞍点比局部最小值更有可能。我们将在下一节介绍凸性时讨论这种情况的一些例外情况。简而言之，凸函数是Hessian函数的特征值永远不是负值的函数。不幸的是，大多数深度学习问题并不属于这个类别。尽管如此，它还是研究优化算法的一个很好的工具。</p>
+<h3 id="梯度消失"><a href="#梯度消失" class="headerlink" title="梯度消失"></a>梯度消失</h3><p>可能遇到的最隐蔽的问题是梯度消失。例如，假设我们想最小化函数$f(x)&#x3D;tanh⁡(x)$，然后我们恰好从$𝑥&#x3D;4$开始。正如我们所看到的那样，$𝑓$的梯度接近零。更具体地说，$𝑓′(𝑥)&#x3D;1−tanh2(𝑥)$，因此是$𝑓′(4)&#x3D;0.0013$。因此，在我们取得进展之前，优化将会停滞很长一段时间。事实证明，这是在引入ReLU激活函数之前训练深度学习模型相当棘手的原因之一。</p>
+<p><img src="/src%5Cimage-20220309141749050.png" alt="image-20220309141749050"></p>
+<p>所以激活函数用Relu是好的。</p>
+<h1 id="凸函数"><a href="#凸函数" class="headerlink" title="凸函数"></a>凸函数</h1><p><em>凸性</em>（convexity）在优化算法的设计中起到至关重要的作用， 这主要是由于在这种情况下对算法进行分析和测试要容易得多。 换言之，如果该算法甚至在凸性条件设定下的效果很差， 通常我们很难在其他条件下看到好的结果。 此外，即使深度学习中的优化问题通常是非凸的， 它们也经常在局部极小值附近表现出一些凸性。</p>
+<p><strong>凸函数的优化算法或者损失函数是一定存在解析解的。</strong></p>
+<h2 id="什么是凸集、凸函数"><a href="#什么是凸集、凸函数" class="headerlink" title="什么是凸集、凸函数"></a>什么是凸集、凸函数</h2><p><strong><em>凸集</em>（convex set）</strong>是凸性的基础。 简单地说，如果对于任何$𝑎，𝑏∈X$，连接$a$和$b$的线段也位于$X$中，则向量空间中的一个集合$X$是<em>凸</em>（convex）的。 在数学术语上，这意味着对于所有$𝜆∈[0,1]$​，我们得到<br>$$<br>\lambda a + (1- \lambda)b \in X, \qquad &lt;当a,b\in X&gt;<br>$$<br>假设$X$和$Y$是凸集，那么$X∩Y$也是凸集的。</p>
+<p>通常，深度学习中的问题是在凸集上定义的。 例如，$\mathbb{R}^d$，即实数的$d$维向量的集合是凸集（毕竟$\mathbb{R}^d$中任意两点之间的线存在$\mathbb{R}^d$）中。 在某些情况下，我们使用有界长度的变量，例如球的半径定义为${𝐱|𝐱\in \mathbb{R}^d and ‖𝐱‖≤𝑟}$。</p>
+<p>现在我们有了<strong>凸集</strong>，我们可以引入<strong><em>凸函数</em>（convex function）</strong>$f$。 给定一个凸集$X$，如果对于所有$x,x′∈X$和所有$λ∈[0,1]$，一个函数$f:X\to R$​是凸的，我们可以得到<br>$$<br>\lambda f(x)+(1-\lambda)f(x’)\ge f(\lambda x+(1-\lambda x’))<br>$$</p>
+<h2 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h2><p>这是一种对于凸性定义的一个推广<br>$$<br>\sum _{i}\alpha_if(x_i) \ge f(\sum_i\alpha_ix_i)  \quad and \quad E_X[f(X)]\ge f(E_X[X])<br>$$<br>其中$\alpha_i$是非负实数，因此$∑_i\alpha_i&#x3D;1$且$X$是随机变量。凸函数的期望不小于期望的凸函数。</p>
+<h3 id="常见应用：用一个较简单的表达式约束一个较复杂的表达式"><a href="#常见应用：用一个较简单的表达式约束一个较复杂的表达式" class="headerlink" title="常见应用：用一个较简单的表达式约束一个较复杂的表达式"></a><strong>常见应用：用一个较简单的表达式约束一个较复杂的表达式</strong></h3><p>例如，它可以应用于部分观察到的随机变量的对数似然。 具体地说，由于$\int 𝑃(𝑌)𝑃(𝑋∣𝑌)𝑑𝑌&#x3D;𝑃(𝑋)$，所以<br>$$<br>𝐸_{𝑌∼𝑃(𝑌)}[−log𝑃(𝑋∣𝑌)]\ge−log𝑃(𝑋),<br>$$</p>
+<p>这里，$Y$是典型的未观察到的随机变量，$P(Y)$是它可能如何分布的最佳猜测，$P(X)$是将$Y$积分后的分布。 例如，在聚类中$Y$可能是簇标签，而在应用簇标签时，$P(X∣Y)$是生成模型。</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ul>
+<li><p><strong>局部极小值是全局极小值</strong>这一性质是很方便的。 这意味着如果我们最小化函数，我们就不会“卡住”。但是，请注意，这并不意味着不能有多个全局最小值，或者可能不存在一个全局最小值。</p>
+</li>
+<li><p>$f$为凸函数，当且仅当任意二次可微一维函数$f:\mathbb{R}^n\to \mathbb{R}$是凸的。 对于任意二次可微多维函数$f:\mathbb{R}^n\to \mathbb{R}$， 它是凸的当且仅当它的Hessian$∇^2𝑓⪰0$。</p>
+</li>
+<li><p>凸优化的一个很好的特性是能够让我们有效地处理<em><strong>约束</strong></em>（constraints）。 即它使我们能够解决以下形式的<em><strong>约束优化</strong></em>（constrained optimization）问题</p>
+<ul>
+<li><p>拉格朗日函数<br>$$<br>L(\mathbb{x}, \alpha_1,\dots, \alpha_n)&#x3D;f(\mathbb{x})+\sum_{i&#x3D;1}^n\alpha_ic_i(\mathbb{x}) \qquad where \quad \alpha_i\ge 0.<br>$$<br>这里的变量$\alpha_i(i&#x3D;1,\dots,n)$是所谓的<em>拉格朗日乘数</em>（Lagrange multipliers），它确保约束被正确地执行。 选择它们的大小足以确保所有$i$的$c_i(\mathbb{x})$。</p>
+</li>
+<li><p>惩罚: 一种至少近似地满足约束优化问题的方法是采用拉格朗日函数$L$。除了满足$c_i(\mathbb{x})$之外，我们只需将$\alpha_ic_i(\mathbb{x})$添加到目标函数$f(x)$。 这样可以确保不会严重违反约束。</p>
+<p>事实上，我们一直在使用这个技巧。在目标函数中加入$\frac{\lambda}{2}|\mathcal{<br>w}|^2$​​，以确保$\mathcal{<br>w}$​不会增长太大。 使用约束优化的观点，我们可以看到，对于若干半径$r$​，这将确保$|\mathcal{<br>w}|^2 - r^2 \le 0$​。 通过调整$\lambda$​的值，我们可以改变$\mathcal{<br>w}$的大小。</p>
+<p>通常，添加惩罚是确保近似满足约束的一种好方法。 在实践中，这被证明比精确的满意度更可靠。 此外，对于非凸问题，许多使精确方法在凸情况下的性质（例如，可求最优解）不再成立。</p>
+</li>
+<li><p>投影:例如我们在进行梯度剪裁的时候，就运用的到投影的技巧。$g*min(1, \frac{\theta}{||g||}) \to g$</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="梯度下降Gradient-Descent"><a href="#梯度下降Gradient-Descent" class="headerlink" title="梯度下降Gradient Descent"></a>梯度下降Gradient Descent</h1><p>梯度下降实际上是利用泰勒公式对损失函数进行展开，考究原函数与一阶导数之间的关系。</p>
+<p>其中最关键的参数就是步长$\eta$，在机器学习中又称为学习率。</p>
+<p>学习率决定目标函数能否收敛到局部最小值，以及何时能够收敛到最小值</p>
+<p>学习率太大容易发生震荡， 太小难以收敛。那么如何选择一个合适的学习率就是一个值得考量的事情。</p>
+<ul>
+<li>牛顿法：$\nabla f(x) + H\xi \to \xi&#x3D;-H^{-1}\nabla f(x)$ 但是若H为负数， 那么这个损失函数就不会收敛。我们可以利用绝对值或是重新定义学习率来解决</li>
+<li>预处理：整个Hessian矩阵用于计算与存贮是一件非常昂贵的事情。为了规避这一点， 我们可以只计算对角线上的数值。即$x \gets x- \eta diag(H^{-1})\nabla f(x)$</li>
+</ul>
+<p>综上，我们可以发现一个问题， 梯度下降可能会陷入局部最小值，而得不到全局最小值</p>
+<p>常用的三种梯度下降方法，梯度下降法， 随机梯度下降， 小批量随机梯度下降。</p>
+<p>小批量随机梯度下降往往能够提升运算速度， 平均梯度的方式减少了方差， 但是在产生下降过程中易出现左右振荡的现象。而动量梯度下降法通过减小振荡对算法进行优化。动量梯度下降法的核心便是对一系列梯度进行指数加权平均。</p>
+<p><img src="/%5Csrc%5Cimage-20220309160114281.png" alt="image-20220309160114281"><img src="/%5Csrc%5Cimage-20220309160122493.png" alt="image-20220309160122493"></p>
+<p>动量法计算计算公式。他使用指数加权法 让梯度拥有所有信息<br>$$<br>V_t \gets \beta V_{t-1} + g_{t,t-1}\<br>X_t \gets X_{t-1} + \eta_{t}V_t<br>$$</p>
+<ul>
+<li><p>在 <code>sgd</code>中，我们学习了：随机梯度下降在解决优化问题时比梯度下降更有效。<br>$$<br>X \gets X - \eta\nabla f_i(x)<br>$$</p>
+</li>
+<li><p>在 <code>minibatch_sgd</code>中，我们学习了：在一个小批量中使用更大的观测值集，可以通过向量化提供额外效率。这是高效的多机、多GPU和整体并行处理的关键。<br>$$<br>X \gets X - \eta\nabla_w \frac{1}{|B_t|}\sum_{i\in B_t}f(x_i,w)<br>$$</p>
+</li>
+<li><p>在 <code>momentum</code>中我们添加了一种机制，用于汇总过去梯度的历史以加速收敛。<br>利用泄漏平均值替代梯度计算<br>$$<br>g_t &#x3D; \nabla_w \frac{1}{|B_t|}\sum_{i\in B_t}f(x_i,w)\<br>V_t &#x3D; \beta V_{t-1} + g_t  ,\quad \beta\in(0, 1)<br>$$<br>$\beta^{-1}$作为控制泄漏平均值能够记住多少过去梯度的平均值，又被称为半衰期。$V_t$被称为动量</p>
+</li>
+<li><p>在 <code>adagrad</code>中，我们使用每个坐标缩放来实现计算效率的预处理。<br>$$<br>g_t &#x3D; \nabla_w l(y_t, f(x_w, w))\<br>S_t &#x3D; \rho S_{t-1} + (1-\rho)g_t^2\<br>w_t &#x3D; w_{t-1}-\frac{\eta}{\sqrt{S_t+\xi}}g_t<br>$$</p>
+</li>
+<li><p>在 <code>rmsprop</code>中，我们通过学习率的调整来分离每个坐标的缩放。<br>$$<br>S_t &#x3D; \rho S_{t-1} + (1-\rho)g_t^2\<br>X_t &#x3D; X_{t-1}-\frac{\eta}{\sqrt{S_t+\xi}}\odot g_t<br>$$</p>
+</li>
+<li><p>在<code>adadelta</code>中，我们取消了学习率， 利用两个状态变量，$S_t$用于存储梯度二阶导数的漏平均值，$\Delta x_t$​用于存储模型本身中参数变化二阶导数的泄露平均值。<br>$$<br>S_t &#x3D; \rho S_{t-1} + (1-\rho)g_t^2 \<br>g_t’ &#x3D; \frac{\sqrt{\Delta x_{t-1}+\xi}}{\sqrt{S_t+\xi}}\odot g_t \<br> X_t &#x3D;  X_{t-1} - g_t’\<br>\Delta x_t &#x3D; \rho \Delta x_{t-1} + (1-\rho){g_t’}^2<br>$$</p>
+</li>
+<li><p>而<code>adam</code>,其算法的关键组成部分之一是：它使用指数加权移动平均值来估算梯度的动量和第二力矩，即它使用状态变量<br>$$<br>V_t\gets \beta_1V_{t−1}+(1−\beta_1)g_t,\<br>S_t\gets \beta_2S_{t−1}+(1−\beta_2)g_t^2.<br>$$<br>这里$ 𝛽1 $和 $𝛽2$ 是非负加权参数。 他们的常见设置是 $𝛽1&#x3D;0.9$ 和$ 𝛽2&#x3D;0.999 $​。 也就是说，方差的估计比动量的估计移动得远远更慢。为了避免初始化的干扰，<br>$$<br>\hat{V_t} &#x3D; \frac{V_t}{1-\beta_1^t} \quad and \quad \hat{S_t} &#x3D; \frac{S_t}{1-\beta_2^t} \<br>g_t’ &#x3D; \frac{\eta\hat{V_t}}{\sqrt{\hat{S_t}}+\xi} \<br>X_t \gets X_{t-1}-g_t’<br>$$</p>
+</li>
+</ul>
+<h1 id="学习率调度器"><a href="#学习率调度器" class="headerlink" title="学习率调度器"></a>学习率调度器</h1><ul>
+<li>首先，学习率的大小很重要。如果它太大，优化就会发散；如果它太小，训练就会需要过长时间，或者我们最终只能得到次优的结果。我们之前看到问题的条件数很重要。直观地说，这是最不敏感与最敏感方向的变化量的比率。</li>
+<li>其次，衰减速率同样很重要。如果学习率持续过高，我们可能最终会在最小值附近弹跳，从而无法达到最优解。 简而言之，我们希望速率衰减，但要比$\Omega(t^{-\frac{1}{2}})$慢，这样能成为解决凸问题的不错选择。</li>
+<li>另一个同样重要的方面是初始化。这既涉及参数最初的设置方式，又关系到它们最初的演变方式。这被戏称为<em>预热</em>（warmup），即我们最初开始向着解决方案迈进的速度有多快。一开始的大步可能没有好处，特别是因为最初的参数集是随机的。最初的更新方向可能也是毫无意义的。</li>
+<li>最后，还有许多优化变体可以执行周期性学习率调整。</li>
+</ul>
+<p>多项式衰减和分段常数表。 此外，余弦学习率调度在实践中的一些问题上运行效果很好。 在某些问题上，最好在使用较高的学习率之前预热优化器。<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/optim.html">详情参考</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">model = [Parameter(torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, requires_grad=<span class="hljs-literal">True</span>))]<br>optimizer = SGD(model, <span class="hljs-number">0.1</span>)<br>scheduler = ExponentialLR(optimizer, gamma=<span class="hljs-number">0.9</span>)<br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>):<br>    <span class="hljs-keyword">for</span> <span class="hljs-built_in">input</span>, target <span class="hljs-keyword">in</span> dataset:<br>        optimizer.zero_grad()<br>        output = model(<span class="hljs-built_in">input</span>)<br>        loss = loss_fn(output, target)<br>        loss.backward()<br>        optimizer.step()<br>    scheduler.step()<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>在训练期间逐步降低学习率可以提高准确性，并且减少模型的过拟合。</li>
+<li>在实验中，每当进展趋于稳定时就降低学习率，这是很有效的。从本质上说，这可以确保我们有效地收敛到一个适当的解，也只有这样才能通过降低学习率来减小参数的固有方差。</li>
+<li>余弦调度器在某些计算机视觉问题中很受欢迎。</li>
+<li>优化之前的预热期可以防止发散。</li>
+<li>优化在深度学习中有多种用途。对于同样的训练误差而言，选择不同的优化算法和学习率调度，除了最大限度地减少训练时间，可以导致测试集上不同的泛化和过拟合量。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>最小化训练误差并<strong>不能</strong>保证我们找到最佳的参数集来最小化泛化误差。</li>
+<li>优化问题可能有许多局部最小值。</li>
+<li>问题可能有更多的鞍点，因为通常问题不是凸的。</li>
+<li>梯度消失可能会导致优化停滞，重参数化通常会有所帮助。对参数进行良好的初始化也可能是有益的。</li>
+<li>根据Jensen不等式，“一个多变量凸函数的总期望值”大于或等于“用每个变量的期望值计算这个函数的总值“。</li>
+<li>一个二次可微函数是凸函数，当且仅当其Hessian（二阶导数矩阵）是半正定的。</li>
+<li>动量法用过去梯度的平均值来替换梯度，这大大加快了收敛速度。</li>
+<li>对于无噪声梯度下降和嘈杂随机梯度下降，动量法都是可取的。</li>
+<li>动量法可以防止在随机梯度下降的优化过程停滞的问题。</li>
+<li>由于对过去的数据进行了指数降权，有效梯度数为11−𝛽11−β。</li>
+<li>在凸二次问题中，可以对动量法进行明确而详细的分析。</li>
+<li>动量法的实现非常简单，但它需要我们存储额外的状态向量（动量𝐯）。</li>
+<li>AdaGrad算法会在单个坐标层面动态降低学习率。</li>
+<li>AdaGrad算法利用梯度的大小作为调整进度速率的手段：用较小的学习率来补偿带有较大梯度的坐标。</li>
+<li>在深度学习问题中，由于内存和计算限制，计算准确的二阶导数通常是不可行的。梯度可以作为一个有效的代理。</li>
+<li>如果优化问题的结构相当不均匀，AdaGrad算法可以帮助缓解扭曲。</li>
+<li>AdaGrad算法对于稀疏特征特别有效，在此情况下由于不常出现的问题，学习率需要更慢地降低。</li>
+<li>在深度学习问题上，AdaGrad算法有时在降低学习率方面可能过于剧烈。</li>
+<li>RMSProp算法与Adagrad算法非常相似，因为两者都使用梯度的平方来缩放系数。</li>
+<li>RMSProp算法与动量法都使用泄漏平均值。但是，RMSProp算法使用该技术来调整按系数顺序的预处理器。</li>
+<li>Adam算法将许多优化算法的功能结合到了相当强大的更新规则中。规则中。</li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Deep Learning—Optimizer</div>
+      <div>http://example.com/2022/07/01/DeepLearning/优化器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/torch%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="Deep Learning—torch常用操作">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Deep Learning—torch常用操作</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/%E5%90%84%E4%B8%AA%E5%B1%82%E7%9A%84%E8%A7%A3%E9%87%8A/" title="Deep Learning—Layer说明">
+                        <span class="hidden-mobile">Deep Learning—Layer说明</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

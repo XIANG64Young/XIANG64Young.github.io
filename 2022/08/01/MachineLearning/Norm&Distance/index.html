@@ -1,0 +1,1026 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="范数 Norm范数本质是向量或者矩阵映射到实数域的单值函数。  假设$N(x)&#x3D;\Vert x \Vert$是定义在$R^n$上的函数，她需要满足以下三个条件：  非负性：$\Vert x \Vert \ge 0 $，当且仅当$x&#x3D;0$时，$\Vert x \Vert &#x3D; 0 $ 齐次性：$\Vert kx \Vert &#x3D;  \Vert x \Vert *\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——Norm">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/Norm&Distance/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="范数 Norm范数本质是向量或者矩阵映射到实数域的单值函数。  假设$N(x)&#x3D;\Vert x \Vert$是定义在$R^n$上的函数，她需要满足以下三个条件：  非负性：$\Vert x \Vert \ge 0 $，当且仅当$x&#x3D;0$时，$\Vert x \Vert &#x3D; 0 $ 齐次性：$\Vert kx \Vert &#x3D;  \Vert x \Vert *\">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/image-20211214115802005.png">
+<meta property="og:image" content="http://example.com/img/IMG_0522.JPG">
+<meta property="og:image" content="http://example.com/img/640-16463600254073.png">
+<meta property="og:image" content="http://example.com/img/640-16463600254074.png">
+<meta property="og:image" content="http://example.com/img/640-16463600254075.gif">
+<meta property="og:image" content="http://example.com/img/640-16463600254076.png">
+<meta property="og:image" content="http://example.com/img/640-16463600254087.png">
+<meta property="og:image" content="http://example.com/img/640-16463600254088.png">
+<meta property="og:image" content="https://camo.githubusercontent.com/4623a6a2ac3e0f0b122f6ea01512b9bb109a9ef9bd36d1f83fb3d568d25ee125/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d363261656565393930313837396330382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/c6d190e0f05b6be207141bb173883768f2d7d9de4192e3a824b59e7e13c122e5/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d383666393835326261386361343936612e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/c88270c10bd37a31194b953d24a814e9e5c72ce9f9f824089390171836e90ac9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d306431313631616131303636396535392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/2ec05a4b25f50cff3e51999d90ca96ca5bfc4c554c221fba02c91a3ff1026bfd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d373066626637643862363130323464662e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/7144c9f505ae682075bc81922bfb44d7e737fffc73057a4dc456d308777ca96d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d653866306436313763653665393036342e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/dbb3c1b8e27f59afda6c9092c5a52fa1ebacde632cdfda1fd5f1fed244b544cd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d623239623737633263636466346238652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/b41d73b203a6f172280a80af85066ef590bbc7b0d7832b1ffdebeb354ff74594/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d613464623231383730346430393936362e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/30b84347233498518d718b53e20a714163e3a88eefb86381e53673d6efe57288/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d623163646335383163343734663638312e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/29dcd66a01c383eb0639a8b961865fb5b1583aa00d07144021780bde0014d287/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d363961623461613263656638343563392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/117e3aa79041a5a08a1f9d11225c95101c0b442b1a606bd70939414d073730bd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d376166376436353939626663343731302e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/5307b4ca8788ed4bc62b3c7b1f979f723ae1c1c3af7882a32495b7e0817995fe/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333736356331613736376431376662632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/97312fbe79e84ebdf0d9e26600b2be9d2aa2fca3a960545bc5c81777fef8b885/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d616531383266336535386263313639392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/776b7fdb349dcee3c1f5b2ed112ad41734de0fcd091346f8fe9c21d5767614c0/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d356365623632316437623031323166392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/e9c0245a31394f581649c72447cc489e1768e8605dba1ec06e5eecaf98a144f9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d633165613066666637373132613162392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/d2c73bf5409d45a7ff8e511db1a91f61d8ee329a49de9bb2cc2857ee1e33b943/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333039306462633763633066646162372e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/187c4caa4617f742db957740ebaecbdc112bffad74664c845526736e50acbd91/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d303137356136626432663937626139642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/22b9d5369d4ec6667d4339a72f19784bbbc0fd7f825a7c852c2e898fe0107886/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d303431386563333736633134393365382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/2437325d98902f36565cf374ddf01cebc4488b22b6df027e4e57dbf371a239ae/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333435343637323635633331376334642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/9afc487f7cb49790cc6d03c3f9b7b0d31f81d1d876c101d65c3cac9d0e3ec6f9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d626237326265306463663533303236342e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/27b14a247c29f2e7dd158d1b064eac1fbcea818144dae3487baa6fa5f49d0182/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d326636386532346337623134613833652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/2193c8a569ab5424af3a075c28bdbb91d95da9efe82cc79812dc14c03d11797c/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d646336376563636166343236643962652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/d8958e5a6466bac2522b70b629f86d199070ad375f704fc00b743479e393c034/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d336361633866373239303338643233312e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/b07060aafe0bc455ba2392759fdefa98b1c00bb60fe731517ac717c8364faedb/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d653862663461313262623165616162392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/9ca06bb08cb141c2652da402f55a587223503025944a9aaff5df4b4915424dc9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d626466333239663438396464356265352e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/e40fa5dd1e7a67bd2946fbbcf7a14553570420990793dbcb2aef5638d0a3ce99/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d633038313338303931396231356430612e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/54d0d864fbaf4e4706e35bda8b09192138cf2ebe14cb17b4bb30c852064d7c8d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d336362353938386162646265393132392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/fccc2429956bd63d3265e7cf32152204547d661aa0b26276682c6f69aa59d17b/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d656435396431646639386366353239382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/a9d4338383f7dc41b17e3c655c5bba7292cb4dcbb650e3731b7d84d3dac52325/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d666534643334666131613233376230322e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/12ff93970f8c0964e989494ba9adeed40038dfb93240c85c953e99db00e32c7a/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d366331383261326539386237653864332e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/98f65619a427cace4cb8e2ab94433f0e774c3cb69216cb722339bb4b65d8805d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d386633393262313536323433663730632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/8c171587d8e066aa11898d874ff5180639bc9de4b2163c2fc25678352d6887df/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d636632343839336261373231643834642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/af46b27a597ce649bba5bdb12c8b6a4e84b734362b885566287cdf5eff023b2e/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d646661626366353865343161623766632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/a3e2f227676e0ea3d6f51c30a2a502f163fd4b0b6610df6a07c0bc64d206aa26/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d663934353939333837313466666531652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/f7a9a40869ba102730e779c8ebebe47b74d5b59eb51a1c2c73c359ce0c9ba210/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d373438623532613234393330653131352e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/e8c868e9f06634bcb19997096b1bd2c0023dd398e615f7255ff9e33bdf4b8339/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d343161366230306361343434373636362e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="og:image" content="https://camo.githubusercontent.com/75da575a496f7db2633dde5db151155680cbfeda513127a5389cdf7785aaac50/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d613834386531383664353130666232382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430">
+<meta property="article:published_time" content="2022-08-01T02:13:53.488Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.189Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/image-20211214115802005.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——Norm - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——Norm"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——Norm</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="范数-Norm"><a href="#范数-Norm" class="headerlink" title="范数 Norm"></a>范数 Norm</h1><p>范数本质是向量或者矩阵映射到实数域的单值函数。</p>
+<blockquote>
+<p>假设$N(x)&#x3D;\Vert x \Vert$是定义在$R^n$上的函数，她需要满足以下三个条件：</p>
+<ul>
+<li>非负性：$\Vert x \Vert \ge 0 $，当且仅当$x&#x3D;0$时，$\Vert x \Vert &#x3D; 0 $</li>
+<li>齐次性：$\Vert kx \Vert &#x3D;  \Vert x \Vert *\Vert k \Vert, \quad k \in R$</li>
+<li>三角不等性：对于$\forall x,y \in R^n, \quad \Vert x+y \Vert \le \Vert x \Vert+\Vert y \Vert$</li>
+</ul>
+<p>则称$N(x)&#x3D;\Vert x \Vert$在$R^n$上向量$x$的范数</p>
+</blockquote>
+<p>那么，向量范数和矩阵范数输出都是一个值，实数值。只不过输入空间不同罢了。他们都是为了能够更显性的体现出一个向量和矩阵的大小。</p>
+<p>下面是一些范数的图示：</p>
+<p><img src="/img/image-20211214115802005.png" alt="image-20211214115802005"></p>
+<p>同样，范数也可以有相对应的变化趋势，从下图中不难发现一些东西：</p>
+<p><img src="/img/IMG_0522.JPG" alt="QQ图片20211216152534"></p>
+<h2 id="Vector-范数计算公式"><a href="#Vector-范数计算公式" class="headerlink" title="Vector 范数计算公式:"></a>Vector 范数计算公式:</h2><p>$$<br>\Vert x\Vert_1&#x3D; \sum_{i&#x3D;1}^N |x_i| \<br>\Vert x\Vert_2&#x3D; \sqrt {\sum_{i&#x3D;1}^N x_i^2} \<br>\Vert x\Vert_p&#x3D; ({\sum_{i&#x3D;1}^N x_i^p})^{\frac{1}{p}} \<br>\Vert x\Vert _\infty&#x3D; \max|x_i|<br>$$</p>
+<h2 id="Matrix-范数计算公式"><a href="#Matrix-范数计算公式" class="headerlink" title="Matrix 范数计算公式:"></a>Matrix 范数计算公式:</h2><p>$$<br>A_{m\times n}\<br>\Vert A\Vert_1&#x3D; \max_j \sum_{i&#x3D;1}^m |a_{ij}| \<br>\Vert A\Vert_2&#x3D; \sqrt {\lambda_{max}(A^TA)} \<br>\Vert A\Vert_F&#x3D; ({\sum_{i&#x3D;1}^m \sum_{j&#x3D;1}^n |a_{ij}|^2})^{\frac{1}{2}} \<br>\Vert A\Vert_\infty&#x3D; \max_i \sum_{j&#x3D;1}^n|a_{ij}|<br>$$</p>
+<p>范数的应用：在机器学习中，范数最常见的作用是来对目标函数进行惩罚，达到正则化的效果，以免目标函数过拟合。当然面对模型过拟合的方法不止正则化这一种，还有增加数据，特征提取等方式。</p>
+<p>$L_1$范数(Lasso)和$L_0$范数通过正则化得到稀疏解<br>$L_2$范数(Ridge)通过正则化得到稠密解，这种方法有个专有的名字：权值衰减</p>
+<p>首先写出L1正则化和L2正则化的公式：</p>
+<h2 id="用等高线展示L1，L2正则化的正确姿势"><a href="#用等高线展示L1，L2正则化的正确姿势" class="headerlink" title="用等高线展示L1，L2正则化的正确姿势"></a>用等高线展示L1，L2正则化的正确姿势</h2><p><img src="/img/640-16463600254073.png" alt="图片">L1，L2正则化示意图</p>
+<p>图中：</p>
+<ul>
+<li>蓝色的一层层的线，代表<strong>正则项的等高线</strong>，对于L1，它是菱形的，对于L2，它是圆形的；</li>
+<li>绿色的一层层的圆圈，代表<strong>原始损失函数的等高线图</strong>；</li>
+<li>黑色的是坐标轴，这里展示的是二维特征的坐标轴。</li>
+</ul>
+<p><strong>关键的关键</strong>：</p>
+<ol>
+<li>蓝色的等高线和绿色的等高线，分别代表了两个优化问题。对原始的损失函数J添加了正则像之后，优化问题就变成了两个子优化问题的博弈。</li>
+<li>当J和正则项之和最小时，上述的博弈取得平衡。而此时平衡点一定是相切点&#x2F;端点。相切点的具体位置，取决于正则项的惩罚力度，也就是公式里的。每一个平衡点，对应着一个的设置。</li>
+</ol>
+<ul>
+<li>可以想象：<strong>当惩罚力度大时，蓝色的线希望扯着绿色的线，往靠近坐标轴的方向移动</strong>，而<strong>惩罚力度小时，绿色的线希望扯着蓝色的线，往远离坐标轴的方向移动</strong>。</li>
+</ul>
+<p>那么就好理解了，我们可以发现：</p>
+<ul>
+<li>对于L1正则化，蓝线和绿线的相切点，随着蓝线不断靠近坐标轴，早晚会碰到坐标轴，抵达坐标轴之后，最优点会保持在L1等高线的端点处，依然在坐标轴上，故某个特征的值会变为0。</li>
+<li>而L2的相切点则只能无限接近坐标轴，惩罚力度再大，都到不了0。</li>
+</ul>
+<h3 id="上面这个图还是复杂了点儿，能不能分解-x2F-分步一下？"><a href="#上面这个图还是复杂了点儿，能不能分解-x2F-分步一下？" class="headerlink" title="上面这个图还是复杂了点儿，能不能分解&#x2F;分步一下？"></a>上面这个图还是复杂了点儿，能不能分解&#x2F;分步一下？</h3><p>当然，真正让我彻底理解的，是当我画出下面这个图的时候：</p>
+<p><img src="/img/640-16463600254074.png" alt="图片">L1正则化示意图</p>
+<p><img src="/img/640-16463600254075.gif" alt="图片"></p>
+<p>图中展示的都是达到最优的时候的两个等高线的关系。图注都写在图片里了，随着的增大，L1的蓝色的方框不断缩小，拉扯着J的绿色圆圈变大，第三张子图的时候，最优点到达了L1的顶点，后面如果继续增大的话，最优点会沿着纵坐标往下滑。所以，当超过某个阈值的时候，最优解中的w1就会总等于0.</p>
+<p><img src="/img/640-16463600254076.png" alt="图片">L2理解起来就简单多了，两个圆一直都是相切的状态，切点永远到不了原点，也就没法让某个特征等于0。</p>
+<p>这两张图，才真正展示了一般情况下的L1和L2正则化的特点，解释了为什么L1正则化会导致稀疏解。</p>
+<h2 id="最后辅以推导"><a href="#最后辅以推导" class="headerlink" title="最后辅以推导"></a>最后辅以推导</h2><p>只有从直觉上，道理上理解了L1和L2的特点，我们再去用数学推导才有意义。</p>
+<p>要看是否会导致稀疏解，我们可以看0附近的导数是否导致0是其邻域内的极值点：</p>
+<p><img src="/img/640-16463600254087.png" alt="图片"></p>
+<p><img src="/img/640-16463600254088.png" alt="图片">假设J在0处的导数是一个很小的正数，那么在0的邻域内，J的导数和J的大致的样子</p>
+<p>上面的推导表明，对于L1，0的邻域内，存在某种条件，使得导数先负后正，即函数先减后增，所以0是极值点。而条件是：原损失函数J在某参数为0处的导数在范围内。这个条件，说直白一点就是<strong>有没有某特征对损失函数影响不大</strong>。</p>
+<p>而L2在0处的导数，就等于J在0处的导数。只有当原始优化问题的最优解本身就是稀疏解的时候，才会使得该参数为0，而这个显然不常见。</p>
+<p>最后的最后补充一句，前面我一直说的“导致”稀疏解，搞的好像稀疏解是某种不好的后果一样，不是的。其实L1这个特点，经常被用来进行特征选择，因为它可以找出那些不重要的特征。</p>
+<h1 id="距离-Distance："><a href="#距离-Distance：" class="headerlink" title="距离 Distance："></a>距离 Distance：</h1><p>既然说了范数，距离比较是两个<br>$p \in \mathbb{R}^m,\ q \in \mathbb{R}^m$</p>
+<p>$$<br>L_1(p,q)&#x3D; \sum_{i&#x3D;1}^m |p_i-q_i|\<br>L_2(p,q)&#x3D; [\sum_{i&#x3D;1}^m (p_i-q_i)^2]^\frac{1}{2}\<br>L_p(p,q)&#x3D; \max |p_i-q_i|<br>$$</p>
+<p>$L_1$称街区距离，又称Manhattan Distance<br>$L_2$称欧式距离，又称Euclidean Distance<br>$L_1$称切比雪夫距离，又称Minkowski Distance</p>
+<p>距离(distance，差异程度)、相似度(similarity，相似程度)方法可以看作是以某种的距离函数计算元素间的距离，这些方法作为机器学习的基础概念，广泛应用于如：Kmeans聚类、协同过滤推荐算法、相似度算法、MSE损失函数等等。本文对常用的距离计算方法进行归纳以及解析，分为以下几类展开：</p>
+<h2 id="闵氏距离（Minkowski-Distance）类"><a href="#闵氏距离（Minkowski-Distance）类" class="headerlink" title="闵氏距离（Minkowski Distance）类"></a>闵氏距离（Minkowski Distance）类</h2><h3 id="闵氏距离（Minkowski-Distance）"><a href="#闵氏距离（Minkowski-Distance）" class="headerlink" title="闵氏距离（Minkowski Distance）"></a>闵氏距离（Minkowski Distance）</h3><p>对于点x&#x3D;(x1,x2.xn) 与点y&#x3D;(y1,y2.yn) , 闵氏距离可以用下式表示：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/4623a6a2ac3e0f0b122f6ea01512b9bb109a9ef9bd36d1f83fb3d568d25ee125/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d363261656565393930313837396330382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/4623a6a2ac3e0f0b122f6ea01512b9bb109a9ef9bd36d1f83fb3d568d25ee125/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d363261656565393930313837396330382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img-1.png"></a></p>
+<p>闵氏距离是对多个距离度量公式的概括性的表述，p&#x3D;1退化为曼哈顿距离；p&#x3D;2退化为欧氏距离；切比雪夫距离是闵氏距离取极限的形式。</p>
+<h3 id="曼哈顿距离（Manhattan-Distance）VS-欧几里得距离（Euclidean-Distance）"><a href="#曼哈顿距离（Manhattan-Distance）VS-欧几里得距离（Euclidean-Distance）" class="headerlink" title="曼哈顿距离（Manhattan Distance）VS 欧几里得距离（Euclidean Distance）"></a>曼哈顿距离（Manhattan Distance）VS 欧几里得距离（Euclidean Distance）</h3><p>曼哈顿距离 公式：</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/c6d190e0f05b6be207141bb173883768f2d7d9de4192e3a824b59e7e13c122e5/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d383666393835326261386361343936612e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/c6d190e0f05b6be207141bb173883768f2d7d9de4192e3a824b59e7e13c122e5/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d383666393835326261386361343936612e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>欧几里得距离公式：</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/c88270c10bd37a31194b953d24a814e9e5c72ce9f9f824089390171836e90ac9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d306431313631616131303636396535392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/c88270c10bd37a31194b953d24a814e9e5c72ce9f9f824089390171836e90ac9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d306431313631616131303636396535392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>如下图蓝线的距离即是曼哈顿距离（想象你在曼哈顿要从一个十字路口开车到另外一个十字路口实际驾驶距离就是这个“曼哈顿距离”，此即曼哈顿距离名称的来源，也称为城市街区距离），红线为欧几里得距离：</p>
+<p>[<img src="https://camo.githubusercontent.com/2ec05a4b25f50cff3e51999d90ca96ca5bfc4c554c221fba02c91a3ff1026bfd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d373066626637643862363130323464662e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></p>
+<h3 id="切比雪夫距离（Chebyshev-Distance）"><a href="#切比雪夫距离（Chebyshev-Distance）" class="headerlink" title="切比雪夫距离（Chebyshev Distance）"></a>切比雪夫距离（Chebyshev Distance）</h3><p>切比雪夫距离起源于国际象棋中国王的走法，国际象棋中国王每次只能往周围的8格中走一步，那么如果要从棋盘中A格(x1,y1)走到B格(x2,y2)最少需要走几步？你会发现最少步数总是max(|x2-x1|,|y2-y1|)步。有一种类似的一种距离度量方法叫切比雪夫距离。</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/7144c9f505ae682075bc81922bfb44d7e737fffc73057a4dc456d308777ca96d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d653866306436313763653665393036342e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/7144c9f505ae682075bc81922bfb44d7e737fffc73057a4dc456d308777ca96d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d653866306436313763653665393036342e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>切比雪夫距离就是当p趋向于无穷大时的闵氏距离：</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/dbb3c1b8e27f59afda6c9092c5a52fa1ebacde632cdfda1fd5f1fed244b544cd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d623239623737633263636466346238652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/dbb3c1b8e27f59afda6c9092c5a52fa1ebacde632cdfda1fd5f1fed244b544cd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d623239623737633263636466346238652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<h2 id="闵氏距离的相关知识"><a href="#闵氏距离的相关知识" class="headerlink" title="闵氏距离的相关知识"></a>闵氏距离的相关知识</h2><h3 id="距离度量的定义"><a href="#距离度量的定义" class="headerlink" title="距离度量的定义"></a>距离度量的定义</h3><p>距离函数并不一定是距离度量，当距离函数要作为距离度量，需要满足：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/b41d73b203a6f172280a80af85066ef590bbc7b0d7832b1ffdebeb354ff74594/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d613464623231383730346430393936362e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/b41d73b203a6f172280a80af85066ef590bbc7b0d7832b1ffdebeb354ff74594/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d613464623231383730346430393936362e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><br>由此可见，闵氏距离可以作为距离度量，而大部分的相似度并不能作为距离度量。</p>
+<h3 id="Lp范数"><a href="#Lp范数" class="headerlink" title="Lp范数"></a>Lp范数</h3><blockquote>
+<p>向量的范数可以简单形象的理解为向量的长度，或者向量到零点的距离，或者相应的两个点之间的距离。</p>
+</blockquote>
+<p>闵氏距离也是Lp范数（如p&#x3D;&#x3D;2为常用L2范数正则化）的一般化定义。<br>下图给出了一个Lp球（ ||X||p &#x3D; 1 ）的形状随着P的减少的可视化图：</p>
+<p>[<img src="https://camo.githubusercontent.com/30b84347233498518d718b53e20a714163e3a88eefb86381e53673d6efe57288/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d623163646335383163343734663638312e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></p>
+<h3 id="维度灾难的问题"><a href="#维度灾难的问题" class="headerlink" title="维度灾难的问题"></a>维度灾难的问题</h3><p>距离度量随着空间的维度d的不断增加，计算量复杂也逐增，另外在高维空间下，在维度越高的情况下，任意样本之间的距离越趋于相等（样本间最大与最小欧氏距离之间的相对差距就趋近于0），也就是维度灾难的问题，如下式结论：</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/29dcd66a01c383eb0639a8b961865fb5b1583aa00d07144021780bde0014d287/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d363961623461613263656638343563392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/29dcd66a01c383eb0639a8b961865fb5b1583aa00d07144021780bde0014d287/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d363961623461613263656638343563392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>对于维度灾难的问题，常用的有PCA方法进行降维计算。</p>
+<h3 id="量纲差异问题"><a href="#量纲差异问题" class="headerlink" title="量纲差异问题"></a>量纲差异问题</h3><p>假设各样本有年龄，工资两个变量，计算欧氏距离（p&#x3D;2）的时候，(年龄1-年龄2)² 的值要远小于(工资1-工资2)² ，这意味着在不使用特征缩放的情况下，距离会被工资变量（大的数值）主导, 特别当p越大，单一维度的差值对整体的影响就越大。因此，我们需要使用特征缩放来将全部的数值统一到一个量级上来解决此问题。基本的解决方法可以对数据进行“标准化”和“归一化”。</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/117e3aa79041a5a08a1f9d11225c95101c0b442b1a606bd70939414d073730bd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d376166376436353939626663343731302e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/117e3aa79041a5a08a1f9d11225c95101c0b442b1a606bd70939414d073730bd/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d376166376436353939626663343731302e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>另外可以使用马氏距离（协方差距离），与欧式距离不同其考虑到各种特性之间的联系是（量纲）尺度无关 (Scale Invariant) 的，可以排除变量之间的相关性的干扰，缺点是夸大了变化微小的变量的作用。马氏距离定义为：</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/5307b4ca8788ed4bc62b3c7b1f979f723ae1c1c3af7882a32495b7e0817995fe/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333736356331613736376431376662632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/5307b4ca8788ed4bc62b3c7b1f979f723ae1c1c3af7882a32495b7e0817995fe/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333736356331613736376431376662632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><br>马氏距离原理是使用矩阵对两两向量进行投影后，再通过常规的欧几里得距离度量两对象间的距离。当协方差矩阵为单位矩阵，马氏距离就简化为欧氏距离；如果协方差矩阵为对角阵，其也可称为正规化的欧氏距离。</p>
+<h2 id="二、相似度（Similarity"><a href="#二、相似度（Similarity" class="headerlink" title="二、相似度（Similarity)"></a>二、相似度（Similarity)</h2><ul>
+<li><h2 id="余弦相似度-Cosine-Similarity"><a href="#余弦相似度-Cosine-Similarity" class="headerlink" title="余弦相似度 (Cosine Similarity)"></a>余弦相似度 (Cosine Similarity)</h2></li>
+</ul>
+<p>根据向量x,y的点积公式：</p>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/97312fbe79e84ebdf0d9e26600b2be9d2aa2fca3a960545bc5c81777fef8b885/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d616531383266336535386263313639392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/97312fbe79e84ebdf0d9e26600b2be9d2aa2fca3a960545bc5c81777fef8b885/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d616531383266336535386263313639392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>我们可以利用向量间夹角的cos值作为向量相似度[1]：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/776b7fdb349dcee3c1f5b2ed112ad41734de0fcd091346f8fe9c21d5767614c0/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d356365623632316437623031323166392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/776b7fdb349dcee3c1f5b2ed112ad41734de0fcd091346f8fe9c21d5767614c0/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d356365623632316437623031323166392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><br>余弦相似度的取值范围为：-1~1，1 表示两者完全正相关，-1 表示两者完全负相关，0 表示两者之间独立。余弦相似度与向量的长度无关，只与向量的方向有关，但余弦相似度会受到向量平移的影响（上式如果将 x 平移到 x+1, 余弦值就会改变）。</p>
+<p>另外，归一化后计算欧氏距离，等价于余弦值：两个向量x,y, 夹角为A，欧氏距离D&#x3D;(x-y)^2 &#x3D; x^2+y^2-2|x||y|cosA &#x3D; 2-2cosA</p>
+<ul>
+<li><h2 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h2></li>
+</ul>
+<p>协方差是衡量多维数据集中，变量之间相关性的统计量。如下公式X，Y的协方差即是，X减去其均值 乘以 Y减去其均值，所得每一组数值的期望（平均值）。<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/e9c0245a31394f581649c72447cc489e1768e8605dba1ec06e5eecaf98a144f9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d633165613066666637373132613162392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/e9c0245a31394f581649c72447cc489e1768e8605dba1ec06e5eecaf98a144f9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d633165613066666637373132613162392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><br>如果两个变量之间的协方差为正值，则这两个变量之间存在正相关，若为负值，则为负相关。</p>
+<ul>
+<li><h2 id="皮尔逊相关系数-Pearson-Correlation"><a href="#皮尔逊相关系数-Pearson-Correlation" class="headerlink" title="皮尔逊相关系数 (Pearson Correlation)"></a>皮尔逊相关系数 (Pearson Correlation)</h2></li>
+</ul>
+<p>皮尔逊相关系数数值范围也是[-1，1]。皮尔逊相关系数可看作是在余弦相似度或协方差基础上做了优化（变量的协方差除以标准差）。它消除每个分量标准不同（分数膨胀）的影响，具有平移不变性和尺度不变性。<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/d2c73bf5409d45a7ff8e511db1a91f61d8ee329a49de9bb2cc2857ee1e33b943/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333039306462633763633066646162372e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/d2c73bf5409d45a7ff8e511db1a91f61d8ee329a49de9bb2cc2857ee1e33b943/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333039306462633763633066646162372e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li><h2 id="卡方检验"><a href="#卡方检验" class="headerlink" title="卡方检验"></a>卡方检验</h2></li>
+</ul>
+<p>卡方检验X2，主要是比较两个分类变量的关联性、独立性分析。如下公式，A代表实际频数；E代表期望频数：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/187c4caa4617f742db957740ebaecbdc112bffad74664c845526736e50acbd91/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d303137356136626432663937626139642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/187c4caa4617f742db957740ebaecbdc112bffad74664c845526736e50acbd91/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d303137356136626432663937626139642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<h2 id="三、字符串距离-Distance-of-Strings"><a href="#三、字符串距离-Distance-of-Strings" class="headerlink" title="三、字符串距离(Distance of Strings)"></a>三、字符串距离(Distance of Strings)</h2><ul>
+<li><h2 id="Levenshtein-距离"><a href="#Levenshtein-距离" class="headerlink" title="Levenshtein 距离"></a>Levenshtein 距离</h2></li>
+</ul>
+<p>Levenshtein 距离是 编辑距离 (Editor Distance) 的一种，指两个字串之间，由一个转成另一个所需的最少编辑操作次数。允许的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。<br>像hallo与hello两个字符串编辑距离就是1，我们通过替换”a“ 为 ”e“，就可以完成转换。<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/22b9d5369d4ec6667d4339a72f19784bbbc0fd7f825a7c852c2e898fe0107886/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d303431386563333736633134393365382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/22b9d5369d4ec6667d4339a72f19784bbbc0fd7f825a7c852c2e898fe0107886/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d303431386563333736633134393365382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li><h2 id="汉明距离"><a href="#汉明距离" class="headerlink" title="汉明距离"></a>汉明距离</h2></li>
+</ul>
+<p>汉明距离为两个等长字符串对应位置的不同字符的个数，也就是将一个字符串变换成另外一个字符串所需要替换的字符个数。例如：1011101 与 1001001 之间的汉明距离是 2，“toned” 与 “roses” 之间的汉明距离是 3</p>
+<ul>
+<li><h2 id="带权重的字符串距离"><a href="#带权重的字符串距离" class="headerlink" title="带权重的字符串距离"></a>带权重的字符串距离</h2></li>
+</ul>
+<p>另外的，对于字符串距离来说，不同字符所占的份量是不一样的。比如”我乐了“ 与【“我怒了”，”我乐了啊” 】的Levenshtein 距离都是1，但其实两者差异还是很大的，因为像“啊”这种语气词的重要性明显不如“乐”，考虑字符（特征）权重的相似度方法有：TF-IDF、BM25、WMD算法。<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/2437325d98902f36565cf374ddf01cebc4488b22b6df027e4e57dbf371a239ae/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333435343637323635633331376334642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/2437325d98902f36565cf374ddf01cebc4488b22b6df027e4e57dbf371a239ae/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d333435343637323635633331376334642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<h2 id="四、集合距离-Distance-of-Sets"><a href="#四、集合距离-Distance-of-Sets" class="headerlink" title="四、集合距离 (Distance of Sets)"></a>四、集合距离 (Distance of Sets)</h2><ul>
+<li><h2 id="Jaccard-系数"><a href="#Jaccard-系数" class="headerlink" title="Jaccard 系数"></a>Jaccard 系数</h2></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/9afc487f7cb49790cc6d03c3f9b7b0d31f81d1d876c101d65c3cac9d0e3ec6f9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d626237326265306463663533303236342e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/9afc487f7cb49790cc6d03c3f9b7b0d31f81d1d876c101d65c3cac9d0e3ec6f9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d626237326265306463663533303236342e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><br>Jaccard 取值范围为0~1，0 表示两个集合没有重合，1 表示两个集合完全重合。</p>
+<ul>
+<li><h2 id="Dice-系数"><a href="#Dice-系数" class="headerlink" title="Dice 系数"></a>Dice 系数</h2><p><img src="https://camo.githubusercontent.com/27b14a247c29f2e7dd158d1b064eac1fbcea818144dae3487baa6fa5f49d0182/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d326636386532346337623134613833652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></p>
+<p>Dice 系数取值范围为0~1，与Jaccard系数可以相互转换。</p>
+<p><img src="https://camo.githubusercontent.com/2193c8a569ab5424af3a075c28bdbb91d95da9efe82cc79812dc14c03d11797c/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d646336376563636166343236643962652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></p>
+</li>
+</ul>
+<p>但Dice不满足距离函数的三角不等式，不是一个合适的距离度量。</p>
+<ul>
+<li><h2 id="Tversky-系数"><a href="#Tversky-系数" class="headerlink" title="Tversky 系数"></a>Tversky 系数</h2><p><img src="https://camo.githubusercontent.com/d8958e5a6466bac2522b70b629f86d199070ad375f704fc00b743479e393c034/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d336361633866373239303338643233312e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></p>
+<p>Tversky 系数可以理解为 Jaccard 系数和 Dice 系数的一般化，当 α，β为1时为 Jaccard 系数，当 α，β为0.5时为 Dice 系数（X\Y表示集合的相对补集）。</p>
+</li>
+</ul>
+<h2 id="五、信息论距离-Information-Theory-measures"><a href="#五、信息论距离-Information-Theory-measures" class="headerlink" title="五、信息论距离 (Information Theory measures)"></a>五、信息论距离 (Information Theory measures)</h2><p>基础地介绍下信息熵，用来衡量一个随机变量的不确定性程度。对于一个随机变量 X，其概率分布为：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/b07060aafe0bc455ba2392759fdefa98b1c00bb60fe731517ac717c8364faedb/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d653862663461313262623165616162392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/b07060aafe0bc455ba2392759fdefa98b1c00bb60fe731517ac717c8364faedb/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d653862663461313262623165616162392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li><h2 id="互信息"><a href="#互信息" class="headerlink" title="互信息"></a>互信息</h2></li>
+</ul>
+<p>互信息用于衡量两个变量之间的关联程度，衡量了知道这两个变量其中一个，对另一个不确定度减少的程度。公式为：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/9ca06bb08cb141c2652da402f55a587223503025944a9aaff5df4b4915424dc9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d626466333239663438396464356265352e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/9ca06bb08cb141c2652da402f55a587223503025944a9aaff5df4b4915424dc9/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d626466333239663438396464356265352e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><br>如下图，条件熵表示已知随机变量X的情况下，随机变量Y的信息熵，因此互信息实际上也代表了已知随机变量X的情况下，随机变量Y的(信息熵)不确定性的减少程度。<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/e40fa5dd1e7a67bd2946fbbcf7a14553570420990793dbcb2aef5638d0a3ce99/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d633038313338303931396231356430612e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/e40fa5dd1e7a67bd2946fbbcf7a14553570420990793dbcb2aef5638d0a3ce99/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d633038313338303931396231356430612e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li><p>相对熵 (Relative Entropy)相对熵又称之为 KL 散度 (Kullback-Leibler Divergence)，用于衡量两个分布之间的差异，定义为：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/54d0d864fbaf4e4706e35bda8b09192138cf2ebe14cb17b4bb30c852064d7c8d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d336362353938386162646265393132392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/54d0d864fbaf4e4706e35bda8b09192138cf2ebe14cb17b4bb30c852064d7c8d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d336362353938386162646265393132392e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+</li>
+<li><h2 id="JS-散度-Jensen-Shannon-Divergence"><a href="#JS-散度-Jensen-Shannon-Divergence" class="headerlink" title="JS 散度 (Jensen-Shannon Divergence)"></a>JS 散度 (Jensen-Shannon Divergence)</h2></li>
+</ul>
+<p>JS 散度解决了 KL 散度不对称的问题，定义为：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/fccc2429956bd63d3265e7cf32152204547d661aa0b26276682c6f69aa59d17b/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d656435396431646639386366353239382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/fccc2429956bd63d3265e7cf32152204547d661aa0b26276682c6f69aa59d17b/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d656435396431646639386366353239382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li><h2 id="PSI"><a href="#PSI" class="headerlink" title="PSI"></a>PSI</h2></li>
+</ul>
+<p>群体稳定性指标（Population Stability Index，PSI）， 可以看做是解决KL散度非对称性的一个对称性度量指标，用于度量分布之间的差异（常用于风控领域的评估模型预测的稳定性）。</p>
+<p>psi与JS散度的形式是非常类似的，如下公式：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/a9d4338383f7dc41b17e3c655c5bba7292cb4dcbb650e3731b7d84d3dac52325/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d666534643334666131613233376230322e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/a9d4338383f7dc41b17e3c655c5bba7292cb4dcbb650e3731b7d84d3dac52325/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d666534643334666131613233376230322e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<p>PSI的含义等同P与Q，Q与P之间的KL散度之和。</p>
+<ul>
+<li><h2 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h2><p><img src="https://camo.githubusercontent.com/12ff93970f8c0964e989494ba9adeed40038dfb93240c85c953e99db00e32c7a/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d366331383261326539386237653864332e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></p>
+<p>交叉熵常作为机器学习中的分类的损失函数，用于衡量模型预测分布和实际数据分布之间的差异性。</p>
+</li>
+</ul>
+<h2 id="六、时间系列、图结构的距离"><a href="#六、时间系列、图结构的距离" class="headerlink" title="六、时间系列、图结构的距离"></a>六、时间系列、图结构的距离</h2><ul>
+<li><h2 id="DTW-Dynamic-Time-Warping-距离"><a href="#DTW-Dynamic-Time-Warping-距离" class="headerlink" title="DTW (Dynamic Time Warping) 距离"></a>DTW (Dynamic Time Warping) 距离</h2></li>
+</ul>
+<p>DTW 距离用于衡量两个序列之间的相似性，适用于不同长度、不同节奏的时间序列。DTW采用了动态规划DP（dynamic programming）的方法来进行时间规整的计算，通过自动warping扭曲 时间序列（即在时间轴上进行局部的缩放），使得两个序列的形态尽可能的一致，得到最大可能的相似度。(具体可参考[5])<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/98f65619a427cace4cb8e2ab94433f0e774c3cb69216cb722339bb4b65d8805d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d386633393262313536323433663730632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/98f65619a427cace4cb8e2ab94433f0e774c3cb69216cb722339bb4b65d8805d/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d386633393262313536323433663730632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li><h2 id="图结构的距离"><a href="#图结构的距离" class="headerlink" title="图结构的距离"></a>图结构的距离</h2></li>
+</ul>
+<p>图结构间的相似度计算，有图同构、最大共同子图、图编辑距离、Graph Kernel 、图嵌入计算距离等方法（具体可参考[4][6]）。<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/8c171587d8e066aa11898d874ff5180639bc9de4b2163c2fc25678352d6887df/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d636632343839336261373231643834642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/8c171587d8e066aa11898d874ff5180639bc9de4b2163c2fc25678352d6887df/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d636632343839336261373231643834642e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<h2 id="七、度量学习-Metric-Learning"><a href="#七、度量学习-Metric-Learning" class="headerlink" title="七、度量学习(Metric Learning)"></a>七、度量学习(Metric Learning)</h2><p>度量学习的对象通常是样本特征向量的距离，度量学习的关键在于如何有效的度量样本间的距离，目的是通过训练和学习，减小或限制同类样本之间的距离，同时增大不同类别样本之间的距离，简单归类如下[2]：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/af46b27a597ce649bba5bdb12c8b6a4e84b734362b885566287cdf5eff023b2e/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d646661626366353865343161623766632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/af46b27a597ce649bba5bdb12c8b6a4e84b734362b885566287cdf5eff023b2e/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d646661626366353865343161623766632e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<ul>
+<li>基于降维的度量学习算法是学习一个到低维的映射矩阵，使得映射后的样本具有某些性质。包括无监督的PCA、有监督的LDA和ANMM。</li>
+<li>基于Centroids的度量学习算法，即通过类中心进行分类的算法，而不是基于最近邻。</li>
+<li>基于信息论推导的一些距离度量学习算法，比如ITML和MCML等通常是使用距离度量矩阵定义一个分布，然后推导出最小化两个分布的KL距离或者Jeffery距离等等。</li>
+<li>基于深度度量学习：利用深度网络学习一个表示（Embedding），采用各种采样方法（Sampling），比如成对&#x2F;三元组训练样本（Triplet），计算一个带有Margin&#x2F;最近邻等分类或聚类算法的损失。</li>
+</ul>
+<h1 id="常用的度量方法汇总"><a href="#常用的度量方法汇总" class="headerlink" title="常用的度量方法汇总"></a>常用的度量方法汇总</h1><p>最后，附上常用的距离和相似度度量方法[3]：<br><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/a3e2f227676e0ea3d6f51c30a2a502f163fd4b0b6610df6a07c0bc64d206aa26/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d663934353939333837313466666531652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/a3e2f227676e0ea3d6f51c30a2a502f163fd4b0b6610df6a07c0bc64d206aa26/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d663934353939333837313466666531652e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/f7a9a40869ba102730e779c8ebebe47b74d5b59eb51a1c2c73c359ce0c9ba210/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d373438623532613234393330653131352e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/f7a9a40869ba102730e779c8ebebe47b74d5b59eb51a1c2c73c359ce0c9ba210/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d373438623532613234393330653131352e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/e8c868e9f06634bcb19997096b1bd2c0023dd398e615f7255ff9e33bdf4b8339/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d343161366230306361343434373636362e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/e8c868e9f06634bcb19997096b1bd2c0023dd398e615f7255ff9e33bdf4b8339/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d343161366230306361343434373636362e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a><a target="_blank" rel="noopener" href="https://camo.githubusercontent.com/75da575a496f7db2633dde5db151155680cbfeda513127a5389cdf7785aaac50/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d613834386531383664353130666232382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430"><img src="https://camo.githubusercontent.com/75da575a496f7db2633dde5db151155680cbfeda513127a5389cdf7785aaac50/68747470733a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f31313638323237312d613834386531383664353130666232382e706e673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430" alt="img"></a></p>
+<blockquote>
+<p>参考资料<br>[1] <a target="_blank" rel="noopener" href="https://kexue.fm/archives/7388">https://kexue.fm/archives/7388</a><br>[2] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/80656461">https://zhuanlan.zhihu.com/p/80656461</a><br>[3] <a target="_blank" rel="noopener" href="https://www.pianshen.com/article/70261312162/">https://www.pianshen.com/article/70261312162/</a><br>[4] <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2002.07420.pdf">https://arxiv.org/pdf/2002.07420.pdf</a><br>[5] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32849741">https://zhuanlan.zhihu.com/p/32849741</a><br>[6] <a target="_blank" rel="noopener" href="https://github.com/ysig/GraKeL">https://github.com/ysig/GraKeL</a></p>
+<p>转载于：<a target="_blank" rel="noopener" href="https://github.com/aialgorithm/Blog/issues/36">https://github.com/aialgorithm/Blog/issues/36</a> 或访问 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GXASBq_lujZM8HdU23CCMAASBq_lujZM8HdU23CCMA">https://mp.weixin.qq.com/s/GXASBq_lujZM8HdU23CCMAASBq_lujZM8HdU23CCMA</a></p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——Norm</div>
+      <div>http://example.com/2022/08/01/MachineLearning/Norm&amp;Distance/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/PCA/" title="Machine Learning——PCA">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——PCA</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/MLP/" title="Machine Learning——MultiLayer Perceptron">
+                        <span class="hidden-mobile">Machine Learning——MultiLayer Perceptron</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

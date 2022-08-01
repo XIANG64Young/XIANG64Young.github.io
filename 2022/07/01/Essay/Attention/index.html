@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Attention 注意力机制 引用： ​	1.https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1480510​	2.https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leon_winter&#x2F;article&#x2F;details&#x2F;101231034​	3.https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;350953067  一、机制原理通俗的来说，实际上就是对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Essay——注意力小记">
+<meta property="og:url" content="http://example.com/2022/07/01/Essay/Attention/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="Attention 注意力机制 引用： ​	1.https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1480510​	2.https:&#x2F;&#x2F;blog.csdn.net&#x2F;Leon_winter&#x2F;article&#x2F;details&#x2F;101231034​	3.https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;350953067  一、机制原理通俗的来说，实际上就是对">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/image-20220704211532515.png">
+<meta property="og:image" content="http://example.com/src/1620-16523234483093.jpeg">
+<meta property="og:image" content="http://example.com/src/1620-16523234761996.jpeg">
+<meta property="og:image" content="http://example.com/src/1620-16523245340069.jpeg">
+<meta property="og:image" content="http://example.com/src/1324.jpeg">
+<meta property="og:image" content="http://example.com/src/1620-16523277764253.jpeg">
+<meta property="og:image" content="http://example.com/src/1620-165232815064318.jpeg">
+<meta property="og:image" content="http://example.com/src/1620-165232815064419.jpeg">
+<meta property="og:image" content="http://example.com/src/1620-165232827795630.jpeg">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.165Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Essay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/image-20220704211532515.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Essay——注意力小记 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Essay——注意力小记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-01 00:00" pubdate>
+          2022年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Essay——注意力小记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Attention-注意力机制"><a href="#Attention-注意力机制" class="headerlink" title="Attention 注意力机制"></a>Attention 注意力机制</h1><blockquote>
+<p>引用：</p>
+<p>​	1.<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1480510">https://cloud.tencent.com/developer/article/1480510</a><br>​	2.<a target="_blank" rel="noopener" href="https://blog.csdn.net/Leon_winter/article/details/101231034">https://blog.csdn.net/Leon_winter/article/details/101231034</a><br>​	3.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350953067">https://zhuanlan.zhihu.com/p/350953067</a></p>
+</blockquote>
+<h2 id="一、机制原理"><a href="#一、机制原理" class="headerlink" title="一、机制原理"></a>一、机制原理</h2><p>通俗的来说，实际上就是对于某个时刻的输出$y$，他在输入$x$上各个部分的注意力（这里的注意力也可以理解为权重，即输入$x$的各个部分对输出$y$贡献的权重）。</p>
+<h2 id="二、计算方式"><a href="#二、计算方式" class="headerlink" title="二、计算方式"></a>二、计算方式</h2><p><img src="/src/image-20220704211532515.png" alt="image-20220704211532515"></p>
+<p>对上图进行解释：</p>
+<ol>
+<li><p><strong>Additive attention</strong>：论文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1410.5401.pdf">Neural Turing Machines</a>  对于attention的相似度度量使用的是余弦相似度<br>$$<br>cosine[s_t,h_i]&#x3D;\frac{s_t * h_i}{||s_t||*||h_i||}<br>$$</p>
+</li>
+<li><p><strong>Additive Attention</strong>: 论文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1409.0473.pdf">Neural Machine Translation By Jointly Learning to Align and Translate</a></p>
+</li>
+<li><p><strong>Location-Base Attention、General attention、Dot-Product Attention</strong>： 论文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1508.04025.pdf">Effective Approaches to Attention-based Neural Machine Translation</a></p>
+</li>
+<li><p><strong>ScaledDot-Product attention</strong>: 论文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.03762.pdf">Attention is all you need</a></p>
+</li>
+</ol>
+<h2 id="三、Attention发展历程及演变"><a href="#三、Attention发展历程及演变" class="headerlink" title="三、Attention发展历程及演变"></a>三、Attention发展历程及演变</h2><h3 id="3-1-seq2seq中引入attention"><a href="#3-1-seq2seq中引入attention" class="headerlink" title="3.1 seq2seq中引入attention"></a>3.1 seq2seq中引入attention</h3><p>首先attention机制常用在seq2seq模型中，下图一是传统的seq2seq，输出$y$对输入序列$x1,x2,x3.$没有区分，没有辨识度，下图二中我们引入了attention机制，每个输出的词$y$受输入$X1,X2,X3.$影响的权重不同，这个权重便是由Attention计算，因此可以把Attention机制看成注意力分配系数，计算输入每一项对输出权重影响大小</p>
+<p><img src="/src/1620-16523234483093.jpeg" alt="img"></p>
+<p><img src="/src/1620-16523234761996.jpeg" alt="img"></p>
+<p>第一张图是整体的一个架构，第二张图是输入对某个输出的计算过程演示</p>
+<p>介绍一下上图中attention实现过程</p>
+<ol>
+<li><p>首先利用双向RNN结构得到隐层状态$(h_1, h_2,\dots, h_n)$</p>
+</li>
+<li><p>如当前已经decoder到隐层$S_{t-1}$，接下来计算每一个输入位置$h_j$对当前位置$i$​的影响<br>$$<br>e_{ij} &#x3D; a(s_{i-1}, h_j)<br>$$<br>这里对attention的计算方式有很多种，例如点乘、加权点乘、求和等</p>
+</li>
+<li><p>对$e_{ij}$进行softmax将其normalization得到attention权重<br>$$<br>\alpha_{ij}&#x3D;\frac{exp(e_{ij})}{\sum <em>{k&#x3D;1}^{T_x} exp(e</em>{ik})}<br>$$</p>
+</li>
+<li><p>利用$\alpha_{ij}$​进行加权求和得到相应的context vector<br>$$<br>c_i &#x3D; \sum_{j&#x3D;1}^{T_x}\alpha_{ij}h_j<br>$$</p>
+</li>
+<li><p>计算最终输出<br>$$<br>s_i &#x3D; f(s_{i-1},y_{i-1}, c_i)\<br>p(y_i|y_1,\dots,y_{i-1},x)&#x3D;g(y_{i-1},s_i,c_i)<br>$$</p>
+</li>
+</ol>
+<h3 id="3-2-Soft-Attention和Hard-Attention"><a href="#3-2-Soft-Attention和Hard-Attention" class="headerlink" title="3.2 Soft Attention和Hard Attention"></a>3.2 Soft Attention和Hard Attention</h3><p>Soft Attention是参数化的，是可导的可嵌入到模型中直接训练，上述seq2seq中的即是soft attention；Hard attention是一个随机的过程，为了实现梯度的反向传播，需要采用蒙特卡洛采样的方法来估计模块的梯度，目前更多的研究和应用还是更倾向于使用Soft Attention，因为其可以直接求导，进行梯度反向传播，大致了解一下即可</p>
+<h3 id="3-3-Global-Attention和Local-Attention"><a href="#3-3-Global-Attention和Local-Attention" class="headerlink" title="3.3 Global Attention和Local Attention"></a>3.3 Global Attention和Local Attention</h3><p><img src="/src/1620-16523245340069.jpeg" alt="img"></p>
+<p>以上左图是Global Attention，右图是Local Attention。<br>（图片来源于论文：Effective Approaches to Attention-based Neural Machine Translation）</p>
+<p>全局Attention和局部Attention存在共同之处，例如在翻译模型的解码阶段都是将LSTM的顶层隐藏状态$h_t$作为输入，目标是活得一个上下文向量$c_t$来捕获源信息帮助预测当前单词，两种方式不同便在于对上下文向量$c_t$的获取方式不同，但其后步骤是共享的，即首先由上下文信息和隐藏层信息获得注意力隐层状态,再通过注意力隐层状态通过Softmax获得预测分布<br>$$<br>\hat{h_t}&#x3D;tanh(W_c[c_t;h_t])\<br>p(y_t|y_{&lt;t},x)&#x3D;softmax(W_s\hat{h_t})<br>$$</p>
+<h4 id="3-3-1-Global-Attention"><a href="#3-3-1-Global-Attention" class="headerlink" title="3.3.1 Global Attention"></a>3.3.1 Global Attention</h4><p>全局Attention在计算上下文向量$c_t$时考虑编码器所有的隐层状态，attention向量是通过比较当前目标隐藏状态$h_t$和每个源隐藏状态$h_s$​得到：<br>$$<br>\begin{align}<br>a_t(s)&amp;&#x3D;align(h_t,\bar{h_s}) \<br>&amp;&#x3D;\frac{exp(score(h_t,\bar{h_s}))}{\sum_{s’}exp(score(h_t,\bar{h_{s’}}))}<br>\end{align}<br>$$<br>$h_t$​和$h_s$​之间的计算方式可以采用如下几种：<br>$$<br>score(h_t, \bar{h_s})&#x3D;\left{\begin{array}{ll}<br>        {h_t}^T\bar{h_s} &amp; {dot} \<br>        {h_t}^TW_a\bar{h_s} &amp; {general} \<br>        {v_a}^Ttanh(W_a[h_t;\bar{h_s}]) &amp; {concat}<br>        \end{array}\right.<br>$$<br>当然也是可以利用基于location的方式计算attention得分：<br>$$<br>a_t &#x3D; softmax(W_ah_t)\qquad location<br>$$</p>
+<h4 id="3-3-2-Local-Attention"><a href="#3-3-2-Local-Attention" class="headerlink" title="3.3.2 Local Attention"></a>3.3.2 Local Attention</h4><p>全局Attention的缺点在于对每个目标单词必须关注源序列中的所有单词，消耗资源因此局部Attention的思想是对每个目标单词只选择一部分源单词进行预测上下文向量$c_t$，具体来说，在时刻t 模型首先为每个目标单词生成一个对齐位置$p_t$。上下文向量$c_t$ 通过窗口$[p_t -D,p_t +D] $内的源隐藏状态集合加权平均计算得到；$D $根据经验选择。与全局方法不同，局部对齐向量$a_t$是固定维度的，即$a_t\in \mathbb{R}^{2D+1}$。<br>$$<br>p_t &#x3D; S\cdot sigmoid(v_p^Ttanh(W_ph_t)) \<br>a_t(s)&#x3D;align(h_t,\bar{h_s})exp(-\frac{(s-p)^2}{2\sigma^2})<br>$$</p>
+<h3 id="3-4-Scaled-Dot-Product-Attention和Multi-Head-Attention"><a href="#3-4-Scaled-Dot-Product-Attention和Multi-Head-Attention" class="headerlink" title="3.4 Scaled Dot-Product Attention和Multi-Head Attention"></a>3.4 Scaled Dot-Product Attention和Multi-Head Attention</h3><p><img src="/src/1324.jpeg" alt="img"><br>（图片来源于论文：Attention is all you need)</p>
+<p>ScaledDot-Product Attention：通过Q,K矩阵计算矩阵V的权重系数</p>
+<p>Multi-HeadAttention：多头注意力是将Q,K,V通过一个线性映射成h个Q,K,V，然后每个都计算Scaled Dot-Product Attention，最后再合起来，Multi-HeadAttention目的还是对特征进行更全面的抽取</p>
+<h2 id="四、Attention实例分析"><a href="#四、Attention实例分析" class="headerlink" title="四、Attention实例分析"></a>四、Attention实例分析</h2><p><img src="/src/1620-16523277764253.jpeg" alt="img"></p>
+<p>每个输出的词$Y$受输入$X_1,X_2,X_3,X_4$影响的权重不同，这个权重便是由Attention计算</p>
+<p>因此可以把Attention机制看成注意力分配系数，计算输入每一项对输出权重影响大小</p>
+<p>下面一张图给出了Attention机制在机器翻译中实际权重计算过程</p>
+<p><img src="/src/1620-165232815064318.jpeg" alt="img"></p>
+<p>首先由原始数据经过矩阵变化得到Q、K、V向量，如下图</p>
+<p><img src="/src/1620-165232815064419.jpeg" alt="img"></p>
+<p>以单词Thinking为例，先用Thinking的q向量和所有词的k向量相乘，使用下面公式：<br>$$<br>softmax(\frac{QK^T}{\sqrt{d_k}})<br>$$<br>这种得到每个单词对单词Thinking的贡献权重，然后再用得到的权重和每个单词的向量v相乘，得到最终Thinking向量的输出<br>$$<br>Attention(Q,K,V)&#x3D;softmax(\frac{QK^T}{\sqrt{d_k}})V<br>$$</p>
+<h2 id="五、Attention机制实现分析"><a href="#五、Attention机制实现分析" class="headerlink" title="五、Attention机制实现分析"></a>五、Attention机制实现分析</h2><p><img src="/src/1620-165232827795630.jpeg" alt="img"></p>
+<p>HAN结构包含了Word encoder、Word attention、Sentence encoder、Sentence attention，其中有word attention和sentence attention</p>
+<p>h是隐层GRU的输出，设置$w,b,u_s$三个随机变量，先一个全连接变换经过激活函数tanh得到$u_i$，然后在计算$u_s$和$u_i$相乘，计算softmax输出$a$，最后得到权重$a$之后再和$h$相乘，得到最终经过注意力机制的输出$v$，下左图是word attention计算公式，下右图是sentece attention计算公式<br>$$<br>u_{it}&#x3D;tanh(W_wh_{it}+b_w) \qquad u_i &#x3D; tanh(W_sh_i+b_s)\<br>\alpha_{it}&#x3D;\frac{exp(u_{it}^Tu_w)}{\sum_texp(u_{it}^Tu_w)}\qquad<br>\alpha_{i}&#x3D;\frac{exp(u_{i}^Tu_s)}{\sum_texp(u_{i}^Tu_s)}\<br>s_i&#x3D;\sum_t\alpha_{it}h_{it} \qquad v&#x3D;\sum_i\alpha_ih_i\<br>$$<br>m_i\alpha_ih_i\<br>$$</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Essay/">#Essay</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Essay——注意力小记</div>
+      <div>http://example.com/2022/07/01/Essay/Attention/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0/" title="Deep Learning—访问深度模型网络参数">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Deep Learning—访问深度模型网络参数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/01/Essay/Clustering/" title="Essay——聚类小记">
+                        <span class="hidden-mobile">Essay——聚类小记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

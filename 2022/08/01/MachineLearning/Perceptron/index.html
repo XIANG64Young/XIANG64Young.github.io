@@ -1,0 +1,862 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Introduce感知机模型(Perceptron)是一个最简单的有监督的二分类线性模型。他可以从两个方面进行介绍 方面一 问题分析问题（一维）：儿童免票乘车问题（孩子身高低于1.2m可以免票上车）这转换成数学表达式就是 $x:$身高，$y:{-1:$免票 ,$1:$购票$}$ $$ y&#x3D;\left{\begin{matrix}+1,x\ge1.2m \ -1,x\lt1.2m\end{">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——Perceptron">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/Perceptron/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="Introduce感知机模型(Perceptron)是一个最简单的有监督的二分类线性模型。他可以从两个方面进行介绍 方面一 问题分析问题（一维）：儿童免票乘车问题（孩子身高低于1.2m可以免票上车）这转换成数学表达式就是 $x:$身高，$y:{-1:$免票 ,$1:$购票$}$ $$ y&#x3D;\left{\begin{matrix}+1,x\ge1.2m \ -1,x\lt1.2m\end{">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/2274220-20211218214342516-2127817773.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211218214401828-471520394.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211219113413328-528436610.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211218221216356-994026222.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211218221328431-310696772.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211218221424196-524684068.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211219123951945-1354915555.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211219124043889-525716909.png">
+<meta property="og:image" content="http://example.com/img/2274220-20211219130328971-1222419824.png">
+<meta property="article:published_time" content="2022-08-01T02:13:53.491Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.227Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/2274220-20211218214342516-2127817773.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——Perceptron - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——Perceptron"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——Perceptron</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Introduce"><a href="#Introduce" class="headerlink" title="Introduce"></a>Introduce</h1><p>感知机模型(Perceptron)是一个最简单的有监督的二分类线性模型。他可以从两个方面进行介绍</p>
+<h2 id="方面一-问题分析"><a href="#方面一-问题分析" class="headerlink" title="方面一 问题分析"></a>方面一 问题分析</h2><h3 id="问题（一维）：儿童免票乘车问题（孩子身高低于1-2m可以免票上车）"><a href="#问题（一维）：儿童免票乘车问题（孩子身高低于1-2m可以免票上车）" class="headerlink" title="问题（一维）：儿童免票乘车问题（孩子身高低于1.2m可以免票上车）"></a>问题（一维）：儿童免票乘车问题（孩子身高低于1.2m可以免票上车）</h3><p>这转换成数学表达式就是 $x:$身高，$y:{-1:$免票 ,$1:$购票$}$</p>
+<p>$$ y&#x3D;\left{\begin{matrix}+1,x\ge1.2m \ -1,x\lt1.2m\end{matrix}\right. $$</p>
+<p><img src="/img/2274220-20211218214342516-2127817773.png" alt="img"></p>
+<p>如果把$y$用函数$f(x;b)$表达出来就如下所示</p>
+<p>$$ y&#x3D;f(x;b)&#x3D;\left{\begin{matrix}+1,z&#x3D;x+b\ge0 \ -1,z&#x3D;x+b \lt0 \end{matrix}\right. $$</p>
+<p><img src="/img/2274220-20211218214401828-471520394.png" alt="img"></p>
+<p>用机器学习的话来说变量$x$就是一个<strong>特征</strong>,$y$就是一个<strong>标记</strong>，$b$就是一个<strong>偏置</strong></p>
+<h3 id="问题（二维）：西瓜分类（依靠西瓜的颜色和敲击的响声分类）"><a href="#问题（二维）：西瓜分类（依靠西瓜的颜色和敲击的响声分类）" class="headerlink" title="问题（二维）：西瓜分类（依靠西瓜的颜色和敲击的响声分类）"></a>问题（二维）：西瓜分类（依靠西瓜的颜色和敲击的响声分类）</h3><p>这里的$x$就从一个一维特征编程了二维的特称向量${x_1:$颜色 ,$x_2:$响声$}$ $y$仍然是一个标记 $y:{-1:$坏瓜 ,$1:$好瓜$}$ 数据如图所示：</p>
+<p><img src="/img/2274220-20211219113413328-528436610.png" alt="img"></p>
+<p>用一般的数学方法，我们希望将两个变量$x_1,x_2$映射到一个维度上去 就会出现如下三种经典的情况</p>
+<p>映射到水平方向<img src="/img/2274220-20211218221216356-994026222.png" alt="img"></p>
+<p>映射到竖直方向<img src="/img/2274220-20211218221328431-310696772.png" alt="img"></p>
+<p>映射到任意方向<img src="/img/2274220-20211218221424196-524684068.png" alt="img"></p>
+<p>二维向量映射到一维空间需要有映射的方向。此时就需要一定的方向向量$\mathbb{w}&#x3D;(w_1 \ w_2)^T$ 此时，如果把$y$用函数$f(\mathbb{x};\mathbb{w},b)$来表示</p>
+<p>$$ y&#x3D;f(\mathbb{x};\mathbb{w},b)&#x3D;\left{\begin{matrix}+1,\mathbb{w}^T\mathbb{x}+b\ge0 \ -1,\mathbb{w}^T\mathbb{x}+b\lt0 \end{matrix}\right. $$</p>
+<p>综上所述，可以类推到n维。只要将$\mathbb{x},\mathbb{w}升维就可以了$</p>
+<h2 id="方面二-模型发展"><a href="#方面二-模型发展" class="headerlink" title="方面二 模型发展"></a>方面二 模型发展</h2><p>1943年，McCulloch和Pits结合神经元模型Neuron提出来经典的抽象的M-P神经元模型</p>
+<p>神经元的生物学结构<img src="/img/2274220-20211219123951945-1354915555.png" alt="img"></p>
+<p>M-P神经元模型 <img src="/img/2274220-20211219124043889-525716909.png" alt="img"></p>
+<p>而感知机模型是从神经元模型发展过来的。感知机是由两层神经元组成的一个简单模型。只有输出层是M-P 神经元，即只有输出层神经元进行激活函数处理，也称为功能神经元（ functional neuron）；输入层只是接受外界信号（样本属性）并传递给输出层（输入层的神经元个数等于样本的属性数目），而没有激活函数。示意图如下：</p>
+<p><img src="/img/2274220-20211219130328971-1222419824.png" alt="img"></p>
+<h1 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h1><p>假设输入空间（特征空间）是$\mathcal{X} \subset \mathbb{R}^n$，输出空间是$\mathcal{Y}&#x3D;{-1,+1}$。输入$x\in \mathcal{X}$表示实例的特征向量，对应于输入空间（特征空间）的点；输出$y\in \mathcal{Y}$表示类别。由输入空间到输出空间的如下函数： $$ f(x)&#x3D;sign(w \cdot x+b) $$ 成为感知机。其中，$w,b$成为感知机模型的参数,$w \in \mathbb{R}^n$叫做权值（weight）或权值向量（weight vector），$b \in \mathbb{R}$叫做偏置（bias），$w \cdot x$表示两者的内积。$sign$是符号函数，即 $$ sign(a)&#x3D;\left{\begin{matrix}+1,a\ge0\-1,a\lt0\end{matrix}\right. $$ 感知机是一种线性分类器，属于判别模型。感知机模型的假设空间是定义在特征空间中的所有线性分类模型（linear classification model）或线性分类器（linear classifier），即函数模型${f,|,f(x)&#x3D;w \cdot x +b }$</p>
+<h1 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h1><p>感知机学习的策略就是最小化损失函数。对于感知机来说损失函数有两种方式。</p>
+<p>\1. 统计误分类点： $$ l(w)&#x3D;\sum_{i&#x3D;1}^N \ \mathbb{I}(y_i \cdot (w^Tx +b ) &lt; 0) $$ 　但是指示函数不连续，在计算过程中不太友好</p>
+<p>\2. 统计误分类点到分来超平面的距离： $$ \begin{align}l(w) &amp;&#x3D;|w^Tx +b |\ &amp;&#x3D;\sum_{i&#x3D;1}^N - ,y_i \cdot (w^Tx +b )\end{align} $$</p>
+<h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><p>为了找到更好的$w,b$。使用随机梯度下降SGD(Stochastic Gradient Descend), 但是该方法容易受特征缩放、学习率因素影响陷入局部最小值。 $$ w_{n+1} \leftarrow w_n +\eta \frac{\partial l}{\partial w}\ b_{n+1} \leftarrow b_n +\eta \frac{\partial l}{\partial b} $$</p>
+<p>对该算法的超参数：学习率$\eta$，误差上限$\varepsilon$，学习次数$epoch$</p>
+<h1 id="收敛性"><a href="#收敛性" class="headerlink" title="收敛性"></a>收敛性</h1><p>设训练数据集$T&#x3D;{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)}$是线性可分的，其中$x_i\in \mathcal{X}&#x3D;\mathbb{R}^n,\ y_i\in\mathcal{Y}&#x3D;{+1,-1},\ i&#x3D;1,2,\cdots,N$则:</p>
+<ul>
+<li>存在满足条件$||\hat{w}<em>{opt}||&#x3D;1$的超平面$\hat{w}</em>{opt} \cdot \hat{x}&#x3D;w_{opt}\cdot x +b_{opt}&#x3D;0$将训练数据集完全正确分开；且存在$\gamma&gt;0$,对所有$i&#x3D;1,2,\cdots,N$: $$ y_i (\hat{w}<em>{opt} \cdot \hat{x})&#x3D;y_i(w</em>{opt}\cdot x +b_{opt})\geq \gamma $$</li>
+<li>令$R&#x3D;max_{1 \leq i \leq N} ||\hat{x}_i||$,则感知机算法在训练数据集上的误分类次数$k$满足不等式: $$ k \leq (\frac{R}{\gamma})^2 $$</li>
+</ul>
+<h1 id="Disadvantage"><a href="#Disadvantage" class="headerlink" title="Disadvantage"></a>Disadvantage</h1><p>\1. 存在多解<br>\2. 依赖初值，也依赖选择顺序<br>\3. 当数据集线性不可分就会产生迭代震荡。例如XOR异或问题</p>
+<p>针对感知机算法的缺点，提出SVM解决多解问题，Pocket Algorithm使感知机容忍一些错误。</p>
+<h1 id="Python代码实现"><a href="#Python代码实现" class="headerlink" title="Python代码实现"></a>Python代码实现</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br>data1 = [[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">1</span>],[<span class="hljs-number">5</span>,<span class="hljs-number">2</span>]]<br>lable1 = [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>]<br><br>data2 = [[<span class="hljs-number">3</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">1</span>]]<br>lable2 = [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>]<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Model</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self,data</span>):<br>        self.w = np.zeros(np.shape(data)[<span class="hljs-number">1</span>])  <span class="hljs-comment"># 权重参数</span><br>        self.b = <span class="hljs-number">0</span>  <span class="hljs-comment"># 偏置</span><br>        self.l_rate = <span class="hljs-number">1</span>  <span class="hljs-comment"># 学习率</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sign</span>(<span class="hljs-params">self, x, w, b</span>):<br>        y = np.dot(x, w) + b<br>        <span class="hljs-keyword">return</span> y<br><br>    <span class="hljs-comment"># 随机梯度下降法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, data, lable</span>):<br>        is_wrong = <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> is_wrong:<br>            wrong_count = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(data)):<br>                X = data[d]<br>                y = lable[d]<br>                judge = y * self.sign(X, self.w, self.b)<br>                <span class="hljs-keyword">if</span> judge &lt;= <span class="hljs-number">0</span>:<br>                    self.w = self.w + self.l_rate * np.dot(y, X)<br>                    self.b = self.b + self.l_rate * y<br>                    <span class="hljs-keyword">if</span> judge == <span class="hljs-number">0</span>:<br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;未分类=&#x27;</span>, d + <span class="hljs-number">1</span>, <span class="hljs-string">&#x27; &#x27;</span>, data[d])<br>                    <span class="hljs-keyword">else</span>:<br>                        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;误分类=&#x27;</span>, d + <span class="hljs-number">1</span>, <span class="hljs-string">&#x27; &#x27;</span>, data[d])<br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;w = &#x27;</span>,self.w,<span class="hljs-string">&#x27;b= &#x27;</span>,self.b)<br>                    wrong_count += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span> wrong_count == <span class="hljs-number">0</span>:<br>                is_wrong = <span class="hljs-literal">True</span><br><br>perception1 = Model(data1)<br>perception1.fit(data1,lable1)<br></code></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote>
+<p>李航 统计学习方法</p>
+<p>周志华 机器学习(西瓜书)</p>
+<p>shuhuai008 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1aE411o7qd?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click">机器学习白板推导</a>ion.content.click)</p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——Perceptron</div>
+      <div>http://example.com/2022/08/01/MachineLearning/Perceptron/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/Regularization/" title="Machine Learning——Regularization">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——Regularization</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/PCA/" title="Machine Learning——PCA">
+                        <span class="hidden-mobile">Machine Learning——PCA</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

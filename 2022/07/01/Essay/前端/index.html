@@ -1,0 +1,877 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="看书、看视频涨技术没有做项目来的快 ，但是驱动学习的一定是你的目标，你的知识需要 翻到学习文件，应该还可以Github资源，主页地址在文字资源都在这 面试刷题：高级前端面试（vx公众号）、前端面试星球（vx公众号）、https:&#x2F;&#x2F;muyiy.cn&#x2F;question&#x2F; 基础：  环境搭建 	webstorm，hbuilder，vscode（最好），sublime。  html	MDN HTML D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Essay——前端总结">
+<meta property="og:url" content="http://example.com/2022/07/01/Essay/%E5%89%8D%E7%AB%AF/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="看书、看视频涨技术没有做项目来的快 ，但是驱动学习的一定是你的目标，你的知识需要 翻到学习文件，应该还可以Github资源，主页地址在文字资源都在这 面试刷题：高级前端面试（vx公众号）、前端面试星球（vx公众号）、https:&#x2F;&#x2F;muyiy.cn&#x2F;question&#x2F; 基础：  环境搭建 	webstorm，hbuilder，vscode（最好），sublime。  html	MDN HTML D">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/image-20220614093643553.png">
+<meta property="og:image" content="http://example.com/src/image-20220614104848594.png">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.171Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="tool">
+<meta property="article:tag" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/image-20220614093643553.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Essay——前端总结 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Essay——前端总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-01 00:00" pubdate>
+          2022年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Essay——前端总结</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="看书、看视频涨技术没有做项目来的快-，但是驱动学习的一定是你的目标，你的知识需要"><a href="#看书、看视频涨技术没有做项目来的快-，但是驱动学习的一定是你的目标，你的知识需要" class="headerlink" title="看书、看视频涨技术没有做项目来的快 ，但是驱动学习的一定是你的目标，你的知识需要"></a>看书、看视频涨技术没有做项目来的快 ，但是驱动学习的一定是你的目标，你的知识需要</h1><p><img src="/src/image-20220614093643553.png" alt="image-20220614093643553"></p>
+<p>翻到学习文件，应该还可以<a target="_blank" rel="noopener" href="https://github.com/qianguyihao/Web">Github资源</a>，主页地址在<a target="_blank" rel="noopener" href="https://web.qianguyihao.com/">文字资源都在这</a></p>
+<p>面试刷题：高级前端面试（vx公众号）、前端面试星球（vx公众号）、<a target="_blank" rel="noopener" href="https://muyiy.cn/question/">https://muyiy.cn/question/</a></p>
+<p>基础：</p>
+<ol>
+<li>环境搭建 	webstorm，hbuilder，vscode（最好），sublime。 </li>
+<li>html	<a href="https://link.zhihu.com/?target=https://developer.mozilla.org/en-US/docs/Web/HTML">MDN HTML Doc</a></li>
+<li>css	<a href="https://link.zhihu.com/?target=https://developer.mozilla.org/en-US/docs/Web/CSS">MDN CSS Doc</a></li>
+<li>JavaScript	<a href="https://link.zhihu.com/?target=https://developer.mozilla.org/en-US/docs/Web/JavaScript">MDN JavaScript DOC</a></li>
+</ol>
+<p>要先看基础，b站上好多视频，选择一个喜欢的老师教学视频跟着看，html ，css，js，先看基础的，看完之后，搜索高阶js，js一定要多看，html，css可以换个老师再看一遍，会有不同的收获（我是这样学的，看完一个老师的视频，有不懂的地方，我重新找一个老师，选择性看） （师姐说的）</p>
+<p>我也认为基础是重要的，框架并没有那么重要，你需要成为一个做框架的人，而不是一个只会用框架的人。会用框架说明不了什么（但是能找到工作），我觉得前端的核心会了，框架应该也是挺顺的。<br> 学完基础后，可以仿照电商网站（例如京东、小米）做首页的布局。我记得当时学校培训的时候，我们老师就是这么干的。</p>
+<p>进阶：</p>
+<ol>
+<li>纯js操作dom、jQuery、Ajax等。jQuery没有过时（师姐说的）。</li>
+<li>深入学习js：知道作用域和闭包，解读原型链，原型替换，this指向和对象原型等，es6，es7的新语法。es6，这部分属于JS新增的语法，面试必问。其中，关于 promise、async 等内容要尤其关注，学习地址在下方。</li>
+<li>HTML5和CSS3。要熟悉其中的新特性。 <a href="https://link.zhihu.com/?target=http://lesscss.cn/">Less 中文网</a></li>
+<li>ui框架之旅推荐从bootstrap开始，移动Web开发、Bootstrap等。要注意移动开发中的适配和兼容性问题。</li>
+<li>UI框架：<a target="_blank" rel="noopener" href="https://element.eleme.cn/#/">Element UI</a></li>
+<li>前端框架：vue，react，angular2选一种，我建议从vue开始，react的jsx语法不适合你入门去学习，angular2的typescript语法难度也比较高，vue学起来平滑些，结合vue，学一下vue-router，vuex，element,ui，axios，webpack。做个项目玩一下这个全家桶。</li>
+<li>前端工程化</li>
+<li>前端综合</li>
+</ol>
+<p>学习框架，react或者vue或者angular，这三个框架看自己兴趣选择一个先学，再从b站上找一些项目，尚硅谷的之类的跟着学，学习的这些都要记笔记，因为内容很多。如果以后找工作的话，还要刷题，多看看题目就好了。如果还有时间的话，这些都学了，可以多学几个框架，vue和react都掌握了是最好。（TS的内容比ES还要多。。。）</p>
+<p>其他：</p>
+<ol>
+<li>git与nodejs <a href="https://link.zhihu.com/?target=https://nodejs.org/en/docs/guides/">Guides | Node.js</a>   git是基本操作，仓库这个东西还是要会的。node.js我记得vue里面就用到了一点</li>
+<li>canvas。面试时，有的公司不一定会问canvas，靠运气。如果时间不够，这部分的内容可以先不学。但如果你会，绝对属于加分项。(我记得是用来做网页小游戏的吧，我好想写过)  <a target="_blank" rel="noopener" href="https://github.com/bxm0927/canvas-special">代码</a></li>
+</ol>
+<h2 id="基础项目："><a href="#基础项目：" class="headerlink" title="基础项目："></a>基础项目：</h2><ol>
+<li>animate <a target="_blank" rel="noopener" href="https://github.com/animate-css/animate.css">代码</a> <a target="_blank" rel="noopener" href="https://animate.style/">效果</a></li>
+<li>CSS-Inspiration<a target="_blank" rel="noopener" href="https://github.com/chokcoco/CSS-Inspiration">代码</a> <a target="_blank" rel="noopener" href="https://chokcoco.github.io/CSS-Inspiration/#/">效果</a></li>
+<li>vanillawebprojects 表单验证、音视频播放器、打字等小应用 <a target="_blank" rel="noopener" href="https://github.com/bradtraversy/vanillawebprojects">代码</a></li>
+<li>Ant Design 基于 Ant Design 设计体系的 React UI 组件库  <a target="_blank" rel="noopener" href="https://github.com/ant-design/ant-design/">React 代码</a> <a target="_blank" rel="noopener" href="https://github.com/vueComponent/ant-design-vue/">Vue代码</a></li>
+<li>Echarts 基于 JavaScript 的开源可视化图表库 <a target="_blank" rel="noopener" href="https://github.com/apache/echarts">代码</a></li>
+<li>ECMAScript是JavaScript的语言标准，描述了JS的能力，API，基本实现步骤。 es6<a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/">地址</a></li>
+</ol>
+<h2 id="中级项目："><a href="#中级项目：" class="headerlink" title="中级项目："></a>中级项目：</h2><ol>
+<li>particles.js   当我们浏览网页的时候，会看见一些网站的背景有粒子效果，看完是不是也很好奇它是怎么实现的呢？在particles.js这个库里面，我们可以制造许多粒子效果，用在网页的背景可是相当好看的。<a target="_blank" rel="noopener" href="https://codepen.io/VincentGarreau/pen/bGxvQd">演示</a> <a target="_blank" rel="noopener" href="https://github.com/VincentGarreau/particles.js">代码</a></li>
+<li>reveal.js是一款网页ppt，界面优美，又支持许多ppt功能，同时也有许多插件满足前端的需求，例如markdown、code等代码高亮插件。<a target="_blank" rel="noopener" href="https://revealjs.com/">演示</a> <a target="_blank" rel="noopener" href="https://github.com/hakimel/reveal.js">代码</a></li>
+<li>TS  现在的前端开发中，对于TypeScript的使用越来越多，尤其是大型迭代项目中，JavaScript不能满足需要，学习TypeScript会是一个必备的技能 <a target="_blank" rel="noopener" href="https://github.com/jkchao/typescript-book-chinese">书</a></li>
+<li>音乐器  还在因为云音乐因为版权下架了一批你自己喜欢的歌曲，但是又不想单独为了几首歌换平台而烦恼吗，那你可以试试这个库，可以使用 QQ &#x2F; 虾米 &#x2F; 百度 &#x2F; 酷狗 &#x2F; 酷我 &#x2F; 咪咕 &#x2F; JOOX 等音源把云音乐灰色歌曲解锁播放。<a target="_blank" rel="noopener" href="https://github.com/nondanee/UnblockNeteaseMusic">代码</a></li>
+</ol>
+<h2 id="Vue-js项目："><a href="#Vue-js项目：" class="headerlink" title="Vue.js项目："></a>Vue.js项目：</h2><ol>
+<li>vue-element-admin 是一个后台前端解决方案，它基于和 element-ui 实现	<a target="_blank" rel="noopener" href="https://panjiachen.github.io/vue-element-admin">效果</a>、<a target="_blank" rel="noopener" href="https://github.com/PanJiaChen/vue-element-admin">代码</a> 、<a target="_blank" rel="noopener" href="https://panjiachen.github.io/vue-element-admin-site/zh/guide/">介绍</a>、<a target="_blank" rel="noopener" href="https://github.com/PanJiaChen/vue-admin-template">模版</a></li>
+<li>基于Vue.js + Element UI 的后台管理系统解决方案  <a target="_blank" rel="noopener" href="https://lin-xin.gitee.io/example/work/#/login">效果</a>、<a target="_blank" rel="noopener" href="https://github.com/lin-xin/vue-manage-system">代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/biaochenxuying/blog-vue-typescript">Vue + TypeScript + Element-Ui 支持 markdown 渲染的博客前台展示</a><br> 这个博客主挺6的，vue、react的项目 啥都做了 他给的其他项目连接都在这个网页的下面<img src="/src/image-20220614104848594.png" alt="image-20220614104848594"></li>
+</ol>
+<h2 id="React-js项目："><a href="#React-js项目：" class="headerlink" title="React.js项目："></a>React.js项目：</h2><ol>
+<li>h5-dooring是一款可视化编辑器，底层是用react写的，使用此工具可以让我们快速生成h5页面。同时通过这个平台也能了解到低代码的相关知识。 <a target="_blank" rel="noopener" href="https://github.com/MrXujiang/h5-Dooring/blob/master/zh.md">代码</a> <a target="_blank" rel="noopener" href="http://h5.dooring.cn/doc">文档</a></li>
+<li>一套优秀的中后台前端解决方案<a target="_blank" rel="noopener" href="https://github.com/zuiidea/antd-admin/blob/master/README-zh_CN.md">代码</a> <a target="_blank" rel="noopener" href="https://antd-admin.zuiidea.com/">效果</a></li>
+<li>网易云音乐第三方<a target="_blank" rel="noopener" href="https://github.com/trazyn/ieaseMusic">代码</a></li>
+<li>饿了么，还原度相当高，实现了各类动效<a target="_blank" rel="noopener" href="https://github.com/stoneWeb/elm-react-native">代码</a></li>
+</ol>
+<h2 id="Angular项目："><a href="#Angular项目：" class="headerlink" title="Angular项目："></a>Angular项目：</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/windiest/Angular-news">新闻客户端</a></li>
+</ol>
+<h2 id="Node-js项目："><a href="#Node-js项目：" class="headerlink" title="Node.js项目："></a>Node.js项目：</h2><ol>
+<li>基于 node.js + Mongodb 构建的后台系统<a target="_blank" rel="noopener" href="https://github.com/bailicangdu/node-elm">代码</a><br>根据饿了么官网接口写的，所以后台系统也保持了和官网一致的API接口。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tumobi/nideshop-mini-program">基于Node.js+MySQL开发的开源微信小程序商城（微信小程序）</a>ram)</li>
+</ol>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Essay/" class="category-chain-item">Essay</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/tool/">#tool</a>
+      
+        <a href="/tags/summary/">#summary</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Essay——前端总结</div>
+      <div>http://example.com/2022/07/01/Essay/前端/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/Essay/MultiModel/" title="Essay——多模态小记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Essay——多模态小记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/01/Essay/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E6%8A%80%E6%9C%AF/" title="Essay——时间序列预测技术">
+                        <span class="hidden-mobile">Essay——时间序列预测技术</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

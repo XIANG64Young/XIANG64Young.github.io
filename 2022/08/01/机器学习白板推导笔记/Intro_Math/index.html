@@ -1,0 +1,862 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Introduction对概率的诠释有两大学派，一种是频率派另一种是贝叶斯派。后面我们对观测集采用下面记号：$$\mathcal{X}{N\times p}&#x3D;(x{1},x_{2},\cdots,x_{N})^{T},x_{i}&#x3D;(x_{i1},x_{i2},\cdots,x_{ip})^{T}$$ 这个记号表示有 $N$ 个样本，每个样本都是 $p$ 维向量。其中每个观测都是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——数学引入">
+<meta property="og:url" content="http://example.com/2022/08/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/Intro_Math/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="Introduction对概率的诠释有两大学派，一种是频率派另一种是贝叶斯派。后面我们对观测集采用下面记号：$$\mathcal{X}{N\times p}&#x3D;(x{1},x_{2},\cdots,x_{N})^{T},x_{i}&#x3D;(x_{i1},x_{i2},\cdots,x_{ip})^{T}$$ 这个记号表示有 $N$ 个样本，每个样本都是 $p$ 维向量。其中每个观测都是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T02:13:53.720Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.363Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——数学引入 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——数学引入"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          82 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——数学引入</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>对概率的诠释有两大学派，一种是频率派另一种是贝叶斯派。后面我们对观测集采用下面记号：<br>$$<br>\mathcal{X}<em>{N\times p}&#x3D;(x</em>{1},x_{2},\cdots,x_{N})^{T},x_{i}&#x3D;(x_{i1},x_{i2},\cdots,x_{ip})^{T}<br>$$<br> 这个记号表示有 $N$ 个样本，每个样本都是 $p$ 维向量。其中每个观测都是由 $p(x|\theta)$ 生成的。</p>
+<h2 id="频率派的观点"><a href="#频率派的观点" class="headerlink" title="频率派的观点"></a>频率派的观点</h2><p>$p(x|\theta)$中的 $\theta$ 是一个未知常量，$x$是一个随机变量。对于 $N$ 个观测来说观测集的概率为 $p(\mathcal{X}|\theta)\mathop{&#x3D;}\limits <em>{i.i.d}\prod\limits <em>{i&#x3D;1}^{N}p(x</em>{i}|\theta))$ 。$i.i.d$指的是独立同分布 Indentical Independent Distribution。为了求 $\theta$ 的大小，我们采用对数估计MLE的方法：<br>$$<br>\begin{equation}<br>    \begin{split}<br>    \theta</em>{MLE}&amp;&#x3D;\mathop{argmax}\limits _{\theta}\log p(\mathcal{X}|\theta) \<br>    &amp;\mathop{&#x3D;}\limits _{i.i.d}\mathop{argmax}\limits _{\theta}\log \prod\limits <em>{i&#x3D;1}^{N}p(x</em>{i}|\theta) \<br>    &amp;\mathop{&#x3D;}\mathop{argmax}\limits _{\theta}\sum\limits <em>{i&#x3D;1}^{N}\log p(x</em>{i}|\theta)<br>    \end{split}<br>\end{equation}<br>$$<br>连乘会导致下限溢出，所以用对数将连乘转化成连加。</p>
+<h2 id="贝叶斯派的观点"><a href="#贝叶斯派的观点" class="headerlink" title="贝叶斯派的观点"></a>贝叶斯派的观点</h2><p>贝叶斯派则认为 $p(x|\theta)$ 中的 $\theta$ 不是一个常量。这个 $\theta$ 满足一个预设的先验的分布 $\theta\sim p(\theta)$ 。于是根据贝叶斯定理依赖观测集参数的后验可以写成：</p>
+<p>$$<br>p(\theta|\mathcal{X})&#x3D;\frac{p(\mathcal{X}|\theta)\cdot p(\theta)}{p(\mathcal{X})}&#x3D;\frac{p(\mathcal{X}|\theta)\cdot p(\theta)}{\int\limits _{\theta}p(\mathcal{X}|\theta)\cdot p(\theta)d\theta}\propto p(\mathcal{X}|\theta)\cdot p(\theta)<br>$$<br>为了求 $\theta$ 的值，我们要最大化这个参数后验MAP Maximum Posteriori Estimation：</p>
+<p>$$<br>\theta_{MAP}&#x3D;\mathop{argmax}\limits _{\theta}p(\theta|\mathcal{X})\propto\mathop{argmax}\limits _{\theta}p(\mathcal{X}|\theta)\cdot p(\theta)<br>$$<br>其中第二个等号是由于分母和 $\theta$ 没有关系。求解这个 $\theta$ 值后计算$\frac{p(\mathcal{X}|\theta)\cdot p(\theta)}{\int\limits <em>{\theta}p(\mathcal{X}|\theta)\cdot p(\theta)d\theta}$ ，就得到了参数的后验概率。其中 $p(\mathcal{X}|\theta)$ 叫似然，是我们的模型分布。得到了参数的后验分布后，我们可以将这个分布用于预测贝叶斯预测：<br>$$<br>p(x</em>{new}|\mathcal{X})&#x3D;\int\limits <em>{\theta}p(x</em>{new}|\theta)\cdot p(\theta|\mathcal{X})d\theta<br>$$<br> 其中积分中的被乘数是模型，乘数是后验分布。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>频率派和贝叶斯派分别给出了一系列的机器学习算法。频率派的观点导出了一系列的统计机器学习算法而贝叶斯派导出了概率图理论。在应用频率派的 MLE 方法时<strong>最优化理论</strong>占有重要地位。而贝叶斯派的算法无论是后验概率的建模还是应用这个后验进行推断时<strong>积分</strong>占有重要地位。因此采样积分方法如Monte Carlo Method 、Bayes Prediction等很多方面应用。</p>
+<h1 id="Math-Basics"><a href="#Math-Basics" class="headerlink" title="Math Basics"></a>Math Basics</h1><h2 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h2><h3 id="一维情况-MLE-Maximum-Likelihood-Estimation"><a href="#一维情况-MLE-Maximum-Likelihood-Estimation" class="headerlink" title="一维情况 MLE: Maximum Likelihood Estimation"></a>一维情况 MLE: Maximum Likelihood Estimation</h3><p>高斯分布在机器学习中占有举足轻重的作用。在 MLE 方法中：</p>
+<p>$$<br>\theta&#x3D;(\mu,\Sigma)&#x3D;(\mu,\sigma^{2}),x_i \stackrel{i.i.d}{\longrightarrow} p(x|\theta),\ \theta_{MLE}&#x3D;\mathop{argmax}\limits _{\theta}\log p(X|\theta)\mathop{&#x3D;}\limits _{i.i.d}\mathop{argmax}\limits _{\theta}\sum\limits <em>{i&#x3D;1}^{N}\log p(x</em>{i}|\theta)<br>$$<br>一般地，高斯分布的概率密度函数 PDF（Probability Density Function）写为：</p>
+<p>$$<br>p(x|\mu,\Sigma)&#x3D;\frac{1}{(2\pi)^{p&#x2F;2}|\Sigma|^{1&#x2F;2}}e^{-\frac{1}{2}(x-\mu)^{T}\Sigma^{-1}(x-\mu)}<br>$$<br>带入 MLE 中我们考虑一维的情况</p>
+<p>$$<br>\log p(X|\theta)&#x3D;\sum\limits <em>{i&#x3D;1}^{N}\log p(x</em>{i}|\theta)&#x3D;\sum\limits <em>{i&#x3D;1}^{N}\log\frac{1}{\sqrt{2\pi}\sigma}\exp(\frac{-(x</em>{i}-\mu)^{2}}{2\sigma^{2}})<br>$$<br>首先对 $\mu$ 的极值可以得到 ：<br>$$<br>\mu_{MLE}&#x3D;\mathop{argmax}\limits <em>{\mu}\log p(X|\theta)&#x3D;\mathop{argmax}\limits <em>{\mu}\sum\limits <em>{i&#x3D;1}^{N}(x</em>{i}-\mu)^{2}<br>$$<br> 于是：<br>$$<br>\frac{\partial}{\partial\mu}\sum\limits <em>{i&#x3D;1}^{N}(x</em>{i}-\mu)^{2}&#x3D;0\longrightarrow\mu</em>{MLE}&#x3D;\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}x</em>{i}<br>$$<br>其次对 $\theta$ 中的另一个参数 $\sigma$ ，有：<br>$$<br>\begin{align}<br>\sigma</em>{MLE}&#x3D;\mathop{argmax}\limits <em>{\sigma}\log p(X|\theta)&amp;&#x3D;\mathop{argmax}\limits <em>{\sigma}\sum\limits <em>{i&#x3D;1}^{N}[-\log\sigma-\frac{1}{2\sigma^{2}}(x</em>{i}-\mu)^{2}]\nonumber\<br>&amp;&#x3D;\mathop{argmin}\limits <em>{\sigma}\sum\limits <em>{i&#x3D;1}^{N}[\log\sigma+\frac{1}{2\sigma^{2}}(x</em>{i}-\mu)^{2}]<br>\end{align}<br>$$<br>于是：<br>$$<br>\frac{\partial}{\partial\sigma}\sum\limits <em>{i&#x3D;1}^{N}[\log\sigma+\frac{1}{2\sigma^{2}}(x</em>{i}-\mu)^{2}]&#x3D;0\longrightarrow\sigma</em>{MLE}^{2}&#x3D;\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}(x</em>{i}-\mu)^{2}<br>$$<br>值得注意的是，上面的推导中，首先对 $\mu$ 求 MLE， 然后利用这个结果求 $\sigma</em>{MLE}$ ，因此可以预期的是对数据集求期望时 $\mathbb{E}</em>{\mathcal{D}}[\mu_{MLE}]$ 是无偏差的：<br>$$<br>\mathbb{E}<em>{\mathcal{D}}[\mu</em>{MLE}]&#x3D;\mathbb{E}<em>{\mathcal{D}}[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}x</em>{i}]&#x3D;\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}\mathbb{E}</em>{\mathcal{D}}[x</em>{i}]&#x3D;\mu<br>$$<br>但是当对 $\sigma_{MLE}$ 求 期望的时候由于使用了单个数据集的 $\mu_{MLE}$，因此对所有数据集求期望的时候我们会发现 $\sigma_{MLE}$ 是 有偏的：</p>
+<p>$$<br>\begin{align}<br>\mathbb{E}<em>{\mathcal{D}}[\sigma</em>{MLE}^{2}]&amp;&#x3D;\mathbb{E}<em>{\mathcal{D}}[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}(x</em>{i}-\mu</em>{MLE})^{2}]&#x3D;\mathbb{E}<em>{\mathcal{D}}[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}(x</em>{i}^{2}-2x</em>{i}\mu_{MLE}+\mu_{MLE}^{2})\nonumber<br>\&amp;&#x3D;\mathbb{E}<em>{\mathcal{D}}[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}x</em>{i}^{2}-\mu</em>{MLE}^{2}]&#x3D;\mathbb{E}<em>{\mathcal{D}}[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}x</em>{i}^{2}-\mu^{2}+\mu^{2}-\mu</em>{MLE}^{2}]\nonumber\<br>&amp;&#x3D; \mathbb{E}<em>{\mathcal{D}}[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}x</em>{i}^{2}-\mu^{2}]-\mathbb{E}</em>{\mathcal{D}}[\mu_{MLE}^{2}-\mu^{2}]&#x3D;\sigma^{2}-(\mathbb{E}<em>{\mathcal{D}}[\mu</em>{MLE}^{2}]-\mu^{2})\nonumber\&amp;&#x3D;\sigma^{2}-(\mathbb{E}<em>{\mathcal{D}}[\mu</em>{MLE}^{2}]-\mathbb{E}<em>{\mathcal{D}}^{2}[\mu</em>{MLE}])&#x3D;\sigma^{2}-Var[\mu_{MLE}]\nonumber\&amp;&#x3D;\sigma^{2}-Var[\frac{1}{N}\sum\limits <em>{i&#x3D;1}^{N}x</em>{i}]&#x3D;\sigma^{2}-\frac{1}{N^{2}}\sum\limits <em>{i&#x3D;1}^{N}Var[x</em>{i}]&#x3D;\frac{N-1}{N}\sigma^{2}<br>\end{align}<br>$$<br>所以：<br>$$<br>\hat{\sigma}^{2}&#x3D;\frac{1}{N-1}\sum\limits <em>{i&#x3D;1}^{N}(x</em>{i}-\mu)^{2}<br>$$</p>
+<h3 id="多维情况"><a href="#多维情况" class="headerlink" title="多维情况"></a>多维情况</h3><p>多维高斯分布表达式为：<br>$$<br>p(x|\mu,\Sigma)&#x3D;\frac{1}{(2\pi)^{p&#x2F;2}|\Sigma|^{1&#x2F;2}}e^{-\frac{1}{2}(x-\mu)^{T}\Sigma^{-1}(x-\mu)}<br>$$<br>其中 $x,\mu\in\mathbb{R}^{p},\Sigma\in\mathbb{R}^{p\times p}$ ，$\mu $是期望,$\Sigma$ 为协方差矩阵，一般而言也是半正定矩阵。这里我们只考虑正定矩阵,以方便计算。首先我们处理指数上的数字，指数上的数字可以记为 $x$ 和 $\mu$ 之间的马氏距离。对于对称的协方差矩阵可进行特征值分解，$\Sigma&#x3D;U\Lambda U^{T}&#x3D;(u_{1},u_{2},\cdots,u_{p})diag(\lambda_{i})(u_{1},u_{2},\cdots,u_{p})^{T}&#x3D;\sum\limits <em>{i&#x3D;1}^{p}u</em>{i}\lambda_{i}u_{i}^{T}$ ，于是：</p>
+<p>$$<br>\Sigma^{-1}&#x3D;{(U\Lambda U^{T})}^{-1}&#x3D;U{\Lambda}^{-1} U^{T}&#x3D;\sum\limits <em>{i&#x3D;1}^{p}u</em>{i}\frac{1}{\lambda_{i}}u_{i}^{T}<br>$$</p>
+<p>$$<br>\begin{align}<br>\Delta &amp;&#x3D;(x-\mu)^{T}\Sigma^{-1}(x-\mu)\<br>&amp;&#x3D;\sum\limits <em>{i&#x3D;1}^{p}(x-\mu)^{T}u</em>{i}\frac{1}{\lambda_{i}}u_{i}^{T}(x-\mu)\<br>&amp;&#x3D;\sum\limits <em>{i&#x3D;1}^{p}\frac{ { [(x-u)^{T}u_i] }^{2} }{\lambda</em>{i} }&#x3D;\sum\limits <em>{i&#x3D;1}^{p}\frac{ y</em>{i}^{2} }{\lambda_{i} }<br>\end{align}<br>$$</p>
+<p>我们注意到 $y_{i}$ 是 $x-\mu$ 在特征向量 $u_{i}$ 上的投影长度，相当于是坐标轴的平移与旋转。因此上式子就是 $\Delta$ 取不同值时的同心椭圆。</p>
+<p>下面我们看多维高斯模型在实际应用时的两个问题</p>
+<ol>
+<li><p>参数 $\Sigma,\mu$ 的自由度为 $O(p^{2})$ 对于维度很高的数据其自由度太高。解决方案：高自由度的来源是 $\Sigma$ 有 $\frac{p(p+1)}{2}$ 个自由参数，可以假设其是对角矩阵，甚至在各向同性假设中假设其对角线上的元素都相同。前一种的算法有 Factor Analysis，后一种有概率 PCA: Principal Component Analysis(p-PCA) 。</p>
+<p>$\forall i,j \in 1 \cdots p,i\neq j,\lambda_{i}&#x3D;\lambda_{j},\Sigma$为对角矩阵,可判定各特征<strong>各自同性</strong>。</p>
+</li>
+<li><p>第二个问题是单个高斯分布是单峰的，对有多个峰的数据分布不能得到好的结果。解决方案：高斯混合模型 GMM。</p>
+</li>
+</ol>
+<p>下面对多维高斯分布的常用定理进行介绍。</p>
+<p>我们记 $x&#x3D;(x_1, x_2,\cdots,x_p)^T&#x3D;(x_{a,m\times 1}, x_{b,n\times1})^T,\mu&#x3D;(\mu_{a,m\times1}, \mu_{b,n\times1})^{T},\Sigma&#x3D;\begin{pmatrix}\Sigma_{aa}&amp;\Sigma_{ab}\\Sigma_{ba}&amp;\Sigma_{bb}\end{pmatrix}$，已知 $x\sim\mathcal{N}(\mu,\Sigma)$。</p>
+<p>首先是一个高斯分布的定理：&#96;</p>
+<blockquote>
+<p>  定理：已知 $x\sim\mathcal{N}(\mu,\Sigma), y\sim Ax+b$，那么 $y\sim\mathcal{N}(A\mu+b, A\Sigma A^T)$。</p>
+<p>  证明：$\mathbb{E}[y]&#x3D;\mathbb{E}[Ax+b]&#x3D;A\mathbb{E}[x]+b&#x3D;A\mu+b$，$Var[y]&#x3D;Var[Ax+b]&#x3D;Var[Ax]&#x3D;A\cdot Var[x]\cdot A^T$。</p>
+</blockquote>
+<p>下面利用这个定理得到 $p(x_a),p(x_b),p(x_a|x_b),p(x_b|x_a)$ 这四个量。</p>
+<ol>
+<li><p>$x_a&#x3D;\begin{pmatrix}\mathbb{I}<em>{m\times m}&amp;\mathbb{O}</em>{m\times n})\end{pmatrix}\begin{pmatrix}x_a\x_b\end{pmatrix}$，代入定理中得到：<br>$$<br>\mathbb{E}[x_a]&#x3D;\begin{pmatrix}\mathbb{I}&amp;\mathbb{O}\end{pmatrix}\begin{pmatrix}\mu_a\\mu_b\end{pmatrix}&#x3D;\mu_a\<br>Var[x_a]&#x3D;\begin{pmatrix}\mathbb{I}&amp;\mathbb{O}\end{pmatrix}\begin{pmatrix}\Sigma_{aa}&amp;\Sigma_{ab}\\Sigma_{ba}&amp;\Sigma_{bb}\end{pmatrix}\begin{pmatrix}\mathbb{I}\\mathbb{O}\end{pmatrix}&#x3D;\Sigma_{aa}<br>$$<br>所以 $x_a\sim\mathcal{N}(\mu_a,\Sigma_{aa})$。</p>
+</li>
+<li><p>同样的，$x_b\sim\mathcal{N}(\mu_b,\Sigma_{bb})$。</p>
+</li>
+<li><p>对于两个条件概率，我们引入三个量：<br>$$<br>x_{b\cdot a}&#x3D;x_b-\Sigma_{ba}\Sigma_{aa}^{-1}x_a\<br>\mu_{b\cdot a}&#x3D;\mu_b-\Sigma_{ba}\Sigma_{aa}^{-1}\mu_a\<br>\Sigma_{bb\cdot a}&#x3D;\Sigma_{bb}-\Sigma_{ba}\Sigma_{aa}^{-1}\Sigma_{ab}<br>$$<br>特别的，最后一个式子叫做 $\Sigma_{bb}$ 的 Schur Complementary。可以看到：<br>$$<br>x_{b\cdot a}&#x3D;\begin{pmatrix}-\Sigma_{ba}\Sigma_{aa}^{-1}&amp;\mathbb{I}<em>{n\times n}\end{pmatrix}\begin{pmatrix}x_a\x_b\end{pmatrix}<br>$$<br>所以：<br>$$<br>\mathbb{E}[x</em>{b\cdot a}]&#x3D;\begin{pmatrix}-\Sigma_{ba}\Sigma_{aa}^{-1}&amp;\mathbb{I}<em>{n\times n}\end{pmatrix}\begin{pmatrix}\mu_a\\mu_b\end{pmatrix}&#x3D;\mu</em>{b\cdot a}\<br>Var[x_{b\cdot a}]&#x3D;\begin{pmatrix}-\Sigma_{ba}\Sigma_{aa}^{-1}&amp;\mathbb{I}<em>{n\times n}\end{pmatrix}\begin{pmatrix}\Sigma</em>{aa}&amp;\Sigma_{ab}\\Sigma_{ba}&amp;\Sigma_{bb}\end{pmatrix}\begin{pmatrix}-\Sigma_{aa}^{-1}\Sigma_{ba}^T\\mathbb{I}<em>{n\times n}\end{pmatrix}&#x3D;\Sigma</em>{bb\cdot a}<br>$$<br>利用这三个量可以得到 $x_b&#x3D;x_{b\cdot a}+\Sigma_{ba}\Sigma_{aa}^{-1}x_a$。因此：<br>$$<br>\mathbb{E}[x_b|x_a]&#x3D;\mu_{b\cdot a}+\Sigma_{ba}\Sigma_{aa}^{-1}x_a<br>$$</p>
+<p>$$<br>Var[x_b|x_a]&#x3D;\Sigma_{bb\cdot a}<br>$$</p>
+<p>这里同样用到了定理。</p>
+</li>
+<li><p>同样：<br>$$<br>x_{a\cdot b}&#x3D;x_a-\Sigma_{ab}\Sigma_{bb}^{-1}x_b\<br>\mu_{a\cdot b}&#x3D;\mu_a-\Sigma_{ab}\Sigma_{bb}^{-1}\mu_b\<br>\Sigma_{aa\cdot b}&#x3D;\Sigma_{aa}-\Sigma_{ab}\Sigma_{bb}^{-1}\Sigma_{ba}<br>$$<br>所以：<br>$$<br>\mathbb{E}[x_a|x_b]&#x3D;\mu_{a\cdot b}+\Sigma_{ab}\Sigma_{bb}^{-1}x_b<br>$$</p>
+<p>$$<br>Var[x_a|x_b]&#x3D;\Sigma_{aa\cdot b}<br>$$</p>
+</li>
+</ol>
+<p>下面利用上边四个量，求解线性模型：</p>
+<blockquote>
+<p>  已知：$p(x)&#x3D;\mathcal{N}(\mu,\Lambda^{-1}),p(y|x)&#x3D;\mathcal{N}(Ax+b,L^{-1})$，求解：$p(y),p(x|y)$。</p>
+<p>  解：令 $y&#x3D;Ax+b+\epsilon,\epsilon\sim\mathcal{N}(0,L^{-1})$，所以 $\mathbb{E}[y]&#x3D;\mathbb{E}[Ax+b+\epsilon]&#x3D;A\mu+b$，$Var[y]&#x3D;A \Lambda^{-1}A^T+L^{-1}$，因此：<br>  $$<br>  p(y)&#x3D;\mathcal{N}(A\mu+b,L^{-1}+A\Lambda^{-1}A^T)<br>  $$<br>  引入 $z&#x3D;\begin{pmatrix}x\y\end{pmatrix}$，我们可以得到 $Cov[x,y]&#x3D;\mathbb{E}[(x-\mathbb{E}[x])(y-\mathbb{E}[y])^T]$。对于这个协方差可以直接计算：<br>  $$<br>  \begin{align}<br>  Cov(x,y)&amp;&#x3D;\mathbb{E}[(x-\mu)(Ax-A\mu+\epsilon)^T]\ &amp;&#x3D;\mathbb{E}[(x-\mu)(x-\mu)^TA^T]\<br>  &amp;&#x3D;Var[x]A^T&#x3D;\Lambda^{-1}A^T<br>  \end{align}<br>  $$<br>  注意到协方差矩阵的对称性，所以 $p(z)&#x3D;\mathcal{N}\begin{pmatrix}\mu\A\mu+b\end{pmatrix},\begin{pmatrix}\Lambda^{-1}&amp;\Lambda^{-1}A^T\A\Lambda^{-1}&amp;L^{-1}+A\Lambda^{-1}A^T\end<br>  {pmatrix}$。根据之前的公式，我们可以得到：<br>  $$<br>  \mathbb{E}[x|y]&#x3D;\mu+\Lambda^{-1}A^T(L^{-1}+A\Lambda^{-1}A^T)^{-1}(y-A\mu-b)<br>  $$</p>
+<p>  $$<br>  Var[x|y]&#x3D;\Lambda^{-1}-\Lambda^{-1}A^T(L^{-1}+A\Lambda^{-1}A^T)^{-1}A\Lambda^{-1}<br>  $$</p>
+</blockquote>
+<p>这里的$\Lambda^{-1}$是精度矩阵，$\mathit{L}^{-1}$是协方差矩阵。</p>
+<p>Precision matrix &#x3D; Covariance matrix ^ {-1}</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——数学引入</div>
+      <div>http://example.com/2022/08/01/机器学习白板推导笔记/Intro_Math/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/LinearClassification/" title="Machine Learning——线性分类">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——线性分类</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%99%BD%E6%9D%BF%E6%8E%A8%E5%AF%BC%E7%AC%94%E8%AE%B0/cheatsheet/" title="Machine Learning——总结">
+                        <span class="hidden-mobile">Machine Learning——总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

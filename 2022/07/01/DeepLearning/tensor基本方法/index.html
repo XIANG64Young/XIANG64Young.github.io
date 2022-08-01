@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Tensor的概念说起张量（tensor）就不得不说他和scalar、vertor、matrix之间的关系了，直接上图：   标量（scalar）：只有大小概念，没有方向的概念。通过一个具体的数值就能表达完整。比如：重量、温度、长度、提及、时间、热量等都数据标量。 向量（vector）：物理学上也叫矢量，指由大小和方向共同决定的量（跟「标量」相区别）。向量主要有2个维度：大小、方向。比如：力、速度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning—tensor基本概念  torch版">
+<meta property="og:url" content="http://example.com/2022/07/01/DeepLearning/tensor%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="Tensor的概念说起张量（tensor）就不得不说他和scalar、vertor、matrix之间的关系了，直接上图：   标量（scalar）：只有大小概念，没有方向的概念。通过一个具体的数值就能表达完整。比如：重量、温度、长度、提及、时间、热量等都数据标量。 向量（vector）：物理学上也叫矢量，指由大小和方向共同决定的量（跟「标量」相区别）。向量主要有2个维度：大小、方向。比如：力、速度">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211212114510782-517507267.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211212121653659-1556888048.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211212124655518-1573408127.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211212211034421-51741505.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cloading.gif">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211212220038950-808356639.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211212220334767-1100716490.png">
+<meta property="og:image" content="http://example.com/%5Csrc%5C2274220-20211213161318232-1359331427.png">
+<meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.117Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/%5Csrc%5C2274220-20211212114510782-517507267.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Deep Learning—tensor基本概念  torch版 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Deep Learning—tensor基本概念  torch版"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-01 00:00" pubdate>
+          2022年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Deep Learning—tensor基本概念  torch版</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Tensor的概念"><a href="#Tensor的概念" class="headerlink" title="Tensor的概念"></a>Tensor的概念</h1><p>说起张量（tensor）就不得不说他和scalar、vertor、matrix之间的关系了，直接上图：</p>
+<p><img src="/%5Csrc%5C2274220-20211212114510782-517507267.png" alt="img"></p>
+<blockquote>
+<p>标量（scalar）：只有大小概念，没有方向的概念。通过一个具体的数值就能表达完整。比如：重量、温度、长度、提及、时间、热量等都数据标量。</p>
+<p>向量（vector）：物理学上也叫矢量，指由大小和方向共同决定的量（跟「标量」相区别）。向量主要有2个维度：大小、方向。比如：力、速度等<em>。</em></p>
+<p>矩阵（matrix）：（学过线性代数的都知道，可参见之前的<a target="_blank" rel="noopener" href="https://www.cnblogs.com/young978/p/15669123.html#_label1">线代笔记</a>）</p>
+<p>张量（tensor）：一个<strong>多维数组</strong>，它是标量、向量、矩阵的高位扩展 </p>
+</blockquote>
+<p>当下主流的深度网络学习框架是PyTorch和Tensorflow。</p>
+<p>对于这两个框架而言，我只想用一句代码来阐述我心中的杂乱： </p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq"><span class="hljs-keyword">Import</span> torch <span class="hljs-built_in">as</span> tf               <br></code></pre></td></tr></table></figure>
+
+<p>但是，我还是选择了PyTorch（ ^<em>^ &#x2F;\ ~</em>~ ）</p>
+<p>tensor,是PyTorch中最基础的数据类型,也是进行数据存储和运算的基本单元。</p>
+<p>数组array这个概念，数组是类似于列表的高阶对象，是有序的元素序列。</p>
+<p><img src="/%5Csrc%5C2274220-20211212121653659-1556888048.png" alt="img"></p>
+<p>Tensor在PyTorch的地位相当于Array在Numpy中地位。</p>
+<p>实质上Pytorch将Numpy的Array包装成Tensor，为其定义了各种各样的运算方法和函数</p>
+<p>以至于处理tensor的时候，觉得自己在调用Numpy和Pandas这两个包处理。</p>
+<h1 id="Tensor的属性"><a href="#Tensor的属性" class="headerlink" title="Tensor的属性"></a>Tensor的属性</h1><p>每一个tensor都有三个属性：<code>torch.dtype，``torch.device，</code>和<code>torch.layout</code>.</p>
+<h2 id="torch-dtype"><a href="#torch-dtype" class="headerlink" title="torch.dtype"></a>torch.dtype</h2><p>Pytorch拥有12个不同的数据类型。</p>
+<p><img src="/%5Csrc%5C2274220-20211212124655518-1573408127.png" alt="img"></p>
+<p> tensor类型 相关代码</p>
+<blockquote>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">float_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.<span class="hljs-built_in">float</span>)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">double_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.double)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">complex_float_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.complex64)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">complex_double_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.complex128)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">int_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.<span class="hljs-built_in">int</span>)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">long_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.long)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">uint_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.uint8)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">double_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.double)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">bool_tensor = torch.ones(<span class="hljs-number">1</span>, dtype=torch.<span class="hljs-built_in">bool</span>)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">long_zerodim = torch.tensor(<span class="hljs-number">1</span>, dtype=torch.long)</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">int_zerodim = torch.tensor(<span class="hljs-number">1</span>, dtype=torch.<span class="hljs-built_in">int</span>)</span><br><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">torch.add(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>).dtype</span><br>torch.int64<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(int_tensor + <span class="hljs-number">5</span>).dtype</span><br>torch.int32<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(int_tensor + long_zerodim).dtype</span><br>torch.int32<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(long_tensor + int_tensor).dtype</span><br>torch.int64<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(bool_tensor + long_tensor).dtype</span><br>torch.int64<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(bool_tensor + uint_tensor).dtype</span><br>torch.uint8<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(float_tensor + double_tensor).dtype</span><br>torch.float64<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(complex_float_tensor + complex_double_tensor).dtype</span><br>torch.complex128<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">(bool_tensor + int_tensor).dtype</span><br>torch.int32<br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">torch.add(long_tensor, float_tensor).dtype</span><br>torch.float32<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="torch-device"><a href="#torch-device" class="headerlink" title="torch.device"></a>torch.device</h2><p> 由于pytorch可以在Gpu上运行tensor的相关操作。</p>
+<p>torch.device是一个对象，表示正在或将要分配 torch.tensor的设备。</p>
+<p>torch.device一半可选的内容有 cpu，cuda或者一些设备类型的可选设备序号</p>
+<blockquote>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&gt;&gt;&gt; torch.device(<span class="hljs-string">&#x27;cuda:0&#x27;</span>)<br>device(<span class="hljs-attribute">type</span>=<span class="hljs-string">&#x27;cuda&#x27;</span>, <span class="hljs-attribute">index</span>=0)<br><br>&gt;&gt;&gt; torch.device(<span class="hljs-string">&#x27;cpu&#x27;</span>)<br>device(<span class="hljs-attribute">type</span>=<span class="hljs-string">&#x27;cpu&#x27;</span>)<br><br>&gt;&gt;&gt; torch.device(<span class="hljs-string">&#x27;cuda&#x27;</span>)  # current cuda device<br>device(<span class="hljs-attribute">type</span>=<span class="hljs-string">&#x27;cuda&#x27;</span>)<br>&gt;&gt;&gt; torch.device(<span class="hljs-string">&#x27;cuda&#x27;</span>, 0)<br>device(<span class="hljs-attribute">type</span>=<span class="hljs-string">&#x27;cuda&#x27;</span>, <span class="hljs-attribute">index</span>=0)<br><br>&gt;&gt;&gt; torch.device(<span class="hljs-string">&#x27;cpu&#x27;</span>, 0)<br>device(<span class="hljs-attribute">type</span>=<span class="hljs-string">&#x27;cpu&#x27;</span>, <span class="hljs-attribute">index</span>=0)<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="torch-layout"><a href="#torch-layout" class="headerlink" title="torch.layout"></a><strong>torch.layout</strong></h2><p>torch.layout 是表示 torch.tensor 的内存布局的对象。目前，torch.tensor支持torch.strided（密集张量）和sparse_coo（稀疏的COO张量）。</p>
+<p><img src="/%5Csrc%5C2274220-20211212211034421-51741505.png" alt="img"></p>
+<p>stride()方法其实指的就是，tensor每个维度变化1在实际物理存储空间变化的大小。<img src="/%5Csrc%5Cloading.gif" alt="img"></p>
+<blockquote>
+<figure class="highlight python-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">x = torch.tensor([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [<span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>]])</span><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">x.stride()</span><br>(5, 1)<br><br><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">x.t().stride()</span><br>(1, 5)<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="Tensor的创建与访问"><a href="#Tensor的创建与访问" class="headerlink" title="Tensor的创建与访问"></a>Tensor的创建与访问</h1><h2 id="Tensor的创建方式"><a href="#Tensor的创建方式" class="headerlink" title="Tensor的创建方式"></a>Tensor的创建方式</h2><ul>
+<li>可以根据数据、元组、NumPy的ndarray、标量和其他类型，来构建tensor。方法有：torch.tensor()、torch.ones()、torch.zeros()、torch.from_array().</li>
+<li>也可以从一些分布中采样构建新的张量：torch.arange()、torch.range()、torch.rand()、torch.randn()、torch.normal().</li>
+<li>当然也有一些比较特殊的搭建：torch.eye()用于构建一个对角矩阵</li>
+</ul>
+<h2 id="Tensor的访问方式"><a href="#Tensor的访问方式" class="headerlink" title="Tensor的访问方式"></a>Tensor的访问方式</h2><ul>
+<li>当tensor是标量或者一维数据的时候，可以使用torch.item()访问</li>
+<li>当tensor是多维数据的时候，可以使用索引的方式，用法类似于a[:,0,0]</li>
+<li>当然我们也可以使用掩膜的方式，固定的访问一些我们想要的数据。</li>
+</ul>
+<blockquote>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">X</span> = torch.randn((<span class="hljs-number">2</span>,<span class="hljs-number">3</span>))<br><span class="hljs-attr">mask</span> = torch.randn((<span class="hljs-number">2</span>,<span class="hljs-number">3</span>))&gt;<span class="hljs-number">0</span><br><span class="hljs-attr">X1</span> = X[mask]<br><span class="hljs-attr">X2</span> = torch.masked_select(X,mask)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%5Csrc%5C2274220-20211212220038950-808356639.png" alt="img"></p>
+</blockquote>
+<ul>
+<li>还有条件选择这种不错的方式，也是一个值得推荐的方式。</li>
+</ul>
+<blockquote>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">x</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>)<br><span class="hljs-attr">y</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>)<br><span class="hljs-attr">z</span> = torch.where(x&gt;y,x,y)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%5Csrc%5C2274220-20211212220334767-1100716490.png" alt="img"></p>
+</blockquote>
+<h1 id="Tensor的简单操作"><a href="#Tensor的简单操作" class="headerlink" title="Tensor的简单操作"></a>Tensor的简单操作</h1><h2 id="常用数学运算"><a href="#常用数学运算" class="headerlink" title="常用数学运算"></a>常用数学运算</h2><ul>
+<li><p>torch.add()：加法</p>
+</li>
+<li><p>torch.mul()：乘法</p>
+</li>
+<li><p>torch.div()：除法</p>
+</li>
+<li><p>torch.abs()：tensor内每个元素取绝对值</p>
+</li>
+<li><p>torch.round()：tensor内每个元素取整数部分</p>
+</li>
+<li><p>torch.frac()：tensor内每个元素取小数部分</p>
+</li>
+<li><p>torch.log()：tensor内每个元素取对数</p>
+</li>
+<li><p>torch.pow()：tensor内每个元素取幂函数</p>
+</li>
+<li><p>torch.exp()：tensor内每个元素取指数</p>
+</li>
+<li><p>torch.sigmoid()：tensor内每个元素取sigmoid函数值</p>
+</li>
+<li><p>torch.mean()：tensor所有元素的均值</p>
+</li>
+<li><p>torch.norm()：tensor所有元素的范数值</p>
+</li>
+<li><p>torch.prod()：tensor所有元素积</p>
+</li>
+<li><p>torch.sum()：tensor所有元素和</p>
+</li>
+<li><p>torch.max()：tensor所有元素最大值</p>
+</li>
+<li><p>torch.min()：tensor所有元素最小值</p>
+</li>
+</ul>
+<p>注意：例如add()这类函数一般都是会返回一直tensor值的，但是add_()这类加了下划线的方法是在tensor的原空间处理的，会覆盖之前的值</p>
+<p>同样也可以是用以下方式直接处理</p>
+<ol>
+<li>加 tensor1 + tensor2；</li>
+<li>减 tensor1 - tensor2；</li>
+<li>乘 tensor1 * tensor2；</li>
+<li>除 tensor1 &#x2F; tensor2；</li>
+<li>内积 tensor1 @ tensor2；</li>
+<li>幂运算 tensor1 ** n</li>
+</ol>
+<h2 id="线性代数运算"><a href="#线性代数运算" class="headerlink" title="线性代数运算"></a>线性代数运算</h2><ul>
+<li>torch.dot()：向量内积运算</li>
+<li>torch.mv()：矩阵与向量的乘法</li>
+<li>torch.mm()：矩阵乘法</li>
+<li>torch.eig()：方阵的特征值和特征向量</li>
+<li>torch.inverse()：方阵的逆</li>
+<li>torch.ger()：两个向量的张量积</li>
+</ul>
+<h2 id="Tensor连接、分片、变形"><a href="#Tensor连接、分片、变形" class="headerlink" title="Tensor连接、分片、变形"></a>Tensor连接、分片、变形</h2><ul>
+<li>torch.cat()：多个tensor的拼接</li>
+<li>torch.reshape()\torch.view()：返回一个张量，其数据和元素数量与输入相同，但具有指定的形状  对于标量来说x.numel()</li>
+<li>torch.transpose()\torch.t()：指定tensor的两个维度进行转置，torch.t()方法只适用与二维tensor</li>
+<li>torch.squeeze()&#x2F;unsqueeze()：tensor对于张量中大小为1的维度的压缩与扩张</li>
+<li>torch.permute()：返回维度排列后的原始张量输入的视图。</li>
+</ul>
+<p>说到计算就不得不说，tensor 的一种计算机制，<strong>BroadCasting</strong>。在一定条件下，他会使维度不同、维度大小同的tensor完成数学计算</p>
+<p>以A+B为例，Broadcasting的过程如下： 从A,B的最后一个维度开始匹配长度，如果该维度长度一致，则匹配前一个维度。如果某个维度的长度不一致，并且两者长度都&gt;1，那么维度不匹配，无法进行运算，如果有一个长度维1，那么就对该维度进行扩展（广播）,扩展后的两个维度长度一致。依次类推直到第一个维度。如果两个张量维度不同，则在第0维进行升维并做广播。</p>
+<p>粗略的来说，就是利用squeeze()方法使低维的数据升到高维的数据，再利用cat()方法拼接成同样的大小。（前提是，该维度长度为1，或者没有维度才可以）</p>
+<p>下面这张图就可以很清晰的表达BroadCasting的效果。</p>
+<p> <img src="/%5Csrc%5C2274220-20211213161318232-1359331427.png" alt="img"></p>
+<p>范数调用torch.norm(input, p&#x3D;’fro’, dim&#x3D;None, keepdim&#x3D;False, out&#x3D;None, dtype&#x3D;None)<br>$$<br>p&#x3D;1 \to L_1 \ p&#x3D;2 \to L_2 \ P&#x3D;inf \to L_\infty<br>$$<br>向量范数 默认二范数  矩阵范数 默认F范数范数 默认F范数</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Deep-Learning/" class="category-chain-item">Deep Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Deep-Learning/">#Deep Learning</a>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Deep Learning—tensor基本概念  torch版</div>
+      <div>http://example.com/2022/07/01/DeepLearning/tensor基本方法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/module%E5%92%8Cfunctional%E7%9A%84%E8%BE%A8%E6%9E%90/" title="Deep Learning—torch中nn与F的区别">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Deep Learning—torch中nn与F的区别</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/01/DeepLearning/torch/" title="Deep Learning—torch使用小记">
+                        <span class="hidden-mobile">Deep Learning—torch使用小记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,947 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="个人认为正则化这个字眼有点太过抽象和宽泛，其实正则化的本质很简单，就是对某一问题加以先验的限制或约束以达到某种特定目的的一种手段或操作。在算法中使用正则化的目的是防止模型出现过拟合。一提到正则化，很多同学可能马上会想到常用的L1范数和L2范数，在汇总之前，我们先看下LP范数是什么鬼。 LP范数可以参考Norm 范数简单可以理解为用来表征向量空间中的距离，而距离的定义很抽象，只要满足非负、自反、三角">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning——Regularization">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/Regularization/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="个人认为正则化这个字眼有点太过抽象和宽泛，其实正则化的本质很简单，就是对某一问题加以先验的限制或约束以达到某种特定目的的一种手段或操作。在算法中使用正则化的目的是防止模型出现过拟合。一提到正则化，很多同学可能马上会想到常用的L1范数和L2范数，在汇总之前，我们先看下LP范数是什么鬼。 LP范数可以参考Norm 范数简单可以理解为用来表征向量空间中的距离，而距离的定义很抽象，只要满足非负、自反、三角">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640743227862.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640743227869.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640743227877.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640743227884.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640743227893.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746074269.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746074268.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746074271.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746459970.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746649895.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764463.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764470.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764476.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764483.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764489.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764503.webp">
+<meta property="og:image" content="f:/notes/机器学习/src/640-1640746764525.webp">
+<meta property="article:published_time" content="2022-08-01T02:13:53.493Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.228Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="f:/notes/机器学习/src/640-1640743227862.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning——Regularization - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning——Regularization"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          73 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning——Regularization</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>个人认为正则化这个字眼有点太过抽象和宽泛，<strong>其实正则化的本质很简单，就是对某一问题加以先验的限制或约束以达到某种特定目的的一种手段或操作。在算法中使用正则化的目的是防止模型出现过拟合。</strong>一提到正则化，很多同学可能马上会想到常用的L1范数和L2范数，在汇总之前，我们先看下LP范数是什么鬼。</p>
+<h1 id="LP范数"><a href="#LP范数" class="headerlink" title="LP范数"></a>LP范数</h1><p>可以参考<a href="F:\notes\机器学习\Norm&Distance.md">Norm</a></p>
+<p>范数简单可以理解为用来表征向量空间中的距离，而距离的定义很抽象，<strong>只要满足非负、自反、三角不等式就可以称之为距离。</strong></p>
+<p>LP范数不是一个范数，而是一组范数，其定义如下：<br>$$<br>{\vert \vert x \vert \vert}_p &#x3D; (\sum^n_ix^p_i)^\frac{1}{p}<br>$$<br>p的范围是[1,$+\infty$]。<strong>p在(0,1)范围内定义的并不是范数，因为违反了三角不等式。</strong></p>
+<p>根据p的变化，范数也有着不同的变化，借用一个经典的有关P范数的变化图如下：</p>
+<p><img src="F:\notes\机器学习\src\640-1640743227862.webp" alt="图片"></p>
+<p>上图表示了p从0到正无穷变化时，单位球（unit ball）的变化情况。在P范数下定义的单位球都是凸集，但是当0&lt;p&lt;1时，该定义下的单位球不是凸集（这个我们之前提过，当0&lt;p&lt;1时并不是范数）。</p>
+<p>那问题来了，L0范数是啥玩意？</p>
+<p>L0范数表示向量中非零元素的个数，用公式表示如下：<br>$$<br>{\vert \vert x \vert \vert}_0&#x3D;\mathbb{I}(i|x \neq 0)<br>$$<br>我们可以通过最小化L0范数，来寻找最少最优的稀疏特征项。但不幸的是，<strong>L0范数的最优化问题是一个NP hard问题（L0范数同样是非凸的）。因此，在实际应用中我们经常对L0进行凸松弛，理论上有证明，L1范数是L0范数的最优凸近似，因此通常使用L1范数来代替直接优化L0范数。</strong></p>
+<h2 id="L1范数"><a href="#L1范数" class="headerlink" title="L1范数"></a>L1范数</h2><p>根据LP范数的定义我们可以很轻松的得到L1范数的数学形式：<br>$$<br>{\vert \vert x \vert \vert}_1 &#x3D; \sum^n_i \vert x \vert<br>$$<br>通过上式可以看到，L1范数就是向量各元素的绝对值之和，也被称为是”稀疏规则算子”（Lasso regularization）。那么问题来了，为什么我们希望稀疏化？稀疏化有很多好处，最直接的两个：</p>
+<ul>
+<li><strong>特征选择</strong></li>
+<li><strong>可解释性</strong></li>
+</ul>
+<h2 id="L2范数"><a href="#L2范数" class="headerlink" title="L2范数"></a>L2范数</h2><p>L2范数是最熟悉的，它就是欧几里得距离，公式如下：<br>$$<br>{\vert \vert x \vert \vert}_2 &#x3D; (\sum^n_ix^2_i)^\frac{1}{2}<br>$$<br>L2范数有很多名称，有人把它的回归叫“岭回归”（Ridge Regression），也有人叫它“权值衰减”（Weight Decay）。<strong>以L2范数作为正则项可以得到稠密解，即每个特征对应的参数w都很小，接近于0但是不为0；此外，L2范数作为正则化项，可以防止模型为了迎合训练集而过于复杂造成过拟合的情况，从而提高模型的泛化能力。</strong></p>
+<h2 id="L1范数和L2范数的区别"><a href="#L1范数和L2范数的区别" class="headerlink" title="L1范数和L2范数的区别"></a>L1范数和L2范数的区别</h2><p>L1范数可以导致稀疏解，L2范数导致稠密解。</p>
+<p>从贝叶斯先验的角度看，当训练一个模型时，仅依靠当前的训练数据集是不够的，为了实现更好的泛化能力，往往需要加入先验项，而加入正则项相当于加入了一种先验。</p>
+<ul>
+<li><strong>L1范数相当于加入了一个Laplacean先验；</strong></li>
+<li><strong>L2范数相当于加入了一个Gaussian先验。</strong></li>
+</ul>
+<p>如下图所示：<img src="F:\notes\机器学习\src\640-1640743227869.webp" alt="图片"></p>
+<p>从数学角度来解释这方面的东西，使用$L_2$范数的一个原因是它对权重向量的大分量施加了巨大的惩罚。 这使得我们的学习算法偏向于在大量特征上均匀分布权重的模型。 在实践中，这可能使它们对单个变量中的观测误差更为稳定。 相比之下，$L_1$惩罚会导致模型将权重集中在一小部分特征上， 而将其他权重清除为零。 这称为<em>特征选择</em>，这可能是其他场景下需要的。</p>
+<h1 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h1><p>我们介绍了通过惩罚权重的$L_2$范数来正则化统计模型的经典方法。 在概率角度看，我们可以通过以下论证来证明这一技术的合理性： 我们已经假设了一个先验，即权重的值取自均值为0的高斯分布。 更直观的是，我们希望模型深度挖掘特征，即将其权重分散到许多特征中， 而不是过于依赖少数潜在的虚假关联。</p>
+<p>当面对更多的特征而样本不足时，线性模型往往会过拟合。 相反，当给出更多样本而不是特征，通常线性模型不会过拟合。 不幸的是，线性模型泛化的可靠性是有代价的。 简单地说，线性模型没有考虑到特征之间的交互作用。 对于每个特征，线性模型必须指定正的或负的权重，而忽略其他特征。</p>
+<p>泛化性和灵活性之间的这种基本权衡被描述为<em>偏差-方差权衡</em>（bias-variance tradeoff）。 线性模型有很高的偏差：它们只能表示一小类函数。 然而，这些模型的方差很低：它们在不同的随机数据样本上可以得出了相似的结果。</p>
+<p><strong>深度神经网络</strong>位于偏差-方差谱的另一端。 与线性模型不同，神经网络并不局限于单独查看每个特征，而是学习特征之间的交互。</p>
+<p>Dropout是深度学习中经常采用的一种正则化方法。它的做法可以简单的理解为在DNNs训练的过程中以概率p丢弃部分神经元，即使得被丢弃的神经元输出为0。Dropout可以实例化的表示为下图：</p>
+<p><img src="F:\notes\机器学习\src\640-1640743227877.webp" alt="图片"></p>
+<p>我们可以从两个方面去直观地理解Dropout的正则化效果：</p>
+<ul>
+<li>在Dropout每一轮训练过程中随机丢失神经元的操作相当于多个DNNs进行取平均，因此用于预测具有vote的效果。</li>
+<li><strong>减少神经元之间复杂的共适应性。当隐藏层神经元被随机删除之后，使得全连接网络具有了一定的稀疏化，从而有效地减轻了不同特征的协同效应。</strong>也就是说，有些特征可能会依赖于固定关系的隐含节点的共同作用，而通过Dropout的话，就有效地组织了某些特征在其他特征存在下才有效果的情况，增加了神经网络的鲁棒性。</li>
+</ul>
+<p>Dropout会用于在层(多半是全连接层)之间产生噪声，但是并不希望改变原有的期望所以产生的噪音$\xi \sim N(0, \sigma^2)$，对原有的输出进行变化$x’ &#x3D; x + \xi$,从而产生扰动，预期是$E[x’]&#x3D;x$。</p>
+<p>在标准暂退法正则化中，通过按保留（未丢弃）的节点的分数进行规范化来消除每一层的偏差。 换言之，每个中间活性值$h$以<em>暂退概率</em>$p$由随机变量$h’$替换，如下所示：<br>$$<br>h’&#x3D;\left{\begin{array}{ll}<br>        {0} &amp; {\text {该点概率为p}} \<br>        {\frac{h}{1-p}} &amp; {\text { otherwise }}<br>        \end{array}\right.<br>$$<br>根据此模型的设计，其期望值保持不变，即$E[h’]&#x3D;h$</p>
+<p>所以经过Dropout后的层$h$输出的期望不变，层内每个节点$x$输出的期望不变</p>
+<h1 id="归一化、标准化-amp-正则化"><a href="#归一化、标准化-amp-正则化" class="headerlink" title="归一化、标准化 &amp; 正则化"></a>归一化、标准化 &amp; 正则化</h1><p>正则化我们以及提到过了，这里简单提一下归一化和标准化。</p>
+<p>归一化（Normalization）：归一化的目标是找到某种映射关系，将原数据映射到[a,b]区间上。一般a，b会取[-1,1]，[0,1]这些组合 。</p>
+<p>一般有两种应用场景：</p>
+<ul>
+<li><strong>把数变为(0, 1)之间的小数</strong></li>
+<li><strong>把有量纲的数转化为无量纲的数</strong></li>
+</ul>
+<p>常用min-max normalization：</p>
+<p><strong>标准化（Standardization）：用大数定理将数据转化为一个标准正态分布</strong>，标准化公式为：<br>$$<br>x^{‘} &#x3D; \frac{x-\mu}{\sigma}<br>$$<br><strong>归一化和标准化的区别：</strong></p>
+<p>我们可以这样简单地解释：</p>
+<p><strong>归一化的缩放是“拍扁”统一到区间（仅由极值决定），而标准化的缩放是更加“弹性”和“动态”的，和整体样本的分布有很大的关系。</strong></p>
+<p>值得注意：</p>
+<p>归一化：缩放仅仅跟最大、最小值的差别有关。</p>
+<p>标准化：缩放和每个点都有关系，通过方差（variance）体现出来。与归一化对比，标准化中所有数据点都有贡献（通过均值和标准差造成影响）。</p>
+<p><strong>为什么要标准化和归一化？</strong></p>
+<ul>
+<li><strong>提升模型精度：</strong>归一化后，不同维度之间的特征在数值上有一定比较性，可以大大提高分类器的准确性。</li>
+<li><strong>加速模型收敛：</strong>标准化后，最优解的寻优过程明显会变得平缓，更容易正确的收敛到最优解。如下图所示：</li>
+</ul>
+<p><img src="F:\notes\机器学习\src\640-1640743227884.webp" alt="图片"></p>
+<p><img src="F:\notes\机器学习\src\640-1640743227893.webp" alt="图片"></p>
+<h1 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h1><h2 id="什么是Batch-Normalization"><a href="#什么是Batch-Normalization" class="headerlink" title="什么是Batch Normalization"></a>什么是Batch Normalization</h2><p>批规范化（Batch Normalization）严格意义上讲属于归一化手段，主要用于加速网络的收敛，但也具有一定程度的正则化效果。</p>
+<p>这里借鉴下魏秀参博士的知乎回答中对covariate shift的解释。</p>
+<blockquote>
+<p><strong>大家都知道在统计机器学习中的一个经典假设是“源空间（source domain）和目标空间（target domain）的数据分布（distribution）是一致的”。</strong>如果不一致，那么就出现了新的机器学习问题，如transfer learning&#x2F;domain adaptation等。而covariate shift就是分布不一致假设之下的一个分支问题，它是指源空间和目标空间的条件概率是一致的，但是其边缘概率不同。大家细想便会发现，的确，对于神经网络的各层输出，由于它们经过了层内操作作用，其分布显然与各层对应的输入信号分布不同，而且差异会随着网络深度增大而增大，可是它们所能“指示”的样本标记（label）仍然是不变的，这便符合了covariate shift的定义。</p>
+<p>BN的基本思想其实相当直观，因为神经网络在做非线性变换前的激活输入值（X &#x3D; WU + B，U是输入），随着网络深度加深，其分布逐渐发生偏移或者变动（即上述的covariate shift）。之所以训练收敛慢，一般是整体分布逐渐往非线性函数的取值区间的上下限两端靠近（对于Sigmoid函数来说，意味着激活输入值（X &#x3D; WU + B）是大的负值和正值。所以这导致后向传播时低层神经网络的梯度消失，这是训练深层神经网络收敛越来越慢的本质原因。<strong>而 BN 就是通过一定的规范化手段，把每层神经网络任意神经元这个输入值的分布强行拉回到均值为0方差为1的标准正态分布，避免因为激活函数导致的梯度弥散问题。所以与其说BN的作用是缓解covariate shift，倒不如说BN可缓解梯度弥散问题。</strong></p>
+</blockquote>
+<p>谷歌在2015年就提出了Batch Normalization(BN)，该方法对每个mini-batch都进行normalize，下图是BN的计算方式，会把mini-batch中的数据正规化到均值为0，标准差为1，同时还引入了两个可以学的参数，分别为scale和shift，让模型学习其适合的分布。</p>
+<p><img src="F:\notes\机器学习\src\640-1640746074269.webp" alt="图片"></p>
+<p>  <strong>那么为什么在做过正规化后，又要scale和shift呢？</strong></p>
+<p>  当通过正规化后，把尺度缩放到0均值，再scale和shift，不是有可能把数据变回”原样”？因为scale和shift是模型自动学习的，神经网络可以自己琢磨前面的正规化有没有起到优化作用，没有的话就”反”正规化，抵消之前的正规化操作带来的影响。</p>
+<p>  BatchNormalization是对<strong>一批样本</strong>进行处理, 对一批样本的<strong>每个特征</strong>分别进行归一化,举个简单的例子,加入我有一批样本, 每个样本有三个特征,,分别是身高,体重,年龄,那么我做归一化的时候,就是对体重做归一化,对身高做归一化,对年龄做归一化,三者之间不会有交叉影响。</p>
+<p><img src="F:\notes\机器学习\src\640-1640746074268.webp" alt="图片"></p>
+<h2 id="什么是LayerNormalization"><a href="#什么是LayerNormalization" class="headerlink" title="什么是LayerNormalization?"></a><strong>什么是LayerNormalization?</strong></h2><p>  LayerNormalization是对一个样本进行处理，对一个样本的所有特征进行归一化，乍一看很没有道理，因为如果对身高体重和年龄一起求一个均值方差，都不知道这些值有什么含义，但存在一些场景却非常有效果——NLP领域。</p>
+<p><img src="F:\notes\机器学习\src\640-1640746074271.webp" alt="图片"></p>
+<p> 在NLP中，N个特征都可能表示不同的词，这个时候我们仍然采用BatchNormalization的话，对第一个词进行操作，很显然意义就不是非常大了，因为任何一个词都可以放在第一个位置，而且很多时候词序对于我们对于句子的影响没那么大，而此时我们对N个词进行Normalization等操作可以很好地反映句子的分布。(LN一般用在第三维度，[batchsize, seq_len,dims])，因为该维度特征的量纲是相同的，所以并没有太多区别。</p>
+<h2 id="为什么要用Normalization"><a href="#为什么要用Normalization" class="headerlink" title="为什么要用Normalization"></a>为什么要用Normalization</h2><h3 id="解决梯度消失问题"><a href="#解决梯度消失问题" class="headerlink" title="解决梯度消失问题"></a>解决梯度消失问题</h3><p>拿sigmoid激活函数距离，从图中，我们很容易知道，数据值越靠近0梯度越大，越远离0梯度越接近0，我们通过BN改变数据分布到0附近，从而解决梯度消失问题。</p>
+<p><img src="F:\notes\机器学习\src\640-1640746459970.webp"></p>
+<h3 id="解决了Internal-Covariate-Shift-ICS-问题"><a href="#解决了Internal-Covariate-Shift-ICS-问题" class="headerlink" title="解决了Internal Covariate Shift(ICS)问题"></a><strong>解决了Internal Covariate Shift(ICS)问题</strong></h3><blockquote>
+<p>we define Internal Covariate Shift as the change in the distribution of network activations due to the change in network parameters during training</p>
+</blockquote>
+<p>由于训练过程中参数的变化，导致各层数据分布变化较大，神经网络就要学习新的分布，随着层数的加深，学习过程就变的愈加困难，要解决这个问题需要使用较低的学习率，由此又产生收敛速度慢，因此引入BN可以很有效的解决这个问题。</p>
+<h3 id="加速模型收敛"><a href="#加速模型收敛" class="headerlink" title="加速模型收敛"></a><strong>加速模型收敛</strong></h3><p>和对原始特征做归一化类似，BN使得每一维数据对结果的影响是相同的，由此就能加速模型的收敛速度。</p>
+<p><img src="F:\notes\机器学习\src\640-1640746649895.webp" alt="图片"></p>
+<h3 id="具有正则化的效果"><a href="#具有正则化的效果" class="headerlink" title="具有正则化的效果"></a>具有正则化的效果</h3><p> BatchNormalization层和正规化&#x2F;归一化不同，BatchNormalization层是在mini-batch中计算均值方差，因此会带来一些较小的噪声，在神经网络中添加随机噪声可以带来正则化的效果。</p>
+<h2 id="在CTR问题中的蜜汁效果"><a href="#在CTR问题中的蜜汁效果" class="headerlink" title="在CTR问题中的蜜汁效果"></a><strong>在CTR问题中的蜜汁效果</strong></h2><p>  在非常多CTR相关的论文中,很多工作主要都Focus在模型结构方面的优化或者引入新的信息等,而这么做往往都忽略了模型中的一些小的模块的作用,例如Normalization,在CTR相关的结构中我们发现,大家经常会把BatchNorm放在最后的MLP层, 但是这么做够吗？Normalization是否发挥了最大的作用？是否是最优的方案？本文通过大量的系统的实验,给出了结论：<strong>没有,还有更好的方案</strong>, 本文通过在CTR模型的不同地方加入不同的正则化策略(BatchNorm,LayerNorm等),最终取得了非常好的效果。那究竟是怎么做的呢？我们继续往下看，下面的框架很简单，显示作者提出模型的核心组成部分VO-LayerNorm,然后是基于此提出的新的NormDNN，最后是实验验证部分。</p>
+<h3 id="Variance-Only-LayerNorm"><a href="#Variance-Only-LayerNorm" class="headerlink" title="Variance-Only LayerNorm"></a><strong>Variance-Only LayerNorm</strong></h3><p>  这是一个经验得出来的操作,作者在大量的实验中发现，原始的LayerNorm有些复杂化了,在对其进行不断的精简实验后,作者发现在CTR数据集上的效果并没有带来下降，反而更好了。下面我们看看这一步步精简的操作：</p>
+<h3 id="复杂版本LayerNorm"><a href="#复杂版本LayerNorm" class="headerlink" title="复杂版本LayerNorm"></a><strong>复杂版本LayerNorm</strong></h3><p>假设我们一个Batch有H个样本,$x_1,x_2,\dots,x_{H}$ ,那么我们的LayerNorm可以通过下面的方式计算得到：$h &#x3D; g\bigodot N(x)+ b,\  N(x)&#x3D;\frac{x-\mu }{\sigma}$,其中$ \mu&#x3D;\frac{1}{H}\sum_{i&#x3D;1}^Hx_i, \ \sigma&#x3D;\sqrt{\frac{1}{H}\sum_{i&#x3D;1}^H(x_i-u)^2}$,LayerNorm在NLP任务中取得了非常好的效果,但是实践中,Xu等人发现这个LayerNorm的bias和gain增加了过拟合的风险,并且经过试验他们发现简化LayerNorm也可以取的非常不错的效果。</p>
+<h3 id="简化版的LayerNorm"><a href="#简化版的LayerNorm" class="headerlink" title="简化版的LayerNorm"></a><strong>简化版的LayerNorm</strong></h3><p>我们把bias以及gain同时删除,得到精简版的LayerNorm,</p>
+<p>$h&#x3D;N(x),\ N(x)&#x3D;\frac{x-\mu }{\sigma}$,其中$ \mu&#x3D;\frac{1}{H}\sum_{i&#x3D;1}^Hx_i, \ \sigma&#x3D;\sqrt{\frac{1}{H}\sum_{i&#x3D;1}^H(x_i-u)^2}$,在大量的实验中,我们发现简化版本的LayerNorm并没有什么性能损失,相反的还可以取的更好的效果。然后作者在CTR相关的数据集上又进行了大量的实验,发现对模型效果影响最大的不是re-centering等操作,反而方差带来的影响更大，于是作者提出了新的LayerNorm。</p>
+<p>Variance-Only LayerNorm<br>$$<br>h&#x3D;\frac{x}{\sigma}<br>$$<br>其中$\mu&#x3D;\frac{1}{H}\sum_{i&#x3D;1}^Hx_i, \ \sigma&#x3D;\sqrt{\frac{1}{H}\sum_{i&#x3D;1}^H(x_i-u)^2}$,此处,作者直接除以了方差,虽然更加精简了,但是实验效果却显示这么做在CTR数据集上却可以取得更好的效果。</p>
+<h2 id="NormDNN"><a href="#NormDNN" class="headerlink" title="NormDNN"></a><strong>NormDNN</strong></h2><p>在不同的地方使用不同形式的Normalization策略会带来什么样的影响呢？此处作者主要探索了两个部分, 特征Embedding部分的Normalization以及MLP部分的Normalization。在大量的实验之后，作者得到了一种提升最大的方案：</p>
+<ol>
+<li>对于数值类的特征，我们使用Variance-Only LayerNorm或者LayerNorm;</li>
+<li>对于类别特征，我们使用BatchNorm;</li>
+<li>对于MLP部分，我们使用LayerNorm;</li>
+</ol>
+<h3 id="在特征Embedding层的Normalization"><a href="#在特征Embedding层的Normalization" class="headerlink" title="在特征Embedding层的Normalization"></a>在特征Embedding层的Normalization</h3><p>假设我们有个域,我们原始的embedding可以表示为:</p>
+<p>$V_{emb}&#x3D;concat(e_1,e_2,\dots,e_i,\dots,e_f),\ e_i\in\mathbb{R}^k$,</p>
+<p>表示每个field的embedding的维度;</p>
+<p>我们在该基础上加入Normalization,得到</p>
+<p>$N(V_{emb})&#x3D;concat(N(e_1),N(e_2),\dots,N(e_i),\dots,N(e_f)),\ e_i\in\mathbb{R}^k$,</p>
+<p>此处的可以是LayerNorm,BatchNorm等。</p>
+<h3 id="在MLP处加入Normalization"><a href="#在MLP处加入Normalization" class="headerlink" title="在MLP处加入Normalization"></a>在MLP处加入Normalization</h3><p>此处作者发现在非线性的激活函数之前加入Normalization操作的效果是比先使用激活函数再做Normalization处理要好的。</p>
+<h3 id="为什么Normalization是有效的？"><a href="#为什么Normalization是有效的？" class="headerlink" title="为什么Normalization是有效的？"></a>为什么Normalization是有效的？</h3><p>作者最后分析了一下Normalization为什么有效,并绘制了不同的Normalization对于我们均值和方差带来的影响,从图中以及实验中看来,我们发现 Normalization有效的最大一个原因在于方差的影响而不是均值。</p>
+<p><img src="F:\notes\机器学习\src\640-1640746764463.webp" alt="图片"></p>
+<p>同时我们发现很多神经元的输出大部分在使用Variance-Only LayerNorm之后都会被push输出一个负数的值，然后被RELU过滤掉,这可以减少噪音带来的影响,同样的，我们将Normalization的导数表示为：<br>$$<br>\frac{\partial L}{\partial x_i } &#x3D; \frac{\partial L}{\partial h }* \frac{\partial L}{\partial x_i } \<br>\frac{\partial h}{\partial x_i }&#x3D; \frac{1}{\sigma}-\frac{x_i(x_i-\mu)}{\sigma^3\cdot H}<br>$$<br>从上面的式子中我们也发现我们的Normalization对于$\sigma$是非常敏感的。</p>
+<h3 id="特征Embedding上加入Normalization是否有效？"><a href="#特征Embedding上加入Normalization是否有效？" class="headerlink" title="特征Embedding上加入Normalization是否有效？"></a>特征Embedding上加入Normalization是否有效？</h3><p><img src="F:\notes\机器学习\src\640-1640746764470.webp" alt="图片"></p>
+<p>从上面的实验中,我们发现,<strong>在特征Embedding层加入Normalization都是有效的,而且LayerNorm以及相关的变种是效果相对稳定以及最好的</strong>;</p>
+<h3 id="Normalization对于MLP的影响"><a href="#Normalization对于MLP的影响" class="headerlink" title="Normalization对于MLP的影响"></a>Normalization对于MLP的影响</h3><p><img src="F:\notes\机器学习\src\640-1640746764476.webp" alt="图片"></p>
+<p>从上面的实验中,我们发现,<strong>在MLP层加入Normalization都是有效的,但是具体选用哪种Normalization需要依据不同的任务进行选择</strong>;</p>
+<h3 id="Normalization对于Feature-EMbedding-amp-MLP的影响"><a href="#Normalization对于Feature-EMbedding-amp-MLP的影响" class="headerlink" title="Normalization对于Feature EMbedding &amp; MLP的影响"></a>Normalization对于Feature EMbedding &amp; MLP的影响</h3><p><img src="F:\notes\机器学习\src\640-1640746764483.webp" alt="图片"></p>
+<p>从上面的实验中,我们发现,<strong>在MLP层以及特征Embedding层都加入Normalization都是比单个加入都有效的,在MLP侧加入VO-LN的Normalization往往能取得更好的效果</strong>;</p>
+<h3 id="Normalization对于数值以及类别特征的-EMbedding的影响"><a href="#Normalization对于数值以及类别特征的-EMbedding的影响" class="headerlink" title="Normalization对于数值以及类别特征的 EMbedding的影响"></a>Normalization对于数值以及类别特征的 EMbedding的影响</h3><p><img src="F:\notes\机器学习\src\640-1640746764489.webp" alt="图片"></p>
+<p>从上面的实验中,我们发现,<strong>对数值的EMbedding使用LayerNorm相关的效果更好,对数值特征使用LayerNorm相关的正则化方法,在MLP处使用VO-LN往往可以取得最好的效果.</strong></p>
+<h2 id="NormDNN-与-其他网络比较"><a href="#NormDNN-与-其他网络比较" class="headerlink" title="NormDNN 与 其他网络比较"></a><strong>NormDNN 与 其他网络比较</strong></h2><p><img src="F:\notes\机器学习\src\640-1640746764503.webp" alt="图片"><br>出乎意料,在三个数据集上,我们只需要对不同层做Normalization的处理就可以取得比DeepFM,xDeepFM更好的效果;</p>
+<blockquote>
+<p>NormDNN: Numerical Embedding用LayerNorm相关的处理; Categorical Feature使用BatchNorm相关的处理; 在MLP部分使用VO-LN</p>
+</blockquote>
+<h3 id="泛化到其他Deep相关的模型"><a href="#泛化到其他Deep相关的模型" class="headerlink" title="泛化到其他Deep相关的模型"></a>泛化到其他Deep相关的模型</h3><p><img src="F:\notes\机器学习\src\640-1640746764525.webp" alt="图片"></p>
+<p>  我们把初始化的方案应用到更加复杂的网络结构上也都取得了更好的效果;也就是说这种Normalization的方案可以扩充到其他的所有最新网络结构上;</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a><strong>小结</strong></h3><p>  从上面的内容来看,Normalization对于模型的帮助是非常大的; 对Embedding之后的特征进行Normalization(数值Embedding处用LayerNorm相关的Normalization,Categorical部分使用BatchNorm相关的处理，MLP部分使用VO-LN)可以取得非常大的提升;非常值得一试。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning——Regularization</div>
+      <div>http://example.com/2022/08/01/MachineLearning/Regularization/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%96%B9%E6%B3%95/" title="Machine Learning——交叉验证">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning——交叉验证</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/Perceptron/" title="Machine Learning——Perceptron">
+                        <span class="hidden-mobile">Machine Learning——Perceptron</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

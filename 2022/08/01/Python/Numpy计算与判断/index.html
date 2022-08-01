@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据计算Numpy对于相同维度的数组可以直接运算。对于不同shape大小的数据，利用广播机制（Broadcast）进行操作。但是要求最后一个维度的大小为1，这样才能对数据进行加减可以使用进行数据计  广播的规则：  让所有输入数组都向其中形状最长的数组看齐，形状中不足的部分都通过在前面加 1 补齐。 输出数组的形状是输入数组形状的各个维度上的最大值。 如果输入数组的某个维度和输出数组的对应维度的长">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Numpy function">
+<meta property="og:url" content="http://example.com/2022/08/01/Python/Numpy%E8%AE%A1%E7%AE%97%E4%B8%8E%E5%88%A4%E6%96%AD/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="数据计算Numpy对于相同维度的数组可以直接运算。对于不同shape大小的数据，利用广播机制（Broadcast）进行操作。但是要求最后一个维度的大小为1，这样才能对数据进行加减可以使用进行数据计  广播的规则：  让所有输入数组都向其中形状最长的数组看齐，形状中不足的部分都通过在前面加 1 补齐。 输出数组的形状是输入数组形状的各个维度上的最大值。 如果输入数组的某个维度和输出数组的对应维度的长">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/%5Csrc%5Cimage-20220222154739735.png">
+<meta property="article:published_time" content="2022-08-01T02:13:53.518Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.344Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/%5Csrc%5Cimage-20220222154739735.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Numpy function - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Numpy function"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Numpy function</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="数据计算"><a href="#数据计算" class="headerlink" title="数据计算"></a>数据计算</h1><p>Numpy对于相同维度的数组可以直接运算。对于不同shape大小的数据，利用广播机制（Broadcast）进行操作。但是要求最后一个维度的大小为1，这样才能对数据进行加减可以使用进行数据计</p>
+<blockquote>
+<p>广播的规则：</p>
+<ul>
+<li>让所有输入数组都向其中形状最长的数组看齐，形状中不足的部分都通过在前面加 1 补齐。</li>
+<li>输出数组的形状是输入数组形状的各个维度上的最大值。</li>
+<li>如果输入数组的某个维度和输出数组的对应维度的长度相同或者其长度为 1 时，这个数组能够用来计算，否则出错。</li>
+<li>当输入数组的某个维度的长度为 1 时，沿着此维度运算时都用此维度上的第一组值。</li>
+</ul>
+</blockquote>
+<h1 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h1><p>三角函数：sin() cos() tan()  arcsin()  arccos() arctan()等<br>角度与弧度的转化主要利用的是 np.degrees() 和np.radians() </p>
+<h1 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h1><p><strong>linalg</strong>是关于线性代数的函数库。</p>
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>numpy.dot(a, b, out=None) </code></td>
+<td align="left">两个数组的点积，即元素对应相乘。</td>
+</tr>
+<tr>
+<td align="left"><code>numpy.vdot() </code></td>
+<td align="left">两个向量的点积</td>
+</tr>
+<tr>
+<td align="left"><code>numpy.inner()</code></td>
+<td align="left">两个数组的内积</td>
+</tr>
+<tr>
+<td align="left"><code>numpy.matmul()</code></td>
+<td align="left">两个数组的矩阵积</td>
+</tr>
+<tr>
+<td align="left"><code>numpy.linalg.det()</code></td>
+<td align="left">矩阵的行列式</td>
+</tr>
+<tr>
+<td align="left"><code>numpy.linalg.solve()</code></td>
+<td align="left">求解线性矩阵方程</td>
+</tr>
+<tr>
+<td align="left"><code>numpy.linalg.inv()</code></td>
+<td align="left">计算矩阵的乘法逆矩阵</td>
+</tr>
+</tbody></table>
+<h1 id="舍入函数"><a href="#舍入函数" class="headerlink" title="舍入函数"></a>舍入函数</h1><ul>
+<li><code>numpy.around(a,decimals)</code> 返回指定数字的四舍五入值<br> <strong>decimals</strong>: 舍入的小数位数。 默认值为0。 如果为负，整数将四舍五入到小数点左侧的位置</li>
+<li><code>numpy.floor()</code> 向下取整</li>
+<li><code>numpy.ceil()</code> 向上取整</li>
+<li><code>numpy.trunc()</code> 返回数据最接近的整数</li>
+</ul>
+<h1 id="算术函数"><a href="#算术函数" class="headerlink" title="算术函数"></a>算术函数</h1><ul>
+<li><p><code>numpy.add()，numpy.subtract()，numpy.multiply() 和 numpy.divide()</code> 数组的加减乘除</p>
+</li>
+<li><p><code>numpy.reciprocal()</code> 返回参数逐元素的倒数</p>
+</li>
+<li><p><code>numpy.power()</code>将第一个输入数组中的元素作为底数，计算它与第二个输入数组中相应元素的幂。 </p>
+</li>
+<li><p><code>numpy.mod()</code>计算输入数组中相应元素的相除后的余数</p>
+</li>
+<li><p><code>numpy.ufunc.outer</code></p>
+<blockquote>
+<p>他的原理是针对两个数组或者矩阵的每个元素做运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">r = empty(<span class="hljs-built_in">len</span>(A), <span class="hljs-built_in">len</span>(B))<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(A)):<br> <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(B)):<br>     r[i,j]=op(A[i], B[j])<br>//op指的是ufunc的操作是什么可能是加 减 乘 除<br></code></pre></td></tr></table></figure></blockquote>
+</li>
+</ul>
+<h1 id="统计函数"><a href="#统计函数" class="headerlink" title="统计函数"></a>统计函数</h1><ul>
+<li><p><code>numpy.amin() 和 numpy.amax()</code> 计算数组中的元素沿指定轴的最小值或最大值。</p>
+</li>
+<li><p><code>numpy.ptp()</code> 计算数组中元素最大值与最小值的差</p>
+</li>
+<li><p><code>numpy.percentile(a, q, axis)</code> 百分位数是统计中使用的度量，表示小于这个值的观察值的百分比</p>
+<p><strong>a</strong>: 输入数组; <strong>q</strong>: 要计算的百分位数，在 0 ~ 100 之间; <strong>axis</strong>: 沿着它计算百分位数的轴</p>
+</li>
+<li><p><code>numpy.median() </code> 中位数</p>
+</li>
+<li><p><code>numpy.mean()</code> 平均值 </p>
+</li>
+<li><p><code>numpy.average()</code> 平均值 更多的用于计算加权平均值</p>
+</li>
+<li><p><code>numpy.std()</code> 标准差</p>
+</li>
+<li><p><code>numpy.var()</code> 方差</p>
+</li>
+</ul>
+<h1 id="排序函数与条件函数"><a href="#排序函数与条件函数" class="headerlink" title="排序函数与条件函数"></a>排序函数与条件函数</h1><table>
+<thead>
+<tr>
+<th align="left">种类</th>
+<th align="left">速度</th>
+<th align="left">最坏情况</th>
+<th align="left">工作空间</th>
+<th align="left">稳定性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&#39;quicksort&#39;</code>（快速排序）</td>
+<td align="left">1</td>
+<td align="left"><code>O(n^2)</code></td>
+<td align="left">0</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left"><code>&#39;mergesort&#39;</code>（归并排序）</td>
+<td align="left">2</td>
+<td align="left"><code>O(n*log(n))</code></td>
+<td align="left">~n&#x2F;2</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="left"><code>&#39;heapsort&#39;</code>（堆排序）</td>
+<td align="left">3</td>
+<td align="left"><code>O(n*log(n))</code></td>
+<td align="left">0</td>
+<td align="left">否</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><code>numpy.sort(a, axis, kind, order)</code> </p>
+<p><strong>a</strong>: 要排序的数组; <strong>axis</strong>: 沿着它排序数组的轴，如果没有数组会被展开，沿着最后的轴排序， axis&#x3D;0 按列排序，axis&#x3D;1 按行排序; <strong>kind</strong>: 默认为’quicksort’（快速排序） <strong>order</strong>: 如果数组包含字段，则是要排序的字段</p>
+</li>
+<li><p><code>numpy.argsort()</code> 返回的是数组值从小到大的索引值</p>
+</li>
+<li><p><code>numpy.argmax() 和 numpy.argmin()</code>函数分别沿给定轴返回最大和最小元素的索引</p>
+</li>
+<li><p><code>numpy.argpartition(a, kth, axis=- 1, kind=&#39;introselect&#39;, order=None)</code>可以找出 k 个最大数值的索引 </p>
+</li>
+<li><p><code>numpy.nonzero() </code>函数返回输入数组中非零元素的索引</p>
+</li>
+<li><p><code>numpy.where(condition, ture, false)</code> 函数返回输入数组中满足给定条件的元素的索引</p>
+</li>
+<li><p><code>numpy.extract(condition, array)</code> 函数根据某个条件从数组中抽取元素，返回满条件的元素。</p>
+</li>
+<li><p><code>numpy.allclose()</code> 匹配两个数组，检查两个数组是否相似，并得到布尔值表示的输出</p>
+</li>
+</ul>
+<h1 id="保存"><a href="#保存" class="headerlink" title="保存"></a>保存</h1><p><code>numpy.save(file, arr, allow_pickle=True, fix_imports=True)</code> 将数组保存到以 .npy 为扩展名的文件中。</p>
+<ul>
+<li><strong>file</strong>：要保存的文件，扩展名为 .npy，如果文件路径末尾没有扩展名 .npy，该扩展名会被自动加上。</li>
+<li><strong>arr</strong>: 要保存的数组</li>
+<li><strong>allow_pickle</strong>: 可选，布尔值，允许使用 Python pickles 保存对象数组，Python 中的 pickle 用于在保存到磁盘文件或从磁盘文件读取之前，对对象进行序列化和反序列化。</li>
+<li><strong>fix_imports</strong>: 可选，为了方便 Pyhton2 中读取 Python3 保存的数据。</li>
+</ul>
+<h1 id="输出格式设置"><a href="#输出格式设置" class="headerlink" title="输出格式设置"></a>输出格式设置</h1><p><strong>np.set_printopoints()可以控制输出格式 这些选项确定浮点数、数组和其他 NumPy 对象的显示方式。</strong></p>
+<p>precision：int or None浮点输出的精度位数(默认8)# 如floatmode不是fixed，可能是None</p>
+<p>threshold：int触发汇总的数组元素总数而不是完整的repr(默认1000)<br>edgeitems：int在开头和结尾的摘要中的数组项数 每个维度(默认为3)<br>linewidth：int每行用于插入的字符数# 换行符(默认为75)<br>suppress : bool,科学记数法启用</p>
+<p>True用固定点打印浮点数符号，当前精度中的数字等于零将打印为零。</p>
+<p>False用科学记数法；最小数绝对值是&lt;1e-4或比率最大绝对值&gt; 1e3。默认值False</p>
+<p>nanstr：str浮点非字母数字的字符串表示形式(默认为nan)<br>infstr：str浮点无穷大字符串表示形式(默认inf)<br>sign：string，’ - ‘，’+’或’’，控制浮点类型符号的打印。<br>        ‘+’打印正值标志。’’打印空格。’ - ‘省略正值符号，默认</p>
+<p>formatter：可调用字典，格式化功能<br>格式化设置类型：</p>
+<ul>
+<li>‘bool’</li>
+<li>‘int’</li>
+<li>‘timedelta’：’numpy.timedelta64’</li>
+<li>‘datetime’：numpy.datetime64</li>
+<li>‘float’</li>
+<li>‘longfloat’：128位浮点数</li>
+<li>‘complexfloat’</li>
+<li>‘longcomplexfloat’：由两个128位浮点组成</li>
+<li>‘numpystr’ : types numpy.string_ and numpy.unicode</li>
+<li><em>‘object’ : np.object</em> arrays</li>
+<li>‘str’：所有其他字符串</li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-meta">#用于一次设置一组类型的其他键：</span><br> - &#x27;all&#x27;：设置所有类型<br> - &#x27;int_kind&#x27;：设置&#x27;int&#x27;<br> - &#x27;float_kind&#x27;：设置&#x27;float&#x27;和&#x27;longfloat&#x27;<br> - &#x27;complex_kind&#x27;：设置&#x27;complexfloat&#x27;和&#x27;longcomplexfloat&#x27;<br> - &#x27;str_kind&#x27;：设置&#x27;str&#x27;和&#x27;numpystr&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>floatmode：str控制precision选项的解释<br>   浮点类型值：<br>    -‘fixed’：始终打印精确的’precision精度’小数位<br>    -‘unique’：打印最小小数位数，precision选项被忽略。<br>    -‘maxprec’：打印最多precision小数位数<br>    -‘maxprec_equal’：最多打印precision小数位数</p>
+<p>legacy：string或False<br>     如为字符串“1.13”，则启用1.13传统打印模式。<br>    如设置“False”，禁用传统模式。无法识别的字符串将被忽略</p>
+<h1 id="tips"><a href="#tips" class="headerlink" title="tips:"></a>tips:</h1><p><strong>np.sum和np.add.reduce有什么区别？</strong>两者的性能似乎是完全不同的：对于相对较小的数组大小而言。<code>add.reduce</code>大约快两倍。对于较大的数组大小，差别似乎消失了。较长的答案：  <code>np.sum</code>在中定义numpy&#x2F;core&#x2F;fromnumeric.py。在定义中<code>np.sum</code>，你会看到工作被传递给<code>_methods._sum</code>。该功能是_methods.py简单地说就是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">def <span class="hljs-title function_">_sum</span>(a, axis=<span class="hljs-title class_">None</span>, dtype=<span class="hljs-title class_">None</span>, out=<span class="hljs-title class_">None</span>, keepdims=<span class="hljs-title class_">False</span>):<br>    <span class="hljs-keyword">return</span> um.<span class="hljs-property">add</span>.<span class="hljs-title function_">reduce</span>(a, axis=axis, dtype=dtype,<br>                            out=out, keepdims=keepdims)<br></code></pre></td></tr></table></figure>
+
+<p><strong>怎么对矩阵上三角或者下三角处理数据？</strong></p>
+<p><img src="/%5Csrc%5Cimage-20220222154739735.png" alt="image-20220222154739735"></p>
+<p><strong>numpy.tile(array , size)</strong>  拼接数组 自身多个��</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Numpy function</div>
+      <div>http://example.com/2022/08/01/Python/Numpy计算与判断/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/numpy%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C/" title="Numpy trick">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Numpy trick</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/Numpy%E6%95%B0%E7%BB%84/" title="Numpy array">
+                        <span class="hidden-mobile">Numpy array</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

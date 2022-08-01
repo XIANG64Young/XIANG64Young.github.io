@@ -1,0 +1,910 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="统计学和机器学习之间的界定一直很模糊。 无论是业界还是学界一直认为机器学习只是统计学披了一层光鲜的外衣。 而机器学习支撑的人工智能也被称为“统计学的外延”。 例如，诺奖得主托马斯·萨金特曾经说过人工智能其实就是统计学，只不过用了一个很华丽的辞藻。  萨金特在世界科技创新论坛上表示，人工智能其实就是统计学 当然也有一些不同的声音。但是这一观点的正反双方在争吵中充斥着一堆看似高深实则含糊的论述，着实让">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Foundation——统计学习与机器学习的关联">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%B3%E8%81%94/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="统计学和机器学习之间的界定一直很模糊。 无论是业界还是学界一直认为机器学习只是统计学披了一层光鲜的外衣。 而机器学习支撑的人工智能也被称为“统计学的外延”。 例如，诺奖得主托马斯·萨金特曾经说过人工智能其实就是统计学，只不过用了一个很华丽的辞藻。  萨金特在世界科技创新论坛上表示，人工智能其实就是统计学 当然也有一些不同的声音。但是这一观点的正反双方在争吵中充斥着一堆看似高深实则含糊的论述，着实让">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/640-165778097574451.jpeg">
+<meta property="og:image" content="http://example.com/src/640-165778097574452.jpeg">
+<meta property="og:image" content="http://example.com/src/640-165778097574553.jpeg">
+<meta property="og:image" content="http://example.com/src/640-165778097574554.png">
+<meta property="og:image" content="http://example.com/src/640-165778097574555.jpeg">
+<meta property="og:image" content="http://example.com/src/640-165778097574556.jpeg">
+<meta property="og:image" content="http://example.com/src/640-165778097574557.jpeg">
+<meta property="article:published_time" content="2022-08-01T02:13:53.507Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.265Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/640-165778097574451.jpeg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning Foundation——统计学习与机器学习的关联 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning Foundation——统计学习与机器学习的关联"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning Foundation——统计学习与机器学习的关联</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <p>统计学和机器学习之间的界定一直很模糊。</p>
+<p>无论是业界还是学界一直认为机器学习只是统计学披了一层光鲜的外衣。</p>
+<p>而机器学习支撑的人工智能也被称为“统计学的外延”。</p>
+<p>例如，诺奖得主托马斯·萨金特曾经说过人工智能其实就是统计学，只不过用了一个很华丽的辞藻。</p>
+<p><img src="/src/640-165778097574451.jpeg" alt="图片"></p>
+<p>萨金特在世界科技创新论坛上表示，人工智能其实就是统计学</p>
+<p>当然也有一些不同的声音。但是这一观点的正反双方在争吵中充斥着一堆看似高深实则含糊的论述，着实让人摸不着头脑。</p>
+<p>一位名叫Matthew Stewart的哈佛大学博士生从统计与机器学习的不同；统计模型与机器学习的不同，这两个角度论证了机器学习和统计学并不是互为代名词。</p>
+<h2 id="机器学习和统计的主要区别在于它们的目的"><a href="#机器学习和统计的主要区别在于它们的目的" class="headerlink" title="机器学习和统计的主要区别在于它们的目的"></a><strong>机器学习和统计的主要区别在于它们的目的</strong></h2><p><img src="/src/640-165778097574452.jpeg" alt="图片"></p>
+<p>与大部分人所想的正相反，机器学习其实已经存在几十年了。当初只是因为那时的计算能力无法满足它对大量计算的需求，而渐渐被人遗弃。然而，近年来，由于信息爆炸所带来的数据和算力优势，机器学习正快速复苏。</p>
+<p>言归正传，如果说机器学习和统计学是互为代名词，那为什么我们没有看到每所大学的统计学系都关门大吉而转投’机器学习’系呢？因为它们是不一样的!</p>
+<p>我经常听到一些关于这个话题的含糊论述，最常见的是这样的说法:</p>
+<p>“机器学习和统计的主要区别在于它们的目的。机器学习模型旨在使最准确的预测成为可能。统计模型是为推断变量之间的关系而设计的。</p>
+<p>虽然技术上来说这是正确的，但这样的论述并没有给出特别清晰和令人满意的答案。机器学习和统计之间的一个主要区别确实是它们的目的。</p>
+<p>然而，说机器学习是关于准确的预测，而统计模型是为推理而设计，几乎是毫无意义的说法，除非你真的精通这些概念。</p>
+<p><img src="/src/640-165778097574553.jpeg" alt="图片"></p>
+<p>首先，我们必须明白，统计和统计建模是不一样的。统计是对数据的数学研究。除非有数据，否则无法进行统计。统计模型是数据的模型，主要用于推断数据中不同内容的关系，或创建能够预测未来值的模型。通常情况下，这两者是相辅相成的。</p>
+<p>因此，实际上我们需要从两方面来论述：第一，统计与机器学习有何不同；第二，统计模型与机器学习有何不同？</p>
+<p>说得更直白些就是，有很多统计模型可以做出预测，但预测效果比较差强人意。</p>
+<p>而机器学习通常会牺牲可解释性以获得强大的预测能力。例如，从线性回归到神经网络，尽管解释性变差，但是预测能力却大幅提高。</p>
+<p>从宏观角度来看，这是一个很好的答案。至少对大多数人来说已经足够好。然而，在有些情况下，这种说法容易让我们对机器学习和统计建模之间的差异产生误解。让我们看一下线性回归的例子。</p>
+<h2 id="统计模型与机器学习在线性回归上的差异"><a href="#统计模型与机器学习在线性回归上的差异" class="headerlink" title="统计模型与机器学习在线性回归上的差异"></a><strong>统计模型与机器学习在线性回归上的差异</strong></h2><p><img src="/src/640-165778097574554.png" alt="图片"></p>
+<p>或许是因为统计建模和机器学习中使用方法的相似性，使人们认为它们是同一个东西。对于这个我可以理解，但事实上不是这样。</p>
+<p>最明显的例子是线性回归，这可能是造成这种误解的主要原因。线性回归是一种统计方法，通过这种方法我们既可以训练一个线性回归器，又可以通过最小二乘法拟合一个统计回归模型。</p>
+<p>可以看到，在这个案例中，前者做的事儿叫”训练”模型，它只用到了数据的一个子集，而训练得到的模型究竟表现如何需要通过数据的另一个子集测试集测试之后才能知道。在这个例子中，机器学习的最终目的是在测试集上获得最佳性能。</p>
+<p>对于后者，我们则事先假设数据是一个具有高斯噪声的线性回归量，然后试图找到一条线，最大限度地减少了所有数据的均方误差。不需要训练或测试集，在许多情况下，特别是在研究中(如下面的传感器示例)，建模的目的是描述数据与输出变量之间的关系, 而不是对未来数据进行预测。我们称此过程为统计推断，而不是预测。尽管我们可以使用此模型进行预测，这也可能是你所想的，但评估模型的方法不再是测试集，而是评估模型参数的显著性和健壮性。</p>
+<p>机器学习（这里特指有监督学习）的目的是获得一个可反复预测的模型。我们通常不关心模型是否可以解释。机器学习只在乎结果。就好比对公司而言，你的价值只用你的表现来衡量。而统计建模更多的是为了寻找变量之间的关系和确定关系的显著性，恰巧迎合了预测。</p>
+<p>下面我举一个自己的例子，来说明两者的区别。我是一名环境科学家。工作的主要内容是和传感器数据打交道。如果我试图证明传感器能够对某种刺激(如气体浓度)做出反应, 那么我将使用统计模型来确定信号响应是否具有统计显著性。我会尝试理解这种关系，并测试其可重复性，以便能够准确地描述传感器的响应，并根据这些数据做出推断。我还可能测试，响应是否是线性的？响应是否归因于气体浓度而不是传感器中的随机噪声？等等。</p>
+<p>而同时，我也可以拿着从20个不同传感器得到的数据, 去尝试预测一个可由他们表征的传感器的响应。如果你对传感器了解不多，这可能会显得有些奇怪，但目前这确实是环境科学的一个重要研究领域。</p>
+<p>用一个包含20个不同变量的模型来表征传感器的输出显然是一种预测，而且我也没期待模型是可解释的。要知道，由于化学动力学产生的非线性以及物理变量与气体浓度之间的关系等等因素，可能会使这个模型非常深奥，就像神经网络那样难以解释。尽管我希望这个模型能让人看懂, 但其实只要它能做出准确的预测，我就相当高兴了。</p>
+<p>如果我试图证明数据变量之间的关系在某种程度上具有统计显著性，以便我可以在科学论文中发表，我将使用统计模型而不是机器学习。这是因为我更关心变量之间的关系，而不是做出预测。做出预测可能仍然很重要，但是大多数机器学习算法缺乏可解释性，这使得很难证明数据中存在的关系。</p>
+<p><img src="/src/640-165778097574555.jpeg" alt="图片"></p>
+<p>很明显，这两种方法在目标上是不同的，尽管使用了相似的方法来达到目标。机器学习算法的评估使用测试集来验证其准确性。然而，对于统计模型，通过置信区间、显著性检验和其他检验对回归参数进行分析，可以用来评估模型的合法性。因为这些方法产生相同的结果，所以很容易理解为什么人们会假设它们是相同的。</p>
+<h2 id="统计与机器学习在线性回归上的差异"><a href="#统计与机器学习在线性回归上的差异" class="headerlink" title="统计与机器学习在线性回归上的差异"></a><strong>统计与机器学习在线性回归上的差异</strong></h2><p>有一个误解存在了10年：仅基于它们都利用相同的基本概率概念这一事实，来混淆这两个术语是不合理的。</p>
+<p><img src="/src/640-165778097574556.jpeg" alt="图片"></p>
+<p>然而，仅仅基于这两个术语都利用了概率里相同的基本概念这一事实而将他们混为一谈是不合理的。就好比，如果我们仅仅把机器学习当作披了一层光鲜外衣的统计，我们也可以这样说：</p>
+<ul>
+<li>物理只是数学的一种更好听的说法。</li>
+<li>动物学只是邮票收藏的一种更好听的说法。</li>
+<li>建筑学只是沙堡建筑的一种更好听的说法。</li>
+</ul>
+<p>这些说法（尤其是最后一个）非常荒谬，完全混淆了两个类似想法的术语。</p>
+<p>实际上，物理是建立在数学基础上的，理解现实中的物理现象是数学的应用。物理学还包括统计学的各个方面，而现代统计学通常是建立在Zermelo-Frankel集合论与测量理论相结合的框架中，以产生概率空间。它们有很多共同点，因为它们来自相似的起源，并运用相似的思想得出一个逻辑结论。同样，建筑学和沙堡建筑可能有很多共同点，但即使我不是一个建筑师，也不能给出一个清晰的解释，但也看得出它们显然不一样。</p>
+<p>在我们进一步讨论之前，需要简要澄清另外两个与机器学习和统计有关的常见误解。这就是人工智能不同于机器学习，数据科学不同于统计学。这些都是没有争议的问题，所以很快就能说清楚。</p>
+<p>数据科学本质上是应用于数据的计算和统计方法，包括小数据集或大数据集。它也包括诸如探索性数据分析之类的东西，例如对数据进行检查和可视化，以帮助科学家更好地理解数据，并从中做出推论。数据科学还包括诸如数据包装和预处理之类的东西，因此涉及到一定程度的计算机科学，因为它涉及编码和建立数据库、Web服务器之间的连接和流水线等等。</p>
+<p>要进行统计，你并不一定得依靠电脑，但如果是数据科学缺了电脑就没法操作了。这就再次说明了虽然数据科学借助统计学，这两者不是一个概念。</p>
+<p>同理，机器学习也并非人工智能；事实上，机器学习是人工智能的一个分支。这一点挺明显的，因为我们基于以往的数据“教”（训练）机器对特定类型的数据进行概括性的预测。</p>
+<h2 id="机器学习是基于统计学"><a href="#机器学习是基于统计学" class="headerlink" title="机器学习是基于统计学"></a><strong>机器学习是基于统计学</strong></h2><p>在我们讨论统计学和机器学习之间的区别前，我们先来说说其相似性，其实文章的前半段已经对此有过一些探讨了。</p>
+<p>机器学习基于统计的框架，因为机器学习涉及数据，而数据必须基于统计学框架来进行描述，所以这点十分明显。然而，扩展至针对大量粒子的热力学的统计机制，同样也建立在统计学框架之下。</p>
+<p>压力的概念其实是数据，温度也是一种数据。你可能觉得这听起来不合理，但这是真的。这就是为什么你不能描述一个分子的温度或压力，这不合理。温度是分子相撞产生的平均能量的显示。而例如房屋或室外这种拥有大量分子的，我们能用温度来描述也就合理了。</p>
+<p>你会认为热力学和统计学是一个东西吗？当然不会，热力学借助统计学来帮助我们理解运动的相互作用以及转移现象中产生的热。</p>
+<p>事实上，热力学基于多种学科而非仅仅统计学。类似地，机器学习基于许多其他领域的内容，比如数学和计算机科学。举例来说：</p>
+<ul>
+<li>机器学习的理论来源于数学和统计学；</li>
+<li>机器学习算法基于优化理论、矩阵代数和微积分；</li>
+<li>机器学习的实现来源于计算机科学和工程学概念，比如核映射、特征散列等。</li>
+</ul>
+<p>当一个人开始用Python开始编程，突然从Sklearn程序库里找出并使用这些算法，许多上述的概念都比较抽象，因此很难看出其中的区别。这样的情况下，这种抽象定义也就致使了对机器学习真正包含的内容一定程度上的无知。</p>
+<h2 id="统计学习理论——机器学习的统计学基础"><a href="#统计学习理论——机器学习的统计学基础" class="headerlink" title="统计学习理论——机器学习的统计学基础"></a><strong>统计学习理论——机器学习的统计学基础</strong></h2><p>统计学和机器学习之间最主要的区别在于统计学完全基于概率空间。你可以从集合论中推导出全部的统计学内容，集合论讨论了我们如何将数据归类（这些类被称为“集”），然后对这个集进行某种测量保证其总和为1.我们将这种方法成为概率空间。</p>
+<p>统计学除了对这些集合和测量有所定义之外没有其他假设。这就是为什么我们对概率空间的定义非常严谨的原因。一个概率空间，其数学符号写作(Ω,F,P)，包含三部分：</p>
+<ul>
+<li>一个样本空间，Ω，也就是所有可能结果的集合。</li>
+<li>一个事件集合，F，每个事件都包含0或者其它值。</li>
+<li>对每个事件发生的可能性赋予概率，P，这是一个从事件到概率的函数。</li>
+</ul>
+<p>机器学习基于统计学习理论，统计学习理论也依旧基于对概率空间的公理化语言。这个理论基于传统的统计学理论，并发展于19世纪60年代。</p>
+<p>机器学习分为多个类别，这篇文章我仅着眼于监督学习理论，因为它最容易解释（虽然因其充斥数学概念依然显得晦涩难懂）。</p>
+<p>统计学习理论中的监督学习，给了我们一个数据集，我们将其标为S&#x3D; {(xᵢ,yᵢ)}，也就是说我们有一个包含N个数据点的数据集，每个数据点由被称为“特征”的其它值描述，这些特征用x描述，这些特征通过特定函数来描绘以返回我们想要的y值。</p>
+<p>已知这个数据集，问如何找到将x值映射到y值的函数。我们将所有可能的描述映射过程的函数集合称为假设空间。</p>
+<p>为了找到这个函数，我们需要给算法一些方法来“学习”如何最好地着手处理这个问题，而这由一个被称为“损失函数”的概念来提供。因此，对我们所有的每个假设（也即提议的函数），我们要通过比较所有数据下其预期风险的值来衡量这个函数的表现。</p>
+<p>预期风险本质上就是损失函数之和乘以数据的概率分布。如果我们知道这个映射的联合概率分布，找到最优函数就很简单了。但是这个联合概率分布通常是未知的，因此我们最好的方式就是猜测一个最优函数，再实证验证损失函数是否得到优化。我们将这种称为实证风险。</p>
+<p>之后，我们就可以比较不同函数，找出最小预期风险的那个假设，也就是所有函数中得出最小下确界值的那个假设。</p>
+<p>然而，为了最小化损失函数，算法有通过过度拟合来作弊的倾向。这也是为什么要通过训练集“学习”函数，之后在训练集之外的数据集，测试集里对函数进行验证。</p>
+<p>我们如何定义机器学习的本质引出了过度拟合的问题，也对需要区分训练集和测试集作出了解释。而我们在统计学中无需试图最小化实证风险，过度拟合不是统计学的固有特征。最小化统计学中无需视图程向于一个从函数中选取最小化实证风险的学习算法被称为实证风险最小化。</p>
+<h2 id="例证"><a href="#例证" class="headerlink" title="例证"></a><strong>例证</strong></h2><p>以线性回归做一个简单例子。在传统概念中，我们试图最小化数据中的误差找到能够描述数据的函数，这种情况下，我们通常使用均值方差。使用平方数是为了不让正值和负值互相抵消。然后我们可以使用闭合表达式来求出回归系数。</p>
+<p>如果我们将损失函数计为均值方差，并基于统计学习理论进行最小化实证风险，碰巧就能得到传统线性回归分析同样的结果。</p>
+<p>这个巧合是因为两个情况是相同的，对同样的数据以相同的方式求解最大概率自然会得出相同的结果。最大化概率有不同的方法来实现同样的目标，但没人会去争论说最大化概率与线性回归是一个东西。这个最简单的例子显然没能区分开这些方法。</p>
+<p>这里要指出的第二点在于，传统的统计方法中没有训练集和测试集的概念，但我们会使用不同的指标来帮助验证模型。验证过程虽然不同，但两种方法都能够给我们统计稳健的结果。</p>
+<p>另外要指出的一点在于，传统统计方法给了我们一个闭合形式下的最优解，它没有对其它可能的函数进行测试来收敛出一个结果。相对的，机器学习方法尝试了一批不同的模型，最后结合回归算法的结果，收敛出一个最终的假设。</p>
+<p>如果我们用一个不同的损失函数，结果可能并不收敛。例如，如果我们用了铰链损失（使用标准梯度下降时不太好区分，因此需要使用类似近梯度下降等其它方法），那么结果就不会相同了。</p>
+<p>最后可以对模型偏差进行区分。你可以用机器学习算法来测试线性模型以及多项式模型，指数模型等，来检验这些假设是否相对我们的先验损失函数对数据集给出更好的拟合度。在传统统计学概念中，我们选择一个模型，评估其准确性，但无法自动从100个不同的模型中摘出最优的那个。显然，由于最开始选择的算法不同，找出的模型总会存在一些偏误。选择算法是非常必要的，因为为数据集找出最优的方程是一个NP-hard问题。</p>
+<h2 id="那么哪个方法更优呢？"><a href="#那么哪个方法更优呢？" class="headerlink" title="那么哪个方法更优呢？"></a><strong>那么哪个方法更优呢？</strong></h2><p>这个问题其实很蠢。没有统计学，机器学习根本没法存在，但由于当代信息爆炸，人类能接触到的大量数据，机器学习是非常有用的。</p>
+<p>对比机器学习和统计模型还要更难一些，你需要视乎你的目标而定究竟选择哪种。如果你只是想要创建一个高度准确的预测房价的算法，或者从数据中找出哪类人更容易得某种疾病，机器学习可能是更好的选择。如果你希望找出变量之间的关系或从数据中得出推论，选择统计模型会更好。</p>
+<p><img src="/src/640-165778097574557.jpeg" alt="图片"></p>
+<blockquote>
+<p>图中文字：</p>
+<p>这是你的机器学习系统？</p>
+<p>对的，你从这头把数据都倒进这一大堆或者线性代数里，然后从那头里拿答案就好了。</p>
+<p>答案错了咋整？</p>
+<p>那就搅搅，搅到看起来对了为止。</p>
+</blockquote>
+<p>如果你统计学基础不够扎实，你依然可以学习机器学习并使用它——机器学习程序库里的抽象概念能够让你以业余者的身份来轻松使用它们，但你还是得对统计概念有所了解，从而避免模型过度拟合或得出些貌似合理的推论。��的推论。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning Foundation——统计学习与机器学习的关联</div>
+      <div>http://example.com/2022/08/01/MachineLearning/统计学习与机器学习的关联/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/%E9%AB%98%E6%95%B0%E5%9F%BA%E7%A1%80/" title="Machine Learning Foundation——高等数学">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning Foundation——高等数学</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/%E7%BA%BF%E4%BB%A3%E5%9F%BA%E7%A1%80/" title="Machine Learning Foundation——线性代数">
+                        <span class="hidden-mobile">Machine Learning Foundation——线性代数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

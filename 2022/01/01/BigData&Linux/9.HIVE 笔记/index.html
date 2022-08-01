@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Hive笔记hive的存储格式：1 textfile 没有压缩，但是比较占用存储空间。读取效率最高2 rcfile 有压缩，空间占用小。 比较节省空间。3 SequenceFile 适合小文件存储。hive和hdfs的关系：hive的存储是基于hdfs的，在hive中创建一个库，实际上就是在hdfs上的当前用户路径下创建了一个目录；比如 create database sz；hdfs:&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BigData——9.Hive笔记">
+<meta property="og:url" content="http://example.com/2022/01/01/BigData&Linux/9.HIVE%20%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="Hive笔记hive的存储格式：1 textfile 没有压缩，但是比较占用存储空间。读取效率最高2 rcfile 有压缩，空间占用小。 比较节省空间。3 SequenceFile 适合小文件存储。hive和hdfs的关系：hive的存储是基于hdfs的，在hive中创建一个库，实际上就是在hdfs上的当前用户路径下创建了一个目录；比如 create database sz；hdfs:&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-01T02:19:01.387Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="BigData">
+<meta property="article:tag" content="Hive">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>BigData——9.Hive笔记 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="BigData——9.Hive笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-01-01 00:00" pubdate>
+          2022年1月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">BigData——9.Hive笔记</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Hive笔记"><a href="#Hive笔记" class="headerlink" title="Hive笔记"></a>Hive笔记</h1><h2 id="hive的存储格式："><a href="#hive的存储格式：" class="headerlink" title="hive的存储格式："></a>hive的存储格式：</h2><p>1 textfile 没有压缩，但是比较占用存储空间。读取效率最高<br>2 rcfile 有压缩，空间占用小。 比较节省空间。<br>3 SequenceFile 适合小文件存储。<br>hive和hdfs的关系：<br>hive的存储是基于hdfs的，在hive中创建一个库，实际上就是在hdfs上的当前用户<br>路径下创建了一个目录；<br>比如 create database sz；<br>hdfs:&#x2F;&#x2F;master:9000&#x2F;user&#x2F;hive&#x2F;warehouse&#x2F;sz.db<br>hive中的库和hdfs的映射关系，是存放在mysql中的；</p>
+<h2 id="hive的操作"><a href="#hive的操作" class="headerlink" title="hive的操作"></a>hive的操作</h2><p>hive创建库：create database 库名<br>hive 查看数据名：show databases;<br>hive切换数据库：use sz；<br>hive建表：<br>create [EXTERNAL] table vv_stat_fact &#x2F;&#x2F;EXTERNAL关键字，标识是外部表的<br>(<br>userid  string, &#x2F;&#x2F;表中的字段和类型<br>stat_date string,<br>tryvv int,<br>sucvv int,<br>ptime float<br>)<br>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\t’ &#x2F;&#x2F;指定列的分隔符<br>STORED AS textfile &#x2F;&#x2F;指定压缩格式，如果需要直接将数据文本加载到表中，压缩格式需要时textfile<br>location ‘&#x2F;testdata&#x2F;‘; &#x2F;&#x2F;可以自定义数据存储的hdfs的位置目录<br>例子：<br>create table wc<br>(<br>userid  string<br>)<br>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\n’<br>STORED AS textfile<br>hive中表就是hdfs上的一个目录。<br>hive建表，默认的存储路径在&#x2F;user&#x2F;hive&#x2F;warehouse<br>创建hive的外部表：<br>create EXTERNAL table wc_ext<br>(<br>userid  string<br>)<br>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\n’<br>STORED AS textfile<br>hive 删除表：drop table wc_ext;<br>如果是普通表，会删除hdfs上的对应的目录，同时会删除数据文件。<br>如果是外部表的话，只会删除mysql中元信息，并不会删除hdfs上对应的目录和数据</p>
+<p>练习：创建员工表总表<br>EMPNO\ENAME\JOB\MGR\HIREDATE \SAL\COMM\DEPTNO<br>字段是：工号，姓名，工作岗位，部门经理，受雇日期，薪金，奖金，部门编号<br>create table emp<br>(<br>EMPNO  string,<br>ENAME  string,<br>JOB string,<br>MGR string,<br>HIREDATE string,<br>SAL int,<br>COMM int,<br>DEPTNO string<br>)<br>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘,’<br>STORED AS textfile<br>将dept.txt数据插入表字段（DEPTNO、DNAME、LOC）<br>create table deptl<br>(<br>DEPTNO  string,<br>DNAME  string,<br>LOC string<br>)<br>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘,’<br>STORED AS textfile<br>location ‘&#x2F;testdata&#x2F;‘;</p>
+<p>hive的分区表：<br>优点：避免全表扫描，提高查询效率。<br>创建分区表;<br>create table dept_p<br>(<br>DEPTNO  string,<br>DNAME  string,<br>LOC string<br>) PARTITIONED BY (dt string)<br>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘,’<br>STORED AS textfile;<br>手动增加分区：<br>alter table dept_p add partition (dt&#x3D;’20190715’);<br>查看表的属性：desc dept_p</p>
+<p>hive 加载数据：<br>load命令</p>
+<p>load data [local] inpath ‘数据的路径’ into table 表名称；</p>
+<p>给一个表增加&#x2F;删除分区命令：目标表必须是分区表，建表的时候就要指定<br>   alter table test_table add partition (pt&#x3D;xxxx)<br>    alter table test_table drop if exists partition(…);<br>    例子：<br>    增加分区<br>    alter table dept_p add partition(dt&#x3D;’20180707’);<br>    删除一个分区：<br>    alter table dept_p drop partition(dt&#x3D;’20180707’);<br>如何规划建分区表还是普通表：<br>如果数据量每天或者有规律的增加，可以预知数据量会非常大。可以采用分区表<br>如果数据量比较小或者是静态数据。可以创建普通表。</p>
+<h2 id="hive语法："><a href="#hive语法：" class="headerlink" title="hive语法："></a><strong>hive语法：</strong></h2><p>where用法：用于过滤数据，尤其是分区表的数据，添加过滤条件<br>select * from emp where sal &gt; 1000 and comm &gt; 1000;<br>分区表同样把分区字段当做where条件过滤字段。<br>不支持子查询条件:如<br>select * from emp where sal &gt; (select max(sal) as s from emp ) and comm &gt; 1000;</p>
+<p>join的用法：<br>left join 用法：会按照左边的表进行输出，右边无论有没有关联上，左边都会全部输出<br>右边没有关联上的，会以null补充<br>zs 10  10 shanghai<br>lisi  20  null<br>假设想要查出员工表emp中部门所在地是纽约的员工的姓名和薪水。<br>select e.ename,e.sal from emp e left join dept d on e.deptno&#x3D;d.deptno where d.loc&#x3D;’NEW YORK’;<br>第二种写法：<br>select e.ename,e.sal,d.loc from emp e left join (select deptno,loc from dept  where loc&#x3D;’NEW YORK’) d on e.deptno&#x3D;d.deptno where  d.loc is not null </p>
+<p>group by 分组聚合：<br>例子：求每个部门中的平均薪水是多少：<br>select deptno,round(avg(sal),1) as a_s from emp group by deptno ;<br>在hive中 参与计算的维度，必须要出现在 group by 后面<br>distinct 去重：</p>
+<h2 id="hive-常用的函数："><a href="#hive-常用的函数：" class="headerlink" title="hive 常用的函数："></a>hive 常用的函数：</h2><p>if(条件表达式,条件为真返回值,否则返回)；<br>例子，<br>如果emp中小于1000员工，name每个员工工资+500<br>select s.ename,s.sal+500 from (select * from emp where sal &lt; 1000) s;<br>用if函数写<br>select ename,if(sal&lt;1000,sal+500,sal) as sal from emp;<br>也可以用case when<br>select ename,case when sal&lt;1000 then sal+500 else sal end as sal from emp;<br>null 判断：<br>select ename,comm from emp where comm is not null;<br>窗口函数之row_number() over()：<br>例子：想要查询每个部门中前2名工资高的员工。<br>select deptno,ename,sal  from<br>(select deptno,ename,sal,row_number() over(partition by deptno order by sal desc ) as rn from emp) e<br>where e.rn&lt;&#x3D;2 ;</p>
+<p>高级函数：split() 可以对目标字段进行切分，返回数组类型<br>explode 可以将行转列；<br>wordcount的例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> w.word,<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) cn <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> explode(split(userid,<span class="hljs-string">&#x27;,&#x27;</span>)) <span class="hljs-keyword">as</span> w<br>ord <span class="hljs-keyword">from</span> wc) w <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> w.word;<br></code></pre></td></tr></table></figure>
+
+<p>hive笔记3<br>日期函数：<br>datediff<br>例子： select datediff(‘2019-07-16’,’2019-07-13’)<br>date_add(string startdate, int days)<br>例子：date_add(‘2019-07-16’,50)<br>from_unixtime 将时间戳转换成 日期函数：<br>select from_unixtime(1563261771)</p>
+<p>字符串函数：concat<br>select concat(‘zhangsan’,’lisi’)</p>
+<p>函数练习的例子：数据<br>2018&#x2F;6&#x2F;1,10<br>2018&#x2F;6&#x2F;2,11<br>2018&#x2F;6&#x2F;3,11<br>2018&#x2F;6&#x2F;4,12<br>2018&#x2F;6&#x2F;5,14<br>2018&#x2F;6&#x2F;6,15<br>2018&#x2F;6&#x2F;7,13<br>2018&#x2F;6&#x2F;8,37<br>2018&#x2F;6&#x2F;9,18<br>2018&#x2F;6&#x2F;10,19<br>2018&#x2F;6&#x2F;11,10<br>2018&#x2F;6&#x2F;12,11<br>2018&#x2F;6&#x2F;13,11<br>2018&#x2F;6&#x2F;14,12<br>2018&#x2F;6&#x2F;15,14<br>2018&#x2F;6&#x2F;16,15</p>
+<p>需求：想要每隔7天的平均消费金额。<br>2018-6-1<del>2018-6-7 20<br>2018-6-8</del>2018-6-14 15</p>
+<p>第一步：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>第二步：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+<p>第三步：对日期求商 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span><br></code></pre></td></tr></table></figure>
+
+<p>第四步：对日期进行加</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> date_add(<span class="hljs-string">&#x27;2018-6-1&#x27;</span>,<span class="hljs-built_in">cast</span>(<span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span> <span class="hljs-keyword">as</span> <span class="hljs-type">int</span>))<br><span class="hljs-keyword">select</span> date_add(<span class="hljs-string">&#x27;2018-6-1&#x27;</span>,<span class="hljs-built_in">cast</span>(<span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span><span class="hljs-operator">+</span><span class="hljs-number">6</span> <span class="hljs-keyword">as</span> <span class="hljs-type">int</span>))<br></code></pre></td></tr></table></figure>
+
+<p>第五步拼接日期：(hive中group by 后面是不允许跟别名，需要跟实际参与分组的字段)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> concat(date_add(<span class="hljs-string">&#x27;2018-6-1&#x27;</span>,<span class="hljs-built_in">cast</span>(<span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span> <span class="hljs-keyword">as</span> <span class="hljs-type">int</span>)),<span class="hljs-string">&#x27;~&#x27;</span>,date_add(<span class="hljs-string">&#x27;2018-6-1&#x27;</span>,<span class="hljs-built_in">cast</span>(<span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span><span class="hljs-operator">+</span><span class="hljs-number">6</span> <span class="hljs-keyword">as</span> <span class="hljs-type">int</span>))) <span class="hljs-keyword">as</span> dt,round(<span class="hljs-built_in">avg</span>(cost),<span class="hljs-number">1</span>) <br><span class="hljs-keyword">from</span> dp <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> concat(date_add(<span class="hljs-string">&#x27;2018-6-1&#x27;</span>,<span class="hljs-built_in">cast</span>(<span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span> <span class="hljs-keyword">as</span> <span class="hljs-type">int</span>)),<span class="hljs-string">&#x27;~&#x27;</span>,date_add(<span class="hljs-string">&#x27;2018-6-1&#x27;</span>,<span class="hljs-built_in">cast</span>(<span class="hljs-built_in">floor</span>(datediff(concat_ws(<span class="hljs-string">&#x27;-&#x27;</span>,split(date_time,<span class="hljs-string">&#x27;/&#x27;</span>)),<span class="hljs-string">&#x27;2018-6-1&#x27;</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>)<span class="hljs-operator">*</span><span class="hljs-number">7</span><span class="hljs-operator">+</span><span class="hljs-number">6</span> <span class="hljs-keyword">as</span> <span class="hljs-type">int</span>))) <br></code></pre></td></tr></table></figure>
+
+<p>结果</p>
+<p>2018-06-01<del>2018-06-07    12.3<br>2018-06-08</del>2018-06-14    16.9<br>2018-06-15<del>2018-06-21    16.6<br>2018-06-22</del>2018-06-28    23.3<br>2018-06-29<del>2018-07-05    37.9<br>2018-07-06</del>2018-07-12    47.6<br>2018-07-13<del>2018-07-19    54.3<br>2018-07-20</del>2018-07-26    36.0<br>2018-07-27<del>2018-08-02    51.3<br>2018-08-03</del>2018-08-09    75.4<br>2018-08-10~2018-08-16    80.7</p>
+<p>create table if not exists  movie(<br>  stat_date string,<br>  userid string,<br>  uid string,<br>  version string,<br>  country string,<br>  province string,<br>  movie_tryvv int,<br>  movie_sucvv int,<br>  movie_ptime int<br>)<br> PARTITIONED BY (<br>  dt string)<br>clustered by (userid) into 3000 buckets<br>ROW FORMAT DELIMITED<br>  FIELDS TERMINATED BY ‘,’<br>STORED AS textfile;</p>
+<p>清空表数据：truncate table xxx<br>加载分区表数据<br>load data local inpath ‘&#x2F;usr&#x2F;local&#x2F;soft&#x2F;datadir&#x2F;movedata.csv’ into tab<br>le movie_vv partition(dt&#x3D;’20190717’);<br>简单指标：<br>pv:页面访问次数<br>uv：用户独立访问次数<br>select count(*) as pv, count(distinct userid) as uv from movie_vv;</p>
+<p>练习：一句sql算出，可以用到if函数<br>0-5分钟，观影人数。5-20分钟观影人数，50-100</p>
+<p>hive的udf：<br>分三类udf<br>：udf 输入一行数据返回一行数据，一对一的关系<br>：UDAF输入多行数据，返回一行数据，通常是聚合函数<br>：UDTF 输入一行数据，返回多行数据，通常是行转列的操作，或者切割的操作。</p>
+<p>第一步：maven添加依赖：<br>      <dependency><br>            <groupId>org.apache.hive</groupId><br>            <artifactId>hive-exec</artifactId><br>            <version>1.2.1</version><br>        </dependency><br>第二步：编写udf的程序：<br>import org.apache.hadoop.hive.ql.exec.UDF;</p>
+<p>public class hive_udf_demo extends UDF{<br>&#x2F;&#x2F;方法名称必须是：evaluate<br>&#x2F;&#x2F;这里的参数 s 就是sql中函数需要传入的那个字段，<br>    public String evaluate(String s){<br>        &#x2F;&#x2F;在函数内实现自己的业务逻辑。<br>        if (s&#x3D;&#x3D;”JONES”) {<br>            s&#x3D;”shangdan”;<br>        }<br>        return s.toLowerCase();<br>    }</p>
+<p>}<br>第三步：将jar包上传到hive中<br>第四步：hive加载jar包<br>add jar &#x2F;usr&#x2F;local&#x2F;soft&#x2F;datadir&#x2F;hive_udf_low.jar;<br>第五步：创建hive函数<br>CREATE TEMPORARY FUNCTION my_lower as ‘hadoop04.shujia04.hive_udf_demo<br>‘;</p>
+<p>hive的shell 操作：<br>可以创建一个shell脚本，脚本中通过hive -e的方式写sql<br>#!&#x2F;bin&#x2F;bash<br>source &#x2F;etc&#x2F;profile<br>hive -e ‘select * from sz.dp’<br>启动命令：比如shell 文件名称是 hivesql.sh<br>sh hivesql.sh<br>也可以通过hql文件写sql，然后执行文件<br>hive -f test.hql</p>
+<p>将命令加入到定时服务器<br><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1609952845993989858&amp;wfr=spider&amp;for=pc">https://baijiahao.baidu.com/s?id=1609952845993989858&amp;wfr=spider&amp;for=pc</a><br>打开定时任务清单：crontab -e</p>
+<h2 id="exercise"><a href="#exercise" class="headerlink" title="exercise"></a>exercise</h2><p>一 将empdata.txt数据插入hive表。<br>EMPNO\ENAME\JOB\MGR\HIREDATE \SAL\COMM\DEPTNO<br>字段中文名字依次是：工号，姓名，工作岗位，部门经理，受雇日期，薪金，奖金，部门编号<br>将dept.txt数据插入表字段（DEPTNO、DNAME、LOC）<br>10,ACCOUNTING,NEW YORK<br>10,ACCOUNTING,shanghai<br>20,RESEARCH,DALLAS<br>30,SALES,CHICAGO<br>40,OPERATIONS,BOSTON</p>
+<p>然后查询（sql和运行结果截图）：<br>1． 列出至少有4个员工的所有部门编号和名称。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ss.DEPTNO,d.DNAME <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> DEPTNO <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> DEPTNO,<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">as</span> cn <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">group</span> <br><span class="hljs-keyword">by</span> DEPTNO)s  <span class="hljs-keyword">where</span> s.cn<span class="hljs-operator">&gt;=</span><span class="hljs-number">4</span>)ss <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> dept d <span class="hljs-keyword">on</span> ss.DEPTNO<span class="hljs-operator">=</span>d.DEPTNO; <br><br><span class="hljs-keyword">select</span> ss.DEPTNO,d.DNAME <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> DEPTNO,<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">as</span> cn <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> DEPTNO <span class="hljs-keyword">having</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">4</span>)ss <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> dept d <span class="hljs-keyword">on</span> ss.DEPTNO<span class="hljs-operator">=</span>d.DEPTNO; <br></code></pre></td></tr></table></figure>
+
+<p>2． 列出薪金比“SCOTT”多的所有员工。<br>     第一种：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ENAME,SAL <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> sal<span class="hljs-operator">&gt;</span>(<span class="hljs-keyword">select</span> sal <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ENAME<span class="hljs-operator">=</span><span class="hljs-string">&#x27;SCOTT&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>​     第二种: </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME, e.SAL <span class="hljs-keyword">from</span> (<br> <span class="hljs-keyword">select</span> ENAME,SAL,<span class="hljs-number">1</span> <span class="hljs-keyword">as</span> cid  <span class="hljs-keyword">from</span> emp)e <br> <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> SAL,<span class="hljs-number">1</span> <span class="hljs-keyword">as</span> cid  <span class="hljs-keyword">from</span> emp <span class="hljs-keyword">where</span> ENAME<span class="hljs-operator">=</span><span class="hljs-string">&#x27;SCOTT&#x27;</span> )s <br> <span class="hljs-keyword">on</span> e.cid<span class="hljs-operator">=</span>s.cid <span class="hljs-keyword">where</span> e.SAL<span class="hljs-operator">&gt;</span>s.SAL;<br></code></pre></td></tr></table></figure>
+
+<p>3． 列出所有员工的姓名及其直接上级的姓名。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME,ee.ENAME <span class="hljs-keyword">from</span> hemp e <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> empno,ENAME,MGR <span class="hljs-keyword">from</span> hemp ) ee <span class="hljs-keyword">on</span> e.MGR<span class="hljs-operator">=</span>ee.empno;<br></code></pre></td></tr></table></figure>
+
+<p>4． 列出受雇日期早于其直接上级的所有员工。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME <span class="hljs-keyword">from</span> hemp e <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> hemp ) ee <span class="hljs-keyword">on</span> e.MGR<span class="hljs-operator">=</span>ee.empno <span class="hljs-keyword">where</span> e.hiredate<span class="hljs-operator">&lt;</span>ee.hiredate;<br></code></pre></td></tr></table></figure>
+
+<p>5． 列出部门名称和这些部门的员工信息，同时列出那些没有员工的部门。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> dept d <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> emp  e <span class="hljs-keyword">on</span> d.DEPTNO<span class="hljs-operator">=</span>e.DEPTNO;<br></code></pre></td></tr></table></figure>
+
+<p>6． 列出所有“CLERK”（办事员）的姓名及其部门名称。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> j.ENAME,d.DNAME <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">where</span> JOB<span class="hljs-operator">=</span> &quot;CLERK&quot; ) j <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> hdept d <span class="hljs-keyword">on</span> j.deptno<span class="hljs-operator">=</span>d.deptno;<br></code></pre></td></tr></table></figure>
+
+<p>7． 列出最低薪金大于1500的各种工作。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  <span class="hljs-keyword">distinct</span> JOB <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">where</span> SAL <span class="hljs-operator">&gt;</span> <span class="hljs-number">1500</span>;<br></code></pre></td></tr></table></figure>
+
+<p>8． 列出在部门“SALES”（销售部）工作的员工的姓名，假定不知道销售部的部门编号</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME <span class="hljs-keyword">from</span> hemp e <span class="hljs-keyword">join</span>  hdept d <span class="hljs-keyword">on</span> d.deptno<span class="hljs-operator">=</span>e.deptno <span class="hljs-keyword">where</span> d.DNAME<span class="hljs-operator">=</span>&quot;SALES&quot;;<br></code></pre></td></tr></table></figure>
+
+<p>9． 列出薪金高于公司平均薪金的所有员工。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span>  <span class="hljs-operator">*</span>,<span class="hljs-number">1</span> <span class="hljs-keyword">as</span> cid <span class="hljs-keyword">from</span> emp) e<br> <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> <span class="hljs-built_in">avg</span>(SAL) cn,<span class="hljs-number">1</span> <span class="hljs-keyword">as</span> cid <span class="hljs-keyword">from</span> emp) s <br> <span class="hljs-keyword">on</span> e.cid<span class="hljs-operator">=</span>s.cid <br> <span class="hljs-keyword">where</span> e.sal<span class="hljs-operator">&gt;</span>s.cn;<br></code></pre></td></tr></table></figure>
+
+<p>10．列出与“SCOTT”从事相同工作的所有员工。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> p.ENAME <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">where</span>  ENAME<span class="hljs-operator">=</span><span class="hljs-string">&#x27;SCOTT&#x27;</span> ) e <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">where</span>  ENAME<span class="hljs-operator">!=</span><span class="hljs-string">&#x27;SCOTT&#x27;</span> ) p <span class="hljs-keyword">on</span> e.JOB<span class="hljs-operator">=</span>p.JOB;<br></code></pre></td></tr></table></figure>
+
+<p>11．列出薪金等于部门30中员工的薪金的所有员工的姓名和薪金。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ep.ENAME,ep.SAL <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-keyword">distinct</span> sal <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">where</span> DEPTNO<span class="hljs-operator">=</span><span class="hljs-string">&#x27;30&#x27;</span>) e <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> hemp ep <span class="hljs-keyword">on</span> e.SAL<span class="hljs-operator">=</span>ep.SAL;<br></code></pre></td></tr></table></figure>
+
+<p>12．列出薪金高于在部门30工作的所有员工的薪金的员工姓名和薪金。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME,e.SAL <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span>  <span class="hljs-operator">*</span>,<span class="hljs-number">1</span> <span class="hljs-keyword">as</span> cid <span class="hljs-keyword">from</span> hemp) e <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> <span class="hljs-built_in">max</span>(SAL) cn,<span class="hljs-number">1</span> <span class="hljs-keyword">as</span> cid <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">where</span>  DEPTNO<span class="hljs-operator">=</span><span class="hljs-string">&#x27;30&#x27;</span>) s <span class="hljs-keyword">on</span> e.cid<span class="hljs-operator">=</span>s.cid <span class="hljs-keyword">where</span> e.sal<span class="hljs-operator">&gt;</span>s.cn;<br></code></pre></td></tr></table></figure>
+
+<p>13．列出在每个部门工作的员工数量、平均工资和平均服务期限。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>  DEPTNO,<span class="hljs-built_in">count</span>(ENAME) <span class="hljs-keyword">as</span> name ,<span class="hljs-built_in">avg</span>(sal) <span class="hljs-keyword">as</span> avg_sal,round(<span class="hljs-built_in">avg</span>(datediff(<span class="hljs-built_in">current_timestamp</span>,hiredate)),<span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> avg_day <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> DEPTNO;<br></code></pre></td></tr></table></figure>
+
+<p>14．列出所有员工的姓名、部门名称和工资。 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> e.ENAME,d.DNAME,e.sal <span class="hljs-keyword">from</span> hemp e <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> hdept d <span class="hljs-keyword">on</span> e.DEPTNO<span class="hljs-operator">=</span>d.DEPTNO;<br></code></pre></td></tr></table></figure>
+
+<p>15．列出所有部门的详细信息和部门人数。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> hdept d <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> DEPTNO,<span class="hljs-built_in">count</span>(ENAME) <span class="hljs-keyword">as</span> cn <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> DEPTNO )  e <span class="hljs-keyword">on</span> e.DEPTNO<span class="hljs-operator">=</span>d.DEPTNO;<br></code></pre></td></tr></table></figure>
+
+<p>16．列出各种工作的最低工资。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> job,<span class="hljs-built_in">min</span>(sal)  <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> job;<br></code></pre></td></tr></table></figure>
+
+<p>17．列出各个部门的MANAGER（经理）的最低薪金。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> DEPTNO,<span class="hljs-built_in">min</span>(SAL)  <span class="hljs-keyword">FROM</span> hemp <span class="hljs-keyword">where</span> job <span class="hljs-operator">=</span><span class="hljs-string">&#x27;MANAGER&#x27;</span> <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> DEPTNO;<br></code></pre></td></tr></table></figure>
+
+<p>18．列出所有员工的年工资,列出年薪最高的前3个员工。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ENAME,sal<span class="hljs-operator">*</span><span class="hljs-number">12</span><span class="hljs-operator">+</span>COMM <span class="hljs-keyword">as</span> all_m <span class="hljs-keyword">from</span> hemp <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> all_m <span class="hljs-keyword">desc</span> limit <span class="hljs-number">3</span>;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> ENAME,sal<span class="hljs-operator">*</span><span class="hljs-number">12</span><span class="hljs-operator">+</span>COMM <span class="hljs-keyword">as</span> all_m <span class="hljs-keyword">from</span> hemp) e <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> e.all_m <span class="hljs-keyword">desc</span> limit <span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+
+<p>思考： 列出每个部门薪水前两名最高的人员名称以及薪水</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> ename,sal,deptno <span class="hljs-keyword">from</span> <br>(<span class="hljs-keyword">select</span> ename,sal,deptno,<span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> deptno <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sal <span class="hljs-keyword">desc</span>) <span class="hljs-keyword">as</span> num <span class="hljs-keyword">from</span> hemp ) <br><span class="hljs-keyword">where</span> num <span class="hljs-operator">&lt;=</span><span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/BigData/" class="category-chain-item">BigData</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/BigData/">#BigData</a>
+      
+        <a href="/tags/Hive/">#Hive</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>BigData——9.Hive笔记</div>
+      <div>http://example.com/2022/01/01/BigData&amp;Linux/9.HIVE 笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年1月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/01/BigData&amp;Linux/7.Hbase%20Shell/" title="BigData——7.Hbase Shell的用法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BigData——7.Hbase Shell的用法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

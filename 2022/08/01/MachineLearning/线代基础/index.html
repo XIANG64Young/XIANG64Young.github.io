@@ -1,0 +1,1091 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="线性代数1 基本符号 $A \in \mathbb{R}^{m \times n}$，表示 $A$ 为由实数组成具有$m$行和$n$列的矩阵。  $x \in \mathbb{R}^{ n}$，表示具有$n$个元素的向量。 通常，向量$x$将表示列向量: 即，具有$n$行和$1$列的矩阵。 如果我们想要明确地表示行向量: 具有 $1$ 行和$n$列的矩阵 - 我们通常写$x^T$（这里$x^T$x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Foundation——线性代数">
+<meta property="og:url" content="http://example.com/2022/08/01/MachineLearning/%E7%BA%BF%E4%BB%A3%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="线性代数1 基本符号 $A \in \mathbb{R}^{m \times n}$，表示 $A$ 为由实数组成具有$m$行和$n$列的矩阵。  $x \in \mathbb{R}^{ n}$，表示具有$n$个元素的向量。 通常，向量$x$将表示列向量: 即，具有$n$行和$1$列的矩阵。 如果我们想要明确地表示行向量: 具有 $1$ 行和$n$列的矩阵 - 我们通常写$x^T$（这里$x^T$x">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T02:13:53.506Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.262Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Mathematics">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Machine Learning Foundation——线性代数 - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Machine Learning Foundation——线性代数"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          30k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          247 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Machine Learning Foundation——线性代数</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h1><h2 id="1-基本符号"><a href="#1-基本符号" class="headerlink" title="1 基本符号"></a>1 基本符号</h2><ul>
+<li><p>$A \in \mathbb{R}^{m \times n}$，表示 $A$ 为由实数组成具有$m$行和$n$列的矩阵。</p>
+</li>
+<li><p>$x \in \mathbb{R}^{ n}$，表示具有$n$个元素的向量。 通常，向量$x$将表示列向量: 即，具有$n$行和$1$列的矩阵。 如果我们想要明确地表示行向量: 具有 $1$ 行和$n$列的矩阵 - 我们通常写$x^T$（这里$x^T$x$的转置）。</p>
+</li>
+<li><p>$x_i$表示向量$x$的第$i$个元素</p>
+</li>
+</ul>
+<p>$$<br>x&#x3D;\left[\begin{array}{c}{x_{1} } \ {x_{2} } \ {\vdots} \ {x_{n} }\end{array}\right]<br>$$</p>
+<ul>
+<li>我们使用符号 $a_{ij}$（或$A_{ij}$,$A_{i,j}$等）来表示第 $i$ 行和第$j$列中的 $A$ 的元素：</li>
+</ul>
+<p>$$<br>A&#x3D;\left[\begin{array}{cccc}{a_{11} } &amp; {a_{12} } &amp; {\cdots} &amp; {a_{1 n} } \ {a_{21} } &amp; {a_{22} } &amp; {\cdots} &amp; {a_{2 n} } \ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \ {a_{m 1} } &amp; {a_{m 2} } &amp; {\cdots} &amp; {a_{m n} }\end{array}\right]<br>$$</p>
+<ul>
+<li>我们用$a^j$或者$A_{:,j}$表示矩阵$A$的第$j$列：</li>
+</ul>
+<p>$$<br>A&#x3D;\left[\begin{array}{llll}{ |} &amp; { |} &amp; {} &amp; { |} \ {a^{1} } &amp; {a^{2} } &amp; {\cdots} &amp; {a^{n} } \ { |} &amp; { |} &amp; {} &amp; { |}\end{array}\right]<br>$$</p>
+<ul>
+<li><p>我们用$a^T_i$或者$A_{i,:}$表示矩阵$A$的第$i$行：</p>
+<p>$$<br>A&#x3D;\left[\begin{array}{c}{-a_{1}^{T}-} \ {-a_{2}^{T}-} \ {\vdots} \ {-a_{m}^{T}-}\end{array}\right]<br>$$</p>
+</li>
+</ul>
+<h2 id="2-行列式"><a href="#2-行列式" class="headerlink" title="2 行列式"></a>2 行列式</h2><p><strong>行列式按行（列）展开定理</strong></p>
+<p>(1) 设$A &#x3D; ( a_{ {ij} } )<em>{n \times n}$，则：$a</em>{i1}A_{j1} +a_{i2}A_{j2} + \cdots + a_{ {in} }A_{ {jn} } &#x3D; \begin{cases}|A|,i&#x3D;j\ 0,i \neq j\end{cases}$</p>
+<p>或$a_{1i}A_{1j} + a_{2i}A_{2j} + \cdots + a_{ {ni} }A_{ {nj} } &#x3D; \begin{cases}|A|,i&#x3D;j\ 0,i \neq j\end{cases}$即 $AA^{<em>} &#x3D; A^{</em>}A &#x3D; \left| A \right|E,$其中：$A^{*} &#x3D; \begin{pmatrix} A_{11} &amp; A_{12} &amp; \ldots &amp; A_{1n} \ A_{21} &amp; A_{22} &amp; \ldots &amp; A_{2n} \ \ldots &amp; \ldots &amp; \ldots &amp; \ldots \ A_{n1} &amp; A_{n2} &amp; \ldots &amp; A_{ {nn} } \ \end{pmatrix} &#x3D; (A_{ {ji} }) &#x3D; {(A_{ {ij} })}^{T}$</p>
+<p>$D_{n} &#x3D; \begin{vmatrix} 1 &amp; 1 &amp; \ldots &amp; 1 \ x_{1} &amp; x_{2} &amp; \ldots &amp; x_{n} \ \ldots &amp; \ldots &amp; \ldots &amp; \ldots \ x_{1}^{n - 1} &amp; x_{2}^{n - 1} &amp; \ldots &amp; x_{n}^{n - 1} \ \end{vmatrix} &#x3D; \prod_{1 \leq j &lt; i \leq n}^{},(x_{i} - x_{j})$</p>
+<p>(2) 设$A,B$为$n$阶方阵，则$\left| {AB} \right| &#x3D; \left| A \right|\left| B \right| &#x3D; \left| B \right|\left| A \right| &#x3D; \left| {BA} \right|$，但$\left| A \pm B \right| &#x3D; \left| A \right| \pm \left| B \right|$不一定成立。</p>
+<p>(3) $\left| {kA} \right| &#x3D; k^{n}\left| A \right|$,$A$为$n$阶方阵。</p>
+<p>(4) 设$A$为$n$阶方阵，$|A^{T}| &#x3D; |A|;|A^{- 1}| &#x3D; |A|^{- 1}$（若$A$可逆），$|A^{*}| &#x3D; |A|^{n - 1}$</p>
+<p>$n \geq 2$</p>
+<p>(5) $\left| \begin{matrix}  &amp; {A\quad O} \  &amp; {O\quad B} \ \end{matrix} \right| &#x3D; \left| \begin{matrix}  &amp; {A\quad C} \  &amp; {O\quad B} \ \end{matrix} \right| &#x3D; \left| \begin{matrix}  &amp; {A\quad O} \  &amp; {C\quad B} \ \end{matrix} \right| &#x3D;| A||B|$<br>，$A,B$为方阵，但$\left| \begin{matrix} {O} &amp; A_{m \times m} \  B_{n \times n} &amp; { O} \ \end{matrix} \right| &#x3D; ({- 1)}^{ {mn} }|A||B|$ 。</p>
+<p>(6) 范德蒙行列式$D_{n} &#x3D; \begin{vmatrix} 1 &amp; 1 &amp; \ldots &amp; 1 \ x_{1} &amp; x_{2} &amp; \ldots &amp; x_{n} \ \ldots &amp; \ldots &amp; \ldots &amp; \ldots \ x_{1}^{n - 1} &amp; x_{2}^{n 1} &amp; \ldots &amp; x_{n}^{n - 1} \ \end{vmatrix} &#x3D;  \prod_{1 \leq j &lt; i \leq n}^{},(x_{i} - x_{j})$</p>
+<p>设$A$是$n$阶方阵，$\lambda_{i}(i &#x3D; 1,2\cdots,n)$是$A$的$n$个特征值，则<br>$|A| &#x3D; \prod_{i &#x3D; 1}^{n}\lambda_{i}$</p>
+<h2 id="3-矩阵"><a href="#3-矩阵" class="headerlink" title="3 矩阵"></a>3 矩阵</h2><p>矩阵：$m \times n$个数$a_{ {ij} }$排成$m$行$n$列的表格$\begin{bmatrix}  a_{11}\quad a_{12}\quad\cdots\quad a_{1n} \ a_{21}\quad a_{22}\quad\cdots\quad a_{2n} \ \quad\cdots\cdots\cdots\cdots\cdots \  a_{m1}\quad a_{m2}\quad\cdots\quad a_{ {mn} } \ \end{bmatrix}$ 称为矩阵，简记为$A$，或者$\left( a_{ {ij} } \right)_{m \times n}$ 。若$m &#x3D; n$，则称$A$是$n$阶矩阵或$n$阶方阵。</p>
+<h3 id="3-1-矩阵的属性"><a href="#3-1-矩阵的属性" class="headerlink" title="3.1 矩阵的属性"></a><strong>3.1 矩阵的属性</strong></h3><h4 id="3-1-1-单位矩阵和对角矩阵"><a href="#3-1-1-单位矩阵和对角矩阵" class="headerlink" title="3.1.1 单位矩阵和对角矩阵"></a>3.1.1 单位矩阵和对角矩阵</h4><p><strong>单位矩阵</strong>,$I \in \mathbb{R}^{n \times n} $，它是一个方阵，对角线的元素是1，其余元素都是0：<br>$<br>I_{i j}&#x3D;\left{\begin{array}{ll}{1} &amp; {i&#x3D;j} \ {0} &amp; {i \neq j}\end{array}\right.<br>$对于所有$A \in \mathbb{R}^ {m \times n}$，有：<br>$I &#x3D; A &#x3D; IA<br>$，在某种意义上，单位矩阵的表示法是不明确的，因为它没有指定$I$的维数。通常，$I$的维数是从上下文推断出来的，以便使矩阵乘法成为可能。 例如，在上面的等式中，$AI &#x3D; A$中的I是$n\times n$矩阵，而$A &#x3D; IA$中的$I$是$m\times m$矩阵。</p>
+<p>对角矩阵是一种这样的矩阵：对角线之外的元素全为0。对角阵通常表示为：$D&#x3D; diag(d_1, d_2, . . . , d_n)$，其中：<br>$<br>D_{i j}&#x3D;\left{\begin{array}{ll}{d_{i} } &amp; {i&#x3D;j} \ {0} &amp; {i \neq j}\end{array}\right.<br>$很明显：单位矩阵$ I &#x3D; diag(1, 1, . . . , 1)$。</p>
+<h4 id="3-1-2-转置"><a href="#3-1-2-转置" class="headerlink" title="3.1.2 转置"></a>3.1.2 转置</h4><p>矩阵的转置是指翻转矩阵的行和列。</p>
+<p>给定一个矩阵：</p>
+<p>$A \in \mathbb{R}^ {m \times n}$, 它的转置为$n \times m$的矩阵$A^T \in \mathbb{R}^ {n \times m}$ ，其中的元素为：<br>$<br>(A^T)<em>{ij} &#x3D; A</em>{ji}<br>$事实上，我们在描述行向量时已经使用了转置，因为列向量的转置自然是行向量。</p>
+<p>转置的以下属性很容易验证：</p>
+<ul>
+<li>$(A^T )^T &#x3D; A$</li>
+<li>$ (AB)^T &#x3D; B^T A^T$</li>
+<li>$(A + B)^T &#x3D; A^T + B^T$</li>
+</ul>
+<h4 id="3-1-3-矩阵的逆"><a href="#3-1-3-矩阵的逆" class="headerlink" title="3.1.3 矩阵的逆"></a>3.1.3 矩阵的逆</h4><p>方阵$A  \in \mathbb{R}^{n \times n}$的倒数表示为$A^{-1}$，并且是这样的独特矩阵:<br>$<br>A^{-1}A&#x3D;I&#x3D;AA^{-1}<br>$请注意，并非所有矩阵都具有逆。 例如，非方形矩阵根据定义没有逆。 然而，对于一些方形矩阵$A$，可能仍然存在$A^{-1}$可能不存在的情况。 特别是，如果$A^{-1}$存在，我们说$A$是<strong>可逆</strong>的或<strong>非奇异</strong>的，否则就是<strong>不可逆</strong>或<strong>奇异</strong>的。<br>为了使方阵A具有逆$A^{-1}$，则$A$必须是满秩。 我们很快就会发现，除了满秩之外，还有许多其它的充分必要条件。<br>以下是逆的属性; 假设$A,B  \in \mathbb{R}^{n \times n}$，而且是非奇异的：</p>
+<ul>
+<li>$(A^{-1})^{-1} &#x3D; A$</li>
+<li>$(AB)^{-1} &#x3D; B^{-1}A^{-1}$</li>
+<li>$(A^{-1})^{T} &#x3D;(A^{T})^{-1} $因此，该矩阵通常表示为$A^{-T}$。<br>作为如何使用逆的示例，考虑线性方程组，$Ax &#x3D; b$，其中$A  \in \mathbb{R}^{n \times n}$，$x,b\in \mathbb{R}$， 如果$A$是非奇异的（即可逆的），那么$x &#x3D; A^{-1}b$。</li>
+</ul>
+<h4 id="3-1-4-对称矩阵"><a href="#3-1-4-对称矩阵" class="headerlink" title="3.1.4 对称矩阵"></a>3.1.4 对称矩阵</h4><p>如果$A &#x3D;  A^T$，则矩阵$A \in \mathbb{R}^ {n \times n}$是对称矩阵。 如果$ A &#x3D;  -  A^T$，它是反对称的。 很容易证明，对于任何矩阵$A \in \mathbb{R}^ {n \times n}$，矩阵$A  +  A^ T$是对称的，矩阵$A -A^T$是反对称的。 由此得出，任何方矩阵$A \in \mathbb{R}^ {n \times n}$可以表示为对称矩阵和反对称矩阵的和，所以：<br>$<br>A&#x3D;\frac{1}{2}(A+A^T)+\frac{1}{2}(A-A^T)<br>$上面公式的右边的第一个矩阵是对称矩阵，而第二个矩阵是反对称矩阵。 事实证明，对称矩阵在实践中用到很多，它们有很多很好的属性，我们很快就会看到它们。<br>通常将大小为$n$的所有对称矩阵的集合表示为$\mathbb{S}^n$，因此$A \in \mathbb{S}^n$意味着$A$是对称的$n\times n$矩阵;</p>
+<h4 id="3-1-5-正交阵"><a href="#3-1-5-正交阵" class="headerlink" title="3.1.5  正交阵"></a>3.1.5  正交阵</h4><p>如果 $x^Ty&#x3D;0$，则两个向量$x,y\in \mathbb{R}^{n}$ 是<strong>正交</strong>的。如果$|x|_2&#x3D;1$，则向量$x\in \mathbb{R}^{n}$ 被归一化。如果一个方阵$U\in \mathbb{R}^{n \times n}$的所有列彼此正交并被归一化（这些列然后被称为正交），则方阵$U$是正交阵（注意在讨论向量时的意义不一样）。</p>
+<p>它可以从正交性和正态性的定义中得出:<br>$<br>U^ TU &#x3D; I &#x3D; U U^T<br>$</p>
+<p>换句话说，正交矩阵的逆是其转置。 注意，如果$U$不是方阵 :即，$U\in \mathbb{R}^{m \times n}$，$n &lt;m$  ，但其列仍然是正交的，则$U^TU &#x3D; I$，但是$UU^T \neq I$。我们通常只使用术语”正交”来描述先前的情况 ，其中$U$是方阵。<br>正交矩阵的另一个好的特性是在具有正交矩阵的向量上操作不会改变其欧几里德范数，即:<br>$<br>|U x|<em>{2}&#x3D;|x|</em>{2}<br>$对于任何 $x\in \mathbb{R}$ , $U\in \mathbb{R}^{n}$是正交的。</p>
+<h4 id="3-1-6-矩阵的迹"><a href="#3-1-6-矩阵的迹" class="headerlink" title="3.1.6 矩阵的迹"></a>3.1.6 矩阵的迹</h4><p>方矩阵$A \in \mathbb{R}^ {n \times n}$的迹，表示为$\operatorname{tr} (A)$（或者只是$\operatorname{tr} A$，如果括号显然是隐含的），是矩阵中对角元素的总和：<br>$<br>\operatorname{tr} A&#x3D;\sum_{i&#x3D;1}^{n} A_{i i}<br>$迹具有以下属性（如下所示）：</p>
+<ul>
+<li><p>对于矩阵$A \in \mathbb{R}^ {n \times n}$，则：$\operatorname{tr}A &#x3D;\operatorname{tr}A^T$</p>
+</li>
+<li><p>对于矩阵$A,B \in \mathbb{R}^ {n \times n}$，则：$\operatorname{tr}(A + B) &#x3D; \operatorname{tr}A + \operatorname{tr}B$</p>
+</li>
+<li><p>对于矩阵$A \in \mathbb{R}^ {n \times n}$，$ t \in \mathbb{R}$，则：$\operatorname{tr}(tA) &#x3D; t\operatorname{tr}A$.</p>
+</li>
+<li><p>对于矩阵 $A$, $B$，$AB$ 为方阵, 则：$\operatorname{tr}AB &#x3D; \operatorname{tr}BA$</p>
+</li>
+<li><p>对于矩阵 $A$, $B$, $C$, $ABC$为方阵, 则：$\operatorname{tr}ABC &#x3D; \operatorname{tr}BCA&#x3D;\operatorname{tr}CAB$, 同理，更多矩阵的积也是有这个性质。</p>
+</li>
+</ul>
+<p>作为如何证明这些属性的示例，我们将考虑上面给出的第四个属性。 假设$A \in \mathbb{R}^ {m \times n}$和$B \in \mathbb{R}^ {n \times m}$（因此$AB \in \mathbb{R}^ {m \times m}$是方阵）。 观察到$BA \in \mathbb{R}^ {n \times n}$也是一个方阵，因此对它们进行迹的运算是有意义的。 要证明$\operatorname{tr}AB &#x3D; \operatorname{tr}BA$，请注意：</p>
+<p>$$<br>\begin{aligned} \operatorname{tr} A B &amp;&#x3D;\sum_{i&#x3D;1}^{m}(A B)<em>{i i}&#x3D;\sum</em>{i&#x3D;1}^{m}\left(\sum_{j&#x3D;1}^{n} A_{i j} B_{j i}\right) \ &amp;&#x3D;\sum_{i&#x3D;1}^{m} \sum_{j&#x3D;1}^{n} A_{i j} B_{j i}&#x3D;\sum_{j&#x3D;1}^{n} \sum_{i&#x3D;1}^{m} B_{j i} A_{i j} \ &amp;&#x3D;\sum_{j&#x3D;1}^{n}\left(\sum_{i&#x3D;1}^{m} B_{j i} A_{i j}\right)&#x3D;\sum_{j&#x3D;1}^{n}(B A)_{j j}&#x3D;\operatorname{tr} B A \end{aligned}<br>$$</p>
+<p>这里，第一个和最后两个等式使用迹运算符和矩阵乘法的定义，重点在第四个等式，使用标量乘法的可交换性来反转每个乘积中的项的顺序，以及标量加法的可交换性和相关性，以便重新排列求和的顺序。</p>
+<h4 id="3-1-7-矩阵的范数"><a href="#3-1-7-矩阵的范数" class="headerlink" title="3.1.7  矩阵的范数"></a>3.1.7  矩阵的范数</h4><p>向量的范数$|x|$是非正式度量的向量的“长度” 。 例如，我们有常用的欧几里德或$\ell_{2}$范数，<br>$<br>|x|<em>{2}&#x3D;\sqrt{\sum</em>{i&#x3D;1}^{n} x_{i}^{2} }<br>$注意：$|x|_{2}^{2}&#x3D;x^{T} x$</p>
+<p>更正式地，范数是满足4个属性的函数（$f : \mathbb{R}^{n} \rightarrow \mathbb{R}$）：</p>
+<ol>
+<li>对于所有的 $x \in \mathbb{R}^ {n}$, $f(x) \geq 0 $(非负).</li>
+<li>当且仅当$x &#x3D; 0$ 时，$f(x) &#x3D; 0$ (明确性).</li>
+<li>对于所有$x \in \mathbb{R}^ {n}$,$t\in \mathbb{R}$，则 $f(tx) &#x3D; \left| t \right|f(x)$ (正齐次性).</li>
+<li>对于所有 $x,y \in \mathbb{R}^ {n}$, $f(x + y) \leq f(x) + f(y)$ (三角不等式)</li>
+</ol>
+<p>其他范数的例子是$\ell_1$范数:<br>$<br>|x|<em>{1}&#x3D;\sum</em>{i&#x3D;1}^{n}\left|x_{i}\right|<br>$和$\ell_{\infty }$范数：<br>$|x|<em>{\infty}&#x3D;\max <em>{i}\left|x</em>{i}\right|<br>$上，到目前为止所提出的所有三个范数都是$\ell_p$范数族的例子，它们由实数$p \geq 1$参数化，并定义为：<br>$|</em>{p}&#x3D;\left(\sum_{i&#x3D;1}^{n}\left|x_{i}\right|^{p}\right)^{1 &#x2F; p}<br>$</p>
+<p>也可以为矩阵定义范数，例如<strong>Frobenius</strong>范数:<br>$<br>|A|<em>{F}&#x3D;\sqrt{\sum</em>{i&#x3D;1}^{m} \sum_{j&#x3D;1}^{n} A_{i j}^{2} }&#x3D;\sqrt{\operatorname{tr}\left(A^{T} A\right)}<br>$</p>
+<h3 id="3-2-矩阵的线性运算"><a href="#3-2-矩阵的线性运算" class="headerlink" title="3.2 矩阵的线性运算"></a><strong>3.2 矩阵的线性运算</strong></h3><h4 id="3-2-1-矩阵的加法"><a href="#3-2-1-矩阵的加法" class="headerlink" title="3.2.1 矩阵的加法"></a><strong>3.2.1 矩阵的加法</strong></h4><p>设$A &#x3D; (a_{ {ij} }),B &#x3D; (b_{ {ij} })$是两个$m \times n$矩阵，则$m \times n$ 矩阵$（C &#x3D; c_{ {ij} }) &#x3D; a_{ {ij} } + b_{ {ij} }$称为矩阵$A$与$B$的和，记为$A + B &#x3D; C$ 。</p>
+<h4 id="3-2-2-矩阵的数乘"><a href="#3-2-2-矩阵的数乘" class="headerlink" title="3.2.2 矩阵的数乘"></a><strong>3.2.2 矩阵的数乘</strong></h4><p>设$A &#x3D; (a_{ {ij} })$是$m \times n$矩阵，$k$是一个常数，则$m \times n$矩阵$(ka_{ {ij} })$称为数$k$与矩阵$A$的数乘，记为${kA}$。</p>
+<h4 id="3-2-3-矩阵的乘法"><a href="#3-2-3-矩阵的乘法" class="headerlink" title="3.2.3 矩阵的乘法"></a><strong>3.2.3 矩阵的乘法</strong></h4><p>设$A &#x3D; (a_{ {ij} })$是$m \times n$矩阵，$B &#x3D; (b_{ {ij} })$是$n \times s$矩阵，那么$m \times s$矩阵$C &#x3D; (c_{ {ij} })$，其中$c_{ {ij} } &#x3D; a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{ {in} }b_{ {nj} } &#x3D; \sum_{k &#x3D;1}^{n}{a_{ {ik} }b_{ {kj} }}$称为${AB}$的乘积，记为$C &#x3D; AB$ 。</p>
+<h4 id="3-2-4-mathbf-A-mathbf-T-、-mathbf-A-mathbf-1-、-mathbf-A-mathbf-三者之间的关系"><a href="#3-2-4-mathbf-A-mathbf-T-、-mathbf-A-mathbf-1-、-mathbf-A-mathbf-三者之间的关系" class="headerlink" title="*3.2.4 ** $\mathbf{A}^{\mathbf{T} }$、$\mathbf{A}^{\mathbf{-1} }$、$\mathbf{A}^{\mathbf{} }$三者之间的关系"></a>*<em>3.2.4 ** $\mathbf{A}^{\mathbf{T} }$<strong>、</strong>$\mathbf{A}^{\mathbf{-1} }$<strong>、</strong>$\mathbf{A}^{\mathbf{</em>} }$<strong>三者之间的关系</strong></h4><p>(1) ${(A^{T})}^{T} &#x3D; A,{(AB)}^{T} &#x3D; B^{T}A^{T},{(kA)}^{T} &#x3D; kA^{T},{(A \pm B)}^{T} &#x3D; A^{T} \pm B^{T}$</p>
+<p>(2) $\left( A^{- 1} \right)^{- 1} &#x3D; A,\left( {AB} \right)^{- 1} &#x3D; B^{- 1}A^{- 1},\left( {kA} \right)^{- 1} &#x3D; \frac{1}{k}A^{- 1},$</p>
+<p>但 ${(A \pm B)}^{- 1} &#x3D; A^{- 1} \pm B^{- 1}$不一定成立。</p>
+<p>(3) $\left( A^{<em>} \right)^{</em>} &#x3D; |A|^{n - 2}\ A\ \ (n \geq 3)$，$\left({AB} \right)^{<em>} &#x3D; B^{</em>}A^{<em>},$ $\left( {kA} \right)^{</em>} &#x3D; k^{n -1}A^{*}{\ \ }\left( n \geq 2 \right)$</p>
+<p>但$\left( A \pm B \right)^{<em>} &#x3D; A^{</em>} \pm B^{*}$不一定成立。</p>
+<p>(4) ${(A^{- 1})}^{T} &#x3D; {(A^{T})}^{- 1},\ \left( A^{- 1} \right)^{<em>} &#x3D;{(AA^{</em>})}^{- 1},{(A^{<em>})}^{T} &#x3D; \left( A^{T} \right)^{</em>}$</p>
+<h4 id="3-2-5-有关-mathbf-A-mathbf-的结论"><a href="#3-2-5-有关-mathbf-A-mathbf-的结论" class="headerlink" title="3.2.5 有关$\mathbf{A}^{\mathbf{*} }$的结论"></a><strong>3.2.5 有关</strong>$\mathbf{A}^{\mathbf{*} }$<strong>的结论</strong></h4><p>(1) $AA^{<em>} &#x3D; A^{</em>}A &#x3D; |A|E$</p>
+<p>(2) $|A^{<em>}| &#x3D; |A|^{n - 1}\ (n \geq 2),\ \ \ \ {(kA)}^{</em>} &#x3D; k^{n -1}A^{<em>},{ {\ \ }\left( A^{</em>} \right)}^{*} &#x3D; |A|^{n - 2}A(n \geq 3)$</p>
+<p>(3) 若$A$可逆，则$A^{<em>} &#x3D; |A|A^{- 1},{(A^{</em>})}^{*} &#x3D; \frac{1}{|A|}A$</p>
+<p>(4) 若$A$为$n$阶方阵，则：</p>
+<p>$r(A^*)&#x3D;\begin{cases}n,\quad r(A)&#x3D;n\ 1,\quad r(A)&#x3D;n-1\ 0,\quad r(A)&lt;n-1\end{cases}$</p>
+<h4 id="3-2-6-有关-mathbf-A-mathbf-1-的结论"><a href="#3-2-6-有关-mathbf-A-mathbf-1-的结论" class="headerlink" title="3.2.6 有关$\mathbf{A}^{\mathbf{- 1} }$的结论"></a><strong>3.2.6 有关</strong>$\mathbf{A}^{\mathbf{- 1} }$<strong>的结论</strong></h4><p>$A$可逆$\Leftrightarrow AB &#x3D; E; \Leftrightarrow |A| \neq 0; \Leftrightarrow r(A) &#x3D; n;$</p>
+<p>$\Leftrightarrow A$可以表示为初等矩阵的乘积；$\Leftrightarrow A;\Leftrightarrow Ax &#x3D; 0$。</p>
+<h4 id="3-2-7-有关矩阵秩的结论"><a href="#3-2-7-有关矩阵秩的结论" class="headerlink" title="3.2.7 有关矩阵秩的结论"></a><strong>3.2.7 有关矩阵秩的结论</strong></h4><p>(1) 秩$r(A)$&#x3D;行秩&#x3D;列秩；</p>
+<p>(2) $r(A_{m \times n}) \leq \min(m,n);$</p>
+<p>(3) $A \neq 0 \Rightarrow r(A) \geq 1$；</p>
+<p>(4) $r(A \pm B) \leq r(A) + r(B);$</p>
+<p>(5) 初等变换不改变矩阵的秩</p>
+<p>(6) $r(A) + r(B) - n \leq r(AB) \leq \min(r(A),r(B)),$特别若$AB &#x3D; O$<br>则：$r(A) + r(B) \leq n$</p>
+<p>(7) 若$A^{- 1}$存在$\Rightarrow r(AB) &#x3D; r(B);$ 若$B^{- 1}$存在<br>$\Rightarrow r(AB) &#x3D; r(A);$</p>
+<p>若$r(A_{m \times n}) &#x3D; n \Rightarrow r(AB) &#x3D; r(B);$ 若$r(A_{m \times s}) &#x3D; n\Rightarrow r(AB) &#x3D; r\left( A \right)$。</p>
+<p>(8) $r(A_{m \times s}) &#x3D; n \Leftrightarrow Ax &#x3D; 0$只有零解</p>
+<h4 id="3-2-8-分块求逆公式"><a href="#3-2-8-分块求逆公式" class="headerlink" title="3.2.8 分块求逆公式"></a><strong>3.2.8 分块求逆公式</strong></h4><p>$\begin{pmatrix} A &amp; O \ O &amp; B \ \end{pmatrix}^{- 1} &#x3D; \begin{pmatrix} A^{-1} &amp; O \ O &amp; B^{- 1} \ \end{pmatrix}$； $\begin{pmatrix} A &amp; C \ O &amp; B \\end{pmatrix}^{- 1} &#x3D; \begin{pmatrix} A^{- 1}&amp; - A^{- 1}CB^{- 1} \ O &amp; B^{- 1} \ \end{pmatrix}$；</p>
+<p>$\begin{pmatrix} A &amp; O \ C &amp; B \ \end{pmatrix}^{- 1} &#x3D; \begin{pmatrix}  A^{- 1}&amp;{O} \   - B^{- 1}CA^{- 1} &amp; B^{- 1} \\end{pmatrix}$； $\begin{pmatrix} O &amp; A \ B &amp; O \ \end{pmatrix}^{- 1} &#x3D;\begin{pmatrix} O &amp; B^{- 1} \ A^{- 1} &amp; O \ \end{pmatrix}$</p>
+<p>这里$A$，$B$均为可逆方阵。</p>
+<h3 id="3-3-矩阵微积分"><a href="#3-3-矩阵微积分" class="headerlink" title="3.3 矩阵微积分"></a>3.3 矩阵微积分</h3><p>虽然前面章节中的主题通常包含在线性代数的标准课程中，但似乎很少涉及（我们将广泛使用）的一个主题是微积分扩展到向量设置展。尽管我们使用的所有实际微积分都是相对微不足道的，但是符号通常会使事情看起来比实际困难得多。 在本节中，我们将介绍矩阵微积分的一些基本定义，并提供一些示例。</p>
+<h4 id="3-3-1-梯度"><a href="#3-3-1-梯度" class="headerlink" title="3.3.1 梯度"></a>3.3.1 梯度</h4><p>假设$f: \mathbb{R}^{m \times n} \rightarrow \mathbb{R}$是将维度为$m \times n$的矩阵$A\in \mathbb{R}^{m \times n}$作为输入并返回实数值的函数。 然后$f$的梯度（相对于$A\in \mathbb{R}^{m \times n}$）是偏导数矩阵，定义如下：<br>$<br>\nabla_{A} f(A) \in \mathbb{R}^{m \times n}&#x3D;\left[\begin{array}{cccc}{\frac{\partial f(A)}{\partial A_{11} }} &amp; {\frac{\partial f(A)}{\partial A_{12} }} &amp; {\cdots} &amp; {\frac{\partial f(A)}{\partial A_{1n} }} \ {\frac{\partial f(A)}{\partial A_{21} }} &amp; {\frac{\partial f(A)}{\partial A_{22} }} &amp; {\cdots} &amp; {\frac{\partial f(A)}{\partial A_{2 n} }} \ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \ {\frac{\partial f(A)}{\partial A_{m 1} }} &amp; {\frac{\partial f(A)}{\partial A_{m 2} }} &amp; {\cdots} &amp; {\frac{\partial f(A)}{\partial A_{m n} }}\end{array}\right]<br>$即，$m \times n$矩阵:<br>$\left(\nabla_{A} f(A)\right)<em>{i j}&#x3D;\frac{\partial f(A)}{\partial A</em>{i j} }<br>$意，$\nabla_{A} f(A) $的维度始终与$A$的维度相同。特殊情况，如果$A$只是向量$A\in \mathbb{R}^{n}$，则<br>$bla_{x} f(x)&#x3D;\left[\begin{array}{c}{\frac{\partial f(x)}{\partial x_{1} }} \ {\frac{\partial f(x)}{\partial x_{2} }} \ {\vdots} \ {\frac{\partial f(x)}{\partial x_{n} }}\end{array}\right]<br>$要记住，只有当函数是实值时，即如果函数返回标量值，才定义函数的梯度。例如，$A\in \mathbb{R}^{m \times n}$相对于$x$，我们不能取$Ax$的梯度，因为这个量是向量值。<br>它直接从偏导数的等价性质得出：</p>
+<ul>
+<li><p>$\nabla_{x}(f(x)+g(x))&#x3D;\nabla_{x} f(x)+\nabla_{x} g(x)$</p>
+</li>
+<li><p>对于$t \in \mathbb{R}$ ，$\nabla_{x}(t f(x))&#x3D;t \nabla_{x} f(x)$</p>
+</li>
+</ul>
+<p>原则上，梯度是偏导数对多变量函数的自然延伸。然而，在实践中，由于符号的原因，使用梯度有时是很困难的。例如，假设$A\in \mathbb{R}^{m \times n}$是一个固定系数矩阵，假设$b\in \mathbb{R}^{m}$是一个固定系数向量。设$f: \mathbb{R}^{m \times n} \rightarrow \mathbb{R}$为$f(z)&#x3D;z^Tz$定义的函数，因此$\nabla_{z}f(z)&#x3D;2z$。但现在考虑表达式，<br>$<br>\nabla f(Ax)<br>$该表达式应该如何解释？ 至少有两种可能性：<br>1.在第一个解释中，回想起$\nabla_{z}f(z)&#x3D;2z$。 在这里，我们将$\nabla f(Ax)$解释为评估点$Ax$处的梯度，因此:</p>
+<p>$$<br>\nabla f(A x)&#x3D;2(A x)&#x3D;2 A x \in \mathbb{R}^{m}<br>$$</p>
+<p>2.在第二种解释中，我们将数量$f(Ax)$视为输入变量$x$的函数。 更正式地说，设$g(x) &#x3D;f(Ax)$。 然后在这个解释中:<br>$<br>\nabla f(A x)&#x3D;\nabla_{x} g(x) \in \mathbb{R}^{n}<br>$</p>
+<p>在这里，我们可以看到这两种解释确实不同。 一种解释产生$m$维向量作为结果，而另一种解释产生$n$维向量作为结果！ 我们怎么解决这个问题？</p>
+<p>这里，关键是要明确我们要区分的变量。<br>在第一种情况下，我们将函数$f$与其参数$z$进行区分，然后替换参数$Ax$。<br>在第二种情况下，我们将复合函数$g(x)&#x3D;f(Ax)$直接与$x$进行微分。</p>
+<p>我们将第一种情况表示为$\nabla zf(Ax)$，第二种情况表示为$\nabla xf(Ax)$。</p>
+<p>保持符号清晰是非常重要的，以后完成课程作业时候你就会发现。</p>
+<h4 id="3-3-2-黑塞矩阵"><a href="#3-3-2-黑塞矩阵" class="headerlink" title="3.3.2 黑塞矩阵"></a>3.3.2 黑塞矩阵</h4><p>假设$f: \mathbb{R}^{n} \rightarrow \mathbb{R}$是一个函数，它接受$\mathbb{R}^{n}$中的向量并返回实数。那么关于$x$的<strong>黑塞矩阵</strong>（也有翻译作海森矩阵），写做：$\nabla_x ^2 f(A x)$，或者简单地说，$H$是$n \times n$矩阵的偏导数：<br>$<br>\nabla_{x}^{2} f(x) \in \mathbb{R}^{n \times n}&#x3D;\left[\begin{array}{cccc}{\frac{\partial^{2} f(x)}{\partial x_{1}^{2} }} &amp; {\frac{\partial^{2} f(x)}{\partial x_{1} \partial x_{2} }} &amp; {\cdots} &amp; {\frac{\partial^{2} f(x)}{\partial x_{1} \partial x_{n} }} \ {\frac{\partial^{2} f(x)}{\partial x_{2} \partial x_{1} }} &amp; {\frac{\partial^{2} f(x)}{\partial x_{2}^{2} }} &amp; {\cdots} &amp; {\frac{\partial^{2} f(x)}{\partial x_{2} \partial x_{n} }} \ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \ {\frac{\partial^{2} f(x)}{\partial x_{n} \partial x_{1} }} &amp; {\frac{\partial^{2} f(x)}{\partial x_{n} \partial x_{2} }} &amp; {\cdots} &amp; {\frac{\partial^{2} f(x)}{\partial x_{n}^{2} }}\end{array}\right]<br>$换句话说，$\nabla_{x}^{2} f(x) \in \mathbb{R}^{n \times n}$，其：</p>
+<p>$$<br>\left(\nabla_{x}^{2} f(x)\right)<em>{i j}&#x3D;\frac{\partial^{2} f(x)}{\partial x</em>{i} \partial x_{j} }<br>$$</p>
+<p>注意：黑塞矩阵通常是对称阵：</p>
+<p>$$<br>\frac{\partial^{2} f(x)}{\partial x_{i} \partial x_{j} }&#x3D;\frac{\partial^{2} f(x)}{\partial x_{j} \partial x_{i} }<br>$$</p>
+<p>与梯度相似，只有当$f(x)$为实值时才定义黑塞矩阵。</p>
+<p>很自然地认为梯度与向量函数的一阶导数的相似，而黑塞矩阵与二阶导数的相似（我们使用的符号也暗示了这种关系）。 这种直觉通常是正确的，但需要记住以下几个注意事项。<br>首先，对于一个变量$f: \mathbb{R} \rightarrow \mathbb{R}$的实值函数，它的基本定义：二阶导数是一阶导数的导数，即：<br>$<br>\frac{\partial^{2} f(x)}{\partial x^{2} }&#x3D;\frac{\partial}{\partial x} \frac{\partial}{\partial x} f(x)<br>$然而，对于向量的函数，函数的梯度是一个向量，我们不能取向量的梯度，即:<br>$nabla_{x} \nabla_{x} f(x)&#x3D;\nabla_{x}\left[\begin{array}{c}{\frac{\partial f(x)}{\partial x_{1} }} \ {\frac{\partial f(x)}{\partial x_{2} }} \ {\vdots} \ {\frac{\partial f(x)}{\partial x_{n} }}\end{array}\right]<br>$</p>
+<p>上面这个表达式没有意义。 因此，黑塞矩阵不是梯度的梯度。 然而，下面这种情况却这几乎是正确的：如果我们看一下梯度$\left(\nabla_{x} f(x)\right)<em>{i}&#x3D;\partial f(x) &#x2F; \partial x</em>{i}$的第$i$个元素，并取关于于$x$的梯度我们得到：<br>$<br>\nabla_{x} \frac{\partial f(x)}{\partial x_{i} }&#x3D;\left[\begin{array}{c}{\frac{\partial^{2} f(x)}{\partial x_{i} \partial x_{1} }} \ {\frac{\partial^{2} f(x)}{\partial x_{2} \partial x_{2} }} \ {\vdots} \ {\frac{\partial f(x)}{\partial x_{i} \partial x_{n} }}\end{array}\right]<br>$</p>
+<p>这是黑塞矩阵第$i$行（列）,所以：<br>$<br>\nabla_{x}^{2} f(x)&#x3D;\left[\nabla_{x}\left(\nabla_{x} f(x)\right)<em>{1} \quad \nabla</em>{x}\left(\nabla_{x} f(x)\right)<em>{2} \quad \cdots \quad \nabla</em>{x}\left(\nabla_{x} f(x)\right)<em>{n}\right]<br>$简单地说：我们可以说由于：$\nabla</em>{x}^{2} f(x)&#x3D;\nabla_{x}\left(\nabla_{x} f(x)\right)^{T}$，只要我们理解，这实际上是取$\nabla_{x} f(x)$的每个元素的梯度，而不是整个向量的梯度。</p>
+<p>最后，请注意，虽然我们可以对矩阵$A\in \mathbb{R}^{n}$取梯度，但对于这门课，我们只考虑对向量$x \in \mathbb{R}^{n}$取黑塞矩阵。<br>这会方便很多（事实上，我们所做的任何计算都不要求我们找到关于矩阵的黑森方程），因为关于矩阵的黑塞方程就必须对矩阵所有元素求偏导数$\partial^{2} f(A) &#x2F;\left(\partial A_{i j} \partial A_{k \ell}\right)$，将其表示为矩阵相当麻烦。</p>
+<h4 id="3-3-3-二次函数和线性函数的梯度和黑塞矩阵"><a href="#3-3-3-二次函数和线性函数的梯度和黑塞矩阵" class="headerlink" title="3.3.3 二次函数和线性函数的梯度和黑塞矩阵"></a>3.3.3 二次函数和线性函数的梯度和黑塞矩阵</h4><p>现在让我们尝试确定几个简单函数的梯度和黑塞矩阵。 </p>
+<p>对于$x \in \mathbb{R}^{n}$, 设$f(x)&#x3D;b^Tx$  的某些已知向量$b \in \mathbb{R}^{n}$ ，则：</p>
+<p>$$<br>f(x)&#x3D;\sum_{i&#x3D;1}^{n} b_{i} x_{i}<br>$$</p>
+<p>所以：<br>$<br>\frac{\partial f(x)}{\partial x_{k} }&#x3D;\frac{\partial}{\partial x_{k} } \sum_{i&#x3D;1}^{n} b_{i} x_{i}&#x3D;b_{k}<br>$由此我们可以很容易地看出$\nabla_{x} b^{T} x&#x3D;b$。 这应该与单变量微积分中的类似情况进行比较，其中$\partial &#x2F;(\partial x) a x&#x3D;a$。<br>现在考虑$A\in \mathbb{S}^{n}$的二次函数$f(x)&#x3D;x^TAx$。 记住这一点：<br>$(x)&#x3D;\sum_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{n} A_{i j} x_{i} x_{j}<br>$取偏导数，我们将分别考虑包括$x_k$和$x_2^k$因子的项：</p>
+<p>$$<br>\begin{aligned} \frac{\partial f(x)}{\partial x_{k} } &amp;&#x3D;\frac{\partial}{\partial x_{k} } \sum_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{n} A_{i j} x_{i} x_{j} \ &amp;&#x3D;\frac{\partial}{\partial x_{k} }\left[\sum_{i \neq k} \sum_{j \neq k} A_{i j} x_{i} x_{j}+\sum_{i \neq k} A_{i k} x_{i} x_{k}+\sum_{j \neq k} A_{k j} x_{k} x_{j}+A_{k k} x_{k}^{2}\right] \ &amp;&#x3D;\sum_{i \neq k} A_{i k} x_{i}+\sum_{j \neq k} A_{k j} x_{j}+2 A_{k k} x_{k} \ &amp;&#x3D;\sum_{i&#x3D;1}^{n} A_{i k} x_{i}+\sum_{j&#x3D;1}^{n} A_{k j} x_{j}&#x3D;2 \sum_{i&#x3D;1}^{n} A_{k i} x_{i} \end{aligned}<br>$$</p>
+<p>最后一个等式，是因为$A$是对称的（我们可以安全地假设，因为它以二次形式出现）。 注意，$\nabla_{x} f(x)$的第$k$个元素是$A$和$x$的第$k$行的内积。 因此，$\nabla_{x} x^{T} A x&#x3D;2 A x$。 同样，这应该提醒你单变量微积分中的类似事实，即$\partial &#x2F;(\partial x) a x^{2}&#x3D;2 a x$。</p>
+<p>最后，让我们来看看二次函数$f(x)&#x3D;x^TAx$黑塞矩阵（显然，线性函数$b^Tx$的黑塞矩阵为零）。在这种情况下:<br>$<br>\frac{\partial^{2} f(x)}{\partial x_{k} \partial x_{\ell} }&#x3D;\frac{\partial}{\partial x_{k} }\left[\frac{\partial f(x)}{\partial x_{\ell} }\right]&#x3D;\frac{\partial}{\partial x_{k} }\left[2 \sum_{i&#x3D;1}^{n} A_{\ell i} x_{i}\right]&#x3D;2 A_{\ell k}&#x3D;2 A_{k \ell}<br>$因此，应该很清楚$\nabla_{x}^2 x^{T} A x&#x3D;2 A$，这应该是完全可以理解的（同样类似于$\partial^2 &#x2F;(\partial x^2) a x^{2}&#x3D;2a$的单变量事实）。</p>
+<p>简要概括起来：</p>
+<ul>
+<li><p>$\nabla_{x} b^{T} x&#x3D;b$ </p>
+</li>
+<li><p>$\nabla_{x} x^{T} A x&#x3D;2 A x$ (如果$A$是对称阵)</p>
+</li>
+<li><p>$\nabla_{x}^2 x^{T} A x&#x3D;2 A $  (如果$A$是对称阵)</p>
+</li>
+</ul>
+<h4 id="3-3-4-最小二乘法"><a href="#3-3-4-最小二乘法" class="headerlink" title="3.3.4 最小二乘法"></a>3.3.4 最小二乘法</h4><p>让我们应用上一节中得到的方程来推导最小二乘方程。假设我们得到矩阵$A\in \mathbb{R}^{m \times n}$（为了简单起见，我们假设$A$是满秩）和向量$b\in \mathbb{R}^{m}$，从而使$b \notin \mathcal{R}(A)$。在这种情况下，我们将无法找到向量$x\in \mathbb{R}^{n}$，由于$Ax &#x3D; b$，因此我们想要找到一个向量$x$，使得$Ax$尽可能接近 $b$，用欧几里德范数的平方$|A x-b|_{2}^{2} $来衡量。</p>
+<p>使用公式$|x|^{2}&#x3D;x^Tx$，我们可以得到：</p>
+<p>$$<br>\begin{aligned}|A x-b|_{2}^{2} &amp;&#x3D;(A x-b)^{T}(A x-b) \ &amp;&#x3D;x^{T} A^{T} A x-2 b^{T} A x+b^{T} b \end{aligned}<br>$$</p>
+<p>根据$x$的梯度，并利用上一节中推导的性质：<br>$<br>\begin{aligned} \nabla_{x}\left(x^{T} A^{T} A x-2 b^{T} A x+b^{T} b\right) &amp;&#x3D;\nabla_{x} x^{T} A^{T} A x-\nabla_{x} 2 b^{T} A x+\nabla_{x} b^{T} b \ &amp;&#x3D;2 A^{T} A x-2 A^{T} b \end{aligned}<br>$将最后一个表达式设置为零，然后解出$x$，得到了正规方程：<br>$ &#x3D; (A^TA)^{-1}A^Tb<br>$我们在课堂上得到的相同。</p>
+<h4 id="3-3-5-行列式的梯度"><a href="#3-3-5-行列式的梯度" class="headerlink" title="3.3.5 行列式的梯度"></a>3.3.5 行列式的梯度</h4><p>现在让我们考虑一种情况，我们找到一个函数相对于矩阵的梯度，也就是说，对于$A\in \mathbb{R}^{n \times n}$，我们要找到$\nabla_{A}|A|$。回想一下我们对行列式的讨论：<br>$<br>|A|&#x3D;\sum_{i&#x3D;1}^{n}(-1)^{i+j} A_{i j}\left|A_{\backslash i, \backslash j}\right| \quad(\text { for any } j \in 1, \ldots, n)<br>$所以：<br>$frac{\partial}{\partial A_{k \ell} }|A|&#x3D;\frac{\partial}{\partial A_{k \ell} } \sum_{i&#x3D;1}^{n}(-1)^{i+j} A_{i j}\left|A_{\backslash i, \backslash j}\right|&#x3D;(-1)^{k+\ell}\left|A_{\backslash k,\backslash \ell}\right|&#x3D;(\operatorname{adj}(A))<em>{\ell k}<br>$里可以知道，它直接从伴随矩阵的性质得出：<br>$bla</em>{A}|A|&#x3D;(\operatorname{adj}(A))^{T}&#x3D;|A| A^{-T}<br>$来考虑函数$f : \mathbb{S}<em>{++}^{n} \rightarrow \mathbb{R}$，$f(A)&#x3D;\log |A|$。注意，我们必须将$f$的域限制为正定矩阵，因为这确保了$|A|&gt;0$，因此$|A|$的对数是实数。在这种情况下，我们可以使用链式法则（没什么奇怪的，只是单变量演算中的普通链式法则）来看看：<br>${\partial \log |A|}{\partial A</em>{i j} }&#x3D;\frac{\partial \log |A|}{\partial|A|} \frac{\partial|A|}{\partial A_{i j} }&#x3D;\frac{1}{|A|} \frac{\partial|A|}{\partial A_{i j} }<br>$明显看出：</p>
+<p>$$<br>\nabla_{A} \log |A|&#x3D;\frac{1}{|A|} \nabla_{A}|A|&#x3D;A^{-1}<br>$$</p>
+<p>我们可以在最后一个表达式中删除转置，因为$A$是对称的。注意与单值情况的相似性，其中$\partial &#x2F;(\partial x) \log x&#x3D;1 &#x2F; x$。</p>
+<h4 id="3-3-6-特征值优化"><a href="#3-3-6-特征值优化" class="headerlink" title="3.3.6 特征值优化"></a>3.3.6 特征值优化</h4><p>最后，我们使用矩阵演算以直接导致特征值&#x2F;特征向量分析的方式求解优化问题。 考虑以下等式约束优化问题：</p>
+<p>$$<br>\max <em>{x \in \mathbb{R}^{n} } x^{T} A x \quad \text { subject to }|x|</em>{2}^{2}&#x3D;1<br>$$</p>
+<p>对于对称矩阵$A\in \mathbb{S}^{n}$。求解等式约束优化问题的标准方法是采用<strong>拉格朗日</strong>形式，一种包含等式约束的目标函数，在这种情况下，拉格朗日函数可由以下公式给出：</p>
+<p>$$<br>\mathcal{L}(x, \lambda)&#x3D;x^{T} A x-\lambda x^{T} x<br>$$</p>
+<p>其中，$\lambda $被称为与等式约束关联的拉格朗日乘子。可以确定，要使$x^*$成为问题的最佳点，拉格朗日的梯度必须在$x^*$处为零（这不是唯一的条件，但它是必需的）。也就是说，<br>$<br>\nabla_{x} \mathcal{L}(x, \lambda)&#x3D;\nabla_{x}\left(x^{T} A x-\lambda x^{T} x\right)&#x3D;2 A^{T} x-2 \lambda x&#x3D;0<br>$请注意，这只是线性方程$Ax &#x3D;\lambda x$。 这表明假设$x^T x &#x3D; 1$，可能最大化（或最小化）$x^T Ax$的唯一点是$A$的特征向量。</p>
+<h2 id="4-向量"><a href="#4-向量" class="headerlink" title="4 向量"></a>4 向量</h2><h3 id="4-1-有关向量组的线性表示"><a href="#4-1-有关向量组的线性表示" class="headerlink" title="4.1 有关向量组的线性表示"></a><strong>4.1 有关向量组的线性表示</strong></h3><p>(1)$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性相关$\Leftrightarrow$至少有一个向量可以用其余向量线性表示。</p>
+<p>(2)$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性无关，$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$，$\beta$线性相关$\Leftrightarrow \beta$可以由$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$唯一线性表示。</p>
+<p>(3) $\beta$可以由$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性表示<br>$\Leftrightarrow r(\alpha_{1},\alpha_{2},\cdots,\alpha_{s}) &#x3D;r(\alpha_{1},\alpha_{2},\cdots,\alpha_{s},\beta)$ 。</p>
+<h3 id="4-2-有关向量组的线性相关性"><a href="#4-2-有关向量组的线性相关性" class="headerlink" title="4.2 有关向量组的线性相关性"></a><strong>4.2 有关向量组的线性相关性</strong></h3><p>(1)部分相关，整体相关；整体无关，部分无关.</p>
+<p>(2) ① $n$个$n$维向量<br>$\alpha_{1},\alpha_{2}\cdots\alpha_{n}$线性无关$\Leftrightarrow \left|\left\lbrack \alpha_{1}\alpha_{2}\cdots\alpha_{n} \right\rbrack \right| \neq0$， $n$个$n$维向量$\alpha_{1},\alpha_{2}\cdots\alpha_{n}$线性相关<br>$\Leftrightarrow |\lbrack\alpha_{1},\alpha_{2},\cdots,\alpha_{n}\rbrack| &#x3D; 0$<br>。</p>
+<p>② $n + 1$个$n$维向量线性相关。</p>
+<p>③ 若$\alpha_{1},\alpha_{2}\cdots\alpha_{S}$线性无关，则添加分量后仍线性无关；或一组向量线性相关，去掉某些分量后仍线性相关。</p>
+<h3 id="4-3-有关向量组的线性表示"><a href="#4-3-有关向量组的线性表示" class="headerlink" title="4.3 有关向量组的线性表示"></a><strong>4.3 有关向量组的线性表示</strong></h3><p>(1) $\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性相关$\Leftrightarrow$至少有一个向量可以用其余向量线性表示。</p>
+<p>(2) $\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性无关，$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$，$\beta$线性相关$\Leftrightarrow\beta$ 可以由$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$唯一线性表示。</p>
+<p>(3) $\beta$可以由$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性表示<br>$\Leftrightarrow r(\alpha_{1},\alpha_{2},\cdots,\alpha_{s}) &#x3D;r(\alpha_{1},\alpha_{2},\cdots,\alpha_{s},\beta)$</p>
+<h3 id="4-4-向量组的秩与矩阵的秩之间的关系"><a href="#4-4-向量组的秩与矩阵的秩之间的关系" class="headerlink" title="4.4 向量组的秩与矩阵的秩之间的关系"></a><strong>4.4 向量组的秩与矩阵的秩之间的关系</strong></h3><p>设$r(A_{m \times n}) &#x3D;r$，则$A$的秩$r(A)$与$A$的行列向量组的线性相关性关系为：</p>
+<p>(1) 若$r(A_{m \times n}) &#x3D; r &#x3D; m$，则$A$的行向量组线性无关。</p>
+<p>(2) 若$r(A_{m \times n}) &#x3D; r &lt; m$，则$A$的行向量组线性相关。</p>
+<p>(3) 若$r(A_{m \times n}) &#x3D; r &#x3D; n$，则$A$的列向量组线性无关。</p>
+<p>(4) 若$r(A_{m \times n}) &#x3D; r &lt; n$，则$A$的列向量组线性相关。</p>
+<h3 id="4-5-mathbf-n-维向量空间的基变换公式及过渡矩阵"><a href="#4-5-mathbf-n-维向量空间的基变换公式及过渡矩阵" class="headerlink" title="**4.5 **$\mathbf{n}$维向量空间的基变换公式及过渡矩阵"></a>**4.5 **$\mathbf{n}$<strong>维向量空间的基变换公式及过渡矩阵</strong></h3><p>若$\alpha_{1},\alpha_{2},\cdots,\alpha_{n}$与$\beta_{1},\beta_{2},\cdots,\beta_{n}$是向量空间$V$的两组基，则基变换公式为：</p>
+<p>$(\beta_{1},\beta_{2},\cdots,\beta_{n}) &#x3D; (\alpha_{1},\alpha_{2},\cdots,\alpha_{n})\begin{bmatrix}  c_{11}&amp; c_{12}&amp; \cdots &amp; c_{1n} \  c_{21}&amp; c_{22}&amp;\cdots &amp; c_{2n} \ \cdots &amp; \cdots &amp; \cdots &amp; \cdots \  c_{n1}&amp; c_{n2} &amp; \cdots &amp; c_{ {nn} } \\end{bmatrix} &#x3D; (\alpha_{1},\alpha_{2},\cdots,\alpha_{n})C$</p>
+<p>其中$C$是可逆矩阵，称为由基$\alpha_{1},\alpha_{2},\cdots,\alpha_{n}$到基$\beta_{1},\beta_{2},\cdots,\beta_{n}$的过渡矩阵。</p>
+<h3 id="4-6-坐标变换公式"><a href="#4-6-坐标变换公式" class="headerlink" title="4.6 坐标变换公式"></a><strong>4.6 坐标变换公式</strong></h3><p>若向量$\gamma$在基$\alpha_{1},\alpha_{2},\cdots,\alpha_{n}$与基$\beta_{1},\beta_{2},\cdots,\beta_{n}$的坐标分别是<br>$X &#x3D; {(x_{1},x_{2},\cdots,x_{n})}^{T}$，</p>
+<p>$Y &#x3D; \left( y_{1},y_{2},\cdots,y_{n} \right)^{T}$ 即： $\gamma &#x3D;x_{1}\alpha_{1} + x_{2}\alpha_{2} + \cdots + x_{n}\alpha_{n} &#x3D; y_{1}\beta_{1} +y_{2}\beta_{2} + \cdots + y_{n}\beta_{n}$，则向量坐标变换公式为$X &#x3D; CY$ 或$Y &#x3D; C^{- 1}X$，其中$C$是从基$\alpha_{1},\alpha_{2},\cdots,\alpha_{n}$到基$\beta_{1},\beta_{2},\cdots,\beta_{n}$的过渡矩阵。</p>
+<h3 id="4-7-向量的内积-Inner-Product"><a href="#4-7-向量的内积-Inner-Product" class="headerlink" title="4.7 向量的内积(Inner Product)"></a><strong>4.7 向量的内积(Inner Product)</strong></h3><p>也可以成为点积(Dot Product)或标量积(Scalar Product)</p>
+<p>$(\alpha,\beta) &#x3D; a_{1}b_{1} + a_{2}b_{2} + \cdots + a_{n}b_{n} &#x3D; \alpha^{T}\beta &#x3D; \beta^{T}\alpha$</p>
+<h3 id="4-8-Schmidt-正交化"><a href="#4-8-Schmidt-正交化" class="headerlink" title="4.8 Schmidt 正交化"></a><strong>4.8 Schmidt 正交化</strong></h3><p>若$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$线性无关，则可构造$\beta_{1},\beta_{2},\cdots,\beta_{s}$使其两两正交，且$\beta_{i}$仅是$\alpha_{1},\alpha_{2},\cdots,\alpha_{i}$的线性组合$(i&#x3D; 1,2,\cdots,n)$，再把$\beta_{i}$单位化，记$\gamma_{i} &#x3D;\frac{\beta_{i} }{\left| \beta_{i}\right|}$，则$\gamma_{1},\gamma_{2},\cdots,\gamma_{i}$是规范正交向量组。其中<br>$\beta_{1} &#x3D; \alpha_{1}$， $\beta_{2} &#x3D; \alpha_{2} -\frac{(\alpha_{2},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1}$ ， $\beta_{3} &#x3D;\alpha_{3} - \frac{(\alpha_{3},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1} -\frac{(\alpha_{3},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2}$ ，</p>
+<p>$\beta_{s} &#x3D; \alpha_{s} - \frac{(\alpha_{s},\beta_{1})}{(\beta_{1},\beta_{1})}\beta_{1} - \frac{(\alpha_{s},\beta_{2})}{(\beta_{2},\beta_{2})}\beta_{2} - \cdots - \frac{(\alpha_{s},\beta_{s - 1})}{(\beta_{s - 1},\beta_{s - 1})}\beta_{s - 1}$</p>
+<h3 id="4-9-正交基及规范正交基"><a href="#4-9-正交基及规范正交基" class="headerlink" title="4.9 正交基及规范正交基"></a><strong>4.9 正交基及规范正交基</strong></h3><p>向量空间一组基中的向量如果两两正交，就称为正交基；若正交基中每个向量都是单位向量，就称其为规范正交基。</p>
+<h2 id="5-线性方程组"><a href="#5-线性方程组" class="headerlink" title="5 线性方程组"></a>5 线性方程组</h2><p><strong>1. 克莱姆法则</strong></p>
+<p>线性方程组$\begin{cases}  a_{11}x_{1} + a_{12}x_{2} + \cdots +a_{1n}x_{n} &#x3D; b_{1} \   a_{21}x_{1} + a_{22}x_{2} + \cdots + a_{2n}x_{n} &#x3D;b_{2} \   \quad\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots \ a_{n1}x_{1} + a_{n2}x_{2} + \cdots + a_{ {nn} }x_{n} &#x3D; b_{n} \ \end{cases}$，如果系数行列式$D &#x3D; \left| A \right| \neq 0$，则方程组有唯一解，$x_{1} &#x3D; \frac{D_{1} }{D},x_{2} &#x3D; \frac{D_{2} }{D},\cdots,x_{n} &#x3D;\frac{D_{n} }{D}$，其中$D_{j}$是把$D$中第$j$列元素换成方程组右端的常数列所得的行列式。</p>
+<p><strong>2.</strong> $n$阶矩阵$A$可逆$\Leftrightarrow Ax &#x3D; 0$只有零解。$\Leftrightarrow\forall b,Ax &#x3D; b$总有唯一解，一般地，$r(A_{m \times n}) &#x3D; n \Leftrightarrow Ax&#x3D; 0$只有零解。</p>
+<p><strong>3.非奇次线性方程组有解的充分必要条件，线性方程组解的性质和解的结构</strong></p>
+<p>(1) 设$A$为$m \times n$矩阵，若$r(A_{m \times n}) &#x3D; m$，则对$Ax &#x3D;b$而言必有$r(A) &#x3D; r(A \vdots b) &#x3D; m$，从而$Ax &#x3D; b$有解。</p>
+<p>(2) 设$x_{1},x_{2},\cdots x_{s}$为$Ax &#x3D; b$的解，则$k_{1}x_{1} + k_{2}x_{2}\cdots + k_{s}x_{s}$当$k_{1} + k_{2} + \cdots + k_{s} &#x3D; 1$时仍为$Ax &#x3D;b$的解；但当$k_{1} + k_{2} + \cdots + k_{s} &#x3D; 0$时，则为$Ax &#x3D;0$的解。特别$\frac{x_{1} + x_{2} }{2}$为$Ax &#x3D; b$的解；$2x_{3} - (x_{1} +x_{2})$为$Ax &#x3D; 0$的解。</p>
+<p>(3) 非齐次线性方程组${Ax} &#x3D; b$无解$\Leftrightarrow r(A) + 1 &#x3D;r(\overline{A}) \Leftrightarrow b$不能由$A$的列向量$\alpha_{1},\alpha_{2},\cdots,\alpha_{n}$线性表示。</p>
+<p><strong>4.奇次线性方程组的基础解系和通解，解空间，非奇次线性方程组的通解</strong></p>
+<p>(1) 齐次方程组${Ax} &#x3D; 0$恒有解(必有零解)。当有非零解时，由于解向量的任意线性组合仍是该齐次方程组的解向量，因此${Ax}&#x3D; 0$的全体解向量构成一个向量空间，称为该方程组的解空间，解空间的维数是$n - r(A)$，解空间的一组基称为齐次方程组的基础解系。</p>
+<p>(2) $\eta_{1},\eta_{2},\cdots,\eta_{t}$是${Ax} &#x3D; 0$的基础解系，即：</p>
+<ol>
+<li><p>$\eta_{1},\eta_{2},\cdots,\eta_{t}$是${Ax} &#x3D; 0$的解；</p>
+</li>
+<li><p>$\eta_{1},\eta_{2},\cdots,\eta_{t}$线性无关；</p>
+</li>
+<li><p>${Ax} &#x3D; 0$的任一解都可以由$\eta_{1},\eta_{2},\cdots,\eta_{t}$线性表出.<br>$k_{1}\eta_{1} + k_{2}\eta_{2} + \cdots + k_{t}\eta_{t}$是${Ax} &#x3D; 0$的通解，其中$k_{1},k_{2},\cdots,k_{t}$是任意常数。</p>
+</li>
+</ol>
+<h2 id="6-矩阵的特征值和特征向量"><a href="#6-矩阵的特征值和特征向量" class="headerlink" title="6 矩阵的特征值和特征向量"></a>6 矩阵的特征值和特征向量</h2><h3 id="6-1-矩阵的特征值和特征向量的概念及性质"><a href="#6-1-矩阵的特征值和特征向量的概念及性质" class="headerlink" title="6.1 矩阵的特征值和特征向量的概念及性质"></a><strong>6.1 矩阵的特征值和特征向量的概念及性质</strong></h3><p>(1) 设$\lambda$是$A$的一个特征值，则 ${kA},{aA} + {bE},A^{2},A^{m},f(A),A^{T},A^{- 1},A^{*}$有一个特征值分别为<br>${kλ},{aλ} + b,\lambda^{2},\lambda^{m},f(\lambda),\lambda,\lambda^{- 1},\frac{|A|}{\lambda},$且对应特征向量相同（$A^{T}$ 例外）。</p>
+<p>(2)若$\lambda_{1},\lambda_{2},\cdots,\lambda_{n}$为$A$的$n$个特征值，则$\sum_{i&#x3D; 1}^{n}\lambda_{i} &#x3D; \sum_{i &#x3D; 1}^{n}a_{ {ii} },\prod_{i &#x3D; 1}^{n}\lambda_{i}&#x3D; |A|$ ,从而$|A| \neq 0 \Leftrightarrow A$没有特征值。</p>
+<p>(3)设$\lambda_{1},\lambda_{2},\cdots,\lambda_{s}$为$A$的$s$个特征值，对应特征向量为$\alpha_{1},\alpha_{2},\cdots,\alpha_{s}$，</p>
+<p>若: $\alpha &#x3D; k_{1}\alpha_{1} + k_{2}\alpha_{2} + \cdots + k_{s}\alpha_{s}$ ,</p>
+<p>则: $A^{n}\alpha &#x3D; k_{1}A^{n}\alpha_{1} + k_{2}A^{n}\alpha_{2} + \cdots +k_{s}A^{n}\alpha_{s} &#x3D; k_{1}\lambda_{1}^{n}\alpha_{1} +k_{2}\lambda_{2}^{n}\alpha_{2} + \cdots k_{s}\lambda_{s}^{n}\alpha_{s}$ 。</p>
+<h3 id="6-2相似变换、相似矩阵的概念及性质"><a href="#6-2相似变换、相似矩阵的概念及性质" class="headerlink" title="6.2相似变换、相似矩阵的概念及性质"></a><strong>6.2相似变换、相似矩阵的概念及性质</strong></h3><p>(1) 若$A \sim B$，则</p>
+<ol>
+<li><p>$A^{T} \sim B^{T},A^{- 1} \sim B^{- 1},,A^{<em>} \sim B^{</em>}$</p>
+</li>
+<li><p>$|A| &#x3D; |B|,\sum_{i &#x3D; 1}^{n}A_{ {ii} } &#x3D; \sum_{i &#x3D;1}^{n}b_{ {ii} },r(A) &#x3D; r(B)$</p>
+</li>
+<li><p>$|\lambda E - A| &#x3D; |\lambda E - B|$，对$\forall\lambda$成立</p>
+</li>
+</ol>
+<h3 id="6-3-矩阵可相似对角化的充分必要条件"><a href="#6-3-矩阵可相似对角化的充分必要条件" class="headerlink" title="6.3 矩阵可相似对角化的充分必要条件"></a><strong>6.3 矩阵可相似对角化的充分必要条件</strong></h3><p>(1)设$A$为$n$阶方阵，则$A$可对角化$\Leftrightarrow$对每个$k_{i}$重根特征值$\lambda_{i}$，有$n-r(\lambda_{i}E - A) &#x3D; k_{i}$</p>
+<p>(2) 设$A$可对角化，则由$P^{- 1}{AP} &#x3D; \Lambda,$有$A &#x3D; {PΛ}P^{-1}$，从而$A^{n} &#x3D; P\Lambda^{n}P^{- 1}$</p>
+<p>(3) 重要结论</p>
+<ol>
+<li><p>若$A \sim B,C \sim D$，则$\begin{bmatrix}  A &amp; O \ O &amp; C \\end{bmatrix} \sim \begin{bmatrix} B &amp; O \  O &amp; D \\end{bmatrix}$.</p>
+</li>
+<li><p>若$A \sim B$，则$f(A) \sim f(B),\left| f(A) \right| \sim \left| f(B)\right|$，其中$f(A)$为关于$n$阶方阵$A$的多项式。</p>
+</li>
+<li><p>若$A$为可对角化矩阵，则其非零特征值的个数(重根重复计算)＝秩($A$)</p>
+</li>
+</ol>
+<h3 id="6-4-实对称矩阵的特征值、特征向量及相似对角阵"><a href="#6-4-实对称矩阵的特征值、特征向量及相似对角阵" class="headerlink" title="6.4 实对称矩阵的特征值、特征向量及相似对角阵"></a><strong>6.4 实对称矩阵的特征值、特征向量及相似对角阵</strong></h3><p>(1)相似矩阵：设$A,B$为两个$n$阶方阵，如果存在一个可逆矩阵$P$，使得$B &#x3D;P^{- 1}{AP}$成立，则称矩阵$A$与$B$相似，记为$A \sim B$。</p>
+<p>(2)相似矩阵的性质：如果$A \sim B$则有：</p>
+<ol>
+<li><p>$A^{T} \sim B^{T}$</p>
+</li>
+<li><p>$A^{- 1} \sim B^{- 1}$ （若$A$，$B$均可逆）</p>
+</li>
+<li><p>$A^{k} \sim B^{k}$ （$k$为正整数）</p>
+</li>
+<li><p>$\left| {λE} - A \right| &#x3D; \left| {λE} - B \right|$，从而$A,B$<br>有相同的特征值</p>
+</li>
+<li><p>$\left| A \right| &#x3D; \left| B \right|$，从而$A,B$同时可逆或者不可逆</p>
+</li>
+<li><p>秩$\left( A \right) &#x3D;$秩$\left( B \right),\left| {λE} - A \right| &#x3D;\left| {λE} - B \right|$，$A,B$不一定相似</p>
+</li>
+</ol>
+<h2 id="7-二次型"><a href="#7-二次型" class="headerlink" title="7 二次型"></a>7 二次型</h2><h3 id="7-1-mathbf-n-个变量-mathbf-x-mathbf-1-mathbf-mathbf-x-mathbf-2-mathbf-cdots-mathbf-x-mathbf-n-的二次齐次函数"><a href="#7-1-mathbf-n-个变量-mathbf-x-mathbf-1-mathbf-mathbf-x-mathbf-2-mathbf-cdots-mathbf-x-mathbf-n-的二次齐次函数" class="headerlink" title="7.1 $\mathbf{n}$个变量$\mathbf{x}{\mathbf{1} }\mathbf{,}\mathbf{x}{\mathbf{2} }\mathbf{,\cdots,}\mathbf{x}_{\mathbf{n} }$的二次齐次函数"></a><strong>7.1</strong> $\mathbf{n}$<strong>个变量</strong>$\mathbf{x}<em>{\mathbf{1} }\mathbf{,}\mathbf{x}</em>{\mathbf{2} }\mathbf{,\cdots,}\mathbf{x}_{\mathbf{n} }$<strong>的二次齐次函数</strong></h3><p>$f(x_{1},x_{2},\cdots,x_{n}) &#x3D; \sum_{i &#x3D; 1}^{n}{\sum_{j &#x3D;1}^{n}{a_{ {ij} }x_{i}y_{j} }}$，其中$a_{ {ij} } &#x3D; a_{ {ji} }(i,j &#x3D;1,2,\cdots,n)$，称为$n$元二次型，简称二次型. 若令$x &#x3D; \ \begin{bmatrix}x_{1} \ x_{1} \  \vdots \ x_{n} \ \end{bmatrix},A &#x3D; \begin{bmatrix}  a_{11}&amp; a_{12}&amp; \cdots &amp; a_{1n} \  a_{21}&amp; a_{22}&amp; \cdots &amp; a_{2n} \ \cdots &amp;\cdots &amp;\cdots &amp;\cdots \  a_{n1}&amp; a_{n2} &amp; \cdots &amp; a_{ {nn} } \\end{bmatrix}$,这二次型$f$可改写成矩阵向量形式$f &#x3D;x^{T}{Ax}$，其中$A$称为二次型矩阵。写得清楚些，我们可以看到：</p>
+<p>$$<br>x^{T} A x&#x3D;\sum_{i&#x3D;1}^{n} x_{i}(A x)<em>{i}&#x3D;\sum</em>{i&#x3D;1}^{n} x_{i}\left(\sum_{j&#x3D;1}^{n} A_{i j} x_{j}\right)&#x3D;\sum_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{n} A_{i j} x_{i} x_{j}<br>$$</p>
+<p>注意：<br>$<br>x^{T} A x&#x3D;\left(x^{T} A x\right)^{T}&#x3D;x^{T} A^{T} x&#x3D;x^{T}\left(\frac{1}{2} A+\frac{1}{2} A^{T}\right) x<br>$第一个等号的是因为是标量的转置与自身相等，而第二个等号是因为是我们平均两个本身相等的量。 由此，我们可以得出结论，只有$A$的对称部分有助于形成二次型。 出于这个原因，我们经常隐含地假设以二次型出现的矩阵是对称阵。<br>我们给出以下定义：</p>
+<ul>
+<li><p>对于所有非零向量$x \in \mathbb{R}^n$，$x^TAx&gt;0$，对称阵$A \in \mathbb{S}^n$为<strong>正定</strong>（<strong>positive definite,PD</strong>）。这通常表示为$A\succ0$（或$A&gt;0$），并且通常将所有正定矩阵的集合表示为$\mathbb{S}_{++}^n$。</p>
+</li>
+<li><p>对于所有向量$x^TAx\geq 0$，对称矩阵$A \in \mathbb{S}^n$是<strong>半正定</strong>(<strong>positive semidefinite ,PSD</strong>)。 这写为（或$A \succeq 0$仅$A≥0$），并且所有半正定矩阵的集合通常表示为$\mathbb{S}_+^n$。</p>
+</li>
+<li><p>同样，对称矩阵$A \in \mathbb{S}^n$是<strong>负定</strong>（<strong>negative definite,ND</strong>），如果对于所有非零$x \in \mathbb{R}^n$，则$x^TAx &lt;0$表示为$A\prec0$（或$A &lt;0$）。</p>
+</li>
+<li><p>类似地，对称矩阵$A \in \mathbb{S}^n$是<strong>半负定</strong>(<strong>negative semidefinite,NSD</strong>），如果对于所有$x \in \mathbb{R}^n$，则$x^TAx \leq 0$表示为$A\preceq 0$（或$A≤0$）。</p>
+</li>
+<li><p>最后，对称矩阵$A \in \mathbb{S}^n$是<strong>不定</strong>的，如果它既不是正半定也不是负半定，即，如果存在$x_1,x_2 \in \mathbb{R}^n$，那么$x_1^TAx_1&gt;0$且$x_2^TAx_2&lt;0$。</p>
+</li>
+</ul>
+<p>很明显，如果$A$是正定的，那么$−A$是负定的，反之亦然。同样，如果$A$是半正定的，那么$−A$是是半负定的，反之亦然。如果果$A$是不定的，那么$−A$是也是不定的。</p>
+<p>正定矩阵和负定矩阵的一个重要性质是它们总是满秩，因此是可逆的。为了了解这是为什么，假设某个矩阵$A \in \mathbb{S}^n$不是满秩。然后，假设$A$的第$j$列可以表示为其他$n-1$列的线性组合：<br>$<br>a_{j}&#x3D;\sum_{i \neq j} x_{i} a_{i}<br>$对于某些$x_1,\cdots x_{j-1},x_{j + 1} ,\cdots ,x_n\in \mathbb{R}$。设$x_j &#x3D; -1$，则：<br>$x&#x3D;\sum_{i \neq j} x_{i} a_{i}&#x3D;0<br>$意味着对于某些非零向量$x$，$x^T Ax &#x3D; 0$，因此$A$必须既不是正定也不是负定。如果$A$是正定或负定，则必须是满秩。<br>最后，有一种类型的正定矩阵经常出现，因此值得特别提及。 给定矩阵$A  \in \mathbb{R}^{m \times n}$（不一定是对称或偶数平方），矩阵$G &#x3D; A^T A$（有时称为<strong>Gram矩阵</strong>）总是半正定的。 此外，如果$m\geq n$（同时为了方便起见，我们假设$A$是满秩），则$G &#x3D; A^T A$是正定的。</p>
+<h3 id="7-2-惯性定理，二次型的标准形和规范形"><a href="#7-2-惯性定理，二次型的标准形和规范形" class="headerlink" title="7.2 惯性定理，二次型的标准形和规范形"></a><strong>7.2 惯性定理，二次型的标准形和规范形</strong></h3><p>(1) 惯性定理</p>
+<p>对于任一二次型，不论选取怎样的合同变换使它化为仅含平方项的标准型，其正负惯性指数与所选变换无关，这就是所谓的惯性定理。</p>
+<p>(2) 标准形</p>
+<p>二次型$f &#x3D; \left( x_{1},x_{2},\cdots,x_{n} \right) &#x3D;x^{T}{Ax}$经过合同变换$x &#x3D; {Cy}$化为$f &#x3D; x^{T}{Ax} &#x3D;y^{T}C^{T}{AC}$</p>
+<p>$y &#x3D; \sum_{i &#x3D; 1}^{r}{d_{i}y_{i}^{2} }$称为 $f(r \leq n)$的标准形。在一般的数域内，二次型的标准形不是唯一的，与所作的合同变换有关，但系数不为零的平方项的个数由$r(A)$唯一确定。</p>
+<p>(3) 规范形</p>
+<p>任一实二次型$f$都可经过合同变换化为规范形$f &#x3D; z_{1}^{2} + z_{2}^{2} + \cdots z_{p}^{2} - z_{p + 1}^{2} - \cdots -z_{r}^{2}$，其中$r$为$A$的秩，$p$为正惯性指数，$r -p$为负惯性指数，且规范型唯一。</p>
+<h3 id="7-3-用正交变换和配方法化二次型为标准形，二次型及其矩阵的正定性"><a href="#7-3-用正交变换和配方法化二次型为标准形，二次型及其矩阵的正定性" class="headerlink" title="7.3 用正交变换和配方法化二次型为标准形，二次型及其矩阵的正定性"></a><strong>7.3 用正交变换和配方法化二次型为标准形，二次型及其矩阵的正定性</strong></h3><p>设$A$正定$\Rightarrow {kA}(k &gt; 0),A^{T},A^{- 1},A^{*}$正定；$|A| &gt;0$,$A$可逆；$a_{ {ii} } &gt; 0$，且$|A_{ {ii} }| &gt; 0$</p>
+<p>$A$，$B$正定$\Rightarrow A +B$正定，但${AB}$，${BA}$不一定正定</p>
+<p>$A$正定$\Leftrightarrow f(x) &#x3D; x^{T}{Ax} &gt; 0,\forall x \neq 0$</p>
+<p>$\Leftrightarrow A$的各阶顺序主子式全大于零</p>
+<p>$\Leftrightarrow A$的所有特征值大于零</p>
+<p>$\Leftrightarrow A$的正惯性指数为$n$</p>
+<p>$\Leftrightarrow$存在可逆阵$P$使$A &#x3D; P^{T}P$</p>
+<p>$\Leftrightarrow$存在正交矩阵$Q$，使$Q^{T}{AQ} &#x3D; Q^{- 1}{AQ} &#x3D;\begin{pmatrix} \lambda_{1} &amp; &amp; \ \begin{matrix}  &amp; \  &amp; \ \end{matrix} &amp;\ddots &amp; \  &amp; &amp; \lambda_{n} \ \end{pmatrix},$</p>
+<p>其中$\lambda_{i} &gt; 0,i &#x3D; 1,2,\cdots,n.$正定$\Rightarrow {kA}(k &gt;0),A^{T},A^{- 1},A^{*}$正定； $|A| &gt; 0,A$可逆；$a_{ {ii} } &gt;0$，且$|A_{ {ii} }| &gt; 0$ 。 }| &gt; 0$ 。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Machine-Learning/">#Machine Learning</a>
+      
+        <a href="/tags/Mathematics/">#Mathematics</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Machine Learning Foundation——线性代数</div>
+      <div>http://example.com/2022/08/01/MachineLearning/线代基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%B3%E8%81%94/" title="Machine Learning Foundation——统计学习与机器学习的关联">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Machine Learning Foundation——统计学习与机器学习的关联</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/%E7%9F%A9%E9%98%B5%E5%90%91%E9%87%8F%E6%B1%82%E5%AF%BC/" title="Machine Learning Foundation——矩阵求导">
+                        <span class="hidden-mobile">Machine Learning Foundation——矩阵求导</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

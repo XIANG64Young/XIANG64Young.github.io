@@ -1,0 +1,985 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Logging 理解Logging作为Python的标准库之一，日志是对软件执行时所发生事件的一种追踪方式，所以他可以十分灵活的帮助我们记录程序运行过程中的一些信息。这里给出官方文档，可以进行参考 什么时候使用日志对于简单的日志使用来说日志功能提供了一系列便利的函数。它们是 debug()，info()，warning()，error() 和 critical()。想要决定何时使用日志，请看下表，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Logging">
+<meta property="og:url" content="http://example.com/2022/08/01/Python/Logging/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="Logging 理解Logging作为Python的标准库之一，日志是对软件执行时所发生事件的一种追踪方式，所以他可以十分灵活的帮助我们记录程序运行过程中的一些信息。这里给出官方文档，可以进行参考 什么时候使用日志对于简单的日志使用来说日志功能提供了一系列便利的函数。它们是 debug()，info()，warning()，error() 和 critical()。想要决定何时使用日志，请看下表，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/1620.png">
+<meta property="og:image" content="http://example.com/src/logging_flow.png">
+<meta property="article:published_time" content="2022-08-01T02:13:53.512Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.267Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/1620.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python Logging - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python Logging"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python Logging</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h1 id="Logging-理解"><a href="#Logging-理解" class="headerlink" title="Logging 理解"></a>Logging 理解</h1><p>Logging作为Python的标准库之一，日志是对软件执行时所发生事件的一种追踪方式，所以他可以十分灵活的帮助我们记录程序运行过程中的一些信息。这里给出<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/logging.html#">官方文档</a>，可以进行参考</p>
+<h2 id="什么时候使用日志"><a href="#什么时候使用日志" class="headerlink" title="什么时候使用日志"></a>什么时候使用日志</h2><p>对于简单的日志使用来说日志功能提供了一系列便利的函数。它们是 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.debug"><code>debug()</code></a>，<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.info"><code>info()</code></a>，<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.warning"><code>warning()</code></a>，<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.error"><code>error()</code></a> 和 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.critical"><code>critical()</code></a>。想要决定何时使用日志，请看下表，其中显示了对于每个通用任务集合来说最好的工具。</p>
+<table>
+<thead>
+<tr>
+<th align="left">你想要执行的任务</th>
+<th align="left">此任务最好的工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">对于命令行或程序的应用，结果显示在控制台。</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/functions.html#print"><code>print()</code></a></td>
+</tr>
+<tr>
+<td align="left">在对程序的普通操作发生时提交事件报告(比如：状态监控和错误调查)</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.info"><code>logging.info()</code></a> 函数(当有诊断目的需要详细输出信息时使用 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.debug"><code>logging.debug()</code></a> 函数)</td>
+</tr>
+<tr>
+<td align="left">提出一个警告信息基于一个特殊的运行时事件</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/warnings.html#warnings.warn"><code>warnings.warn()</code></a> 位于代码库中，该事件是可以避免的，需要修改客户端应用以消除告警<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.warning"><code>logging.warning()</code></a> 不需要修改客户端应用，但是该事件还是需要引起关注</td>
+</tr>
+<tr>
+<td align="left">对一个特殊的运行时事件报告错误</td>
+<td align="left">引发异常</td>
+</tr>
+<tr>
+<td align="left">报告错误而不引发异常(如在长时间运行中的服务端进程的错误处理)</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.error"><code>logging.error()</code></a>, <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.exception"><code>logging.exception()</code></a> 或 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.critical"><code>logging.critical()</code></a> 分别适用于特定的错误及应用领域</td>
+</tr>
+</tbody></table>
+<p>日志功能应以所追踪事件级别或严重性而定。各级别适用性如下（以严重性递增）：</p>
+<table>
+<thead>
+<tr>
+<th align="left">级别</th>
+<th>级别数值</th>
+<th align="left">何时使用</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>DEBUG</code></td>
+<td>10</td>
+<td align="left">细节信息，仅当诊断问题时适用。</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><code>INFO</code></td>
+<td>20</td>
+<td align="left">确认程序按预期运行。</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><code>WARNING</code></td>
+<td>30</td>
+<td align="left">表明有已经或即将发生的意外（例如：磁盘空间不足）。程序仍按预期进行。</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><code>ERROR</code></td>
+<td>40</td>
+<td align="left">由于严重的问题，程序的某些功能已经不能正常执行</td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><code>CRITICAL</code></td>
+<td>50</td>
+<td align="left">严重的错误，表明程序已不能继续执行</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>默认的级别是 <code>WARNING</code>，意味着只会追踪该级别及以上的事件，除非更改日志配置。</p>
+<p>所追踪事件可以以不同形式处理。最简单的方式是输出到控制台。另一种常用的方式是写入磁盘文件。</p>
+<h2 id="日志的输出格式"><a href="#日志的输出格式" class="headerlink" title="日志的输出格式"></a>日志的输出格式</h2><p><img src="/src/1620.png" alt="img"></p>
+<h2 id="怎么使用日志"><a href="#怎么使用日志" class="headerlink" title="怎么使用日志"></a>怎么使用日志</h2><p><strong>最简单的方法</strong>当然是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">logging.warning(<span class="hljs-string">&#x27;Watch out!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这样就会直接在控制台中输出<code>WARNING:root:Watch out!</code></p>
+<p>同样可以在消息中<strong>填加一些事件的属性</strong>，例如时间、日期等</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br>logging.basicConfig(<span class="hljs-built_in">format</span>=<span class="hljs-string">&#x27;%(asctime)s %(message)s&#x27;</span>)<br>logging.warning(<span class="hljs-string">&#x27;is when this event was logged.&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>那么它的输出就是<code>2022-07-18 16:08:42,612 is when this event was logged.</code></p>
+<p>当然这里还存在一些高级的<strong>进项使用方法</strong></p>
+<p>日志库采用模块化方法，并提供几类组件（对象）：**<code>Logger</code><strong>日志、</strong><code>LogRecord</code><strong>记录器、</strong><code>Filter过滤器</code><strong>、</strong><code>Handler</code><strong>处理器、</strong><code>Formatter</code>**格式器。</p>
+<ul>
+<li>记录器暴露了应用程序代码直接使用的接口。</li>
+<li>处理器将日志记录（由记录器创建）发送到适当的目标。</li>
+<li>过滤器提供了更细粒度的功能，用于确定要输出的日志记录。</li>
+<li>格式器指定最终输出中日志记录的样式。</li>
+</ul>
+<p><img src="/src/logging_flow.png" alt="/_images/logging_flow.png"></p>
+<p>Logging流程解释：</p>
+<ol>
+<li>判断 Logger 对象对于设置的级别是否可用，如果可用，则往下执行，否则，流程结束。</li>
+<li>创建 LogRecord 对象，如果注册到 Logger 对象中的 Filter 对象过滤后返回 False，则不记录日志，流程结束，否则，则向下执行。</li>
+<li>LogRecord 对象将 Handler 对象传入当前的 Logger 对象，（图中的子流程）如果 Handler 对象的日志级别大于设置的日志级别，再判断注册到 Handler 对象中的 Filter 对象过滤后是否返回 True 而放行输出日志信息，否则不放行，流程结束。</li>
+<li>如果传入的 Handler 大于 Logger 中设置的级别，也即 Handler 有效，则往下执行，否则，流程结束。</li>
+<li>判断这个 Logger 对象是否还有父 Logger 对象，如果没有（代表当前 Logger 对象是最顶层的 Logger 对象 root Logger），流程结束。否则将 Logger 对象设置为它的父 Logger 对象，重复上面的 3、4 两步，输出父类 Logger 对象中的日志输出，直到是 root Logger 为止。</li>
+</ol>
+<h3 id="记录器"><a href="#记录器" class="headerlink" title="记录器"></a>记录器</h3><p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger"><code>Logger</code></a> 对象有三重任务。首先，它们向应用程序代码公开了几种方法，以便应用程序可以在运行时记录消息。其次，记录器对象根据严重性（默认过滤工具）或过滤器对象确定要处理的日志消息。第三，记录器对象将相关的日志消息传递给所有感兴趣的日志处理器。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.getLogger"><code>getLogger()</code></a> 返回对具有指定名称的记录器实例的引用（如果已提供），或者如果没有则返回 <code>root</code> 。</p>
+<p>记录器对象上使用最广泛的方法分为两类：配置和消息发送。这些是最常见的配置方法：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.setLevel"><code>Logger.setLevel()</code></a> 指定记录器将处理的最低严重性日志消息，其中 debug 是最低内置严重性级别， critical 是最高内置严重性级别。 例如，如果严重性级别为 INFO ，则记录器将仅处理 INFO 、 WARNING 、 ERROR 和 CRITICAL 消息，并将忽略 DEBUG 消息。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.addHandler"><code>Logger.addHandler()</code></a> 和 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.removeHandler"><code>Logger.removeHandler()</code></a> 从记录器对象中添加和删除处理器对象。处理器在以下内容中有更详细的介绍 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/howto/logging.html#handler-basic">处理器</a> 。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.addFilter"><code>Logger.addFilter()</code></a> 和 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.removeFilter"><code>Logger.removeFilter()</code></a> 可以添加或移除记录器对象中的过滤器。 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#filter">过滤器对象</a> 包含更多的过滤器细节。</li>
+</ul>
+<p>配置记录器对象后，以下方法将创建日志消息：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.debug"><code>Logger.debug()</code></a> 、 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.info"><code>Logger.info()</code></a> 、 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.warning"><code>Logger.warning()</code></a> 、 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.error"><code>Logger.error()</code></a> 和 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.critical"><code>Logger.critical()</code></a> 都创建日志记录，包含消息和与其各自方法名称对应的级别。该消息实际上是一个格式化字符串，它可能包含标题字符串替换语法 <code>%s</code> 、 <code>%d</code> 、 <code>%f</code> 等等。其余参数是与消息中的替换字段对应的对象列表。关于 <code>**kwargs</code> ，日志记录方法只关注 <code>exc_info</code> 的关键字，并用它来确定是否记录异常信息。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.exception"><code>Logger.exception()</code></a> 创建与 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.error"><code>Logger.error()</code></a> 相似的日志信息。 不同之处是， <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.exception"><code>Logger.exception()</code></a> 同时还记录当前的堆栈追踪。仅从异常处理程序调用此方法。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.log"><code>Logger.log()</code></a> 将日志级别作为显式参数。对于记录消息而言，这比使用上面列出的日志级别便利方法更加冗长，但这是使用自定义日志级别的方法。</li>
+</ul>
+<h3 id="处理器"><a href="#处理器" class="headerlink" title="处理器"></a>处理器</h3><p><a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Handler"><code>Handler</code></a> 对象负责将适当的日志消息（基于日志消息的严重性）分派给处理器的指定目标。 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger"><code>Logger</code></a> 对象可以使用 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Logger.addHandler"><code>addHandler()</code></a> 方法向自己添加零个或多个处理器对象。</p>
+<p>注意不要直接实例化 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/logging.html#logging.Handler"><code>Handler</code></a> ；这个类用来派生其他更有用的子类。但是，子类的 <code>__init__()</code> 方法需要调用 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/logging.html#logging.Handler.__init__"><code>Handler.__init__()</code></a> 。</p>
+<h3 id="格式器"><a href="#格式器" class="headerlink" title="格式器"></a>格式器</h3><p>格式化器对象配置日志消息的最终顺序、结构和内容。 与 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3.10/library/logging.html#logging.Handler"><code>logging.Handler</code></a> 类不同，应用程序代码可以实例化格式器类，但如果应用程序需要特殊行为，则可能会对格式化器进行子类化定制。</p>
+<p>构造函数有三个可选参数 —— 消息格式字符串、日期格式字符串和样式指示符。</p>
+<p>一般情况下，它们负责将 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/logging.html#logging.LogRecord"><code>LogRecord</code></a> 转换为可由人或外部系统解释的字符串。基础的 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/logging.html#logging.Formatter"><code>Formatter</code></a> 允许指定格式字符串。如果未提供任何值，则使用默认值 <code>&#39;%(message)s&#39;</code> ，它仅将消息包括在日志记录调用中。</p>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p><code>Filters</code> 可被 <code>Handlers</code> 和 <code>Loggers</code> 用来实现比按层级提供更复杂的过滤操作。 基本过滤器类只允许低于日志记录器层级结构中低于特定层级的事件。</p>
+<p>在上面的使用中我们用到了<code>basicConfig()</code>，这个方法就可基本满足一般使用需求。在没有传入参数时，会根据默认的配置来创建一个Logger对象，把日志级别默认设置为Warning。具体的参数为：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数名称</th>
+<th align="left">参数描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">filename</td>
+<td align="left">日志输出到文件的文件名</td>
+</tr>
+<tr>
+<td align="left">filemode</td>
+<td align="left">文件模式，r[+]、w[+]、a[+]</td>
+</tr>
+<tr>
+<td align="left">format</td>
+<td align="left">日志输出的格式</td>
+</tr>
+<tr>
+<td align="left">datefat</td>
+<td align="left">日志附带日期时间的格式</td>
+</tr>
+<tr>
+<td align="left">style</td>
+<td align="left">格式占位符，默认为 “%” 和 “{}”</td>
+</tr>
+<tr>
+<td align="left">level</td>
+<td align="left">设置日志输出级别</td>
+</tr>
+<tr>
+<td align="left">stream</td>
+<td align="left">定义输出流，用来初始化 StreamHandler 对象，不能 filename 参数一起使用，否则会ValueError 异常</td>
+</tr>
+<tr>
+<td align="left">handles</td>
+<td align="left">定义处理器，用来创建 Handler 对象，不能和 filename 、stream 参数一起使用，否则也会抛出 ValueError 异常</td>
+</tr>
+</tbody></table>
+<p>例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><br>logging.basicConfig()<br>logging.debug(<span class="hljs-string">&#x27;This is a debug message&#x27;</span>)<br>logging.info(<span class="hljs-string">&#x27;This is an info message&#x27;</span>)<br>logging.warning(<span class="hljs-string">&#x27;This is a warning message&#x27;</span>)<br>logging.error(<span class="hljs-string">&#x27;This is an error message&#x27;</span>)<br>logging.critical(<span class="hljs-string">&#x27;This is a critical message&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>结果如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">WARNING:root:This <span class="hljs-keyword">is</span> a warning message<br>ERROR:root:This <span class="hljs-keyword">is</span> an error message<br>CRITICAL:root:This <span class="hljs-keyword">is</span> a critical message<br></code></pre></td></tr></table></figure>
+
+<p>当然我们也可以自定义去设计一个Logger</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">log_file</span>():<br>    log_file = <span class="hljs-string">&#x27;testfun.log&#x27;</span><br>    handler_test = logging.FileHandler(log_file,encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-comment"># stdout to file</span><br>    handler_control = logging.StreamHandler()    <span class="hljs-comment"># stdout to console</span><br>    handler_test.setLevel(<span class="hljs-string">&#x27;ERROR&#x27;</span>)               <span class="hljs-comment"># 设置ERROR级别</span><br>    handler_control.setLevel(<span class="hljs-string">&#x27;INFO&#x27;</span>)             <span class="hljs-comment"># 设置INFO级别</span><br><br>    selfdef_fmt = <span class="hljs-string">&#x27;%(asctime)s - %(funcName)s - %(levelname)s - %(message)s&#x27;</span><br>    formatter = logging.Formatter(selfdef_fmt)<br>    handler_test.setFormatter(formatter)<br>    handler_control.setFormatter(formatter)<br><br>    logger = logging.getLogger(<span class="hljs-string">&#x27;updateSecurity&#x27;</span>)<br>    logger.setLevel(<span class="hljs-string">&#x27;DEBUG&#x27;</span>)           <span class="hljs-comment">#设置了这个才会把debug以上的输出到控制台</span><br><br>    logger.addHandler(handler_test)    <span class="hljs-comment">#添加handler</span><br>    logger.addHandler(handler_control)<br>    logger.info(<span class="hljs-string">&#x27;info,一般的信息输出&#x27;</span>)<br>    logger.warning(<span class="hljs-string">&#x27;waring，用来用来打印警告信息&#x27;</span>)<br>    logger.error(<span class="hljs-string">&#x27;error，一般用来打印一些错误信息&#x27;</span>)<br>    logger.critical(<span class="hljs-string">&#x27;critical，用来打印一些致命的错误信息，等级最高&#x27;</span>)<br><br>log_file()<br></code></pre></td></tr></table></figure>
+
+<h2 id="实战问题"><a href="#实战问题" class="headerlink" title="实战问题"></a>实战问题</h2><h3 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a><strong>中文乱码</strong></h3><p>FileHandler 创建对象时可以设置文件编码，如果将文件编码设置为 “utf-8”（utf-8 和 utf8 等价），就可以解决中文乱码问题</p>
+<h3 id="临时禁用日志输出"><a href="#临时禁用日志输出" class="headerlink" title="临时禁用日志输出"></a><strong>临时禁用日志输出</strong></h3><p>有时候我们又不想让日志输出，但在这后又想输出日志。如果我们打印信息用的是 print() 方法，那么就需要把所有的 print() 方法都注释掉，而使用了 logging 后，我们就有了一键开关闭日志的 “魔法”。一种方法是在使用默认配置时，给 logging.disabled() 方法传入禁用的日志级别，就可以禁止设置级别以下的日志输出了，另一种方法时在自定义 Logger 时，Logger 对象的 disable 属性设为 True，默认值是 False，也即不禁用。</p>
+<h3 id="日志文件按照时间划分或者按照大小划分"><a href="#日志文件按照时间划分或者按照大小划分" class="headerlink" title="日志文件按照时间划分或者按照大小划分"></a><strong>日志文件按照时间划分或者按照大小划分</strong></h3><p>如果将日志保存在一个文件中，那么时间一长，或者日志一多，单个日志文件就会很大，既不利于备份，也不利于查看。我们会想到能不能按照时间或者大小对日志文件进行划分呢？答案肯定是可以的，并且还很简单，logging 考虑到了我们这个需求。logging.handlers 文件中提供了 <strong>TimedRotatingFileHandler</strong> 和 <strong>RotatingFileHandler</strong> 类分别可以实现按时间和大小划分。打开这个 handles 文件，可以看到还有其他功能的 Handler 类，它们都继承自基类 <strong>BaseRotatingHandler</strong>。<br>*。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python Logging</div>
+      <div>http://example.com/2022/08/01/Python/Logging/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/matplotlib/" title="matplotlib example">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">matplotlib example</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/MachineLearning/%E9%AB%98%E6%95%B0%E5%9F%BA%E7%A1%80/" title="Machine Learning Foundation——高等数学">
+                        <span class="hidden-mobile">Machine Learning Foundation——高等数学</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

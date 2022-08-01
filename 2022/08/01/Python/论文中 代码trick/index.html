@@ -1,0 +1,889 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chris·Yougn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="pickelpickel是能够实现任意对象与文本之间的相互转化，也可以实现任意对象与二进制之间的相互转化。也就是说，pickle 可以实现 Python 对象的存储及恢复。 pickle 模块提供了以下 4 个函数供我们使用：  dumps()：将 Python 中的对象序列化成二进制对象，并返回； loads()：读取给定的二进制对象数据，并将其转换为 Python 对象； dump()：将 P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python TrickNote in Code">
+<meta property="og:url" content="http://example.com/2022/08/01/Python/%E8%AE%BA%E6%96%87%E4%B8%AD%20%E4%BB%A3%E7%A0%81trick/index.html">
+<meta property="og:site_name" content="相阳的小屋">
+<meta property="og:description" content="pickelpickel是能够实现任意对象与文本之间的相互转化，也可以实现任意对象与二进制之间的相互转化。也就是说，pickle 可以实现 Python 对象的存储及恢复。 pickle 模块提供了以下 4 个函数供我们使用：  dumps()：将 Python 中的对象序列化成二进制对象，并返回； loads()：读取给定的二进制对象数据，并将其转换为 Python 对象； dump()：将 P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/src/image-20220710105542841.png">
+<meta property="article:published_time" content="2022-08-01T02:13:53.536Z">
+<meta property="article:modified_time" content="2022-08-01T02:24:48.356Z">
+<meta property="article:author" content="Chris·Yougn">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/src/image-20220710105542841.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Python TrickNote in Code - 相阳的小屋</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.1","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":null,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chris Yougn的小屋</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python TrickNote in Code"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-01 10:13" pubdate>
+          2022年8月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Python TrickNote in Code</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2022年8月1日 上午
+                  
+                
+              </p>
+            
+            <div class="markdown-body">
+              
+              <h2 id="pickel"><a href="#pickel" class="headerlink" title="pickel"></a>pickel</h2><p>pickel是能够实现任意对象与文本之间的相互转化，也可以实现任意对象与二进制之间的相互转化。也就是说，pickle 可以实现 Python 对象的存储及恢复。</p>
+<p>pickle 模块提供了以下 4 个函数供我们使用：</p>
+<ol>
+<li>dumps()：将 Python 中的对象序列化成二进制对象，并返回；</li>
+<li>loads()：读取给定的二进制对象数据，并将其转换为 Python 对象；</li>
+<li>dump()：将 Python 中的对象序列化成二进制对象，并写入文件；</li>
+<li>load()：读取指定的序列化数据文件，并返回对象。</li>
+</ol>
+<h2 id="pickel的读取的数据转成torch-float对象"><a href="#pickel的读取的数据转成torch-float对象" class="headerlink" title="pickel的读取的数据转成torch.float对象"></a>pickel的读取的数据转成torch.float对象</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.from_numpy(data.todense()).<span class="hljs-built_in">type</span>(torch.FloatTensor)<br></code></pre></td></tr></table></figure>
+
+<p><code>data</code>是pickel.load()方法读取出来的python对象。</p>
+<p><code>todense()</code>和<code>toarray()</code>很类似，一个是把对象当作矩阵输出，一个是输出ndarray</p>
+<p><img src="/src/image-20220710105542841.png" alt="image-20220710105542841"></p>
+<p>python对象-&gt; 矩阵-&gt; ndarray -&gt; torch.float</p>
+<h2 id="contiguous-函数引发的认知"><a href="#contiguous-函数引发的认知" class="headerlink" title="contiguous()函数引发的认知"></a>contiguous()函数引发的认知</h2><p>在pytorch中，只有很少几个操作是<strong>不改变tensor的内容本身</strong>，而只是<strong>重新定义下标与元素的对应关系</strong>的。换句话说，这种操作不进行数据拷贝和数据的改变，变的是<strong>元数据</strong>。</p>
+<p>会改变元数据的操作是：narrow()、view()、expand()、transpose()<br>在使用transpose()进行转置操作时，pytorch并不会创建新的、转置后的tensor，而是修改了tensor中的一些属性（也就是元数据），使得此时的offset和stride是与转置tensor相对应的。转置的tensor和原tensor的内存是共享的！  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.randn(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br>y = torch.transpose(x, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;修改前：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;x-&quot;</span>, x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;y-&quot;</span>, y)<br> <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n修改后：&quot;</span>)<br>y[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>] = <span class="hljs-number">11</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;x-&quot;</span>, x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;y-&quot;</span>, y)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，<strong>改变了y的元素的值的同时，x的元素的值也发生了变化</strong>。因此可以说，x是contiguous的，但y不是（因为内部数据不是通常的布局方式）。注意不要被contiguous的字面意思“连续的”误解，tensor中数据还是在内存中一块区域里，只是布局的问题！</p>
+<p>为什么这么说：因为，y里面数据布局的方式和从头开始创建一个常规的tensor布局的方式是不一样的。这个可能只是python中之前常用的浅拷贝，y还是指向x变量所处的位置，只是说记录了transpose这个变化的布局。</p>
+<p>使用contiguous() ：如果想要断开这两个变量之间的依赖（x本身是contiguous的），就要使用contiguous()针对x进行变化，感觉上就是我们认为的深拷贝。</p>
+<p> 当调用contiguous()时，会强制拷贝一份tensor，让它的布局和从头创建的一模一样，但是两个tensor完全没有联系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.randn(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br>y = torch.transpose(x, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>).contiguous()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;修改前：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;x-&quot;</span>, x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;y-&quot;</span>, y)<br> <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n修改后：&quot;</span>)<br>y[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>] = <span class="hljs-number">11</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;x-&quot;</span>, x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;y-&quot;</span>, y)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，当<strong>对y使用了.contiguous()<strong>后，</strong>改变y的值时，x没有任何影响</strong>！</p>
+<p>一般来说这一点不用太担心，当遇到<strong>需要调用contiguous()的地方</strong>，运行时会提示你：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">RuntimeError: <span class="hljs-built_in">input</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> contiguous<br></code></pre></td></tr></table></figure>
+
+<p><strong>这时候只需要在该变量后面加上.contiguous()就可以了！</strong></p>
+<h2 id="关于detach与clone之间的思考"><a href="#关于detach与clone之间的思考" class="headerlink" title="关于detach与clone之间的思考"></a>关于detach与clone之间的思考</h2><p>contiguous 这个操作和深拷贝的作用还是很类似的。clone()作为正常的深拷贝操作，一般可能会和detach()这个方法联用。</p>
+<p>Torch 为了提高速度，向量或是矩阵的赋值是指向同一内存的，这不同于 Matlab。如果需要保存旧的tensor即需要开辟新的存储地址而不是引用，可以用 clone() 进行<strong>深拷贝</strong>，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><br>a = torch.tensor(<span class="hljs-number">1.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>b = a.clone()<br>c = a.detach()<br>a.data *= <span class="hljs-number">3</span><br>b -= <span class="hljs-number">1</span><br><br><span class="hljs-built_in">print</span>(a)   <span class="hljs-comment"># tensor(3., requires_grad=True)</span><br><span class="hljs-built_in">print</span>(b)<br><span class="hljs-built_in">print</span>(c)<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">输出结果：</span><br><span class="hljs-string">tensor(3., requires_grad=True)</span><br><span class="hljs-string">tensor(2., grad_fn=&lt;AddBackward0&gt;)</span><br><span class="hljs-string">tensor(3.)      # detach()后的值随着a的变化出现变化</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<p><code>grad_fn=&lt;CloneBackward&gt;</code>，表示新的tensor充当中间变量，会保留在计算图中，参与梯度计算（回传叠加），但是一般不会保留自身梯度。  	clone操作在一定程度上可以视为是一个identity-mapping函数。detach()操作后的tensor与原始tensor共享数据内存，当原始tensor在计算图中数值发生反向传播等更新之后，detach()的tensor值也发生了改变。</p>
+<p><code>所以在torch中使用id来直接判断tensor是否共享内存是不合适的。因为也许底层共享数据，但是存在一个变量是detach出来的新tensor。</code>     </p>
+<p>同样可以发现的是detach()函数可以返回一个完全相同的tensor,与旧的tensor共享内存，脱离计算图，不会牵扯梯度计算。而clone充当中间变量，会将梯度传给源张量进行叠加，但是本身不保存其grad，即值为None。</p>
+<p>使用torch.clone()获得的新tensor和原来的数据不再共享内存，但仍保留在计算图中，clone操作在不共享数据内存的同时支持梯度梯度传递与叠加，所以常用在神经网络中某个单元需要重复使用的场景下。</p>
+<p>通常如果原tensor的requires_grad&#x3D;True，则：</p>
+<ul>
+<li>clone()操作后的tensor requires_grad&#x3D;True,  不共享内存</li>
+<li>detach()操作后的tensor requires_grad&#x3D;False。共享内存</li>
+</ul>
+<p>如果原tensor的requires_grad&#x3D;False，则：</p>
+<ul>
+<li>clone()操作后的tensor requires_grad&#x3D;True, 不存在张量回传的现象。但是可以求得clone后的张量导数</li>
+<li>detach()操作后的tensor requires_grad&#x3D;False</li>
+</ul>
+<h1 id="关于设置多GPU指定问题-torch-nn-DataParaller"><a href="#关于设置多GPU指定问题-torch-nn-DataParaller" class="headerlink" title="关于设置多GPU指定问题  torch.nn.DataParaller"></a>关于设置多GPU指定问题  torch.nn.DataParaller</h1><p>这里指的是单机多卡的问题。在终端中可以利用<code>nvidia-smi</code>查看相关信息</p>
+<p>![屏幕截图 2022-07-18 093729](&#x2F;src&#x2F;屏幕截图 2022-07-18 093729.png)</p>
+<p>可以看见前面对于每张显卡都是有序号的。一般情况下，序号为0的显卡是主卡（可以理解为最先使用的显卡）</p>
+<p>我们通过<code>os.environ[&#39;CUDA_VISIBLE_DEVICES&#39;]</code>来设定主卡是哪一张，使用空闲资源，避免内存资源分配不够。</p>
+<p>例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">os.environ[<span class="hljs-string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="hljs-string">&quot;3,2,0,1&quot;</span><br><span class="hljs-comment"># os.environ[&quot;CUDA_VISIBLE_DEVICES&quot;] = &#x27;,&#x27;.join(map(str, [3,2,0,1]))</span><br>model = torch.nn.DataParallel(model, device_ids=[<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]).cuda()<br></code></pre></td></tr></table></figure>
+
+<p>则实际的显卡编号与torch中显卡编号的对应关系为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">实际显卡编号-----&gt;运算显卡编号<br>    <span class="hljs-number">3</span>     -----&gt;     <span class="hljs-number">0</span>（主卡）<br>    <span class="hljs-number">2</span>     -----&gt;     <span class="hljs-number">1</span><br>    <span class="hljs-number">0</span>     -----&gt;     <span class="hljs-number">2</span><br>    <span class="hljs-number">1</span>     -----&gt;     <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+<p>当然如果不需要多卡并行计算的话，可以直接使用<code>torch.cuda.set_device(1)</code>来设定，但是这样设定后仍然会占据<code>device:0</code>的部分GPU资源</p>
+<p>在使用<code>os.environ[&#39;CUDA_VISIBLE_DEVICES&#39;]</code>一定要注意其放置的位置，要不然极有可能不生效。<strong>一定要放置在所有访问GPU代码之前，能放在<code>import torch</code>最好不过。</strong></p>
+<p>这里需要注意的是当你设定了可见的显卡后，在torch中设定的显卡的时候注意一下显卡编号问题。<br>还有个小问题，就是当你设置多卡并行的时候，选定显卡需要包括主卡，要不然就会报错<code>报错RuntimeError: module must have its parameters and buffers on device cuda:1 (device_ids[0]) but found</code></p>
+<h1 id="关于self-dict-update"><a href="#关于self-dict-update" class="headerlink" title="关于self.__ dict __.update"></a>关于self.__ dict __.update</h1><p>__dict__是用来存储对象属性的一个<strong>字典</strong>，其键为属性名，值为属性的值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.name = <span class="hljs-string">&#x27;xiaoming&#x27;</span><br>        self.age = <span class="hljs-number">18</span><br>        self.gender = <span class="hljs-string">&#x27;man&#x27;</span><br>    abc = <span class="hljs-number">666</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">print_dict</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">print</span>(self.__dict__)<br></code></pre></td></tr></table></figure>
+
+<p>如果我们调用<code>print_dict</code>来使用<code>self.__dict__</code>我们可以发现<code>__dict__</code>中存储了对象的属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;xiaoming&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&#x27;gender&#x27;</span>: <span class="hljs-string">&#x27;man&#x27;</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这样写起来特别方便，在面对很大键值对的时候，直接调用update函数来实现自动化实例变量。这样直接输入一个字典，就可以自动的生成对应的变量了，还是很方便的</p>
+<h1 id="torch-autograd-detect-anomaly"><a href="#torch-autograd-detect-anomaly" class="headerlink" title="torch.autograd.detect_anomaly()"></a>torch.autograd.detect_anomaly()</h1><p>为 autograd 引擎启用异常检测的上下文管理器。 这做了两件事：</p>
+<ul>
+<li>在启用检测的情况下运行正向传递将允许反向传递打印创建失败的反向函数的正向操作的回溯。</li>
+<li>任何产生“nan”值的反向计算都会引发错误。</li>
+</ul>
+<blockquote>
+<p>警告: 此模式应仅用于调试，因为不同的测试会减慢您的程序执行速度。</p>
+</blockquote>
+<h1 id="torch-spmm"><a href="#torch-spmm" class="headerlink" title="torch.spmm"></a>torch.spmm</h1><p>可以允许SparseMatrix * DenseMatrix，DenseMatrix* DenseMatrix， SparseMatrix * SparseMatrix </p>
+<p>但是不可以DenseMatrix* SparseMatrix<br>x </p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python TrickNote in Code</div>
+      <div>http://example.com/2022/08/01/Python/论文中 代码trick/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chris·Yougn</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/%E9%94%99%E8%AF%AF%E9%9B%86%E5%90%88/" title="Python 错误集合">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python 错误集合</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/01/Python/%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86/" title="缺失值处理">
+                        <span class="hidden-mobile">缺失值处理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-1abd33uwz-xiang64young.vercel.app","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+  });
+</script>
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
